@@ -1,7 +1,7 @@
 from django.conf import settings
-from .services.chatbot.answer_service import AnswerService
+
 from .serializers import AskQuestionSerializer
-from .models import ChatSession, ChatMessage, ProfileDocument
+from .models import ChatSession, ChatMessage, ProfileDocument, DocumentChunk
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -13,15 +13,17 @@ from .serializers import StartProjectRequestSerializer, ProfileDocumentUploadSer
 from .services.resend_email import send_start_project_email
 
 from .services.retrieval.reranked_vector_retrieval import RerankedVectorRetrievalService
-from .services.chatbot.answer_service import AnswerService
+
 
 
 from .services.documents.ingestion_service import IngestionService
-from .services.chatbot.answer_composer import AnswerComposer
+import re
+from difflib import SequenceMatcher
 
 from .services.chatbot.gemini_query_rewriter import GeminiQueryRewriter
 from .services.retrieval.reranked_vector_retrieval import RerankedVectorRetrievalService
 from .services.chatbot.gemini_grounded_answerer import GeminiGroundedAnswerer
+from .services.chatbot.smart_chat_intents import SmartChatIntentService
 
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
@@ -34,11 +36,7 @@ class CsrfExemptSessionAuthentication(SessionAuthentication):
         return
 
 
-"""
-API views for the public "Start Project" form.
-"""
-
-
+"""API views for the public "Start Project" form."""
 class StartProjectRequestView(APIView):
     permission_classes = [AllowAny]
     authentication_classes = [
@@ -76,20 +74,42 @@ class StartProjectRequestView(APIView):
         # Usually not needed explicitly, but safe if debugging preflight behavior
         return Response(status=status.HTTP_200_OK)
 
+""" API views for the portfolio chatbot backend."""
+class ProfileDocumentStatsAPIView(APIView):
+    def get(self, request, doc_id, *args, **kwargs):
+        doc = ProfileDocument.objects.filter(id=doc_id).first()
+        if not doc:
+            return Response({"detail": "Document not found."}, status=status.HTTP_404_NOT_FOUND)
 
-"""
-API views for the portfolio chatbot backend.
-"""
+        chunks_qs = DocumentChunk.objects.filter(document=doc)
+        chunks_count = chunks_qs.count()
+        embedded_count = chunks_qs.exclude(embedding__isnull=True).count()
+        raw_len = len(doc.raw_text or "")
+
+        return Response({
+            "document_id": str(doc.id),
+            "title": doc.title,
+            "document_type": doc.document_type,
+            "status": doc.status,
+            "is_active": getattr(doc, "is_active", True),
+            "raw_text_length": raw_len,
+            "chunks_count": chunks_count,
+            "embedded_chunks_count": embedded_count,
+        }, status=status.HTTP_200_OK)
 
 
+
+"""API views for the portfolio chatbot backend."""
 class AskAboutMeAPIView(APIView):
     """
     Enterprise RAG endpoint:
     - Create / reuse session
     - Save user message
+    - Quick replies for greetings/thanks/help (NO Gemini)
+    - Rewrite query for retrieval (Gemini optional + cached + safe fallback)
     - Retrieve evidence using vector search + reranking
-    - Compose answer (generic RAG OR optional extractor formatting)
-    - Save assistant message with citations and confidence
+    - Gemini grounded answer (safe fallback if quota exceeded)
+    - Save assistant message
     """
 
     def post(self, request, *args, **kwargs):
@@ -102,28 +122,70 @@ class AskAboutMeAPIView(APIView):
 
         # 2) Get or create session
         if session_id:
-            session = ChatSession.objects.filter(
-                id=session_id, is_active=True).first()
+            session = ChatSession.objects.filter(id=session_id, is_active=True).first()
             if session is None:
-                return Response(
-                    {"detail": "Session not found."},
-                    status=status.HTTP_404_NOT_FOUND
-                )
+                return Response({"detail": "Session not found."}, status=status.HTTP_404_NOT_FOUND)
         else:
             session = ChatSession.objects.create()
 
         # 3) Save user message
-        ChatMessage.objects.create(
-            session=session,
-            role="user",
-            content=message,
-        )
+        ChatMessage.objects.create(session=session, role="user", content=message)
 
-        # 1) Rewrite query for retrieval (typos, synonyms, expansion)
-        rewrite = GeminiQueryRewriter.rewrite(message)
-        retrieval_query = rewrite["rewritten_query"] or message
+        # 4) Quick intents (greeting, goodbye, thanks, help) -> NEVER call Gemini here
+        quick = SmartChatIntentService.detect(message)
+        if quick.handled:
+            assistant_message = ChatMessage.objects.create(
+                session=session,
+                role="assistant",
+                content=quick.reply,
+                citations=[],
+                confidence_score=quick.confidence,
+            )
+            return Response(
+                {
+                    "session_id": str(session.id),
+                    "message_id": str(assistant_message.id),
+                    "answer": quick.reply,
+                    "citations": [],
+                    "confidence": quick.confidence,
+                    "mode": quick.intent,
+                    "intent_source": quick.source,
+                    "retrieval_debug": [],
+                },
+                status=status.HTTP_200_OK
+            )
 
-        # 2) Retrieve evidence using rewritten query
+        # 5) Rewrite query for retrieval (SAFE + CACHED + fallback to local rewrite)
+        # IMPORTANT: use rewrite_cached, not rewrite
+        rewrite = GeminiQueryRewriter.rewrite_cached(message)
+        retrieval_query = rewrite.get("rewritten_query") or message
+        
+
+        # # Remove near-duplicate chunks to reduce repetition in output.
+        # def normalize_text(t: str) -> str:
+        #     t = (t or "").lower()
+        #     t = re.sub(r"\s+", " ", t).strip()
+        #     return t
+
+        # def dedupe_chunks(chunks, similarity_threshold: float = 0.92):
+        #     """
+        #     Remove near-duplicate chunks to reduce repetition in output.
+        #     """
+        #     kept = []
+        #     kept_norm = []
+        #     for c in chunks:
+        #         norm = normalize_text(c.content)
+        #         is_dup = False
+        #         for kn in kept_norm:
+        #             if SequenceMatcher(None, norm, kn).ratio() >= similarity_threshold:
+        #                 is_dup = True
+        #                 break
+        #         if not is_dup:
+        #             kept.append(c)
+        #             kept_norm.append(norm)
+        #     return kept
+
+        # 6) Retrieve evidence using rewritten query
         chunks, retrieval_debug = RerankedVectorRetrievalService.retrieve_relevant_chunks(
             query=retrieval_query,
             candidate_k=settings.RERANK_CANDIDATE_K,
@@ -131,12 +193,15 @@ class AskAboutMeAPIView(APIView):
             min_rerank_score=settings.RERANK_MIN_SCORE,
         )
 
-        # 3) Use Gemini to produce final grounded answer
+        # 7) Gemini final grounded answer (SAFE fallback on quota exhaustion)
         gemini_result = GeminiGroundedAnswerer.answer(question=message, evidence_chunks=chunks)
 
-        # 4) Citations ONLY for the chunks Gemini says it used
+        # 8) Citations ONLY for chunks Gemini used (safe index handling)
         citations = []
-        for i in gemini_result["used_chunk_indices"]:
+        used_indices = gemini_result.get("used_chunk_indices") or []
+        for i in used_indices:
+            if not isinstance(i, int) or i < 0 or i >= len(chunks):
+                continue
             c = chunks[i]
             citations.append({
                 "document_id": str(c.document.id),
@@ -148,28 +213,30 @@ class AskAboutMeAPIView(APIView):
                 "distance": float(getattr(c, "distance", 0.0)) if getattr(c, "distance", None) is not None else None,
             })
 
-        # 5) Build answer text with bullets
-        answer_text = gemini_result["answer"]
-        if gemini_result["bullets"]:
-            answer_text += "\n\nKey points:\n- " + "\n- ".join(gemini_result["bullets"])
+        # 9) Build answer text with bullets
+        answer_text = gemini_result.get("answer") or "I don’t have enough evidence to answer that."
+        bullets = gemini_result.get("bullets") or []
+        if bullets:
+            answer_text += "\n\nKey points:\n- " + "\n- ".join(bullets)
 
-        # 6) Save assistant message
+        # 10) Save assistant message
+        verdict = gemini_result.get("verdict", "not_enough_evidence")
         assistant_message = ChatMessage.objects.create(
             session=session,
             role="assistant",
             content=answer_text,
             citations=citations,
-            confidence_score=0.9 if gemini_result["verdict"] in {"yes", "no"} else 0.6,
+            confidence_score=0.9 if verdict in {"yes", "no"} else 0.6,
         )
 
-        # 7) Return response
+        # 11) Return response
         return Response(
             {
                 "session_id": str(session.id),
                 "message_id": str(assistant_message.id),
                 "retrieval_query": retrieval_query,
                 "rewrite_notes": rewrite.get("notes"),
-                "verdict": gemini_result["verdict"],
+                "verdict": verdict,
                 "answer": answer_text,
                 "citations": citations,
                 "retrieval_debug": retrieval_debug,

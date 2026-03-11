@@ -1,64 +1,56 @@
 from __future__ import annotations
 
 import json
-from typing import Dict, Any
+from functools import lru_cache
 from django.conf import settings
+
 from core.services.llm.gemini_client import GeminiClient
+from core.services.llm.gemini_safe import gemini_call_safe
 
 
 class GeminiQueryRewriter:
-    """
-    Rewrites the user query into a retrieval-optimized query:
-    - fixes typos
-    - expands abbreviations
-    - adds synonyms / keywords
-    - keeps the same intent
-    """
-
     @classmethod
-    def rewrite(cls, user_query: str) -> Dict[str, Any]:
+    @lru_cache(maxsize=512)
+    def rewrite_cached(cls, user_query: str) -> dict:
         q = (user_query or "").strip()
         if not q:
             return {"rewritten_query": "", "notes": "empty"}
 
-        system_instruction = (
-            "You rewrite user queries to improve document retrieval.\n"
-            "Rules:\n"
-            "1) Keep the SAME meaning/intent.\n"
-            "2) Fix typos.\n"
-            "3) Add relevant keywords/synonyms.\n"
-            "4) Output JSON only.\n"
-        )
+        # If Gemini key missing, fallback immediately
+        if not getattr(settings, "GEMINI_API_KEY", None):
+            return {"rewritten_query": cls._local_rewrite(q), "notes": "no_gemini_key"}
 
-        prompt = (
-            "Return JSON with keys:\n"
-            "- rewritten_query: string (optimized for retrieval)\n"
-            "- keywords: array of strings (optional)\n"
-            "- notes: short string\n\n"
-            f"User query: {q}\n"
-        )
+        def _call():
+            client = GeminiClient.client()
+            resp = client.models.generate_content(
+                model=settings.GEMINI_MODEL,
+                contents=(
+                    "Rewrite the query for retrieval: fix typos, keep meaning, add useful keywords.\n"
+                    "Return JSON: {rewritten_query, notes}\n\n"
+                    f"Query: {q}"
+                ),
+                config={"response_mime_type": "application/json",
+                        "temperature": 0.1},
+            )
+            return resp.text
 
-        client = GeminiClient.client()
-        resp = client.models.generate_content(
-            model=settings.GEMINI_MODEL,
-            contents=prompt,
-            config={
-                "system_instruction": system_instruction,
-                "response_mime_type": "application/json",
-                "temperature": 0.1,
-            },
-        )
+        ok, text, err = gemini_call_safe(_call, max_retries=0)
+        if not ok:
+            return {"rewritten_query": cls._local_rewrite(q), "notes": f"gemini_{err}_fallback"}
 
         try:
-            data = json.loads(resp.text)
-            rewritten = (data.get("rewritten_query") or "").strip()
-            if not rewritten:
-                rewritten = q
-            return {
-                "rewritten_query": rewritten,
-                "keywords": data.get("keywords", []),
-                "notes": data.get("notes", ""),
-            }
+            data = json.loads(text)
+            rewritten = (data.get("rewritten_query") or "").strip() or q
+            return {"rewritten_query": rewritten, "notes": data.get("notes", "ok")}
         except Exception:
-            # Fallback: use original query if parsing fails
-            return {"rewritten_query": q, "keywords": [], "notes": "json_parse_failed"}
+            return {"rewritten_query": cls._local_rewrite(q), "notes": "json_parse_failed_fallback"}
+
+    @staticmethod
+    def _local_rewrite(q: str) -> str:
+        # tiny local typo fixes that help a lot
+        return (
+            q.replace(" now ", " know ")
+            .replace(" certficate", " certificate")
+            .replace(" certifcate", " certificate")
+            .strip()
+        )

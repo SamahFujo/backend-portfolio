@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import AskAboutMeAPIView, ProfileDocumentListAPIView, ProfileDocumentUploadAPIView, StartProjectRequestView
+from .views import AskAboutMeAPIView, ProfileDocumentListAPIView, ProfileDocumentStatsAPIView, ProfileDocumentUploadAPIView, StartProjectRequestView
 
 urlpatterns = [
     path("contact/start-project/", StartProjectRequestView.as_view(),
@@ -8,4 +8,5 @@ urlpatterns = [
     path("documents/upload/", ProfileDocumentUploadAPIView.as_view(),
         name="documents-upload"),
     path("documents/", ProfileDocumentListAPIView.as_view(), name="documents-list"),
+    path("documents/<uuid:doc_id>/stats/", ProfileDocumentStatsAPIView.as_view(), name="documents-stats"),
 ]

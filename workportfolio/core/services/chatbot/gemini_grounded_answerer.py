@@ -6,6 +6,7 @@ from django.conf import settings
 
 from core.models import DocumentChunk
 from core.services.llm.gemini_client import GeminiClient
+from core.services.llm.gemini_safe import gemini_call_safe
 
 
 class GeminiGroundedAnswerer:
@@ -47,30 +48,57 @@ class GeminiGroundedAnswerer:
         )
 
         prompt = (
-            "Return JSON with keys:\n"
-            "- verdict: one of ['yes','no','not_enough_evidence']\n"
-            "- answer: concise answer (1-4 sentences)\n"
-            "- bullets: 0-6 bullet points (strings)\n"
-            "- used_chunk_indices: array of integers referencing evidence chunks used\n\n"
-            f"Question: {question}\n\n"
-            f"Evidence:\n{evidence_text}\n"
+        "Return JSON with keys:\n"
+        "- verdict: one of ['yes','no','not_enough_evidence']\n"
+        "- answer: concise answer (1-3 sentences)\n"
+        "- bullets: 3-6 bullets that add NEW details not already stated in 'answer'\n"
+        "- used_chunk_indices: array of integers referencing evidence chunks used\n\n"
+        "Rules:\n"
+        "A) Do NOT repeat the same idea in different words.\n"
+        "B) Bullets must be non-overlapping and each bullet must be unique.\n"
+        "C) If the answer is already complete, bullets can be an empty array.\n\n"
+        f"Question: {question}\n\n"
+        f"Evidence:\n{evidence_text}\n"
         )
 
-        client = GeminiClient.client()
-        resp = client.models.generate_content(
-            model=settings.GEMINI_MODEL,
-            contents=prompt,
-            config={
-                "system_instruction": system_instruction,
-                "response_mime_type": "application/json",
-                "temperature": 0.2,
-            },
-        )
+        def _call():
+            client = GeminiClient.client()
+            resp = client.models.generate_content(
+                model=settings.GEMINI_MODEL,
+                contents=prompt,
+                config={
+                    "system_instruction": system_instruction,
+                    "response_mime_type": "application/json",
+                    "temperature": 0.1,
+                },
+            )
+            return resp.text
 
+
+        ok, text, err = gemini_call_safe(_call, max_retries=0)
+
+        # If Gemini is down / quota exceeded / error -> return fallback WITHOUT crashing
+        if not ok:
+            # fallback: return an evidence-based response (no LLM)
+            fallback_used = list(range(min(3, len(evidence_chunks))))
+            fallback_lines = []
+            for i in fallback_used:
+                fallback_lines.append(f"- {cls._snippet(evidence_chunks[i].content, 220)}")
+
+            return {
+                "verdict": "not_enough_evidence",
+                "answer": (
+                    "Gemini is temporarily unavailable (quota/rate limit). "
+                    "Here is the best evidence I found:\n" + "\n".join(fallback_lines)
+                ),
+                "bullets": [],
+                "used_chunk_indices": fallback_used,
+            }
+
+        # Parse JSON from Gemini
         try:
-            data = json.loads(resp.text)
+            data = json.loads(text)
         except Exception:
-            # Fallback if Gemini returns non-JSON
             return {
                 "verdict": "not_enough_evidence",
                 "answer": "I couldn’t reliably format an answer. Please try again.",
