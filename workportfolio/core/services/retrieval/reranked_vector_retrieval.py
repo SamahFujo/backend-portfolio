@@ -6,6 +6,7 @@ from django.conf import settings
 from core.models import DocumentChunk
 from core.services.retrieval.vector_search_service import VectorSearchService
 from core.services.retrieval.rerank_service import RerankService
+from typing import List, Tuple, Optional, Dict, Any
 
 
 class RerankedVectorRetrievalService:
@@ -23,6 +24,7 @@ class RerankedVectorRetrievalService:
         candidate_k: int | None = None,
         top_n: int | None = None,
         min_rerank_score: float | None = None,
+        filters: Optional[Dict[str, Any]] = None,
     ) -> Tuple[List[DocumentChunk], List[dict]]:
         """
         Returns:
@@ -34,7 +36,10 @@ class RerankedVectorRetrievalService:
         min_rerank_score = min_rerank_score if min_rerank_score is not None else settings.RERANK_MIN_SCORE
 
         candidates = VectorSearchService.retrieve_candidates(
-            query=query, candidate_k=candidate_k)
+            query=query,
+            candidate_k=candidate_k,
+            filters=filters
+        )
         if not candidates:
             return [], []
 

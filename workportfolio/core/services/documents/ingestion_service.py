@@ -13,6 +13,7 @@ from core.models import ProfileDocument, DocumentChunk
 from .parser_service import ParserService
 from .chunk_service import ChunkService
 from .embedding_service import EmbeddingService
+from .doc_type_classifier import DocumentTypeClassifier
 
 
 class IngestionService:
@@ -27,9 +28,18 @@ class IngestionService:
         """
         try:
             raw_text = ParserService.extract_text(document.file.path)
+            
+            
+
             document.raw_text = raw_text
+            
+            result = DocumentTypeClassifier.classify(title=document.title, raw_text=raw_text)
+            document.document_type = result.doc_type
+            document.tags = result.tags
             document.status = "processed"
-            document.save(update_fields=["raw_text", "status", "updated_at"])
+            document.save(update_fields=["raw_text", "status", "document_type", "tags", "updated_at"])
+
+            
 
             document.chunks.all().delete()
 

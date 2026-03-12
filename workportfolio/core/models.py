@@ -43,6 +43,9 @@ class ProfileDocument(TimeStampedModel):
     raw_text = models.TextField(blank=True, null=True)
     status = models.CharField(
         max_length=20, choices=STATUS_CHOICES, default="uploaded")
+    is_active = models.BooleanField(default=True)
+    priority = models.PositiveSmallIntegerField(default=5)  # 1 high priority
+    tags = models.JSONField(blank=True, null=True)          # list of strings
     source_label = models.CharField(
         max_length=255,
         blank=True,

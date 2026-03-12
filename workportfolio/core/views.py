@@ -1,5 +1,4 @@
 from django.conf import settings
-
 from .serializers import AskQuestionSerializer
 from .models import ChatSession, ChatMessage, ProfileDocument, DocumentChunk
 from rest_framework.views import APIView
@@ -8,22 +7,14 @@ from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework.throttling import AnonRateThrottle
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-
 from .serializers import StartProjectRequestSerializer, ProfileDocumentUploadSerializer, ProfileDocumentSerializer
 from .services.resend_email import send_start_project_email
-
-from .services.retrieval.reranked_vector_retrieval import RerankedVectorRetrievalService
-
-
-
 from .services.documents.ingestion_service import IngestionService
-import re
-from difflib import SequenceMatcher
-
 from .services.chatbot.gemini_query_rewriter import GeminiQueryRewriter
 from .services.retrieval.reranked_vector_retrieval import RerankedVectorRetrievalService
 from .services.chatbot.gemini_grounded_answerer import GeminiGroundedAnswerer
 from .services.chatbot.smart_chat_intents import SmartChatIntentService
+from .services.retrieval.scope_resolver import ScopeResolver
 
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
@@ -99,6 +90,7 @@ class ProfileDocumentStatsAPIView(APIView):
 
 
 
+
 """API views for the portfolio chatbot backend."""
 class AskAboutMeAPIView(APIView):
     """
@@ -119,6 +111,11 @@ class AskAboutMeAPIView(APIView):
 
         session_id = serializer.validated_data.get("session_id")
         message = serializer.validated_data["message"].strip()
+        
+        msg_low = message.lower()
+        is_list_request = any(k in msg_low for k in ["list", "all", "show me", "give me"]) and any(
+            k in msg_low for k in ["projects", "project", "certificates", "certificate", "credentials"]
+        )
 
         # 2) Get or create session
         if session_id:
@@ -159,42 +156,33 @@ class AskAboutMeAPIView(APIView):
         # IMPORTANT: use rewrite_cached, not rewrite
         rewrite = GeminiQueryRewriter.rewrite_cached(message)
         retrieval_query = rewrite.get("rewritten_query") or message
-        
-
-        # # Remove near-duplicate chunks to reduce repetition in output.
-        # def normalize_text(t: str) -> str:
-        #     t = (t or "").lower()
-        #     t = re.sub(r"\s+", " ", t).strip()
-        #     return t
-
-        # def dedupe_chunks(chunks, similarity_threshold: float = 0.92):
-        #     """
-        #     Remove near-duplicate chunks to reduce repetition in output.
-        #     """
-        #     kept = []
-        #     kept_norm = []
-        #     for c in chunks:
-        #         norm = normalize_text(c.content)
-        #         is_dup = False
-        #         for kn in kept_norm:
-        #             if SequenceMatcher(None, norm, kn).ratio() >= similarity_threshold:
-        #                 is_dup = True
-        #                 break
-        #         if not is_dup:
-        #             kept.append(c)
-        #             kept_norm.append(norm)
-        #     return kept
 
         # 6) Retrieve evidence using rewritten query
+        # 6) Retrieve evidence using rewritten query (scope-aware with fallback to all docs)
+        filters = ScopeResolver.resolve_filters(message)
+
         chunks, retrieval_debug = RerankedVectorRetrievalService.retrieve_relevant_chunks(
             query=retrieval_query,
             candidate_k=settings.RERANK_CANDIDATE_K,
             top_n=settings.RERANK_TOP_N,
             min_rerank_score=settings.RERANK_MIN_SCORE,
+            filters=filters,
         )
+
+        # fallback to ALL docs if scope was too narrow/weak
+        if not chunks or len(chunks) < 3:
+            chunks, retrieval_debug = RerankedVectorRetrievalService.retrieve_relevant_chunks(
+                query=retrieval_query,
+                candidate_k=settings.RERANK_CANDIDATE_K,
+                top_n=settings.RERANK_TOP_N,
+                min_rerank_score=settings.RERANK_MIN_SCORE,
+                filters=None,
+            )
 
         # 7) Gemini final grounded answer (SAFE fallback on quota exhaustion)
         gemini_result = GeminiGroundedAnswerer.answer(question=message, evidence_chunks=chunks)
+        
+        gemini_meta = gemini_result.get("meta", {})
 
         # 8) Citations ONLY for chunks Gemini used (safe index handling)
         citations = []
@@ -228,6 +216,9 @@ class AskAboutMeAPIView(APIView):
             citations=citations,
             confidence_score=0.9 if verdict in {"yes", "no"} else 0.6,
         )
+        
+    
+
 
         # 11) Return response
         return Response(
@@ -240,6 +231,8 @@ class AskAboutMeAPIView(APIView):
                 "answer": answer_text,
                 "citations": citations,
                 "retrieval_debug": retrieval_debug,
+                "gemini_model_used": gemini_meta.get("model_used"),
+                "gemini_tried_models": gemini_meta.get("tried_models"),
             },
             status=status.HTTP_200_OK
         )
