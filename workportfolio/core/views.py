@@ -19,7 +19,7 @@ from .services.retrieval.scope_resolver import ScopeResolver
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
     """
-    Disable CSRF for this API endpoint (public portfolio form).
+    Disable CSRF for this API endpoint (public portfolio form). this is safe because we are not using session authentication for any sensitive operations, and we have other protections in place (throttling, CORS, etc). It allows the public form to submit without needing a CSRF token.
     """
 
     def enforce_csrf(self, request):
@@ -28,6 +28,8 @@ class CsrfExemptSessionAuthentication(SessionAuthentication):
 
 
 """API views for the public "Start Project" form."""
+
+
 class StartProjectRequestView(APIView):
     permission_classes = [AllowAny]
     authentication_classes = [
@@ -64,6 +66,48 @@ class StartProjectRequestView(APIView):
     def options(self, request, *args, **kwargs):
         # Usually not needed explicitly, but safe if debugging preflight behavior
         return Response(status=status.HTTP_200_OK)
+
+from rest_framework.permissions import AllowAny
+from rest_framework.throttling import AnonRateThrottle
+from rest_framework.authentication import BasicAuthentication, SessionAuthentication
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+
+from .serializers import GetInTouchSerializer
+from .services.resend_contact_email import send_get_in_touch_email
+
+
+class GetInTouchView(APIView):
+    permission_classes = [AllowAny]
+    authentication_classes = [CsrfExemptSessionAuthentication, BasicAuthentication]
+    throttle_classes = [AnonRateThrottle]
+
+    def post(self, request, *args, **kwargs):
+        serializer = GetInTouchSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        try:
+            result = send_get_in_touch_email(serializer.validated_data)
+            return Response(
+                {
+                    "success": True,
+                    "message": "Message sent successfully.",
+                    "provider": "resend",
+                    "email_id": result.get("id"),
+                },
+                status=status.HTTP_200_OK,
+            )
+        except Exception as e:
+            return Response(
+                {
+                    "success": False,
+                    "message": "Could not send your message right now. Please try again later.",
+                    "error": str(e),  # remove in production
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )   
+    
 
 """ API views for the portfolio chatbot backend."""
 class ProfileDocumentStatsAPIView(APIView):
