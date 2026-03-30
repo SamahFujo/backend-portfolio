@@ -1,0 +1,121 @@
+[
+  {
+    "index": 1,
+    "original_query": "what did you learn from your certificates",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "what did you learn from your certificates",
+      "notes": "Minor grammar correction to maintain clarity",
+      "meta": {
+        "provider": "ollama",
+        "model_used": "llama3.1:8b",
+        "tried_models": [
+          "llama3.1:8b"
+        ],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 2,
+    "original_query": "what is your current role",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "What is your current role?",
+      "notes": "Minor grammar correction for clarity",
+      "meta": {
+        "provider": "ollama",
+        "model_used": "llama3.1:8b",
+        "tried_models": [
+          "llama3.1:8b"
+        ],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 3,
+    "original_query": "خبرتك في react و next js",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "خبرتك في React و Next.js",
+      "notes": "",
+      "meta": {
+        "provider": "ollama",
+        "model_used": "llama3.1:8b",
+        "tried_models": [
+          "llama3.1:8b"
+        ],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 4,
+    "original_query": "حدثني عن مهاراتك التقنية",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "حدثني عن مهاراتك التقنية",
+      "notes": "Minor correction in capitalization and spacing for better readability",
+      "meta": {
+        "provider": "ollama",
+        "model_used": "llama3.1:8b",
+        "tried_models": [
+          "llama3.1:8b"
+        ],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 5,
+    "original_query": "what can you do",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "What can you do?",
+      "notes": "Minor grammar correction for clarity",
+      "meta": {
+        "provider": "ollama",
+        "model_used": "llama3.1:8b",
+        "tried_models": [
+          "llama3.1:8b"
+        ],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 6,
+    "original_query": "what makes your profile strong",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "What makes your profile strong?",
+      "notes": "Minor grammar correction for clarity",
+      "meta": {
+        "provider": "ollama",
+        "model_used": "llama3.1:8b",
+        "tried_models": [
+          "llama3.1:8b"
+        ],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 7,
+    "original_query": "what certificates support your ai profile",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "What certificates support your AI profile?",
+      "notes": "Minor grammar correction to improve clarity",
+      "meta": {
+        "provider": "ollama",
+        "model_used": "llama3.1:8b",
+        "tried_models": [
+          "llama3.1:8b"
+        ],
+        "error": null
+      }
+    }
+  }
+]

@@ -1,0 +1,182 @@
+[
+  {
+    "index": 1,
+    "original_query": "tell me about your certficate",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "tell me about your certificate",
+      "notes": "rewrite_fallback:empty_response_from_model:gpt-oss:20b",
+      "meta": {
+        "provider": "ollama",
+        "model_used": null,
+        "tried_models": [
+          "gpt-oss:20b",
+          "gpt-oss:20b"
+        ],
+        "error": "empty_response_from_model:gpt-oss:20b"
+      }
+    }
+  },
+  {
+    "index": 2,
+    "original_query": "what experiance do you have in django",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "what experiance do you have in django",
+      "notes": "rewrite_fallback:empty_response_from_model:gpt-oss:20b",
+      "meta": {
+        "provider": "ollama",
+        "model_used": null,
+        "tried_models": [
+          "gpt-oss:20b",
+          "gpt-oss:20b"
+        ],
+        "error": "empty_response_from_model:gpt-oss:20b"
+      }
+    }
+  },
+  {
+    "index": 3,
+    "original_query": "do you know react and next js",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "do you know react and next js",
+      "notes": "rewrite_fallback:empty_response_from_model:gpt-oss:20b",
+      "meta": {
+        "provider": "ollama",
+        "model_used": null,
+        "tried_models": [
+          "gpt-oss:20b",
+          "gpt-oss:20b"
+        ],
+        "error": "empty_response_from_model:gpt-oss:20b"
+      }
+    }
+  },
+  {
+    "index": 4,
+    "original_query": "what projects did you build in ai",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "what projects did you build in ai",
+      "notes": "rewrite_fallback:empty_response_from_model:gpt-oss:20b",
+      "meta": {
+        "provider": "ollama",
+        "model_used": null,
+        "tried_models": [
+          "gpt-oss:20b",
+          "gpt-oss:20b"
+        ],
+        "error": "empty_response_from_model:gpt-oss:20b"
+      }
+    }
+  },
+  {
+    "index": 5,
+    "original_query": "tell me about your work in spend analysis",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "tell me about your work in spend analysis",
+      "notes": "rewrite_fallback:empty_response_from_model:gpt-oss:20b",
+      "meta": {
+        "provider": "ollama",
+        "model_used": null,
+        "tried_models": [
+          "gpt-oss:20b",
+          "gpt-oss:20b"
+        ],
+        "error": "empty_response_from_model:gpt-oss:20b"
+      }
+    }
+  },
+  {
+    "index": 6,
+    "original_query": "what is your experiance in python and backend",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "what is your experiance in python and backend",
+      "notes": "rewrite_fallback:empty_response_from_model:gpt-oss:20b",
+      "meta": {
+        "provider": "ollama",
+        "model_used": null,
+        "tried_models": [
+          "gpt-oss:20b",
+          "gpt-oss:20b"
+        ],
+        "error": "empty_response_from_model:gpt-oss:20b"
+      }
+    }
+  },
+  {
+    "index": 7,
+    "original_query": "do you have any certificate in ai",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "do you have any certificate in ai",
+      "notes": "rewrite_fallback:empty_response_from_model:gpt-oss:20b",
+      "meta": {
+        "provider": "ollama",
+        "model_used": null,
+        "tried_models": [
+          "gpt-oss:20b",
+          "gpt-oss:20b"
+        ],
+        "error": "empty_response_from_model:gpt-oss:20b"
+      }
+    }
+  },
+  {
+    "index": 8,
+    "original_query": "tell me about samah skills",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "tell me about samah skills",
+      "notes": "rewrite_fallback:empty_response_from_model:gpt-oss:20b",
+      "meta": {
+        "provider": "ollama",
+        "model_used": null,
+        "tried_models": [
+          "gpt-oss:20b",
+          "gpt-oss:20b"
+        ],
+        "error": "empty_response_from_model:gpt-oss:20b"
+      }
+    }
+  },
+  {
+    "index": 9,
+    "original_query": "what kind of work have you done in machine learning",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "what kind of work have you done in machine learning",
+      "notes": "rewrite_fallback:empty_response_from_model:gpt-oss:20b",
+      "meta": {
+        "provider": "ollama",
+        "model_used": null,
+        "tried_models": [
+          "gpt-oss:20b",
+          "gpt-oss:20b"
+        ],
+        "error": "empty_response_from_model:gpt-oss:20b"
+      }
+    }
+  },
+  {
+    "index": 10,
+    "original_query": "have you worked with OCR before",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "have you worked with OCR before",
+      "notes": "rewrite_fallback:empty_response_from_model:gpt-oss:20b",
+      "meta": {
+        "provider": "ollama",
+        "model_used": null,
+        "tried_models": [
+          "gpt-oss:20b",
+          "gpt-oss:20b"
+        ],
+        "error": "empty_response_from_model:gpt-oss:20b"
+      }
+    }
+  }
+]

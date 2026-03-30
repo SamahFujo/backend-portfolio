@@ -1,0 +1,121 @@
+[
+  {
+    "index": 1,
+    "original_query": "what did you learn from your certificates",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "What did you learn from your certificates?",
+      "notes": "No changes needed.",
+      "meta": {
+        "provider": "ollama",
+        "model_used": "qwen2.5-coder:7b",
+        "tried_models": [
+          "qwen2.5-coder:7b"
+        ],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 2,
+    "original_query": "what is your current role",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "What is your current role?",
+      "notes": "No changes needed.",
+      "meta": {
+        "provider": "ollama",
+        "model_used": "qwen2.5-coder:7b",
+        "tried_models": [
+          "qwen2.5-coder:7b"
+        ],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 3,
+    "original_query": "خبرتك في react و next js",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "خبرتك في React و Next.js",
+      "notes": "No changes needed.",
+      "meta": {
+        "provider": "ollama",
+        "model_used": "qwen2.5-coder:7b",
+        "tried_models": [
+          "qwen2.5-coder:7b"
+        ],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 4,
+    "original_query": "حدثني عن مهاراتك التقنية",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "حدثني عن مهاراتك التقنية",
+      "notes": "No changes needed.",
+      "meta": {
+        "provider": "ollama",
+        "model_used": "qwen2.5-coder:7b",
+        "tried_models": [
+          "qwen2.5-coder:7b"
+        ],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 5,
+    "original_query": "what can you do",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "What can you do?",
+      "notes": "No changes needed.",
+      "meta": {
+        "provider": "ollama",
+        "model_used": "qwen2.5-coder:7b",
+        "tried_models": [
+          "qwen2.5-coder:7b"
+        ],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 6,
+    "original_query": "what makes your profile strong",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "What makes your profile strong?",
+      "notes": "No changes needed.",
+      "meta": {
+        "provider": "ollama",
+        "model_used": "qwen2.5-coder:7b",
+        "tried_models": [
+          "qwen2.5-coder:7b"
+        ],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 7,
+    "original_query": "what certificates support your ai profile",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "What certificates support your AI profile?",
+      "notes": "No changes needed.",
+      "meta": {
+        "provider": "ollama",
+        "model_used": "qwen2.5-coder:7b",
+        "tried_models": [
+          "qwen2.5-coder:7b"
+        ],
+        "error": null
+      }
+    }
+  }
+]

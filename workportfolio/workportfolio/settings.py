@@ -151,13 +151,43 @@ JINA_API_KEY = os.getenv("JINA_API_KEY")
 EMBEDDING_DIM = int(os.getenv("EMBEDDING_DIM", "1024"))
 
 
-
+# ============================================================
+# gemini settings
+# ============================================================
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-GEMINI_PRIMARY_MODEL = os.getenv("GEMINI_PRIMARY_MODEL", "gemini-2.5-flash")
+GEMINI_PRIMARY_MODEL = os.getenv("GEMINI_PRIMARY_MODEL", "gemini-2.5-flash-lite")
 GEMINI_FALLBACK_MODELS = [m.strip() for m in os.getenv("GEMINI_FALLBACK_MODELS", "").split(",") if m.strip()]
 
 GEMINI_REWRITE_PRIMARY = os.getenv("GEMINI_REWRITE_PRIMARY", "gemini-2.5-flash-lite")
 GEMINI_REWRITE_FALLBACKS = [m.strip() for m in os.getenv("GEMINI_REWRITE_FALLBACKS", "").split(",") if m.strip()]
+
+# ============================================================
+# Generic LLM provider switch
+# ============================================================
+
+LLM_PROVIDER = os.getenv("LLM_PROVIDER", "gemini")
+
+# LLM_PROVIDER = os.getenv("LLM_PROVIDER", "ollama")
+
+# ============================================================
+# Ollama settings
+# ============================================================
+# OLLAMA_API_URL = os.getenv("OLLAMA_API_URL", "http://localhost:11434/api/generate")
+
+# OLLAMA_PRIMARY_MODEL = os.getenv("OLLAMA_PRIMARY_MODEL", "gemma3:4b")
+# OLLAMA_FALLBACK_MODELS = [
+#     m.strip()
+#     for m in os.getenv("OLLAMA_FALLBACK_MODELS", "gemma3:4b").split(",")
+#     if m.strip()
+# ]
+
+# OLLAMA_REWRITE_PRIMARY = os.getenv("OLLAMA_REWRITE_PRIMARY", "gemma3:4b")
+# OLLAMA_REWRITE_FALLBACKS = [
+#     m.strip()
+#     for m in os.getenv("OLLAMA_REWRITE_FALLBACKS", "gemma3:4b").split(",")
+#     if m.strip()
+# ]
+
 
 RERANK_MIN_SCORE = float(os.getenv("RERANK_MIN_SCORE", "0.20"))
 RERANK_CANDIDATE_K = int(os.getenv("RERANK_CANDIDATE_K", "40"))

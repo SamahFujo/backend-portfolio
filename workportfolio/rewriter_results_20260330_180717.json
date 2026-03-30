@@ -1,0 +1,172 @@
+[
+  {
+    "index": 1,
+    "original_query": "tell me about your certficate",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "Tell me about your certificate",
+      "notes": "No changes needed. Query is clear.",
+      "meta": {
+        "provider": "ollama",
+        "model_used": "qwen2.5-coder:7b",
+        "tried_models": [
+          "qwen2.5-coder:7b"
+        ],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 2,
+    "original_query": "what experiance do you have in django",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "What experience do you have with Django?",
+      "notes": "Fixed typo and grammar.",
+      "meta": {
+        "provider": "ollama",
+        "model_used": "qwen2.5-coder:7b",
+        "tried_models": [
+          "qwen2.5-coder:7b"
+        ],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 3,
+    "original_query": "do you know react and next js",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "Do you know React and Next.js?",
+      "notes": "Clarified 'next js' to 'Next.js'",
+      "meta": {
+        "provider": "ollama",
+        "model_used": "qwen2.5-coder:7b",
+        "tried_models": [
+          "qwen2.5-coder:7b"
+        ],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 4,
+    "original_query": "what projects did you build in ai",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "What AI projects did you build?",
+      "notes": "Clarified 'projects' to 'AI projects' for better retrieval.",
+      "meta": {
+        "provider": "ollama",
+        "model_used": "qwen2.5-coder:7b",
+        "tried_models": [
+          "qwen2.5-coder:7b"
+        ],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 5,
+    "original_query": "tell me about your work in spend analysis",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "Tell me about your work in spend analysis.",
+      "notes": "Query is clear and concise.",
+      "meta": {
+        "provider": "ollama",
+        "model_used": "qwen2.5-coder:7b",
+        "tried_models": [
+          "qwen2.5-coder:7b"
+        ],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 6,
+    "original_query": "what is your experiance in python and backend",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "What is your experience with Python and backend?",
+      "notes": "Clarified 'experiance' to 'experience'",
+      "meta": {
+        "provider": "ollama",
+        "model_used": "qwen2.5-coder:7b",
+        "tried_models": [
+          "qwen2.5-coder:7b"
+        ],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 7,
+    "original_query": "do you have any certificate in ai",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "Do you have any AI-related certificates?",
+      "notes": "Clarified 'AI' for better retrieval.",
+      "meta": {
+        "provider": "ollama",
+        "model_used": "qwen2.5-coder:7b",
+        "tried_models": [
+          "qwen2.5-coder:7b"
+        ],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 8,
+    "original_query": "tell me about samah skills",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "Tell me about Samah's skills",
+      "notes": "Added 'Samah's' for clarity",
+      "meta": {
+        "provider": "ollama",
+        "model_used": "qwen2.5-coder:7b",
+        "tried_models": [
+          "qwen2.5-coder:7b"
+        ],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 9,
+    "original_query": "what kind of work have you done in machine learning",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "What projects have you worked on in machine learning?",
+      "notes": "Added 'projects' for clarity.",
+      "meta": {
+        "provider": "ollama",
+        "model_used": "qwen2.5-coder:7b",
+        "tried_models": [
+          "qwen2.5-coder:7b"
+        ],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 10,
+    "original_query": "have you worked with OCR before",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "Have you worked with OCR before?",
+      "notes": "No changes needed.",
+      "meta": {
+        "provider": "ollama",
+        "model_used": "qwen2.5-coder:7b",
+        "tried_models": [
+          "qwen2.5-coder:7b"
+        ],
+        "error": null
+      }
+    }
+  }
+]

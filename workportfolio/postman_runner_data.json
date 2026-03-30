@@ -1,0 +1,32 @@
+[
+    {
+        "message": "Do you have experience with Django?"
+    },
+    {
+        "message": "Have you worked with LangChain?"
+    },
+    {
+        "message": "What AI projects have you built?"
+    },
+    {
+        "message": "What certifications do you have?"
+    },
+    {
+        "message": "Which project used BERT or RoBERTa?"
+    },
+    {
+        "message": "What databases have you worked with?"
+    },
+    {
+        "message": "Have you used OCR before?"
+    },
+    {
+        "message": "What is your current role?"
+    },
+    {
+        "message": "What industries have you worked in?"
+    },
+    {
+        "message": "What is your favorite programming language?"
+    }
+]
