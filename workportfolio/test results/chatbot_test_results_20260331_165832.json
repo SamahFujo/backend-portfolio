@@ -1,0 +1,1418 @@
+{
+  "run_at": "2026-03-31T16:59:50.946383",
+  "api_url": "http://127.0.0.1:8000/api/chat/ask/",
+  "total_questions": 12,
+  "results": [
+    {
+      "question": "What is Samah’s favorite programming language?",
+      "status": "success",
+      "response": {
+        "session_id": "258482e0-d89a-44d4-b10c-1c760cb5eb04",
+        "message_id": "cbdada90-68f1-4fa0-b2cb-bd988aef8ab2",
+        "retrieval_query": "What is Samah’s favorite programming language?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah's favorite programming language is Python. She feels most comfortable using it for backend development, AI workflows, automation, APIs, NLP tasks, and data-related solutions, and it is the language she uses most often professionally.\n\nKey points:\n- Samah is especially well-suited for backend and AI-focused projects, particularly those involving Django, APIs, LLM integration, automation, and document intelligence.\n- Python is her strongest and most preferred language for production systems, even though she also knows FastAPI and Flask.\n- Samah is an AI Team Lead and AI/ML Engineer with strong experience in Python, Django, backend engineering, AI workflows, and full-stack development.",
+        "citations": [
+          {
+            "document_id": "9417adb4-de89-479e-b34c-59fd15d6ef9d",
+            "document_title": "Samah Faq",
+            "chunk_id": "7e33c29c-3bd6-4421-b83c-d4ec2230c04a",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.33223879327524575
+          },
+          {
+            "document_id": "9417adb4-de89-479e-b34c-59fd15d6ef9d",
+            "document_title": "Samah Faq",
+            "chunk_id": "7db6107e-58ec-40b8-94b1-f36470b734a6",
+            "chunk_index": 7,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.41056001876830983
+          },
+          {
+            "document_id": "83e9bd65-1896-46b3-ad96-e4646de7d640",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "4c098112-5ea8-4250-a471-187ec40b64f6",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.5884462823074696
+          },
+          {
+            "document_id": "83e9bd65-1896-46b3-ad96-e4646de7d640",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "61a66dc4-a0d1-4eca-a9d5-81202bd8137f",
+            "chunk_index": 7,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.6028274538660737
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "7e33c29c-3bd6-4421-b83c-d4ec2230c04a",
+            "chunk_index": 1,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.33223879327524575,
+            "rerank_score": 0.68087858,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "7db6107e-58ec-40b8-94b1-f36470b734a6",
+            "chunk_index": 7,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.41056001876830983,
+            "rerank_score": 0.5426209,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "1ea7335e-2e34-4754-b9a3-70863674812c",
+            "chunk_index": 0,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.4048191131597427,
+            "rerank_score": 0.50772035,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "5854fe21-ab18-43f5-8580-82a6bc97cdc9",
+            "chunk_index": 2,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.3857249664418345,
+            "rerank_score": 0.43590149,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "4c098112-5ea8-4250-a471-187ec40b64f6",
+            "chunk_index": 0,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "projects",
+            "vector_distance": 0.5884462823074696,
+            "rerank_score": 0.42871165,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "61a66dc4-a0d1-4eca-a9d5-81202bd8137f",
+            "chunk_index": 7,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "projects",
+            "vector_distance": 0.6028274538660737,
+            "rerank_score": 0.40544873,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "1d23aef7-defc-4255-9dac-e2f82344eae9",
+            "chunk_index": 5,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.38640958545293436,
+            "rerank_score": 0.38260272,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "77ae8f70-ffd1-4826-b9d9-9247943c69e6",
+            "chunk_index": 0,
+            "doc_title": "Samah CV 2026",
+            "document_type": "cv",
+            "vector_distance": 0.6325380850640064,
+            "rerank_score": 0.38075897,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold"
+          }
+        ],
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ]
+      }
+    },
+    {
+      "question": "Does Samah prefer Django or FastAPI?",
+      "status": "success",
+      "response": {
+        "session_id": "ab7c00f2-615a-42d0-aa5d-2fa6baee4e08",
+        "message_id": "d061c1fd-a7df-481d-98eb-ad049aa52e72",
+        "retrieval_query": "Does Samah prefer Django or FastAPI?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "yes",
+        "answer": "Yes, Samah prefers Django over FastAPI. She considers Django her strongest and most preferred backend framework for production systems and serious production projects.\n\nKey points:\n- Samah has experience with both FastAPI and Flask.\n- She prefers Django because it provides a strong structure for building secure, scalable, and production-ready applications.\n- Django is especially useful for business systems, admin panels, enterprise workflows, role-based platforms, and AI-powered web applications.",
+        "citations": [
+          {
+            "document_id": "9417adb4-de89-479e-b34c-59fd15d6ef9d",
+            "document_title": "Samah Faq",
+            "chunk_id": "7e33c29c-3bd6-4421-b83c-d4ec2230c04a",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.36925673484802246
+          },
+          {
+            "document_id": "83e9bd65-1896-46b3-ad96-e4646de7d640",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "27d88360-10b8-4f92-9996-93ed36931d6c",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.45842400441026565
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "7e33c29c-3bd6-4421-b83c-d4ec2230c04a",
+            "chunk_index": 1,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.36925673484802246,
+            "rerank_score": 0.78530854,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "1ea7335e-2e34-4754-b9a3-70863674812c",
+            "chunk_index": 0,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.46167436470542067,
+            "rerank_score": 0.59690315,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "7db6107e-58ec-40b8-94b1-f36470b734a6",
+            "chunk_index": 7,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.4531094431877136,
+            "rerank_score": 0.590307,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "27d88360-10b8-4f92-9996-93ed36931d6c",
+            "chunk_index": 1,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "projects",
+            "vector_distance": 0.45842400441026565,
+            "rerank_score": 0.58841616,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "5854fe21-ab18-43f5-8580-82a6bc97cdc9",
+            "chunk_index": 2,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.4286423325538635,
+            "rerank_score": 0.57654196,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "e6cc106d-9cd2-4e80-9169-0cf692a306d4",
+            "chunk_index": 4,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.4828760623931885,
+            "rerank_score": 0.51854622,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "ef256804-2135-4a53-8bb1-0e666eeb50ef",
+            "chunk_index": 6,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.48464777974175,
+            "rerank_score": 0.50921524,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "8ffd7860-b825-4679-9155-9961907e0adf",
+            "chunk_index": 2,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "projects",
+            "vector_distance": 0.5195008825958293,
+            "rerank_score": 0.49127287,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold"
+          }
+        ],
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ]
+      }
+    },
+    {
+      "question": "What payment range is Samah looking for?",
+      "status": "success",
+      "response": {
+        "session_id": "11dd738b-b7f2-4127-ae5f-4adb741d9b47",
+        "message_id": "493d1865-694e-4b59-bfe0-1ab33edd373a",
+        "retrieval_query": "What payment range is Samah looking for?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "not_enough_evidence",
+        "answer": "The provided evidence does not contain any information regarding Samah's desired payment range or compensation expectations.",
+        "citations": [],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "1ea7335e-2e34-4754-b9a3-70863674812c",
+            "chunk_index": 0,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.6000687122304008,
+            "rerank_score": 0.24364243,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "ef256804-2135-4a53-8bb1-0e666eeb50ef",
+            "chunk_index": 6,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.5030557217035119,
+            "rerank_score": 0.23510839,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "77ae8f70-ffd1-4826-b9d9-9247943c69e6",
+            "chunk_index": 0,
+            "doc_title": "Samah CV 2026",
+            "document_type": "cv",
+            "vector_distance": 0.7655225107385221,
+            "rerank_score": 0.22678363,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "7e33c29c-3bd6-4421-b83c-d4ec2230c04a",
+            "chunk_index": 1,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.6226160824298859,
+            "rerank_score": 0.2043419,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold"
+          }
+        ],
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ]
+      }
+    },
+    {
+      "question": "Is Samah open to freelance work?",
+      "status": "success",
+      "response": {
+        "session_id": "43cacddd-ce29-4f38-b3b1-352bea0ac512",
+        "message_id": "cc64f183-3a78-4501-a719-9d217e988c85",
+        "retrieval_query": "Is Samah open to freelance work?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "yes",
+        "answer": "Yes, Samah is open to freelance work. She is also open to contract-based, consulting, and project-based opportunities, provided the work is a good fit.\n\nKey points:\n- Samah is open to full-time opportunities.\n- Samah is open to remote work, hybrid work, and suitable on-site opportunities.\n- Samah is especially open to opportunities in Dubai, Abu Dhabi, and other suitable opportunities in the UAE.",
+        "citations": [
+          {
+            "document_id": "9417adb4-de89-479e-b34c-59fd15d6ef9d",
+            "document_title": "Samah Faq",
+            "chunk_id": "ef256804-2135-4a53-8bb1-0e666eeb50ef",
+            "chunk_index": 6,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.394873284988002
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "ef256804-2135-4a53-8bb1-0e666eeb50ef",
+            "chunk_index": 6,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.394873284988002,
+            "rerank_score": 0.71621859,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "77ae8f70-ffd1-4826-b9d9-9247943c69e6",
+            "chunk_index": 0,
+            "doc_title": "Samah CV 2026",
+            "document_type": "cv",
+            "vector_distance": 0.7025558473203086,
+            "rerank_score": 0.43686226,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "1ea7335e-2e34-4754-b9a3-70863674812c",
+            "chunk_index": 0,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.525028316674928,
+            "rerank_score": 0.4201237,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "1d23aef7-defc-4255-9dac-e2f82344eae9",
+            "chunk_index": 5,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.442422091960907,
+            "rerank_score": 0.37570643,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "7db6107e-58ec-40b8-94b1-f36470b734a6",
+            "chunk_index": 7,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.4642822742462158,
+            "rerank_score": 0.36749724,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "85c7e919-2567-4ea2-8379-00d700b018f8",
+            "chunk_index": 7,
+            "doc_title": "Samah Projects 2026",
+            "document_type": "projects",
+            "vector_distance": 0.615253890924502,
+            "rerank_score": 0.36658973,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "e6cc106d-9cd2-4e80-9169-0cf692a306d4",
+            "chunk_index": 4,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.5597679018974304,
+            "rerank_score": 0.33982763,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "d23a51df-546e-47f6-b8bb-94c6c3570f08",
+            "chunk_index": 8,
+            "doc_title": "Samah Projects 2026",
+            "document_type": "projects",
+            "vector_distance": 0.600543475183455,
+            "rerank_score": 0.3328523,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold"
+          }
+        ],
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ]
+      }
+    },
+    {
+      "question": "Can Samah build an AI chatbot?",
+      "status": "success",
+      "response": {
+        "session_id": "1f997681-4f17-4a92-93da-4923fc033339",
+        "message_id": "af2daf3f-65e7-4a3e-b421-535058e32e6e",
+        "retrieval_query": "Can Samah build an AI chatbot?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "yes",
+        "answer": "Yes, Samah can build AI-powered chatbots. Her capabilities include creating document-grounded chatbots, intelligent assistants, conversational search tools, and business workflow chatbots.\n\nKey points:\n- Samah has experience with AI and LLM technologies such as Hugging Face Transformers, BERT, RoBERTa, T5, Gemini, Ollama, LangChain, embeddings, vector search, prompt engineering, and RAG workflows.\n- She has built an AI property search chatbot and an interactive portfolio website with an AI chatbot section.\n- Samah is strongest in backend development and AI-focused work, including AI workflows, APIs, and solution architecture.\n- She can build retrieval-augmented generation (RAG) systems that use documents, embeddings, vector search, reranking, and grounded answering logic.",
+        "citations": [
+          {
+            "document_id": "9417adb4-de89-479e-b34c-59fd15d6ef9d",
+            "document_title": "Samah Faq",
+            "chunk_id": "5854fe21-ab18-43f5-8580-82a6bc97cdc9",
+            "chunk_index": 2,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.341540794556231
+          },
+          {
+            "document_id": "9417adb4-de89-479e-b34c-59fd15d6ef9d",
+            "document_title": "Samah Faq",
+            "chunk_id": "e6cc106d-9cd2-4e80-9169-0cf692a306d4",
+            "chunk_index": 4,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.4039730315176244
+          },
+          {
+            "document_id": "9417adb4-de89-479e-b34c-59fd15d6ef9d",
+            "document_title": "Samah Faq",
+            "chunk_id": "1ea7335e-2e34-4754-b9a3-70863674812c",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.33211561036797943
+          },
+          {
+            "document_id": "9c70b356-edda-4770-a464-e5a6fb662c13",
+            "document_title": "Samah Projects 2026",
+            "chunk_id": "85c7e919-2567-4ea2-8379-00d700b018f8",
+            "chunk_index": 7,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.5760678360603704
+          },
+          {
+            "document_id": "9417adb4-de89-479e-b34c-59fd15d6ef9d",
+            "document_title": "Samah Faq",
+            "chunk_id": "8ce3f4be-20e0-49b7-b0f6-4acb49ecc191",
+            "chunk_index": 3,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.4650556722316461
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "e6cc106d-9cd2-4e80-9169-0cf692a306d4",
+            "chunk_index": 4,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.4039730315176244,
+            "rerank_score": 0.83223671,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "5854fe21-ab18-43f5-8580-82a6bc97cdc9",
+            "chunk_index": 2,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.341540794556231,
+            "rerank_score": 0.77184349,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "1ea7335e-2e34-4754-b9a3-70863674812c",
+            "chunk_index": 0,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.33211561036797943,
+            "rerank_score": 0.70416009,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "1d23aef7-defc-4255-9dac-e2f82344eae9",
+            "chunk_index": 5,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.4030231121805997,
+            "rerank_score": 0.69014156,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "85c7e919-2567-4ea2-8379-00d700b018f8",
+            "chunk_index": 7,
+            "doc_title": "Samah Projects 2026",
+            "document_type": "projects",
+            "vector_distance": 0.5760678360603704,
+            "rerank_score": 0.67405045,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "d23a51df-546e-47f6-b8bb-94c6c3570f08",
+            "chunk_index": 8,
+            "doc_title": "Samah Projects 2026",
+            "document_type": "projects",
+            "vector_distance": 0.5457960151069183,
+            "rerank_score": 0.64063591,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "8ce3f4be-20e0-49b7-b0f6-4acb49ecc191",
+            "chunk_index": 3,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.4650556722316461,
+            "rerank_score": 0.63883525,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "7db6107e-58ec-40b8-94b1-f36470b734a6",
+            "chunk_index": 7,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.42040984873888665,
+            "rerank_score": 0.49591073,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold"
+          }
+        ],
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ]
+      }
+    },
+    {
+      "question": "What can Samah help with professionally?",
+      "status": "success",
+      "response": {
+        "session_id": "ff15f35a-0937-4446-afe3-938f8d9309e1",
+        "message_id": "66e8ad6b-c765-4eb6-9036-715ed7e4253a",
+        "answer": "I can answer questions about Samah using her uploaded CV and documents. Try: “What are her strongest technical skills?”, “Which projects used Django?”, or “How can I contact her?”",
+        "citations": [],
+        "confidence": 0.95,
+        "mode": "help",
+        "intent_source": "heuristic",
+        "retrieval_debug": []
+      }
+    },
+    {
+      "question": "What does Samah do?",
+      "status": "success",
+      "response": {
+        "session_id": "3db47b1d-c865-4871-b73f-233b37d2882b",
+        "message_id": "7e79d9a7-c28e-424f-931e-5a55c1dcca98",
+        "retrieval_query": "What does Samah do?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah is an AI Team Lead and AI/ML Engineer with strong full-stack development experience. She builds AI-powered applications, backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms.\n\nKey points:\n- She has leadership experience as an AI Team Lead, involving technical solution delivery, project ownership, stakeholder communication, and guiding implementation efforts.\n- Her strongest technical areas include Python backend development, Django and Django REST Framework, AI and LLM integration, workflow automation, and document understanding pipelines.\n- She can build full-stack applications using Django or Python-based backends with Next.js, React, and Tailwind CSS.\n- She is skilled in building retrieval-augmented generation (RAG) systems, document-grounded chatbots, and conversational search tools.\n- She has experience with OCR and document-processing tools such as Tesseract, EasyOCR, OpenCV, and LLM-based extraction workflows.\n- Samah is strongest at solving problems that involve automating manual workflows, turning unstructured data into useful structured outputs, and connecting AI with business operations.",
+        "citations": [
+          {
+            "document_id": "9417adb4-de89-479e-b34c-59fd15d6ef9d",
+            "document_title": "Samah Faq",
+            "chunk_id": "1ea7335e-2e34-4754-b9a3-70863674812c",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.45807512229456915
+          },
+          {
+            "document_id": "9417adb4-de89-479e-b34c-59fd15d6ef9d",
+            "document_title": "Samah Faq",
+            "chunk_id": "1d23aef7-defc-4255-9dac-e2f82344eae9",
+            "chunk_index": 5,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.37142370258044277
+          },
+          {
+            "document_id": "9417adb4-de89-479e-b34c-59fd15d6ef9d",
+            "document_title": "Samah Faq",
+            "chunk_id": "5854fe21-ab18-43f5-8580-82a6bc97cdc9",
+            "chunk_index": 2,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.4756344400535355
+          },
+          {
+            "document_id": "9417adb4-de89-479e-b34c-59fd15d6ef9d",
+            "document_title": "Samah Faq",
+            "chunk_id": "7db6107e-58ec-40b8-94b1-f36470b734a6",
+            "chunk_index": 7,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.4323575327502943
+          },
+          {
+            "document_id": "9417adb4-de89-479e-b34c-59fd15d6ef9d",
+            "document_title": "Samah Faq",
+            "chunk_id": "8ce3f4be-20e0-49b7-b0f6-4acb49ecc191",
+            "chunk_index": 3,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.553855194036506
+          },
+          {
+            "document_id": "9417adb4-de89-479e-b34c-59fd15d6ef9d",
+            "document_title": "Samah Faq",
+            "chunk_id": "7e33c29c-3bd6-4421-b83c-d4ec2230c04a",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.5034837574804947
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "1ea7335e-2e34-4754-b9a3-70863674812c",
+            "chunk_index": 0,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.45807512229456915,
+            "rerank_score": 0.754915,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "1d23aef7-defc-4255-9dac-e2f82344eae9",
+            "chunk_index": 5,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.37142370258044277,
+            "rerank_score": 0.71223217,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "5854fe21-ab18-43f5-8580-82a6bc97cdc9",
+            "chunk_index": 2,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.4756344400535355,
+            "rerank_score": 0.69347292,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "7db6107e-58ec-40b8-94b1-f36470b734a6",
+            "chunk_index": 7,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.4323575327502943,
+            "rerank_score": 0.68087858,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "e6cc106d-9cd2-4e80-9169-0cf692a306d4",
+            "chunk_index": 4,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.5770168774431012,
+            "rerank_score": 0.67233169,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "8ce3f4be-20e0-49b7-b0f6-4acb49ecc191",
+            "chunk_index": 3,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.553855194036506,
+            "rerank_score": 0.64868897,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "7e33c29c-3bd6-4421-b83c-d4ec2230c04a",
+            "chunk_index": 1,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.5034837574804947,
+            "rerank_score": 0.57463354,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "ef256804-2135-4a53-8bb1-0e666eeb50ef",
+            "chunk_index": 6,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.4651525734501395,
+            "rerank_score": 0.57033134,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold"
+          }
+        ],
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ]
+      }
+    },
+    {
+      "question": "What are Samah’s strongest technical areas?",
+      "status": "success",
+      "response": {
+        "session_id": "09f6fe36-a04d-48fc-9983-251044b3c32f",
+        "message_id": "f58361c4-f2c1-40df-8a3f-8a8a122e8740",
+        "retrieval_query": "What are Samah’s strongest technical areas?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah's strongest technical areas include Python backend development, Django and Django REST Framework, AI and LLM integration, workflow automation, and document understanding pipelines. She also excels in full-stack solution delivery.\n\nKey points:\n- Samah is primarily strongest in backend development and AI-focused work.\n- While she has experience with FastAPI and Flask, Django is her preferred and strongest backend framework for production systems.\n- For frontend development in full-stack solutions, Samah prefers Next.js with React and Tailwind CSS.\n- Her expertise in AI and LLM technologies includes Hugging Face Transformers, BERT, RoBERTa, T5, Gemini, Ollama, LangChain, embeddings, vector search, prompt engineering, and RAG workflows.\n- She is particularly well-suited for projects involving Django, APIs, LLM integration, automation, and document intelligence.",
+        "citations": [
+          {
+            "document_id": "9417adb4-de89-479e-b34c-59fd15d6ef9d",
+            "document_title": "Samah Faq",
+            "chunk_id": "1ea7335e-2e34-4754-b9a3-70863674812c",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.48415699695604963
+          },
+          {
+            "document_id": "9417adb4-de89-479e-b34c-59fd15d6ef9d",
+            "document_title": "Samah Faq",
+            "chunk_id": "e6cc106d-9cd2-4e80-9169-0cf692a306d4",
+            "chunk_index": 4,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.5115514397621155
+          },
+          {
+            "document_id": "9417adb4-de89-479e-b34c-59fd15d6ef9d",
+            "document_title": "Samah Faq",
+            "chunk_id": "5854fe21-ab18-43f5-8580-82a6bc97cdc9",
+            "chunk_index": 2,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.4064880609512329
+          },
+          {
+            "document_id": "9417adb4-de89-479e-b34c-59fd15d6ef9d",
+            "document_title": "Samah Faq",
+            "chunk_id": "7e33c29c-3bd6-4421-b83c-d4ec2230c04a",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.456744909286499
+          },
+          {
+            "document_id": "9417adb4-de89-479e-b34c-59fd15d6ef9d",
+            "document_title": "Samah Faq",
+            "chunk_id": "7db6107e-58ec-40b8-94b1-f36470b734a6",
+            "chunk_index": 7,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.41730743646621704
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "1ea7335e-2e34-4754-b9a3-70863674812c",
+            "chunk_index": 0,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.48415699695604963,
+            "rerank_score": 0.78133065,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "e6cc106d-9cd2-4e80-9169-0cf692a306d4",
+            "chunk_index": 4,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.5115514397621155,
+            "rerank_score": 0.75635755,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "5854fe21-ab18-43f5-8580-82a6bc97cdc9",
+            "chunk_index": 2,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.4064880609512329,
+            "rerank_score": 0.71303219,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "7e33c29c-3bd6-4421-b83c-d4ec2230c04a",
+            "chunk_index": 1,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.456744909286499,
+            "rerank_score": 0.71062827,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "7db6107e-58ec-40b8-94b1-f36470b734a6",
+            "chunk_index": 7,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.41730743646621704,
+            "rerank_score": 0.69595832,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "1d23aef7-defc-4255-9dac-e2f82344eae9",
+            "chunk_index": 5,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.3986433744430542,
+            "rerank_score": 0.66017234,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "ef256804-2135-4a53-8bb1-0e666eeb50ef",
+            "chunk_index": 6,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.47880753748461735,
+            "rerank_score": 0.56361818,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "8ce3f4be-20e0-49b7-b0f6-4acb49ecc191",
+            "chunk_index": 3,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.5029350219407656,
+            "rerank_score": 0.5496406,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold"
+          }
+        ],
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ]
+      }
+    },
+    {
+      "question": "What impact has Samah created through her work?",
+      "status": "success",
+      "response": {
+        "session_id": "dd7d189b-f2ee-4d6e-89d4-0cd80256f834",
+        "message_id": "c28fd72f-1b60-43b8-aac6-4f3a63510b27",
+        "retrieval_query": "What impact has Samah created through her work?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah creates impact by developing practical, production-oriented, and business-focused solutions that integrate software engineering with AI capabilities to deliver clear operational value. Her work often applies AI and automation to real-world problems, significantly reducing manual effort and enhancing overall efficiency.\n\nKey points:\n- She converts complex or unstructured information into usable structured outputs.\n- Her work improves the speed of business processes.\n- She makes technical systems more helpful and accessible to users.\n- Samah builds systems that are structured, scalable, and useful in real environments.\n- She designs strong backend APIs and business logic.\n- She creates maintainable project structures for long-term use.",
+        "citations": [
+          {
+            "document_id": "03db854a-e0ac-40c8-8372-22585abaa4b5",
+            "document_title": "Achievements And Impact",
+            "chunk_id": "3f423af1-9f8e-4ab5-88f8-305982deda18",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.6747544109821296
+          },
+          {
+            "document_id": "03db854a-e0ac-40c8-8372-22585abaa4b5",
+            "document_title": "Achievements And Impact",
+            "chunk_id": "59a74956-7f68-42a0-aede-20bc82bbb210",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.7028370918534448
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "1ea7335e-2e34-4754-b9a3-70863674812c",
+            "chunk_index": 0,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.5233562588691678,
+            "rerank_score": 0.55157375,
+            "source": "reranked",
+            "matched_filter_document_type": "achievements",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "1d23aef7-defc-4255-9dac-e2f82344eae9",
+            "chunk_index": 5,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.4499532252522236,
+            "rerank_score": 0.55109054,
+            "source": "reranked",
+            "matched_filter_document_type": "achievements",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "8ce3f4be-20e0-49b7-b0f6-4acb49ecc191",
+            "chunk_index": 3,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.5833909213542909,
+            "rerank_score": 0.5431056,
+            "source": "reranked",
+            "matched_filter_document_type": "achievements",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "7db6107e-58ec-40b8-94b1-f36470b734a6",
+            "chunk_index": 7,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.4706381839894157,
+            "rerank_score": 0.5252471,
+            "source": "reranked",
+            "matched_filter_document_type": "achievements",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "3f423af1-9f8e-4ab5-88f8-305982deda18",
+            "chunk_index": 0,
+            "doc_title": "Achievements And Impact",
+            "document_type": "projects",
+            "vector_distance": 0.6747544109821296,
+            "rerank_score": 0.50598115,
+            "source": "reranked",
+            "matched_filter_document_type": "achievements",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "5854fe21-ab18-43f5-8580-82a6bc97cdc9",
+            "chunk_index": 2,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.50524225862278,
+            "rerank_score": 0.49169996,
+            "source": "reranked",
+            "matched_filter_document_type": "achievements",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "e6cc106d-9cd2-4e80-9169-0cf692a306d4",
+            "chunk_index": 4,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.5904337519665801,
+            "rerank_score": 0.48444104,
+            "source": "reranked",
+            "matched_filter_document_type": "achievements",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "59a74956-7f68-42a0-aede-20bc82bbb210",
+            "chunk_index": 1,
+            "doc_title": "Achievements And Impact",
+            "document_type": "projects",
+            "vector_distance": 0.7028370918534448,
+            "rerank_score": 0.4709799,
+            "source": "reranked",
+            "matched_filter_document_type": "achievements",
+            "reason": "passed_threshold"
+          }
+        ],
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ]
+      }
+    },
+    {
+      "question": "What did Samah do before becoming an AI Team Lead?",
+      "status": "success",
+      "response": {
+        "session_id": "1dafcbcb-d94c-433a-9562-de7f6fbdec63",
+        "message_id": "c4afe9bf-203e-49f5-bf88-ae2fef237dcc",
+        "retrieval_query": "What did Samah do before becoming an AI Team Lead?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Before becoming an AI Team Lead, Samah focused on building AI solutions that addressed operational and business problems in practical environments. Her work involved connecting AI capabilities with backend systems, business workflows, user interfaces, and stakeholder needs.\n\nKey points:\n- Her previous work emphasized applied AI delivery, intelligent automation, and AI-enabled full-stack systems.\n- She also focused on business-oriented solution design and production-focused engineering.",
+        "citations": [
+          {
+            "document_id": "46753902-4a1a-45d3-a687-627bbc0ada97",
+            "document_title": "Career Timeline",
+            "chunk_id": "83864296-df71-4aa6-8c35-36c6d14231da",
+            "chunk_index": 4,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.5018726740213844
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "e6cc106d-9cd2-4e80-9169-0cf692a306d4",
+            "chunk_index": 4,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.3615685130567984,
+            "rerank_score": 0.83223671,
+            "source": "reranked",
+            "matched_filter_document_type": "career_timeline",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "1d23aef7-defc-4255-9dac-e2f82344eae9",
+            "chunk_index": 5,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.26461654287128245,
+            "rerank_score": 0.73259181,
+            "source": "reranked",
+            "matched_filter_document_type": "career_timeline",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "7db6107e-58ec-40b8-94b1-f36470b734a6",
+            "chunk_index": 7,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.3116051535253337,
+            "rerank_score": 0.67319167,
+            "source": "reranked",
+            "matched_filter_document_type": "career_timeline",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "1ea7335e-2e34-4754-b9a3-70863674812c",
+            "chunk_index": 0,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.333922604737352,
+            "rerank_score": 0.67060828,
+            "source": "reranked",
+            "matched_filter_document_type": "career_timeline",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "83864296-df71-4aa6-8c35-36c6d14231da",
+            "chunk_index": 4,
+            "doc_title": "Career Timeline",
+            "document_type": "cv",
+            "vector_distance": 0.5018726740213844,
+            "rerank_score": 0.62062156,
+            "source": "reranked",
+            "matched_filter_document_type": "career_timeline",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "24165538-f242-4e9e-a93d-40cc4e726556",
+            "chunk_index": 0,
+            "doc_title": "Samah Recommendation Letter 2026",
+            "document_type": "recommendation",
+            "vector_distance": 0.5432056078200567,
+            "rerank_score": 0.5612148,
+            "source": "reranked",
+            "matched_filter_document_type": "career_timeline",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "77ae8f70-ffd1-4826-b9d9-9247943c69e6",
+            "chunk_index": 0,
+            "doc_title": "Samah CV 2026",
+            "document_type": "cv",
+            "vector_distance": 0.5375044252730048,
+            "rerank_score": 0.55712259,
+            "source": "reranked",
+            "matched_filter_document_type": "career_timeline",
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "ef256804-2135-4a53-8bb1-0e666eeb50ef",
+            "chunk_index": 6,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.40555235826259206,
+            "rerank_score": 0.53849787,
+            "source": "reranked",
+            "matched_filter_document_type": "career_timeline",
+            "reason": "passed_threshold"
+          }
+        ],
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ]
+      }
+    },
+    {
+      "question": "How can I contact Samah?",
+      "status": "success",
+      "response": {
+        "session_id": "1cf9f04b-c8d3-48c5-b2fc-13eef97ccf09",
+        "message_id": "b620c947-f29d-4a4e-8e15-7e1535dc02f1",
+        "retrieval_query": "How can I contact Samah?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "You can contact Samah via her phone number or email address. Her phone number is +971 52 792 9218 and her email is s.fujo@hotmail.com.\n\nKey points:\n- Samah is located in Dubai, United Arab Emirates.",
+        "citations": [
+          {
+            "document_id": "24a5ecb3-71b3-4cbd-b7ed-27d9c35b953a",
+            "document_title": "Samah CV 2026",
+            "chunk_id": "77ae8f70-ffd1-4826-b9d9-9247943c69e6",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.720716085519324
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "77ae8f70-ffd1-4826-b9d9-9247943c69e6",
+            "chunk_index": 0,
+            "doc_title": "Samah CV 2026",
+            "document_type": "cv",
+            "vector_distance": 0.720716085519324,
+            "rerank_score": 0.6215409,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "24165538-f242-4e9e-a93d-40cc4e726556",
+            "chunk_index": 0,
+            "doc_title": "Samah Recommendation Letter 2026",
+            "document_type": "recommendation",
+            "vector_distance": 0.6711287302451563,
+            "rerank_score": 0.46174484,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "ef256804-2135-4a53-8bb1-0e666eeb50ef",
+            "chunk_index": 6,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.5408009339333694,
+            "rerank_score": 0.4291901,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "d23a51df-546e-47f6-b8bb-94c6c3570f08",
+            "chunk_index": 8,
+            "doc_title": "Samah Projects 2026",
+            "document_type": "projects",
+            "vector_distance": 0.7049253827244499,
+            "rerank_score": 0.41964793,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "1ea7335e-2e34-4754-b9a3-70863674812c",
+            "chunk_index": 0,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.4926584362983668,
+            "rerank_score": 0.407805,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "85c7e919-2567-4ea2-8379-00d700b018f8",
+            "chunk_index": 7,
+            "doc_title": "Samah Projects 2026",
+            "document_type": "projects",
+            "vector_distance": 0.7554206781716164,
+            "rerank_score": 0.40450743,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "d022a023-4190-4075-ac2e-8cb4c6e1eb1b",
+            "chunk_index": 0,
+            "doc_title": "Samah Certificate 2026",
+            "document_type": "certificates",
+            "vector_distance": 0.8345039537253349,
+            "rerank_score": 0.40074939,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "2ba7c02b-f798-451d-8667-28dfb6acfa75",
+            "chunk_index": 0,
+            "doc_title": "Samah experience Letter 2026",
+            "document_type": "experience_letter",
+            "vector_distance": 0.700219911350006,
+            "rerank_score": 0.39653543,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold"
+          }
+        ],
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ]
+      }
+    },
+    {
+      "question": "What is Samah’s favorite movie?",
+      "status": "success",
+      "response": {
+        "session_id": "e562cd3a-74bb-4dbf-bb9c-8aadbcd007ee",
+        "message_id": "6a21d0e5-495b-4741-b4d7-2dc6fad53095",
+        "retrieval_query": "What is Samah’s favorite movie?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "not_enough_evidence",
+        "answer": "The provided evidence does not contain any information about Samah's favorite movie.",
+        "citations": [],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "7e33c29c-3bd6-4421-b83c-d4ec2230c04a",
+            "chunk_index": 1,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.5404687201697389,
+            "rerank_score": 0.36658973,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "1ea7335e-2e34-4754-b9a3-70863674812c",
+            "chunk_index": 0,
+            "doc_title": "Samah Faq",
+            "document_type": "projects",
+            "vector_distance": 0.5627778395679188,
+            "rerank_score": 0.23370637,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold"
+          }
+        ],
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ]
+      }
+    }
+  ]
+}

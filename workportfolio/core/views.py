@@ -10,7 +10,7 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from .serializers import StartProjectRequestSerializer, ProfileDocumentUploadSerializer, ProfileDocumentSerializer
 from .services.resend_email import send_start_project_email
 from .services.documents.ingestion_service import IngestionService
-from .services.chatbot.gemini_query_rewriter import GeminiQueryRewriter
+from .services.chatbot.hybrid_query_rewriter import GeminiQueryRewriter
 from .services.retrieval.reranked_vector_retrieval import RerankedVectorRetrievalService
 from .services.chatbot.gemini_grounded_answerer import GeminiGroundedAnswerer
 from .services.chatbot.smart_chat_intents import SmartChatIntentService
@@ -28,8 +28,6 @@ class CsrfExemptSessionAuthentication(SessionAuthentication):
 
 
 """API views for the public "Start Project" form."""
-
-
 class StartProjectRequestView(APIView):
     permission_classes = [AllowAny]
     authentication_classes = [

@@ -1,0 +1,36 @@
+[
+  {
+    "index": 1,
+    "original_query": "compare your AI, backend, and leadership experience across projects and certificates",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "Compare your AI, backend, and leadership experiences across projects and certificates",
+      "notes": "The query is rewritten to focus on the comparison of different experiences related to AI, backend, and leadership, maintaining the original meaning and perspective.",
+      "meta": {
+        "provider": "ollama",
+        "model_used": "gemma3:1b",
+        "tried_models": [
+          "gemma3:1b"
+        ],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 2,
+    "original_query": "can you rewrite this messy query for retrieval: i want to know about samah background in django react ai llms and project that use bert roberta and oracle db together",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "Can you provide information about Samah's background related to Django, React, AI, and LLMs, and any projects utilizing BERT RoBERTa and Oracle Database?",
+      "notes": "Preserved person perspective, language, and project names.",
+      "meta": {
+        "provider": "ollama",
+        "model_used": "gemma3:1b",
+        "tried_models": [
+          "gemma3:1b"
+        ],
+        "error": null
+      }
+    }
+  }
+]

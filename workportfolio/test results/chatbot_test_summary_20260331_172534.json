@@ -1,0 +1,98 @@
+[
+  {
+    "question": "What is Samah’s favorite programming language?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah's favorite programming language is Python. She finds it the most comfortable language for various tasks, including backend development, AI workflows, and automation.\n\nKey points:\n- Python is the language Samah uses most often in her professional work.\n- She prefers Python for APIs, NLP tasks, and data-related solutions.",
+    "applied_filters": null,
+    "used_sources": null
+  },
+  {
+    "question": "Does Samah prefer Django or FastAPI?",
+    "status": "success",
+    "verdict": "yes",
+    "answer": "Samah prefers Django over FastAPI. Django is her strongest and most preferred framework for serious production projects, especially for API development using Django REST Framework.\n\nKey points:\n- Samah prefers Django due to its strong structure for building secure, scalable, and production-ready applications.\n- Django is particularly useful for business systems, admin panels, enterprise workflows, role-based platforms, and AI-powered web applications.\n- Samah also has experience with FastAPI and Flask, but considers Django her strongest framework.",
+    "applied_filters": null,
+    "used_sources": null
+  },
+  {
+    "question": "What payment range is Samah looking for?",
+    "status": "success",
+    "verdict": "not_enough_evidence",
+    "answer": "The provided evidence does not specify a particular payment range for Samah. Instead, Samah prefers to discuss compensation based on several factors related to the role and work arrangement.",
+    "applied_filters": null,
+    "used_sources": null
+  },
+  {
+    "question": "Is Samah open to freelance work?",
+    "status": "success",
+    "verdict": "yes",
+    "answer": "Yes, Samah is open to freelance work, including project-based work, especially when projects are well-defined, practical, and align with her technical strengths.\n\nKey points:\n- Samah is open to freelance projects, consulting, or solution-based technical work.\n- She is particularly suited for freelance or consulting work involving backend APIs, AI chatbot systems, RAG-based assistants, and document processing.\n- Other suitable freelance areas include dashboard and portal development, business process automation, and Django and Next.js-based solutions.",
+    "applied_filters": null,
+    "used_sources": null
+  },
+  {
+    "question": "Can Samah build an AI chatbot?",
+    "status": "success",
+    "verdict": "yes",
+    "answer": "Yes, Samah can build an AI chatbot. She designed and built the backend logic for an AI Property Search Chatbot, which understands natural language requests and extracts structured filters using LLMs like Gemini and Ollama.\n\nKey points:\n- Samah integrated the Django API with chatbot-style user experiences for the property search chatbot.\n- She also built advanced normalization, fuzzy matching, scoring, and follow-up question workflows for the chatbot.\n- Samah's interactive portfolio website includes a chatbot-focused section and a 'Bot/chat-about-me concept'.",
+    "applied_filters": null,
+    "used_sources": null
+  },
+  {
+    "question": "What can Samah help with professionally?",
+    "status": "success",
+    "verdict": null,
+    "answer": "I can answer questions about Samah using her uploaded CV and documents. Try: “What are her strongest technical skills?”, “Which projects used Django?”, or “How can I contact her?”",
+    "applied_filters": null,
+    "used_sources": null
+  },
+  {
+    "question": "What does Samah do?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah is an AI Team Lead and AI/ML Engineer with strong full-stack development experience. She builds AI-powered applications, backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms.\n\nKey points:\n- Her strongest technical areas include Python backend development, Django, AI and LLM integration, and workflow automation.\n- She is particularly strong in backend development and AI-focused work, though she also handles frontend for full-stack products.\n- Samah excels at solving business problems by automating manual workflows and transforming unstructured data into useful structured outputs.\n- She has developed specific projects such as a live smart electricity dashboard, an auditing employee payroll system, and an AI property search chatbot.\n- Her experience includes AI and LLM technologies like Hugging Face Transformers, Gemini, LangChain, and RAG workflows.\n- Roles that fit her best include AI Engineer, Backend Engineer, Senior Python Developer, and Technical Lead.",
+    "applied_filters": null,
+    "used_sources": null
+  },
+  {
+    "question": "What are Samah’s strongest technical areas?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah's strongest technical areas include Python backend development, Django and Django REST Framework, AI and LLM integration, and workflow automation. She also excels in document understanding pipelines and full-stack solution delivery using Next.js and React.\n\nKey points:\n- Samah is strongest in backend development and AI-focused work.\n- Her main strengths are in backend systems, AI workflows, APIs, and solution architecture.\n- She is proficient in building chatbots, RAG systems, and intelligent automation platforms.",
+    "applied_filters": null,
+    "used_sources": null
+  },
+  {
+    "question": "What impact has Samah created through her work?",
+    "status": "success",
+    "verdict": "not_enough_evidence",
+    "answer": "Gemini is temporarily unavailable (client_error:429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 9.479259063s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'model': 'gemini-2.5-flash', 'location': 'global'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '9s'}]}}). Here is the best evidence I found:\n- Automation One of my main strengths is applying AI and automation to real-world business problems. The impact I create often includes: - reducing manual work through intelligent automation - converting complex or unstruc...\n- Achievements and Impact Overview This document summarizes the kinds of impact I have created through my technical work, leadership contribution, solution delivery, and AI-driven system development. It is intended to help...\n- helps me create solutions that are aligned with real needs instead of purely technical assumptions. This creates impact by: - improving requirement clarity - reducing mismatch between business need and technical solution...",
+    "applied_filters": null,
+    "used_sources": null
+  },
+  {
+    "question": "What did Samah do before becoming an AI Team Lead?",
+    "status": "success",
+    "verdict": "not_enough_evidence",
+    "answer": "Gemini is temporarily unavailable (client_error:429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 6.140450063s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '6s'}]}}). Here is the best evidence I found:\n- ractical exposure to troubleshooting, system support, installation work, and customer communication. This stage helped me build a foundation in: - problem solving - technical support - understanding real user needs - wor...\n- d systems - automation driven by AI or structured models Experience in Business-Focused AI Delivery My work evolved toward building AI solutions that solve operational and business problems in practical environments. Rat...\n- As my technical and delivery experience matured, I moved into a leadership role as an AI Team Lead. In this stage, my role includes: - contributing to technical direction - helping shape solution design - coordinating or...",
+    "applied_filters": null,
+    "used_sources": null
+  },
+  {
+    "question": "How can I contact Samah?",
+    "status": "success",
+    "verdict": "not_enough_evidence",
+    "answer": "Gemini is temporarily unavailable (client_error:429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 3.537236023s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '3s'}]}}). Here is the best evidence I found:\n- tion. • Structured the project to connect frontend presentation with backend/AI-powered components. Key Features • Interactive projects showcase. • Animated certificates and skills sections. • Bot/chat-about-me concept....\n- Samah Fujo Prepared on | 12 March 2026 Status | Delivered / Production-facing analytics dashboard Technology Stack | Python, Dash/Plotly, JavaScript, HTML, CSS, Bootstrap, Oracle Database, Deep Learning Outcome / Busines...\n- Nasser Centre For Science & Technology 12-08-2025 To Whom It May Concern, It is my pleasure to provide this letter of recommendation for Ms. Samah Fujo, AI Team Leader in the Artificial Intelligence Research and Developm...",
+    "applied_filters": null,
+    "used_sources": null
+  },
+  {
+    "question": "What is Samah’s favorite movie?",
+    "status": "success",
+    "verdict": "not_enough_evidence",
+    "answer": "Gemini is temporarily unavailable (client_error:429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 1.183576685s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '1s'}]}}). Here is the best evidence I found:\n- Preferences and Work Style Overview This document describes my professional preferences, working style, technical likes, and the kinds of projects I enjoy most. It is intended to help answer questions about how I prefer...\n- gle Gemini - Ollama - LangChain - OCR and document-processing tools Type of Problems I Like Solving I especially like solving problems where I need to: - convert unstructured input into structured results - connect AI wi...\n- chnically interesting, but also has a clear business purpose and visible impact. Areas I Enjoy Most The kinds of work I enjoy most include: - building AI-powered web applications - designing backend systems and APIs - cr...",
+    "applied_filters": null,
+    "used_sources": null
+  }
+]

@@ -8,6 +8,7 @@ from pathlib import Path
 
 import django
 
+
 # ---------------------------------------------------------
 # Add project root to Python path BEFORE importing app code
 # test_rewriter.py is in: core/services/chatbot/
@@ -25,7 +26,7 @@ django.setup()
 # ---------------------------------------------------------
 # Now imports from your Django project will work
 # ---------------------------------------------------------
-from core.services.chatbot.gemini_query_rewriter import GeminiQueryRewriter
+from core.services.chatbot.hybrid_query_rewriter import GeminiQueryRewriter
 
 
 def load_queries(file_path: str = "test_queries.json") -> list[str]:

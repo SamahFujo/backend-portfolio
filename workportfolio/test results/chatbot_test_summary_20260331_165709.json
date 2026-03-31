@@ -1,0 +1,110 @@
+[
+  {
+    "question": "What is Samah’s favorite programming language?",
+    "status": "failed",
+    "verdict": null,
+    "answer": null,
+    "applied_filters": null,
+    "used_sources": null,
+    "error": "HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/chat/ask/ (Caused by NewConnectionError(\"HTTPConnection(host='127.0.0.1', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it\"))"
+  },
+  {
+    "question": "Does Samah prefer Django or FastAPI?",
+    "status": "failed",
+    "verdict": null,
+    "answer": null,
+    "applied_filters": null,
+    "used_sources": null,
+    "error": "HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/chat/ask/ (Caused by NewConnectionError(\"HTTPConnection(host='127.0.0.1', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it\"))"
+  },
+  {
+    "question": "What payment range is Samah looking for?",
+    "status": "failed",
+    "verdict": null,
+    "answer": null,
+    "applied_filters": null,
+    "used_sources": null,
+    "error": "HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/chat/ask/ (Caused by NewConnectionError(\"HTTPConnection(host='127.0.0.1', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it\"))"
+  },
+  {
+    "question": "Is Samah open to freelance work?",
+    "status": "failed",
+    "verdict": null,
+    "answer": null,
+    "applied_filters": null,
+    "used_sources": null,
+    "error": "HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/chat/ask/ (Caused by NewConnectionError(\"HTTPConnection(host='127.0.0.1', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it\"))"
+  },
+  {
+    "question": "Can Samah build an AI chatbot?",
+    "status": "failed",
+    "verdict": null,
+    "answer": null,
+    "applied_filters": null,
+    "used_sources": null,
+    "error": "HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/chat/ask/ (Caused by NewConnectionError(\"HTTPConnection(host='127.0.0.1', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it\"))"
+  },
+  {
+    "question": "What can Samah help with professionally?",
+    "status": "failed",
+    "verdict": null,
+    "answer": null,
+    "applied_filters": null,
+    "used_sources": null,
+    "error": "HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/chat/ask/ (Caused by NewConnectionError(\"HTTPConnection(host='127.0.0.1', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it\"))"
+  },
+  {
+    "question": "What does Samah do?",
+    "status": "failed",
+    "verdict": null,
+    "answer": null,
+    "applied_filters": null,
+    "used_sources": null,
+    "error": "HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/chat/ask/ (Caused by NewConnectionError(\"HTTPConnection(host='127.0.0.1', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it\"))"
+  },
+  {
+    "question": "What are Samah’s strongest technical areas?",
+    "status": "failed",
+    "verdict": null,
+    "answer": null,
+    "applied_filters": null,
+    "used_sources": null,
+    "error": "HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/chat/ask/ (Caused by NewConnectionError(\"HTTPConnection(host='127.0.0.1', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it\"))"
+  },
+  {
+    "question": "What impact has Samah created through her work?",
+    "status": "failed",
+    "verdict": null,
+    "answer": null,
+    "applied_filters": null,
+    "used_sources": null,
+    "error": "HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/chat/ask/ (Caused by NewConnectionError(\"HTTPConnection(host='127.0.0.1', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it\"))"
+  },
+  {
+    "question": "What did Samah do before becoming an AI Team Lead?",
+    "status": "failed",
+    "verdict": null,
+    "answer": null,
+    "applied_filters": null,
+    "used_sources": null,
+    "error": "HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/chat/ask/ (Caused by NewConnectionError(\"HTTPConnection(host='127.0.0.1', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it\"))"
+  },
+  {
+    "question": "How can I contact Samah?",
+    "status": "failed",
+    "verdict": null,
+    "answer": null,
+    "applied_filters": null,
+    "used_sources": null,
+    "error": "HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/chat/ask/ (Caused by NewConnectionError(\"HTTPConnection(host='127.0.0.1', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it\"))"
+  },
+  {
+    "question": "What is Samah’s favorite movie?",
+    "status": "failed",
+    "verdict": null,
+    "answer": null,
+    "applied_filters": null,
+    "used_sources": null,
+    "error": "HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /api/chat/ask/ (Caused by NewConnectionError(\"HTTPConnection(host='127.0.0.1', port=8000): Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it\"))"
+  }
+]

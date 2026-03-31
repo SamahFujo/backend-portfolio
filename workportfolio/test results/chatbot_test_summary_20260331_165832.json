@@ -1,0 +1,98 @@
+[
+  {
+    "question": "What is Samah’s favorite programming language?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah's favorite programming language is Python. She feels most comfortable using it for backend development, AI workflows, automation, APIs, NLP tasks, and data-related solutions, and it is the language she uses most often professionally.\n\nKey points:\n- Samah is especially well-suited for backend and AI-focused projects, particularly those involving Django, APIs, LLM integration, automation, and document intelligence.\n- Python is her strongest and most preferred language for production systems, even though she also knows FastAPI and Flask.\n- Samah is an AI Team Lead and AI/ML Engineer with strong experience in Python, Django, backend engineering, AI workflows, and full-stack development.",
+    "applied_filters": null,
+    "used_sources": null
+  },
+  {
+    "question": "Does Samah prefer Django or FastAPI?",
+    "status": "success",
+    "verdict": "yes",
+    "answer": "Yes, Samah prefers Django over FastAPI. She considers Django her strongest and most preferred backend framework for production systems and serious production projects.\n\nKey points:\n- Samah has experience with both FastAPI and Flask.\n- She prefers Django because it provides a strong structure for building secure, scalable, and production-ready applications.\n- Django is especially useful for business systems, admin panels, enterprise workflows, role-based platforms, and AI-powered web applications.",
+    "applied_filters": null,
+    "used_sources": null
+  },
+  {
+    "question": "What payment range is Samah looking for?",
+    "status": "success",
+    "verdict": "not_enough_evidence",
+    "answer": "The provided evidence does not contain any information regarding Samah's desired payment range or compensation expectations.",
+    "applied_filters": null,
+    "used_sources": null
+  },
+  {
+    "question": "Is Samah open to freelance work?",
+    "status": "success",
+    "verdict": "yes",
+    "answer": "Yes, Samah is open to freelance work. She is also open to contract-based, consulting, and project-based opportunities, provided the work is a good fit.\n\nKey points:\n- Samah is open to full-time opportunities.\n- Samah is open to remote work, hybrid work, and suitable on-site opportunities.\n- Samah is especially open to opportunities in Dubai, Abu Dhabi, and other suitable opportunities in the UAE.",
+    "applied_filters": null,
+    "used_sources": null
+  },
+  {
+    "question": "Can Samah build an AI chatbot?",
+    "status": "success",
+    "verdict": "yes",
+    "answer": "Yes, Samah can build AI-powered chatbots. Her capabilities include creating document-grounded chatbots, intelligent assistants, conversational search tools, and business workflow chatbots.\n\nKey points:\n- Samah has experience with AI and LLM technologies such as Hugging Face Transformers, BERT, RoBERTa, T5, Gemini, Ollama, LangChain, embeddings, vector search, prompt engineering, and RAG workflows.\n- She has built an AI property search chatbot and an interactive portfolio website with an AI chatbot section.\n- Samah is strongest in backend development and AI-focused work, including AI workflows, APIs, and solution architecture.\n- She can build retrieval-augmented generation (RAG) systems that use documents, embeddings, vector search, reranking, and grounded answering logic.",
+    "applied_filters": null,
+    "used_sources": null
+  },
+  {
+    "question": "What can Samah help with professionally?",
+    "status": "success",
+    "verdict": null,
+    "answer": "I can answer questions about Samah using her uploaded CV and documents. Try: “What are her strongest technical skills?”, “Which projects used Django?”, or “How can I contact her?”",
+    "applied_filters": null,
+    "used_sources": null
+  },
+  {
+    "question": "What does Samah do?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah is an AI Team Lead and AI/ML Engineer with strong full-stack development experience. She builds AI-powered applications, backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms.\n\nKey points:\n- She has leadership experience as an AI Team Lead, involving technical solution delivery, project ownership, stakeholder communication, and guiding implementation efforts.\n- Her strongest technical areas include Python backend development, Django and Django REST Framework, AI and LLM integration, workflow automation, and document understanding pipelines.\n- She can build full-stack applications using Django or Python-based backends with Next.js, React, and Tailwind CSS.\n- She is skilled in building retrieval-augmented generation (RAG) systems, document-grounded chatbots, and conversational search tools.\n- She has experience with OCR and document-processing tools such as Tesseract, EasyOCR, OpenCV, and LLM-based extraction workflows.\n- Samah is strongest at solving problems that involve automating manual workflows, turning unstructured data into useful structured outputs, and connecting AI with business operations.",
+    "applied_filters": null,
+    "used_sources": null
+  },
+  {
+    "question": "What are Samah’s strongest technical areas?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah's strongest technical areas include Python backend development, Django and Django REST Framework, AI and LLM integration, workflow automation, and document understanding pipelines. She also excels in full-stack solution delivery.\n\nKey points:\n- Samah is primarily strongest in backend development and AI-focused work.\n- While she has experience with FastAPI and Flask, Django is her preferred and strongest backend framework for production systems.\n- For frontend development in full-stack solutions, Samah prefers Next.js with React and Tailwind CSS.\n- Her expertise in AI and LLM technologies includes Hugging Face Transformers, BERT, RoBERTa, T5, Gemini, Ollama, LangChain, embeddings, vector search, prompt engineering, and RAG workflows.\n- She is particularly well-suited for projects involving Django, APIs, LLM integration, automation, and document intelligence.",
+    "applied_filters": null,
+    "used_sources": null
+  },
+  {
+    "question": "What impact has Samah created through her work?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah creates impact by developing practical, production-oriented, and business-focused solutions that integrate software engineering with AI capabilities to deliver clear operational value. Her work often applies AI and automation to real-world problems, significantly reducing manual effort and enhancing overall efficiency.\n\nKey points:\n- She converts complex or unstructured information into usable structured outputs.\n- Her work improves the speed of business processes.\n- She makes technical systems more helpful and accessible to users.\n- Samah builds systems that are structured, scalable, and useful in real environments.\n- She designs strong backend APIs and business logic.\n- She creates maintainable project structures for long-term use.",
+    "applied_filters": null,
+    "used_sources": null
+  },
+  {
+    "question": "What did Samah do before becoming an AI Team Lead?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Before becoming an AI Team Lead, Samah focused on building AI solutions that addressed operational and business problems in practical environments. Her work involved connecting AI capabilities with backend systems, business workflows, user interfaces, and stakeholder needs.\n\nKey points:\n- Her previous work emphasized applied AI delivery, intelligent automation, and AI-enabled full-stack systems.\n- She also focused on business-oriented solution design and production-focused engineering.",
+    "applied_filters": null,
+    "used_sources": null
+  },
+  {
+    "question": "How can I contact Samah?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "You can contact Samah via her phone number or email address. Her phone number is +971 52 792 9218 and her email is s.fujo@hotmail.com.\n\nKey points:\n- Samah is located in Dubai, United Arab Emirates.",
+    "applied_filters": null,
+    "used_sources": null
+  },
+  {
+    "question": "What is Samah’s favorite movie?",
+    "status": "success",
+    "verdict": "not_enough_evidence",
+    "answer": "The provided evidence does not contain any information about Samah's favorite movie.",
+    "applied_filters": null,
+    "used_sources": null
+  }
+]

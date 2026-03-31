@@ -165,9 +165,8 @@ GEMINI_REWRITE_FALLBACKS = [m.strip() for m in os.getenv("GEMINI_REWRITE_FALLBAC
 # Generic LLM provider switch
 # ============================================================
 
-LLM_PROVIDER = os.getenv("LLM_PROVIDER", "gemini")
+LLM_PROVIDER = os.getenv("LLM_PROVIDER", "ollama")  # options: "gemini", "ollama", "huggingface"
 
-# LLM_PROVIDER = os.getenv("LLM_PROVIDER", "ollama")
 
 # ============================================================
 # Ollama settings
@@ -181,14 +180,16 @@ LLM_PROVIDER = os.getenv("LLM_PROVIDER", "gemini")
 #     if m.strip()
 # ]
 
-# OLLAMA_REWRITE_PRIMARY = os.getenv("OLLAMA_REWRITE_PRIMARY", "gemma3:4b")
-# OLLAMA_REWRITE_FALLBACKS = [
-#     m.strip()
-#     for m in os.getenv("OLLAMA_REWRITE_FALLBACKS", "gemma3:4b").split(",")
-#     if m.strip()
-# ]
+OLLAMA_REWRITE_PRIMARY = os.getenv("OLLAMA_REWRITE_PRIMARY", "gemma3:1b")
+OLLAMA_REWRITE_FALLBACKS = [
+    m.strip()
+    for m in os.getenv("OLLAMA_REWRITE_FALLBACKS", "qwen2.5-coder:7b").split(",")
+    if m.strip()
+]
 
-
+# ============================================================
+# Reranker settings
+# ============================================================
 RERANK_MIN_SCORE = float(os.getenv("RERANK_MIN_SCORE", "0.20"))
 RERANK_CANDIDATE_K = int(os.getenv("RERANK_CANDIDATE_K", "40"))
 RERANK_TOP_N = int(os.getenv("RERANK_TOP_N", "8"))

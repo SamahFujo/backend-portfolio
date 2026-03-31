@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import List
 from django.conf import settings
 import requests
 
@@ -10,6 +10,7 @@ import requests
 class RerankItem:
     """
     A single rerank result item.
+
     index = index of the document in the input list
     score = relevance score assigned by the reranker
     """
@@ -26,6 +27,19 @@ class RerankService:
 
     JINA_RERANK_URL = "https://api.jina.ai/v1/rerank"
     MODEL_NAME = "jina-reranker-v2-base-multilingual"
+    DEFAULT_TIMEOUT = 60
+    MAX_DOCUMENT_LENGTH = 4000
+
+    @classmethod
+    def _clean_text(cls, text: str) -> str:
+        """
+        Normalize whitespace and truncate long candidate text.
+        """
+        text = (text or "").replace("\r", " ").replace("\n", " ").strip()
+        text = " ".join(text.split())
+        if len(text) > cls.MAX_DOCUMENT_LENGTH:
+            text = text[:cls.MAX_DOCUMENT_LENGTH].rstrip()
+        return text
 
     @classmethod
     def rerank(
@@ -33,7 +47,7 @@ class RerankService:
         query: str,
         documents: List[str],
         top_n: int = 5,
-        timeout: int = 60
+        timeout: int = 60,
     ) -> List[RerankItem]:
         query = (query or "").strip()
         if not query:
@@ -45,6 +59,12 @@ class RerankService:
         if not settings.JINA_API_KEY:
             raise ValueError("JINA_API_KEY is not configured.")
 
+        cleaned_documents = [cls._clean_text(doc) for doc in documents]
+        cleaned_documents = [doc for doc in cleaned_documents if doc]
+
+        if not cleaned_documents:
+            return []
+
         headers = {
             "Authorization": f"Bearer {settings.JINA_API_KEY}",
             "Content-Type": "application/json",
@@ -53,22 +73,41 @@ class RerankService:
         payload = {
             "model": cls.MODEL_NAME,
             "query": query,
-            "documents": documents,
-            "top_n": min(top_n, len(documents)),
+            "documents": cleaned_documents,
+            "top_n": min(top_n, len(cleaned_documents)),
         }
 
-        r = requests.post(cls.JINA_RERANK_URL, headers=headers, json=payload, timeout=timeout)
-        r.raise_for_status()
-        data = r.json()
+        try:
+            r = requests.post(
+                cls.JINA_RERANK_URL,
+                headers=headers,
+                json=payload,
+                timeout=timeout or cls.DEFAULT_TIMEOUT,
+            )
+            r.raise_for_status()
+            data = r.json()
+        except requests.RequestException:
+            # Return empty so caller can safely fallback to vector ranking
+            return []
 
         results = data.get("results", []) or []
         items: List[RerankItem] = []
+        seen_indexes = set()
 
         for item in results:
             idx = item.get("index")
             score = item.get("relevance_score")
-            if isinstance(idx, int) and isinstance(score, (int, float)):
-                items.append(RerankItem(index=idx, score=float(score)))
 
-        # Keep them ordered as the API returns (typically best first).
+            if not isinstance(idx, int):
+                continue
+            if not isinstance(score, (int, float)):
+                continue
+            if idx < 0 or idx >= len(cleaned_documents):
+                continue
+            if idx in seen_indexes:
+                continue
+
+            seen_indexes.add(idx)
+            items.append(RerankItem(index=idx, score=float(score)))
+
         return items

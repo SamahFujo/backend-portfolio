@@ -1,0 +1,81 @@
+[
+  {
+    "index": 1,
+    "original_query": "tell me about your certficate",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "Tell me about your certificate",
+      "notes": "local_fast_path",
+      "meta": {
+        "provider": "local",
+        "model_used": null,
+        "tried_models": [],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 2,
+    "original_query": "خبرتك في react و next js",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "خبرتك في React و Next.js",
+      "notes": "local_fast_path",
+      "meta": {
+        "provider": "local",
+        "model_used": null,
+        "tried_models": [],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 3,
+    "original_query": "compare your AI, backend, and leadership experience across projects and certificates",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "Compare your AI, backend, and leadership experience across projects and certificates",
+      "notes": "local_fast_path",
+      "meta": {
+        "provider": "local",
+        "model_used": null,
+        "tried_models": [],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 4,
+    "original_query": "based on your portfolio and cv, what combination of technologies appears most often in your work and how does that relate to your AI focus",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "Considering your portfolio and CV, what technologies are most frequently used in your projects, and how does this relate to your AI focus?",
+      "notes": "The query is preserved with the same person perspective and language. The focus remains on the technology combination and its connection to the AI focus.",
+      "meta": {
+        "provider": "ollama",
+        "model_used": "gemma3:1b",
+        "tried_models": [
+          "gemma3:1b"
+        ],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 5,
+    "original_query": "can you rewrite this messy query for retrieval: i want to know about samah background in django react ai llms and project that use bert roberta and oracle db together",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "Can you provide information about Samah's background related to Django, React, AI, and LLMs, and any projects utilizing BERT Roberta and Oracle Database?",
+      "notes": "Preserved person perspective, language, and project names.",
+      "meta": {
+        "provider": "ollama",
+        "model_used": "gemma3:1b",
+        "tried_models": [
+          "gemma3:1b"
+        ],
+        "error": null
+      }
+    }
+  }
+]

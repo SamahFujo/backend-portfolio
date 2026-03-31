@@ -25,13 +25,39 @@ class SmartChatIntentService:
     - Gemini fallback only when heuristic is uncertain
     """
 
-    # small patterns (not huge static lists)
     _greet_hint = re.compile(
-        r"\b(hi|hello|hey|morning|evening|afternoon|sup)\b", re.I)
-    _bye_hint = re.compile(r"\b(bye|goodbye|later|take care|see you)\b", re.I)
-    _thanks_hint = re.compile(r"\b(thanks|thank you|thx|appreciate)\b", re.I)
+        r"\b(hi|hello|hey|morning|evening|afternoon|sup)\b", re.I
+    )
+    _bye_hint = re.compile(
+        r"\b(bye|goodbye|later|take care|see you)\b", re.I
+    )
+    _thanks_hint = re.compile(
+        r"\b(thanks|thank you|thx|appreciate)\b", re.I
+    )
+
+    # Narrowed help intent: only generic assistant-help phrases
     _help_hint = re.compile(
-        r"\b(help|what can you do|how do you work|what do you know)\b", re.I)
+        r"\b("
+        r"what can you do|"
+        r"how do you work|"
+        r"what do you know|"
+        r"what can i ask|"
+        r"show me examples|"
+        r"how can you help me"
+        r")\b",
+        re.I,
+    )
+
+    # If message looks like a real question about Samah/profile, do NOT trap it as generic help
+    _profile_question_hint = re.compile(
+        r"\b("
+        r"samah|she|her|build|project|projects|experience|skills|"
+        r"language|framework|salary|payment|contact|email|phone|"
+        r"freelance|remote|django|fastapi|backend|frontend|"
+        r"chatbot|ai|llm|availability|work style"
+        r")\b",
+        re.I,
+    )
 
     _arabic_greet_hint = re.compile(r"\b(السلام عليكم|مرحبا|هلا)\b", re.I)
     _arabic_bye_hint = re.compile(r"\b(مع السلامه|سلام)\b", re.I)
@@ -49,10 +75,8 @@ class SmartChatIntentService:
                 source="heuristic",
             )
 
-        # 1) Heuristic scoring
         h = cls._heuristic_classify(msg)
 
-        # If confident, return immediately (no Gemini call)
         if h["confidence"] >= 0.75 and h["intent"] != "other":
             return SmartIntentResult(
                 handled=True,
@@ -62,7 +86,6 @@ class SmartChatIntentService:
                 source="heuristic",
             )
 
-        # 2) Gemini fallback ONLY if uncertain and message looks conversational
         if cls._should_use_gemini(msg, h):
             g = cls._gemini_classify(msg)
 
@@ -88,7 +111,6 @@ class SmartChatIntentService:
         text = msg.strip()
         low = text.lower()
 
-        # features
         tokens = re.findall(r"\b\w+\b", low)
         token_count = len(tokens)
         char_count = len(text)
@@ -102,7 +124,6 @@ class SmartChatIntentService:
             "other": 0.0,
         }
 
-        # Short messages are often greetings/thanks/goodbye
         if token_count <= 3 or char_count <= 15:
             scores["greeting"] += 0.15
             scores["thanks"] += 0.10
@@ -112,28 +133,31 @@ class SmartChatIntentService:
             scores["greeting"] += 0.10
             scores["thanks"] += 0.05
 
-        # minimal hints (not large lists)
         if cls._greet_hint.search(text) or cls._arabic_greet_hint.search(text):
             scores["greeting"] += 0.45
+
         if cls._bye_hint.search(text) or cls._arabic_bye_hint.search(text):
             scores["goodbye"] += 0.50
+
         if cls._thanks_hint.search(text) or cls._arabic_thanks_hint.search(text):
             scores["thanks"] += 0.50
+
         if cls._help_hint.search(text):
             scores["help"] += 0.55
 
-        # If message contains a question mark and more tokens, likely not a pure greeting
+        # If it looks like a real question about Samah/profile, reduce generic help score
+        if cls._profile_question_hint.search(text):
+            scores["help"] -= 0.35
+            scores["other"] += 0.20
+
         if "?" in text and token_count > 4:
             scores["other"] += 0.25
 
-        # pick best
         best_intent = max(scores, key=scores.get)
         best_score = scores[best_intent]
 
-        # normalize confidence to 0..1
-        confidence = min(0.95, 0.4 + best_score)
+        confidence = min(0.95, 0.4 + max(best_score, 0.0))
 
-        # if best score is too small, treat as other
         if best_score < 0.35:
             best_intent = "other"
             confidence = 0.45
@@ -142,20 +166,7 @@ class SmartChatIntentService:
 
     @classmethod
     def _should_use_gemini(cls, msg: str, heuristic: Dict[str, Any]) -> bool:
-        return False  # disable Gemini fallback for now, can re-enable if needed
-    
-        # Only Gemini fallback for short conversational texts, not full questions
-        low = msg.lower().strip()
-        tokens = re.findall(r"\b\w+\b", low)
-        if len(tokens) > 10:
-            return False
-
-        # if heuristic already decided "other" with decent confidence, skip Gemini
-        if heuristic["intent"] == "other" and heuristic["confidence"] >= 0.6:
-            return False
-
-        # if no Gemini key, can't use it
-        return bool(getattr(settings, "GEMINI_API_KEY", None))
+        return False
 
     @classmethod
     def _gemini_classify(cls, msg: str) -> Dict[str, Any]:

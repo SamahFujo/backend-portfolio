@@ -4,10 +4,13 @@ Document ingestion service.
 Pipeline:
 - parse file
 - store raw text
+- classify document type
 - create chunks
 - generate embeddings
 - save chunks
 """
+
+from django.db import transaction
 
 from core.models import ProfileDocument, DocumentChunk
 from .parser_service import ParserService
@@ -24,44 +27,93 @@ class IngestionService:
     @staticmethod
     def process_document(document: ProfileDocument) -> ProfileDocument:
         """
-        Parse, chunk, embed, and save a document.
+        Parse, chunk, embed, classify, and save a document.
         """
         try:
             raw_text = ParserService.extract_text(document.file.path)
-            
-            
+            raw_text = (raw_text or "").strip()
 
-            document.raw_text = raw_text
-            
-            result = DocumentTypeClassifier.classify(title=document.title, raw_text=raw_text)
-            document.document_type = result.doc_type
-            document.tags = result.tags
-            document.status = "processed"
-            document.save(update_fields=["raw_text", "status", "document_type", "tags", "updated_at"])
+            if not raw_text:
+                document.raw_text = ""
+                document.status = "failed"
+                document.save(
+                    update_fields=["raw_text", "status", "updated_at"])
+                return document
 
-            
-
-            document.chunks.all().delete()
+            result = DocumentTypeClassifier.classify(
+                title=document.title,
+                raw_text=raw_text,
+            )
 
             chunks = ChunkService.chunk_text(raw_text)
             if not chunks:
+                document.raw_text = raw_text
+                document.document_type = result.doc_type
+                document.tags = result.tags
+                document.status = "failed"
+                update_fields = ["raw_text", "document_type",
+                                 "tags", "status", "updated_at"]
+
+                # Optional fields if your model supports them
+                if hasattr(document, "doc_type_confidence"):
+                    document.doc_type_confidence = result.confidence
+                    update_fields.append("doc_type_confidence")
+
+                if hasattr(document, "doc_type_source"):
+                    document.doc_type_source = result.source
+                    update_fields.append("doc_type_source")
+
+                document.save(update_fields=update_fields)
                 return document
 
-            embeddings = EmbeddingService.generate_embeddings(chunks)
+            embeddings = EmbeddingService.generate_embeddings(
+                chunks,
+                task="retrieval.passage",
+            )
 
-            chunk_objects = []
-            for index, chunk_text in enumerate(chunks):
-                embedding = embeddings[index] if index < len(embeddings) else None
-                chunk_objects.append(
-                    DocumentChunk(
-                        document=document,
-                        chunk_index=index,
-                        content=chunk_text,
-                        embedding=embedding,
-                    )
+            if len(embeddings) != len(chunks):
+                raise ValueError(
+                    f"Embedding count mismatch. Expected {len(chunks)} embeddings, got {len(embeddings)}."
                 )
 
-            DocumentChunk.objects.bulk_create(chunk_objects)
+            with transaction.atomic():
+                document.raw_text = raw_text
+                document.document_type = result.doc_type
+                document.tags = result.tags
+                document.status = "processed"
+
+                update_fields = ["raw_text", "document_type",
+                "tags", "status", "updated_at"]
+
+                # Optional fields if your model supports them
+                if hasattr(document, "doc_type_confidence"):
+                    document.doc_type_confidence = result.confidence
+                    update_fields.append("doc_type_confidence")
+
+                if hasattr(document, "doc_type_source"):
+                    document.doc_type_source = result.source
+                    update_fields.append("doc_type_source")
+
+                if hasattr(document, "chunk_count"):
+                    document.chunk_count = len(chunks)
+                    update_fields.append("chunk_count")
+
+                document.save(update_fields=update_fields)
+
+                document.chunks.all().delete()
+
+                chunk_objects = []
+                for index, chunk_text in enumerate(chunks):
+                    chunk_objects.append(
+                        DocumentChunk(
+                            document=document,
+                            chunk_index=index,
+                            content=chunk_text,
+                            embedding=embeddings[index],
+                        )
+                    )
+
+                DocumentChunk.objects.bulk_create(chunk_objects)
 
         except Exception:
             document.status = "failed"

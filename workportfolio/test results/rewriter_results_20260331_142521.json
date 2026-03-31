@@ -1,0 +1,152 @@
+[
+  {
+    "index": 1,
+    "original_query": "tell me about your certficate",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "Tell me about your certificate",
+      "notes": "local_fast_path",
+      "meta": {
+        "provider": "local",
+        "model_used": null,
+        "tried_models": [],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 2,
+    "original_query": "do you no react",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "Do you know React?",
+      "notes": "local_fast_path",
+      "meta": {
+        "provider": "local",
+        "model_used": null,
+        "tried_models": [],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 3,
+    "original_query": "tell me more",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "Tell me more",
+      "notes": "local_fast_path",
+      "meta": {
+        "provider": "local",
+        "model_used": null,
+        "tried_models": [],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 4,
+    "original_query": "do you",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "Do you",
+      "notes": "local_fast_path",
+      "meta": {
+        "provider": "local",
+        "model_used": null,
+        "tried_models": [],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 5,
+    "original_query": "certificate",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "certificate",
+      "notes": "local_fast_path",
+      "meta": {
+        "provider": "local",
+        "model_used": null,
+        "tried_models": [],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 6,
+    "original_query": "project",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "project",
+      "notes": "local_fast_path",
+      "meta": {
+        "provider": "local",
+        "model_used": null,
+        "tried_models": [],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 7,
+    "original_query": "same as before",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "Same as before",
+      "notes": "local_fast_path",
+      "meta": {
+        "provider": "local",
+        "model_used": null,
+        "tried_models": [],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 8,
+    "original_query": "حدثني عن مهاراتك التقنية",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "حدثني عن مهاراتك التقنية",
+      "notes": "local_fast_path",
+      "meta": {
+        "provider": "local",
+        "model_used": null,
+        "tried_models": [],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 9,
+    "original_query": "what is your current role",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "What is your current role?",
+      "notes": "local_fast_path",
+      "meta": {
+        "provider": "local",
+        "model_used": null,
+        "tried_models": [],
+        "error": null
+      }
+    }
+  },
+  {
+    "index": 10,
+    "original_query": "what certificates support your ai profile",
+    "status": "ok",
+    "result": {
+      "rewritten_query": "What certificates support your AI profile?",
+      "notes": "local_fast_path",
+      "meta": {
+        "provider": "local",
+        "model_used": null,
+        "tried_models": [],
+        "error": null
+      }
+    }
+  }
+]
