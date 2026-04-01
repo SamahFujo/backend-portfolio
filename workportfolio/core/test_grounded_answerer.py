@@ -10,18 +10,30 @@ TIMEOUT = 120
 DELAY_BETWEEN_REQUESTS = 0.5
 
 QUESTIONS = [
-    "What is Samah’s favorite programming language?",
-    "Does Samah prefer Django or FastAPI?",
-    "What payment range is Samah looking for?",
-    "Is Samah open to freelance work?",
-    "Can Samah build an AI chatbot?",
-    "What can Samah help with professionally?",
-    "What does Samah do?",
-    "What are Samah’s strongest technical areas?",
-    "What impact has Samah created through her work?",
-    "What did Samah do before becoming an AI Team Lead?",
+    # "What is Samah’s favorite programming language?",
+    # "Does Samah prefer Django or FastAPI?",
+    # "What payment range is Samah looking for?",
+    # "Is Samah open to freelance work?",
+    # "Can Samah build an AI chatbot?",
+    # "What can Samah help with professionally?",
+    # "What does Samah do?",
+    # "What are Samah’s strongest technical areas?",
+    # "What impact has Samah created through her work?",
+    # "What did Samah do before becoming an AI Team Lead?",
+    # "How can I contact Samah?",
+    # "What is Samah’s favorite movie?"
+    # "What can Samah help with professionally?",
+    # "What can Samah do?",
+    # "Can Samah help with backend API development?"
+    # "What can Samah help with professionally?",
+    # "What can Samah do?",
+    # "What does Samah do?",
+    # "What are Samah’s strongest technical areas?",
+
     "How can I contact Samah?",
-    "What is Samah’s favorite movie?"
+    "What is Samah’s email?",
+    "What is Samah’s phone number?",
+    "Does Samah have LinkedIn?"
 ]
 
 

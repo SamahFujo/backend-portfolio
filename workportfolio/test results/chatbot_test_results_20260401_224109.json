@@ -1,0 +1,666 @@
+{
+  "run_at": "2026-04-01T22:41:55.367461",
+  "api_url": "http://127.0.0.1:8000/api/chat/ask/",
+  "total_questions": 4,
+  "results": [
+    {
+      "question": "What can Samah help with professionally?",
+      "status": "success",
+      "response": {
+        "session_id": "dc4d3b7f-4b04-4a7b-9b14-d500294c0407",
+        "message_id": "ee4baf5a-c3ad-4026-9f75-6587b9eb57a6",
+        "retrieval_query": "What can Samah help with professionally?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah can professionally help with designing and building production-ready AI solutions, backend systems, and modern full-stack web applications, specializing in AI/LLM integration, workflow automation, and interactive frontend delivery. Additionally, Samah offers technical leadership, including translating business requirements, leading development initiatives, and coordinating project delivery.\n\nKey points:\n- Samah can build AI-powered chatbots, RAG-based question-answering systems, and LLM-based information extraction tools.\n- Samah develops dashboard and analytics platforms, including monitoring dashboards with alerts and forecasts.\n- Samah can create document analysis, OCR systems, and classification/recommendation engines for business data.\n- Samah can build business portals with authentication and role-based permissions, and API-first platforms integrated with modern web frontends.\n- Samah can construct end-to-end web applications using Django backend and Next.js frontend.\n- Samah provides support for junior developers and guidance on implementation direction.",
+        "citations": [
+          {
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9",
+            "document_title": "where i can help",
+            "chunk_id": "b70b1176-5b1c-42c4-a33d-48e71f10dcbb",
+            "chunk_index": 7,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.7420682762820514
+          },
+          {
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9",
+            "document_title": "where i can help",
+            "chunk_id": "ec033764-6477-4d7f-aa57-ed8d25870755",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.7771199675941429
+          },
+          {
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9",
+            "document_title": "where i can help",
+            "chunk_id": "ba2298c5-b8fe-47f5-87a4-d049c1bfa3ad",
+            "chunk_index": 4,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.7266861552017468
+          },
+          {
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9",
+            "document_title": "where i can help",
+            "chunk_id": "903985d2-96b1-4f88-87f2-4a92d7e2e69f",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.7105142897674013
+          },
+          {
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9",
+            "document_title": "where i can help",
+            "chunk_id": "a4fe1a5e-02dc-479d-b070-e006bb5f5d94",
+            "chunk_index": 3,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.7473845852063224
+          },
+          {
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9",
+            "document_title": "where i can help",
+            "chunk_id": "12edfaf6-2b2a-40d7-9992-90d355542a1c",
+            "chunk_index": 6,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.703453523126454
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "b70b1176-5b1c-42c4-a33d-48e71f10dcbb",
+            "chunk_index": 7,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.7420682762820514,
+            "rerank_score": 0.13753246,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "7ac5d8bb-e622-41d4-851f-bfc79aaaef59",
+            "chunk_index": 12,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.7808143449557731,
+            "rerank_score": 0.12940273,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "ec033764-6477-4d7f-aa57-ed8d25870755",
+            "chunk_index": 1,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.7771199675941429,
+            "rerank_score": 0.12421302,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "ba2298c5-b8fe-47f5-87a4-d049c1bfa3ad",
+            "chunk_index": 4,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.7266861552017468,
+            "rerank_score": 0.12168574,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "903985d2-96b1-4f88-87f2-4a92d7e2e69f",
+            "chunk_index": 0,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.7105142897674013,
+            "rerank_score": 0.12002562,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "a4fe1a5e-02dc-479d-b070-e006bb5f5d94",
+            "chunk_index": 3,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.7473845852063224,
+            "rerank_score": 0.1066906,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "12edfaf6-2b2a-40d7-9992-90d355542a1c",
+            "chunk_index": 6,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.703453523126454,
+            "rerank_score": 0.10374863,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          }
+        ],
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ]
+      }
+    },
+    {
+      "question": "What can Samah do?",
+      "status": "success",
+      "response": {
+        "session_id": "0aca6b52-2c61-45f1-a32c-e28137dcfb09",
+        "message_id": "7c9f67fe-638f-43d0-896e-e165e891045a",
+        "retrieval_query": "What can Samah do?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah can build a wide range of AI-powered applications, including backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms. She is also capable of building full-stack applications and Retrieval-Augmented Generation (RAG) systems.\n\nKey points:\n- Samah works directly with customers and stakeholders to gather requirements, present solutions, and translate needs into technical systems.\n- She excels at solving business problems by automating manual workflows, turning unstructured data into useful structured outputs, and connecting AI with business operations.\n- Samah can build interactive dashboards and data-driven business systems for monitoring, analytics, reporting, and decision support.\n- Her experience includes working with OCR and document-processing tools such as Tesseract, EasyOCR, OpenCV, and LLM-based extraction workflows.\n- Samah has experience with AI and LLM technologies including Hugging Face Transformers, BERT, RoBERTa, T5, Gemini, Ollama, LangChain, embeddings, vector search, and prompt engineering.\n- She can build various types of chatbots, such as document-grounded chatbots, intelligent assistants, conversational search tools, and business workflow chatbots.",
+        "citations": [
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.2610947865573995
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "c0ebcff9-c3e2-4cbb-96a2-7075616ee82f",
+            "chunk_index": 8,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.38354241847991943
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "1df26f99-5f94-4755-8e6a-c1f31f7f3148",
+            "chunk_index": 6,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.4651861468068439
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "440d3e3c-d340-4cb5-9e98-785a450378df",
+            "chunk_index": 4,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.5850964660971302
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "chunk_index": 9,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.35266218467580057
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "db5f697e-6248-4c1f-93ad-2acac7c03c35",
+            "chunk_index": 3,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.5111165940761566
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "chunk_index": 0,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.2610947865573995,
+            "rerank_score": 0.71143085,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "c0ebcff9-c3e2-4cbb-96a2-7075616ee82f",
+            "chunk_index": 8,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.38354241847991943,
+            "rerank_score": 0.70982438,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "1df26f99-5f94-4755-8e6a-c1f31f7f3148",
+            "chunk_index": 6,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.4651861468068439,
+            "rerank_score": 0.70740473,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "440d3e3c-d340-4cb5-9e98-785a450378df",
+            "chunk_index": 4,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5850964660971302,
+            "rerank_score": 0.70334578,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "chunk_index": 9,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.35266218467580057,
+            "rerank_score": 0.69760895,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "69dd03be-6961-43b4-8e58-20a0feb96594",
+            "chunk_index": 7,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.4661813974380493,
+            "rerank_score": 0.66104823,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+            "chunk_index": 2,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5260321513433538,
+            "rerank_score": 0.65489471,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "db5f697e-6248-4c1f-93ad-2acac7c03c35",
+            "chunk_index": 3,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5111165940761566,
+            "rerank_score": 0.62520927,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.10)"
+          }
+        ],
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ]
+      }
+    },
+    {
+      "question": "What does Samah do?",
+      "status": "success",
+      "response": {
+        "session_id": "fa34ee17-d2c5-4349-a8bc-1d17441865c3",
+        "message_id": "0a9e032d-7d59-4a2f-929c-7a5dffd79606",
+        "retrieval_query": "What does Samah do?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah is an AI Team Lead and AI/ML Engineer with strong full-stack development experience. She builds a variety of solutions, including AI-powered applications, backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms.\n\nKey points:\n- She is strongest in backend development and AI-focused work.\n- Samah is especially well-suited for projects involving Django, APIs, LLM integration, automation, and document intelligence.\n- She excels at solving business problems by automating manual workflows, turning unstructured data into useful structured outputs, and connecting AI with business operations.\n- Her strongest technical areas include Python backend development, Django, AI and LLM integration, and full-stack solution delivery using Next.js and React.\n- She has built projects such as a live smart electricity dashboard, an auditing employee payroll system, and an AI property search chatbot.\n- Samah also has leadership experience as an AI Team Lead, which includes technical solution delivery and guiding implementation efforts.",
+        "citations": [
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.23846738682395663
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "chunk_index": 9,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.3354495167732191
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "c0ebcff9-c3e2-4cbb-96a2-7075616ee82f",
+            "chunk_index": 8,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.40712752384707374
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "440d3e3c-d340-4cb5-9e98-785a450378df",
+            "chunk_index": 4,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.5997572183391944
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.5224357714446577
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "bf3d502d-1a84-4ed5-af5e-8e7f1c3ed7e8",
+            "chunk_index": 5,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.6730260447844187
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "chunk_index": 0,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.23846738682395663,
+            "rerank_score": 0.74167407,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "1df26f99-5f94-4755-8e6a-c1f31f7f3148",
+            "chunk_index": 6,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.4615899874675259,
+            "rerank_score": 0.71780378,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "chunk_index": 9,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.3354495167732191,
+            "rerank_score": 0.70659554,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "c0ebcff9-c3e2-4cbb-96a2-7075616ee82f",
+            "chunk_index": 8,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.40712752384707374,
+            "rerank_score": 0.67747402,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "440d3e3c-d340-4cb5-9e98-785a450378df",
+            "chunk_index": 4,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5997572183391944,
+            "rerank_score": 0.66454029,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+            "chunk_index": 1,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5224357714446577,
+            "rerank_score": 0.6215409,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+            "chunk_index": 2,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5280619297101414,
+            "rerank_score": 0.60998893,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "bf3d502d-1a84-4ed5-af5e-8e7f1c3ed7e8",
+            "chunk_index": 5,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.6730260447844187,
+            "rerank_score": 0.608594,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.10)"
+          }
+        ],
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ]
+      }
+    },
+    {
+      "question": "What are Samah’s strongest technical areas?",
+      "status": "success",
+      "response": {
+        "session_id": "9cb9f1d6-f394-4b16-8251-9a447cc1984e",
+        "message_id": "e99862e8-b553-4d21-9d5c-98133f85058f",
+        "retrieval_query": "What are Samah’s strongest technical areas?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah's strongest technical areas include Python backend development, Django and Django REST Framework, and AI and LLM integration. She also excels in workflow automation, document understanding pipelines, and full-stack solution delivery using Next.js and React.\n\nKey points:\n- Her main strength lies in backend systems, AI workflows, APIs, and solution architecture.\n- She is particularly well-suited for projects involving Django, LLM integration, automation, and document intelligence.\n- Samah can build chatbots, RAG systems, APIs, dashboards, and intelligent automation platforms.\n- She has strong experience designing and developing backend APIs using Django REST Framework and other Python frameworks.",
+        "citations": [
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.25657735039524254
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+            "chunk_index": 2,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.35919984335898303
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "chunk_index": 9,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.33574483777613295
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "bf3d502d-1a84-4ed5-af5e-8e7f1c3ed7e8",
+            "chunk_index": 5,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.5411368559435745
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "c0ebcff9-c3e2-4cbb-96a2-7075616ee82f",
+            "chunk_index": 8,
+            "section_title": null,
+            "page_number": null,
+            "distance": 0.37736284732818604
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+            "chunk_index": 1,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.25657735039524254,
+            "rerank_score": 0.72252703,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+            "chunk_index": 2,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.35919984335898303,
+            "rerank_score": 0.71859437,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "chunk_index": 0,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.31737325541297334,
+            "rerank_score": 0.715424,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "chunk_index": 9,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.33574483777613295,
+            "rerank_score": 0.70901912,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "bf3d502d-1a84-4ed5-af5e-8e7f1c3ed7e8",
+            "chunk_index": 5,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5411368559435745,
+            "rerank_score": 0.69843233,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "c0ebcff9-c3e2-4cbb-96a2-7075616ee82f",
+            "chunk_index": 8,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.37736284732818604,
+            "rerank_score": 0.68341953,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "1df26f99-5f94-4755-8e6a-c1f31f7f3148",
+            "chunk_index": 6,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.4489031701626274,
+            "rerank_score": 0.66627967,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "69dd03be-6961-43b4-8e58-20a0feb96594",
+            "chunk_index": 7,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5053867101669312,
+            "rerank_score": 0.55832696,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ]
+      }
+    }
+  ]
+}

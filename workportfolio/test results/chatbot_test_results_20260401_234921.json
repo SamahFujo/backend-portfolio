@@ -1,0 +1,227 @@
+{
+  "run_at": "2026-04-01T23:49:32.989262",
+  "api_url": "http://127.0.0.1:8000/api/chat/ask/",
+  "total_questions": 4,
+  "results": [
+    {
+      "question": "How can I contact Samah?",
+      "status": "success",
+      "response": {
+        "session_id": "8f711f7e-08f0-444b-8660-285816218afe",
+        "message_id": "f28ec3e4-6b04-4ea8-8d2e-098bf1fd11a2",
+        "retrieval_query": "How can I contact Samah?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "You can contact Samah using the details found in the uploaded documents:\n- Email: s.fujo@hotmail.com\n- Phone: +971 52 792 9218",
+        "citations": [
+          {
+            "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491",
+            "document_title": "cv",
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "doc_title": "cv",
+            "document_type": "cv",
+            "vector_distance": 0.5083603565907682,
+            "rerank_score": 0.68341953,
+            "source": "reranked",
+            "matched_filter_document_type": "cv",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "cv",
+            "document_type": "cv",
+            "chunk_index": 0,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "cv",
+          "only_active_docs": true,
+          "document_title_contains": "cv"
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_contact",
+        "gemini_model_used": null,
+        "gemini_tried_models": []
+      }
+    },
+    {
+      "question": "What is Samah’s email?",
+      "status": "success",
+      "response": {
+        "session_id": "03aed695-238c-4e44-bc68-3070911fcc43",
+        "message_id": "90218f12-a7f4-4df1-828e-db0f948c4624",
+        "retrieval_query": "What is Samah’s email?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah’s email is s.fujo@hotmail.com.",
+        "citations": [
+          {
+            "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491",
+            "document_title": "cv",
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "doc_title": "cv",
+            "document_type": "cv",
+            "vector_distance": 0.47096896171569824,
+            "rerank_score": 0.66974485,
+            "source": "reranked",
+            "matched_filter_document_type": "cv",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "cv",
+            "document_type": "cv",
+            "chunk_index": 0,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "cv",
+          "only_active_docs": true,
+          "document_title_contains": "cv"
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_contact",
+        "gemini_model_used": null,
+        "gemini_tried_models": []
+      }
+    },
+    {
+      "question": "What is Samah’s phone number?",
+      "status": "success",
+      "response": {
+        "session_id": "e5410536-5afa-479e-953a-c79e198b055b",
+        "message_id": "6e35d8e1-e901-4ef3-af90-798ac0ce049b",
+        "retrieval_query": "What is Samah’s phone number?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah’s phone number is +971 52 792 9218.",
+        "citations": [
+          {
+            "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491",
+            "document_title": "cv",
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "doc_title": "cv",
+            "document_type": "cv",
+            "vector_distance": 0.5271851420402527,
+            "rerank_score": 0.66192287,
+            "source": "reranked",
+            "matched_filter_document_type": "cv",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "cv",
+            "document_type": "cv",
+            "chunk_index": 0,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "cv",
+          "only_active_docs": true,
+          "document_title_contains": "cv"
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_contact",
+        "gemini_model_used": null,
+        "gemini_tried_models": []
+      }
+    },
+    {
+      "question": "Does Samah have LinkedIn?",
+      "status": "success",
+      "response": {
+        "session_id": "0e8d801f-9988-4622-8a35-172bd346f22e",
+        "message_id": "602b3f84-90d8-4b92-a519-785bcfddf1bf",
+        "retrieval_query": "Does Samah have LinkedIn?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "I couldn’t find a LinkedIn link in the uploaded documents.",
+        "citations": [
+          {
+            "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491",
+            "document_title": "cv",
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "doc_title": "cv",
+            "document_type": "cv",
+            "vector_distance": 0.516247837767133,
+            "rerank_score": 0.40215731,
+            "source": "reranked",
+            "matched_filter_document_type": "cv",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "cv",
+            "document_type": "cv",
+            "chunk_index": 0,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "cv",
+          "only_active_docs": true,
+          "document_title_contains": "cv"
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_contact",
+        "gemini_model_used": null,
+        "gemini_tried_models": []
+      }
+    }
+  ]
+}

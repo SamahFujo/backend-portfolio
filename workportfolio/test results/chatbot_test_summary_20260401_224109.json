@@ -1,0 +1,34 @@
+[
+  {
+    "question": "What can Samah help with professionally?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah can professionally help with designing and building production-ready AI solutions, backend systems, and modern full-stack web applications, specializing in AI/LLM integration, workflow automation, and interactive frontend delivery. Additionally, Samah offers technical leadership, including translating business requirements, leading development initiatives, and coordinating project delivery.\n\nKey points:\n- Samah can build AI-powered chatbots, RAG-based question-answering systems, and LLM-based information extraction tools.\n- Samah develops dashboard and analytics platforms, including monitoring dashboards with alerts and forecasts.\n- Samah can create document analysis, OCR systems, and classification/recommendation engines for business data.\n- Samah can build business portals with authentication and role-based permissions, and API-first platforms integrated with modern web frontends.\n- Samah can construct end-to-end web applications using Django backend and Next.js frontend.\n- Samah provides support for junior developers and guidance on implementation direction.",
+    "applied_filters": null,
+    "used_sources": null
+  },
+  {
+    "question": "What can Samah do?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah can build a wide range of AI-powered applications, including backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms. She is also capable of building full-stack applications and Retrieval-Augmented Generation (RAG) systems.\n\nKey points:\n- Samah works directly with customers and stakeholders to gather requirements, present solutions, and translate needs into technical systems.\n- She excels at solving business problems by automating manual workflows, turning unstructured data into useful structured outputs, and connecting AI with business operations.\n- Samah can build interactive dashboards and data-driven business systems for monitoring, analytics, reporting, and decision support.\n- Her experience includes working with OCR and document-processing tools such as Tesseract, EasyOCR, OpenCV, and LLM-based extraction workflows.\n- Samah has experience with AI and LLM technologies including Hugging Face Transformers, BERT, RoBERTa, T5, Gemini, Ollama, LangChain, embeddings, vector search, and prompt engineering.\n- She can build various types of chatbots, such as document-grounded chatbots, intelligent assistants, conversational search tools, and business workflow chatbots.",
+    "applied_filters": null,
+    "used_sources": null
+  },
+  {
+    "question": "What does Samah do?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah is an AI Team Lead and AI/ML Engineer with strong full-stack development experience. She builds a variety of solutions, including AI-powered applications, backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms.\n\nKey points:\n- She is strongest in backend development and AI-focused work.\n- Samah is especially well-suited for projects involving Django, APIs, LLM integration, automation, and document intelligence.\n- She excels at solving business problems by automating manual workflows, turning unstructured data into useful structured outputs, and connecting AI with business operations.\n- Her strongest technical areas include Python backend development, Django, AI and LLM integration, and full-stack solution delivery using Next.js and React.\n- She has built projects such as a live smart electricity dashboard, an auditing employee payroll system, and an AI property search chatbot.\n- Samah also has leadership experience as an AI Team Lead, which includes technical solution delivery and guiding implementation efforts.",
+    "applied_filters": null,
+    "used_sources": null
+  },
+  {
+    "question": "What are Samah’s strongest technical areas?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah's strongest technical areas include Python backend development, Django and Django REST Framework, and AI and LLM integration. She also excels in workflow automation, document understanding pipelines, and full-stack solution delivery using Next.js and React.\n\nKey points:\n- Her main strength lies in backend systems, AI workflows, APIs, and solution architecture.\n- She is particularly well-suited for projects involving Django, LLM integration, automation, and document intelligence.\n- Samah can build chatbots, RAG systems, APIs, dashboards, and intelligent automation platforms.\n- She has strong experience designing and developing backend APIs using Django REST Framework and other Python frameworks.",
+    "applied_filters": null,
+    "used_sources": null
+  }
+]

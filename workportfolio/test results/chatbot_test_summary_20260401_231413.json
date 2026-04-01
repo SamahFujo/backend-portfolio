@@ -1,0 +1,134 @@
+[
+  {
+    "question": "How can I contact Samah?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "You can contact Samah using the details found in the uploaded documents:\n- Phone: 12-08-2025",
+    "applied_filters": {
+      "document_type": "cv",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 9,
+        "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      },
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 10,
+        "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      },
+      {
+        "doc_title": "recommendation",
+        "document_type": "recommendation",
+        "chunk_index": 0,
+        "chunk_id": "6f322887-906a-4010-b430-11270b4bee74",
+        "document_id": "925cae06-632d-4e16-8826-1d0643e63d04"
+      }
+    ]
+  },
+  {
+    "question": "What is Samah’s email?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "You can contact Samah using the details found in the uploaded documents:\n- Phone: 12-08-2025",
+    "applied_filters": {
+      "document_type": "cv",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 0,
+        "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 9,
+        "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 9,
+        "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      }
+    ]
+  },
+  {
+    "question": "What is Samah’s favorite programming language?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah’s favorite programming language is Python.\nSamah’s preferred backend framework is Django.\nSamah is strongest in backend development and AI-focused work.",
+    "applied_filters": {
+      "document_type": "preferences",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 1,
+        "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 9,
+        "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 2,
+        "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      }
+    ]
+  },
+  {
+    "question": "Is Samah open to freelance work?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah is open to full-time opportunities.\nSamah is open to freelance and project-based work.\nSamah is open to remote, hybrid, and suitable on-site opportunities.\nSamah is especially open to opportunities in Dubai, Abu Dhabi, the UAE, and strong remote opportunities.",
+    "applied_filters": {
+      "document_type": "compensation",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 2,
+        "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 5,
+        "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 3,
+        "chunk_id": "dbb70998-a6d8-445d-a1f9-98c54b0764df",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      }
+    ]
+  }
+]

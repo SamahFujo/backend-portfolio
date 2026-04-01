@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 import json
 from dataclasses import dataclass
-from typing import Optional, Dict, Any
+from typing import Dict, Any
 
 from django.conf import settings
 from core.services.llm.gemini_client import GeminiClient
@@ -23,19 +23,26 @@ class SmartChatIntentService:
     Smarter intent detection:
     - heuristic scoring for common conversational intents
     - Gemini fallback only when heuristic is uncertain
+
+    Important behavior:
+    - Generic assistant-help messages should be handled here.
+    - Real questions about Samah/profile/capabilities should NOT be trapped as help.
     """
 
     _greet_hint = re.compile(
-        r"\b(hi|hello|hey|morning|evening|afternoon|sup)\b", re.I
+        r"\b(hi|hello|hey|morning|evening|afternoon|sup)\b",
+        re.I,
     )
     _bye_hint = re.compile(
-        r"\b(bye|goodbye|later|take care|see you)\b", re.I
+        r"\b(bye|goodbye|later|take care|see you)\b",
+        re.I,
     )
     _thanks_hint = re.compile(
-        r"\b(thanks|thank you|thx|appreciate)\b", re.I
+        r"\b(thanks|thank you|thx|appreciate)\b",
+        re.I,
     )
 
-    # Narrowed help intent: only generic assistant-help phrases
+    # Narrowed generic help intent
     _help_hint = re.compile(
         r"\b("
         r"what can you do|"
@@ -48,13 +55,15 @@ class SmartChatIntentService:
         re.I,
     )
 
-    # If message looks like a real question about Samah/profile, do NOT trap it as generic help
+    # If the question is clearly about Samah/profile/capabilities,
+    # do not trap it as generic assistant help.
     _profile_question_hint = re.compile(
         r"\b("
         r"samah|she|her|build|project|projects|experience|skills|"
         r"language|framework|salary|payment|contact|email|phone|"
         r"freelance|remote|django|fastapi|backend|frontend|"
-        r"chatbot|ai|llm|availability|work style"
+        r"chatbot|ai|llm|availability|work style|"
+        r"favorite|favourite|prefer|preferred|impact|career|timeline"
         r")\b",
         re.I,
     )
@@ -66,6 +75,7 @@ class SmartChatIntentService:
     @classmethod
     def detect(cls, message: str) -> SmartIntentResult:
         msg = (message or "").strip()
+
         if not msg:
             return SmartIntentResult(
                 handled=True,
@@ -77,6 +87,7 @@ class SmartChatIntentService:
 
         h = cls._heuristic_classify(msg)
 
+        # If confident and not a normal content question, handle here
         if h["confidence"] >= 0.75 and h["intent"] != "other":
             return SmartIntentResult(
                 handled=True,
@@ -86,6 +97,7 @@ class SmartChatIntentService:
                 source="heuristic",
             )
 
+        # Gemini fallback disabled for now
         if cls._should_use_gemini(msg, h):
             g = cls._gemini_classify(msg)
 
@@ -124,6 +136,7 @@ class SmartChatIntentService:
             "other": 0.0,
         }
 
+        # Short messages are often greetings/thanks/goodbye
         if token_count <= 3 or char_count <= 15:
             scores["greeting"] += 0.15
             scores["thanks"] += 0.10
@@ -145,11 +158,13 @@ class SmartChatIntentService:
         if cls._help_hint.search(text):
             scores["help"] += 0.55
 
-        # If it looks like a real question about Samah/profile, reduce generic help score
+        # If this looks like a real question about Samah/profile/capabilities,
+        # reduce generic help score so retrieval can handle it.
         if cls._profile_question_hint.search(text):
             scores["help"] -= 0.35
             scores["other"] += 0.20
 
+        # Longer question-like text is more likely to be a real content query
         if "?" in text and token_count > 4:
             scores["other"] += 0.25
 
@@ -158,15 +173,29 @@ class SmartChatIntentService:
 
         confidence = min(0.95, 0.4 + max(best_score, 0.0))
 
+        # If score is too weak, let retrieval handle it
         if best_score < 0.35:
             best_intent = "other"
             confidence = 0.45
 
-        return {"intent": best_intent, "confidence": confidence, "scores": scores}
+        return {
+            "intent": best_intent,
+            "confidence": confidence,
+            "scores": scores,
+        }
 
     @classmethod
     def _should_use_gemini(cls, msg: str, heuristic: Dict[str, Any]) -> bool:
         return False
+
+        # Re-enable later if needed:
+        # low = msg.lower().strip()
+        # tokens = re.findall(r"\b\w+\b", low)
+        # if len(tokens) > 10:
+        #     return False
+        # if heuristic["intent"] == "other" and heuristic["confidence"] >= 0.6:
+        #     return False
+        # return bool(getattr(settings, "GEMINI_API_KEY", None))
 
     @classmethod
     def _gemini_classify(cls, msg: str) -> Dict[str, Any]:

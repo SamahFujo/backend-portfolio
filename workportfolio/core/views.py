@@ -1,3 +1,6 @@
+from .services.resend_contact_email import send_get_in_touch_email
+from .serializers import GetInTouchSerializer
+from rest_framework.authentication import BasicAuthentication, SessionAuthentication
 from django.conf import settings
 from .serializers import AskQuestionSerializer
 from .models import ChatSession, ChatMessage, ProfileDocument, DocumentChunk
@@ -11,10 +14,8 @@ from .serializers import StartProjectRequestSerializer, ProfileDocumentUploadSer
 from .services.resend_email import send_start_project_email
 from .services.documents.ingestion_service import IngestionService
 from .services.chatbot.hybrid_query_rewriter import GeminiQueryRewriter
-from .services.retrieval.reranked_vector_retrieval import RerankedVectorRetrievalService
-from .services.chatbot.gemini_grounded_answerer import GeminiGroundedAnswerer
 from .services.chatbot.smart_chat_intents import SmartChatIntentService
-from .services.retrieval.scope_resolver import ScopeResolver
+from .services.chatbot.profile_qa_service import ProfileQAService
 
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
@@ -28,6 +29,8 @@ class CsrfExemptSessionAuthentication(SessionAuthentication):
 
 
 """API views for the public "Start Project" form."""
+
+
 class StartProjectRequestView(APIView):
     permission_classes = [AllowAny]
     authentication_classes = [
@@ -65,20 +68,11 @@ class StartProjectRequestView(APIView):
         # Usually not needed explicitly, but safe if debugging preflight behavior
         return Response(status=status.HTTP_200_OK)
 
-from rest_framework.permissions import AllowAny
-from rest_framework.throttling import AnonRateThrottle
-from rest_framework.authentication import BasicAuthentication, SessionAuthentication
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-
-from .serializers import GetInTouchSerializer
-from .services.resend_contact_email import send_get_in_touch_email
-
 
 class GetInTouchView(APIView):
     permission_classes = [AllowAny]
-    authentication_classes = [CsrfExemptSessionAuthentication, BasicAuthentication]
+    authentication_classes = [
+        CsrfExemptSessionAuthentication, BasicAuthentication]
     throttle_classes = [AnonRateThrottle]
 
     def post(self, request, *args, **kwargs):
@@ -104,10 +98,12 @@ class GetInTouchView(APIView):
                     "error": str(e),  # remove in production
                 },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            )   
-    
+            )
+
 
 """ API views for the portfolio chatbot backend."""
+
+
 class ProfileDocumentStatsAPIView(APIView):
     def get(self, request, doc_id, *args, **kwargs):
         doc = ProfileDocument.objects.filter(id=doc_id).first()
@@ -131,18 +127,21 @@ class ProfileDocumentStatsAPIView(APIView):
         }, status=status.HTTP_200_OK)
 
 
-
-
 """API views for the portfolio chatbot backend."""
+
+
 class AskAboutMeAPIView(APIView):
     """
     Enterprise RAG endpoint:
     - Create / reuse session
     - Save user message
-    - Quick replies for greetings/thanks/help (NO Gemini)
-    - Rewrite query for retrieval (Gemini optional + cached + safe fallback)
-    - Retrieve evidence using vector search + reranking
-    - Gemini grounded answer (safe fallback if quota exceeded)
+    - Quick replies for greetings/thanks/help
+    - Rewrite query for retrieval
+    - Profile QA orchestration:
+        * scope filters
+        * retrieval
+        * deterministic extractors
+        * Gemini grounded fallback
     - Save assistant message
     """
 
@@ -153,24 +152,21 @@ class AskAboutMeAPIView(APIView):
 
         session_id = serializer.validated_data.get("session_id")
         message = serializer.validated_data["message"].strip()
-        
-        msg_low = message.lower()
-        is_list_request = any(k in msg_low for k in ["list", "all", "show me", "give me"]) and any(
-            k in msg_low for k in ["projects", "project", "certificates", "certificate", "credentials"]
-        )
 
         # 2) Get or create session
         if session_id:
-            session = ChatSession.objects.filter(id=session_id, is_active=True).first()
+            session = ChatSession.objects.filter(
+                id=session_id, is_active=True).first()
             if session is None:
                 return Response({"detail": "Session not found."}, status=status.HTTP_404_NOT_FOUND)
         else:
             session = ChatSession.objects.create()
 
         # 3) Save user message
-        ChatMessage.objects.create(session=session, role="user", content=message)
+        ChatMessage.objects.create(
+            session=session, role="user", content=message)
 
-        # 4) Quick intents (greeting, goodbye, thanks, help) -> NEVER call Gemini here
+        # 4) Quick intents
         quick = SmartChatIntentService.detect(message)
         if quick.handled:
             assistant_message = ChatMessage.objects.create(
@@ -194,75 +190,53 @@ class AskAboutMeAPIView(APIView):
                 status=status.HTTP_200_OK
             )
 
-        # 5) Rewrite query for retrieval (SAFE + CACHED + fallback to local rewrite)
-        # IMPORTANT: use rewrite_cached, not rewrite
+        # 5) Rewrite query (kept for debug/traceability)
         rewrite = GeminiQueryRewriter.rewrite_cached(message)
         retrieval_query = rewrite.get("rewritten_query") or message
 
-        # 6) Retrieve evidence using rewritten query
-        # 6) Retrieve evidence using rewritten query (scope-aware with fallback to all docs)
-        filters = ScopeResolver.resolve_filters(message)
+        # 6) Main QA orchestration
+        qa_result = ProfileQAService.answer_question(message)
 
-        chunks, retrieval_debug = RerankedVectorRetrievalService.retrieve_relevant_chunks(
-            query=retrieval_query,
-            candidate_k=settings.RERANK_CANDIDATE_K,
-            top_n=settings.RERANK_TOP_N,
-            min_rerank_score=settings.RERANK_MIN_SCORE,
-            filters=filters,
-        )
+        verdict = qa_result.get("verdict", "not_enough_evidence")
+        answer_text = qa_result.get(
+            "answer") or "I don’t have enough evidence to answer that."
+        bullets = qa_result.get("bullets") or []
 
-        # fallback to ALL docs if scope was too narrow/weak
-        if not chunks or len(chunks) < 3:
-            chunks, retrieval_debug = RerankedVectorRetrievalService.retrieve_relevant_chunks(
-                query=retrieval_query,
-                candidate_k=settings.RERANK_CANDIDATE_K,
-                top_n=settings.RERANK_TOP_N,
-                min_rerank_score=settings.RERANK_MIN_SCORE,
-                filters=None,
-            )
-
-        # 7) Gemini final grounded answer (SAFE fallback on quota exhaustion)
-        gemini_result = GeminiGroundedAnswerer.answer(question=message, evidence_chunks=chunks)
-        
-        gemini_meta = gemini_result.get("meta", {})
-
-        # 8) Citations ONLY for chunks Gemini used (safe index handling)
-        citations = []
-        used_indices = gemini_result.get("used_chunk_indices") or []
-        for i in used_indices:
-            if not isinstance(i, int) or i < 0 or i >= len(chunks):
-                continue
-            c = chunks[i]
-            citations.append({
-                "document_id": str(c.document.id),
-                "document_title": c.document.title,
-                "chunk_id": str(c.id),
-                "chunk_index": c.chunk_index,
-                "section_title": c.section_title,
-                "page_number": c.page_number,
-                "distance": float(getattr(c, "distance", 0.0)) if getattr(c, "distance", None) is not None else None,
-            })
-
-        # 9) Build answer text with bullets
-        answer_text = gemini_result.get("answer") or "I don’t have enough evidence to answer that."
-        bullets = gemini_result.get("bullets") or []
         if bullets:
             answer_text += "\n\nKey points:\n- " + "\n- ".join(bullets)
 
-        # 10) Save assistant message
-        verdict = gemini_result.get("verdict", "not_enough_evidence")
+        used_sources = qa_result.get("used_sources") or []
+        retrieval_debug = qa_result.get("retrieval_debug") or []
+        meta = qa_result.get("meta") or {}
+
+        # 7) Convert used_sources into response citations
+        citations = []
+        for src in used_sources:
+            citations.append({
+                "document_id": src.get("document_id"),
+                "document_title": src.get("doc_title"),
+                "chunk_id": src.get("chunk_id"),
+                "chunk_index": src.get("chunk_index"),
+                "section_title": None,
+                "page_number": None,
+                "distance": None,
+            })
+
+        # 8) Save assistant message
+        confidence = 0.9 if verdict in {"yes", "no"} else 0.6
+        if meta.get("answer_source") == "deterministic_extractor":
+            confidence = min(0.95, confidence +
+            float(meta.get("confidence_boost", 0.0)))
+
         assistant_message = ChatMessage.objects.create(
             session=session,
             role="assistant",
             content=answer_text,
             citations=citations,
-            confidence_score=0.9 if verdict in {"yes", "no"} else 0.6,
+            confidence_score=confidence,
         )
-        
-    
 
-
-        # 11) Return response
+        # 9) Return response
         return Response(
             {
                 "session_id": str(session.id),
@@ -273,8 +247,12 @@ class AskAboutMeAPIView(APIView):
                 "answer": answer_text,
                 "citations": citations,
                 "retrieval_debug": retrieval_debug,
-                "gemini_model_used": gemini_meta.get("model_used"),
-                "gemini_tried_models": gemini_meta.get("tried_models"),
+                "used_sources": used_sources,
+                "applied_filters": qa_result.get("applied_filters"),
+                "answer_source": meta.get("answer_source"),
+                "extractor_used": meta.get("extractor_used"),
+                "gemini_model_used": meta.get("model_used"),
+                "gemini_tried_models": meta.get("tried_models"),
             },
             status=status.HTTP_200_OK
         )

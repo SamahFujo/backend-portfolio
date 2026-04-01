@@ -1,0 +1,26 @@
+[
+  {
+    "question": "What can Samah help with professionally?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah can professionally help with designing and building production-ready AI solutions, backend systems, and modern web applications, specializing in AI/LLM integration, workflow automation, and full-stack development. Samah also offers technical leadership and project delivery coordination.\n\nKey points:\n- Samah can build AI-powered chatbots, RAG-based question-answering systems, and internal assistant tools.\n- Samah can develop dashboard and analytics platforms, document analysis and OCR systems, and classification and recommendation engines.\n- Samah can create workflow automation systems, business portals with authentication, and API-first platforms.\n- Samah's AI capabilities include prompt engineering, LLM-based information extraction, and conversational systems for structured actions.\n- Samah can build specialized business systems like procurement and spend analysis, payroll auditing, and property search assistants.\n- Samah's leadership contributions include coordinating project delivery, communicating with stakeholders, and reviewing solution feasibility.",
+    "applied_filters": null,
+    "used_sources": null
+  },
+  {
+    "question": "What can Samah do?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah is an AI Team Lead and AI/ML Engineer with strong full-stack development experience, specializing in building production-ready AI solutions, backend systems, and modern web applications. She can design and build AI-powered applications that integrate business workflows with NLP, LLMs, and automation, create attractive user interfaces, and contribute both technically and from a leadership perspective.\n\nKey points:\n- She can build secure, scalable backend systems and APIs using Python, including Django and Django REST Framework.\n- Her expertise includes developing end-to-end web applications by combining backend services with modern frontend frameworks like Next.js and React.\n- She can create systems that help organizations automate tasks, classify information, and improve decision-making.\n- From a leadership standpoint, she can translate business requirements into technical solutions, lead development initiatives, and coordinate project delivery.\n- She is also capable of reviewing solution feasibility, proposing practical technical approaches, and supporting junior developers.\n- Her strongest areas combine Python backend engineering, Django-based API development, AI/LLM integration, workflow automation, and interactive frontend delivery.",
+    "applied_filters": null,
+    "used_sources": null
+  },
+  {
+    "question": "Can Samah help with backend API development?",
+    "status": "success",
+    "verdict": "yes",
+    "answer": "Yes, Samah can help with backend API development. She can build secure, scalable backend systems and APIs using Python, including Django and Django REST Framework.\n\nKey points:\n- Samah's strongest areas include Python backend engineering and Django-based API development.\n- She can design and implement APIs for both web and AI applications.\n- Her capabilities extend to authentication and authorization using RBAC and JWT-based flows.\n- Samah can also integrate with external APIs and third-party services.\n- She is proficient in logging, validation, error handling, and structured backend architecture.\n- Samah lists REST APIs under her backend frameworks and tools.",
+    "applied_filters": null,
+    "used_sources": null
+  }
+]

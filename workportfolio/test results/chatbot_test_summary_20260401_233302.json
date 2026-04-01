@@ -1,0 +1,141 @@
+[
+  {
+    "question": "How can I contact Samah?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "You can contact Samah using the details found in the uploaded documents:\n- Email: s.fujo@hotmail.com\n- Phone: +971 52 792 9218",
+    "applied_filters": {
+      "document_type": "cv",
+      "only_active_docs": true,
+      "document_title_contains": "cv"
+    },
+    "used_sources": [
+      {
+        "doc_title": "cv",
+        "document_type": "cv",
+        "chunk_index": 0,
+        "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+        "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+      }
+    ]
+  },
+  {
+    "question": "What is Samah’s email?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "You can contact Samah using the details found in the uploaded documents:\n- Email: s.fujo@hotmail.com\n- Phone: +971 52 792 9218",
+    "applied_filters": {
+      "document_type": "cv",
+      "only_active_docs": true,
+      "document_title_contains": "cv"
+    },
+    "used_sources": [
+      {
+        "doc_title": "cv",
+        "document_type": "cv",
+        "chunk_index": 0,
+        "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+        "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+      }
+    ]
+  },
+  {
+    "question": "Does Samah have LinkedIn?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "You can contact Samah using the details found in the uploaded documents:\n- Email: s.fujo@hotmail.com\n- Phone: +971 52 792 9218",
+    "applied_filters": {
+      "document_type": "cv",
+      "only_active_docs": true,
+      "document_title_contains": "cv"
+    },
+    "used_sources": [
+      {
+        "doc_title": "cv",
+        "document_type": "cv",
+        "chunk_index": 0,
+        "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+        "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+      }
+    ]
+  },
+  {
+    "question": "What is Samah’s phone number?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "You can contact Samah using the details found in the uploaded documents:\n- Email: s.fujo@hotmail.com\n- Phone: +971 52 792 9218",
+    "applied_filters": {
+      "document_type": "cv",
+      "only_active_docs": true,
+      "document_title_contains": "cv"
+    },
+    "used_sources": [
+      {
+        "doc_title": "cv",
+        "document_type": "cv",
+        "chunk_index": 0,
+        "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+        "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+      }
+    ]
+  },
+  {
+    "question": "What is Samah’s favorite programming language?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah’s favorite programming language is Python.",
+    "applied_filters": {
+      "document_type": "preferences",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 0,
+        "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      },
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 8,
+        "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      }
+    ]
+  },
+  {
+    "question": "Is Samah open to freelance work?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah is open to full-time opportunities.\nSamah is open to freelance and project-based work.\nSamah is open to remote, hybrid, and suitable on-site opportunities.\nSamah is especially open to opportunities in Dubai, Abu Dhabi, the UAE, and strong remote opportunities.",
+    "applied_filters": {
+      "document_type": "compensation",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 2,
+        "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 5,
+        "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 3,
+        "chunk_id": "dbb70998-a6d8-445d-a1f9-98c54b0764df",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      }
+    ]
+  }
+]

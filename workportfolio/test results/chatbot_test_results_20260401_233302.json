@@ -1,0 +1,419 @@
+{
+  "run_at": "2026-04-01T23:33:18.248911",
+  "api_url": "http://127.0.0.1:8000/api/chat/ask/",
+  "total_questions": 6,
+  "results": [
+    {
+      "question": "How can I contact Samah?",
+      "status": "success",
+      "response": {
+        "session_id": "1b6e279c-7207-4cfc-ac71-ae460ca848f5",
+        "message_id": "2f6dd5ff-2c5a-4811-a2ff-5ca063f85561",
+        "retrieval_query": "How can I contact Samah?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "You can contact Samah using the details found in the uploaded documents:\n- Email: s.fujo@hotmail.com\n- Phone: +971 52 792 9218",
+        "citations": [
+          {
+            "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491",
+            "document_title": "cv",
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "doc_title": "cv",
+            "document_type": "cv",
+            "vector_distance": 0.5083603565907682,
+            "rerank_score": 0.684264,
+            "source": "reranked",
+            "matched_filter_document_type": "cv",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "cv",
+            "document_type": "cv",
+            "chunk_index": 0,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "cv",
+          "only_active_docs": true,
+          "document_title_contains": "cv"
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_contact",
+        "gemini_model_used": null,
+        "gemini_tried_models": []
+      }
+    },
+    {
+      "question": "What is Samah’s email?",
+      "status": "success",
+      "response": {
+        "session_id": "7229835c-6786-4225-a617-275aab81a8a3",
+        "message_id": "19664d1e-e964-4254-911e-cde7d593b6e6",
+        "retrieval_query": "What is Samah’s email?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "You can contact Samah using the details found in the uploaded documents:\n- Email: s.fujo@hotmail.com\n- Phone: +971 52 792 9218",
+        "citations": [
+          {
+            "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491",
+            "document_title": "cv",
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "doc_title": "cv",
+            "document_type": "cv",
+            "vector_distance": 0.47096896171569824,
+            "rerank_score": 0.66801453,
+            "source": "reranked",
+            "matched_filter_document_type": "cv",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "cv",
+            "document_type": "cv",
+            "chunk_index": 0,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "cv",
+          "only_active_docs": true,
+          "document_title_contains": "cv"
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_contact",
+        "gemini_model_used": null,
+        "gemini_tried_models": []
+      }
+    },
+    {
+      "question": "Does Samah have LinkedIn?",
+      "status": "success",
+      "response": {
+        "session_id": "246aa656-a71e-498f-8d6e-4e013d78aae2",
+        "message_id": "ba2365e5-938b-43b6-87d6-9cb342e630e4",
+        "retrieval_query": "Does Samah have LinkedIn?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "You can contact Samah using the details found in the uploaded documents:\n- Email: s.fujo@hotmail.com\n- Phone: +971 52 792 9218",
+        "citations": [
+          {
+            "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491",
+            "document_title": "cv",
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "doc_title": "cv",
+            "document_type": "cv",
+            "vector_distance": 0.516247837767133,
+            "rerank_score": 0.4016878,
+            "source": "reranked",
+            "matched_filter_document_type": "cv",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "cv",
+            "document_type": "cv",
+            "chunk_index": 0,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "cv",
+          "only_active_docs": true,
+          "document_title_contains": "cv"
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_contact",
+        "gemini_model_used": null,
+        "gemini_tried_models": []
+      }
+    },
+    {
+      "question": "What is Samah’s phone number?",
+      "status": "success",
+      "response": {
+        "session_id": "603208f1-4c81-4f39-8c19-6212ef9fd1f4",
+        "message_id": "060bc4fd-1abf-425d-9cba-3e1f72be2361",
+        "retrieval_query": "What is Samah’s phone number?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "You can contact Samah using the details found in the uploaded documents:\n- Email: s.fujo@hotmail.com\n- Phone: +971 52 792 9218",
+        "citations": [
+          {
+            "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491",
+            "document_title": "cv",
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "doc_title": "cv",
+            "document_type": "cv",
+            "vector_distance": 0.5271851420402527,
+            "rerank_score": 0.66366893,
+            "source": "reranked",
+            "matched_filter_document_type": "cv",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "cv",
+            "document_type": "cv",
+            "chunk_index": 0,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "cv",
+          "only_active_docs": true,
+          "document_title_contains": "cv"
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_contact",
+        "gemini_model_used": null,
+        "gemini_tried_models": []
+      }
+    },
+    {
+      "question": "What is Samah’s favorite programming language?",
+      "status": "success",
+      "response": {
+        "session_id": "bdeeb54b-3924-4c10-b1a8-e0a13d6b4c97",
+        "message_id": "302478d9-5673-409a-b6c4-81e768e599db",
+        "retrieval_query": "What is Samah’s favorite programming language?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah’s favorite programming language is Python.",
+        "citations": [
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "chunk_index": 8,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+            "chunk_index": 0,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.5253123782481931,
+            "rerank_score": 0.41537303,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "chunk_index": 8,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.48315761732423546,
+            "rerank_score": 0.34334174,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 0,
+            "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          },
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 8,
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "preferences",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_preferences",
+        "gemini_model_used": null,
+        "gemini_tried_models": []
+      }
+    },
+    {
+      "question": "Is Samah open to freelance work?",
+      "status": "success",
+      "response": {
+        "session_id": "5d61a88a-1fb2-4cf0-a82e-de9bd24d0a1a",
+        "message_id": "d505a566-77d3-40c7-b746-bd24aeca30b5",
+        "retrieval_query": "Is Samah open to freelance work?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah is open to full-time opportunities.\nSamah is open to freelance and project-based work.\nSamah is open to remote, hybrid, and suitable on-site opportunities.\nSamah is especially open to opportunities in Dubai, Abu Dhabi, the UAE, and strong remote opportunities.",
+        "citations": [
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "chunk_index": 2,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "dbb70998-a6d8-445d-a1f9-98c54b0764df",
+            "chunk_index": 3,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "chunk_index": 2,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.57861007197023,
+            "rerank_score": 0.34510529,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.5843155631830945,
+            "rerank_score": 0.32852942,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "dbb70998-a6d8-445d-a1f9-98c54b0764df",
+            "chunk_index": 3,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.6901512855381534,
+            "rerank_score": 0.307358,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 2,
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 5,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 3,
+            "chunk_id": "dbb70998-a6d8-445d-a1f9-98c54b0764df",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "compensation",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_availability",
+        "gemini_model_used": null,
+        "gemini_tried_models": []
+      }
+    }
+  ]
+}

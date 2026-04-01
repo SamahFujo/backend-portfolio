@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from typing import List, Tuple, Optional, Dict, Any
 from django.conf import settings
 
@@ -43,6 +44,50 @@ class RerankedVectorRetrievalService:
             "reason": reason,
         }
 
+    @staticmethod
+    def _is_broad_capability_query(query: str, filters: Optional[Dict[str, Any]] = None) -> bool:
+        """
+        Detect broad/open-ended capability questions that usually need a lower rerank threshold.
+        """
+        q = (query or "").strip().lower()
+
+        broad_patterns = [
+            r"\bwhat can samah do\b",
+            r"\bwhat can samah help with\b",
+            r"\bwhat can she do\b",
+            r"\bwhat can she help with\b",
+            r"\bwhat does samah do\b",
+            r"\bwhat kind of work\b",
+            r"\bwhat kind of projects\b",
+            r"\bwhat are samah'?s strongest\b",
+        ]
+
+        if any(re.search(p, q) for p in broad_patterns):
+            return True
+
+        if filters and filters.get("document_type") in {"capabilities", "faq", "achievements", "career_timeline"}:
+            # broad questions on these doc types often get lower rerank scores
+            if len(q.split()) <= 8:
+                return True
+
+        return False
+
+    @classmethod
+    def _resolve_min_rerank_score(
+        cls,
+        query: str,
+        min_rerank_score: float,
+        filters: Optional[Dict[str, Any]] = None,
+    ) -> float:
+        """
+        Dynamically relax rerank threshold for broad capability/profile questions.
+        """
+        if cls._is_broad_capability_query(query, filters=filters):
+            # Lower threshold for open-ended questions
+            return min(min_rerank_score, 0.10)
+
+        return min_rerank_score
+
     @classmethod
     def retrieve_relevant_chunks(
         cls,
@@ -63,6 +108,12 @@ class RerankedVectorRetrievalService:
             min_rerank_score if min_rerank_score is not None else settings.RERANK_MIN_SCORE
         )
 
+        adaptive_min_rerank_score = cls._resolve_min_rerank_score(
+            query=query,
+            min_rerank_score=min_rerank_score,
+            filters=filters,
+        )
+
         candidates = VectorSearchService.retrieve_candidates(
             query=query,
             candidate_k=candidate_k,
@@ -73,7 +124,8 @@ class RerankedVectorRetrievalService:
             return [], []
 
         documents_for_rerank = [
-            cls._chunk_to_rerank_text(c) for c in candidates]
+            cls._chunk_to_rerank_text(c) for c in candidates
+        ]
 
         rerank_items = RerankService.rerank(
             query=query,
@@ -102,7 +154,7 @@ class RerankedVectorRetrievalService:
         seen_chunk_ids = set()
 
         for rank, item in enumerate(rerank_items, start=1):
-            if item.score < min_rerank_score:
+            if item.score < adaptive_min_rerank_score:
                 continue
 
             idx = item.index
@@ -121,7 +173,7 @@ class RerankedVectorRetrievalService:
                         rerank_score=float(item.score),
                         source="reranked",
                         filters=filters,
-                        reason="passed_threshold",
+                        reason=f"passed_threshold(min={adaptive_min_rerank_score:.2f})",
                     )
                 )
 
@@ -151,7 +203,7 @@ class RerankedVectorRetrievalService:
                             rerank_score=float(item.score),
                             source="reranked_no_threshold_fallback",
                             filters=filters,
-                            reason="threshold_removed_all",
+                            reason=f"threshold_removed_all(min={adaptive_min_rerank_score:.2f})",
                         )
                     )
 

@@ -1,0 +1,82 @@
+[
+  {
+    "question": "How can I contact Samah?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "You can contact Samah using the details found in the uploaded documents:\n- Email: s.fujo@hotmail.com\n- Phone: +971 52 792 9218",
+    "applied_filters": {
+      "document_type": "cv",
+      "only_active_docs": true,
+      "document_title_contains": "cv"
+    },
+    "used_sources": [
+      {
+        "doc_title": "cv",
+        "document_type": "cv",
+        "chunk_index": 0,
+        "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+        "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+      }
+    ]
+  },
+  {
+    "question": "What is Samah’s email?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah’s email is s.fujo@hotmail.com.",
+    "applied_filters": {
+      "document_type": "cv",
+      "only_active_docs": true,
+      "document_title_contains": "cv"
+    },
+    "used_sources": [
+      {
+        "doc_title": "cv",
+        "document_type": "cv",
+        "chunk_index": 0,
+        "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+        "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+      }
+    ]
+  },
+  {
+    "question": "What is Samah’s phone number?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah’s phone number is +971 52 792 9218.",
+    "applied_filters": {
+      "document_type": "cv",
+      "only_active_docs": true,
+      "document_title_contains": "cv"
+    },
+    "used_sources": [
+      {
+        "doc_title": "cv",
+        "document_type": "cv",
+        "chunk_index": 0,
+        "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+        "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+      }
+    ]
+  },
+  {
+    "question": "Does Samah have LinkedIn?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "I couldn’t find a LinkedIn link in the uploaded documents.",
+    "applied_filters": {
+      "document_type": "cv",
+      "only_active_docs": true,
+      "document_title_contains": "cv"
+    },
+    "used_sources": [
+      {
+        "doc_title": "cv",
+        "document_type": "cv",
+        "chunk_index": 0,
+        "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+        "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+      }
+    ]
+  }
+]
