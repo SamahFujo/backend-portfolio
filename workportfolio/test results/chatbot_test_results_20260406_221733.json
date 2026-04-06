@@ -1,0 +1,185 @@
+{
+  "run_at": "2026-04-06T22:17:51.507727",
+  "api_url": "http://127.0.0.1:8000/api/chat/ask/",
+  "total_questions": 1,
+  "final_session_id": "89b1727b-ac2f-4b2d-9aff-e2798d2bfaae",
+  "results": [
+    {
+      "question": "i need someone with Snowflake experience can Samah handle this kind of project?",
+      "status": "success",
+      "response": {
+        "session_id": "89b1727b-ac2f-4b2d-9aff-e2798d2bfaae",
+        "message_id": "7c232323-d978-45a0-a1c2-c5f6611a5392",
+        "retrieval_query": "Snowflake experience needed?",
+        "rewrite_notes": "The user is seeking a candidate with Snowflake experience for a specific project.",
+        "verdict": "supported",
+        "answer": "The available information does not explicitly confirm direct experience with Snowflake. However, Samah does have strong adjacent experience in dashboard and analytics solution development, backend and API development, full-stack web application delivery, AI-enabled and automation-focused solutions. She may still be a good fit if the project involves similar dashboard, backend, data, or solution-delivery work.",
+        "citations": [
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "e216b069-18a6-49ad-8049-d8077ec56560",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+            "chunk_index": 8,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "a209122a-1e4c-43c6-a47e-f27810723352",
+            "chunk_index": 4,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "e216b069-18a6-49ad-8049-d8077ec56560",
+            "chunk_index": 1,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.7474044859409332,
+            "rerank_score": 0.11279541,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "projects",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+            "chunk_index": 8,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.8639070242643356,
+            "rerank_score": 0.0715912,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "projects",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "a209122a-1e4c-43c6-a47e-f27810723352",
+            "chunk_index": 4,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.847053816738952,
+            "rerank_score": 0.06656919,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "projects",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "095a87f8-cf1e-41b2-99a5-c565f7849145",
+            "chunk_index": 6,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.9062276966896412,
+            "rerank_score": 0.05665243,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "projects",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "644481a1-e954-439f-92ed-cef0caca53f5",
+            "chunk_index": 5,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.8555868566036224,
+            "rerank_score": 0.05500529,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "projects",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "69f2ff60-6d1a-4d46-b234-dc57e77804ab",
+            "chunk_index": 11,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.8427117522187082,
+            "rerank_score": 0.05184546,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "projects",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+            "chunk_index": 10,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.7379561066627502,
+            "rerank_score": 0.04468087,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "projects",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "e1f82ad3-6c55-4e01-b87d-c8d39378d8f1",
+            "chunk_index": 3,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.8433238416910172,
+            "rerank_score": 0.04401865,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "projects",
+            "reason": "threshold_removed_all(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 1,
+            "chunk_id": "e216b069-18a6-49ad-8049-d8077ec56560",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          },
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 8,
+            "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          },
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 4,
+            "chunk_id": "a209122a-1e4c-43c6-a47e-f27810723352",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "projects",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_project_fit",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "debug_history_count": 1,
+        "debug_recent_history": [
+          {
+            "role": "user",
+            "content": "i need someone with Snowflake experience can Samah handle this kind of project?"
+          }
+        ]
+      }
+    }
+  ]
+}

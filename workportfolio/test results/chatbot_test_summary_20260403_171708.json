@@ -1,0 +1,35 @@
+[
+  {
+    "question": " what is the hourly rate for samah? ",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Compensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement.",
+    "applied_filters": {
+      "document_type": "compensation",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 0,
+        "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 1,
+        "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 5,
+        "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      }
+    ]
+  }
+]

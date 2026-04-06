@@ -1,0 +1,35 @@
+[
+  {
+    "question": "Is Samah open to freelance work? and what is the hourly rate if yes?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah is open to freelance and project-based work.",
+    "applied_filters": {
+      "document_type": "compensation",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 5,
+        "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 2,
+        "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 3,
+        "chunk_id": "dbb70998-a6d8-445d-a1f9-98c54b0764df",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      }
+    ]
+  }
+]

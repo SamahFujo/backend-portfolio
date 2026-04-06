@@ -1,0 +1,622 @@
+{
+  "run_at": "2026-04-03T17:19:22.030512",
+  "api_url": "http://127.0.0.1:8000/api/chat/ask/",
+  "total_questions": 6,
+  "results": [
+    {
+      "question": "Is Samah open to freelance work?",
+      "status": "success",
+      "response": {
+        "session_id": "8a7a9593-49d8-436a-9ddb-fcc5693a7ac6",
+        "message_id": "11124687-a54c-4d46-9693-3545dc8155ac",
+        "retrieval_query": "Is Samah open to freelance work?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah is open to freelance and project-based work.",
+        "citations": [
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "chunk_index": 2,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "dbb70998-a6d8-445d-a1f9-98c54b0764df",
+            "chunk_index": 3,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "chunk_index": 2,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.57861007197023,
+            "rerank_score": 0.34510529,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.5843155631830945,
+            "rerank_score": 0.32852942,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "dbb70998-a6d8-445d-a1f9-98c54b0764df",
+            "chunk_index": 3,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.6901512855381534,
+            "rerank_score": 0.307358,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 2,
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 5,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 3,
+            "chunk_id": "dbb70998-a6d8-445d-a1f9-98c54b0764df",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "compensation",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_availability",
+        "gemini_model_used": null,
+        "gemini_tried_models": []
+      }
+    },
+    {
+      "question": "Is Samah open to remote work?",
+      "status": "success",
+      "response": {
+        "session_id": "dac157c8-b607-49d3-8d8f-53603c0f72b2",
+        "message_id": "2fd31f10-8920-4c6c-9ae2-9385da39e457",
+        "retrieval_query": "Is Samah open to remote work?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah is open to remote, hybrid, and suitable on-site opportunities.",
+        "citations": [
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "chunk_index": 2,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "chunk_index": 2,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.5963147638031635,
+            "rerank_score": 0.36387292,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.643020940658934,
+            "rerank_score": 0.32338011,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 2,
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 5,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "compensation",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_availability",
+        "gemini_model_used": null,
+        "gemini_tried_models": []
+      }
+    },
+    {
+      "question": "Which locations is Samah open to?",
+      "status": "success",
+      "response": {
+        "session_id": "3c241536-1941-469d-a4a5-c2cc0fc2d808",
+        "message_id": "67b3ebc3-686d-45b3-85d4-a5336d2af47f",
+        "retrieval_query": "Which locations is Samah open to?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah is especially open to opportunities in Dubai, Abu Dhabi, the UAE, and strong remote opportunities.",
+        "citations": [
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "69dd03be-6961-43b4-8e58-20a0feb96594",
+            "chunk_index": 7,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "c0ebcff9-c3e2-4cbb-96a2-7075616ee82f",
+            "chunk_index": 8,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "1df26f99-5f94-4755-8e6a-c1f31f7f3148",
+            "chunk_index": 6,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "69dd03be-6961-43b4-8e58-20a0feb96594",
+            "chunk_index": 7,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.3689289093017578,
+            "rerank_score": 0.7879312,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "c0ebcff9-c3e2-4cbb-96a2-7075616ee82f",
+            "chunk_index": 8,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.49986231327056885,
+            "rerank_score": 0.50257874,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "1df26f99-5f94-4755-8e6a-c1f31f7f3148",
+            "chunk_index": 6,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.6090532904299067,
+            "rerank_score": 0.46125942,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "doc_title": "cv",
+            "document_type": "cv",
+            "vector_distance": 0.6114400029182434,
+            "rerank_score": 0.4073334,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "chunk_index": 9,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.552986082256669,
+            "rerank_score": 0.40262696,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "chunk_index": 0,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.4990597814041309,
+            "rerank_score": 0.35398629,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+            "chunk_index": 10,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.8667052388191223,
+            "rerank_score": 0.32423541,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+            "chunk_index": 9,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.7566004322946199,
+            "rerank_score": 0.30819026,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 7,
+            "chunk_id": "69dd03be-6961-43b4-8e58-20a0feb96594",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          },
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 8,
+            "chunk_id": "c0ebcff9-c3e2-4cbb-96a2-7075616ee82f",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          },
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 6,
+            "chunk_id": "1df26f99-5f94-4755-8e6a-c1f31f7f3148",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          }
+        ],
+        "applied_filters": {
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_availability",
+        "gemini_model_used": null,
+        "gemini_tried_models": []
+      }
+    },
+    {
+      "question": "What payment range is Samah looking for ?",
+      "status": "success",
+      "response": {
+        "session_id": "0403a639-973d-45aa-9ce2-5e5eb790c7e7",
+        "message_id": "ff93e560-e459-4ffa-9732-b316941a376a",
+        "retrieval_query": "What payment range is Samah looking for ?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Compensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement.",
+        "citations": [
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+            "chunk_index": 1,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.5395074945541467,
+            "rerank_score": 0.33372033,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 1,
+            "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "compensation",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_availability",
+        "gemini_model_used": null,
+        "gemini_tried_models": []
+      }
+    },
+    {
+      "question": "Is Samah open to full-time work?",
+      "status": "success",
+      "response": {
+        "session_id": "7d8b9e72-0a75-45f7-9994-891027a82d20",
+        "message_id": "391681ef-6ff9-4990-bf14-fe684734f805",
+        "retrieval_query": "Is Samah open to full-time work?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah is open to full-time opportunities.",
+        "citations": [
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.6334600746631596,
+            "rerank_score": 0.29992473,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 5,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "compensation",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_availability",
+        "gemini_model_used": null,
+        "gemini_tried_models": []
+      }
+    },
+    {
+      "question": "What is Samah’s availability?",
+      "status": "success",
+      "response": {
+        "session_id": "6bf83042-93dd-4276-9983-c168e54beff1",
+        "message_id": "cbcc2af3-d295-42f0-a0c7-1d33177153fa",
+        "retrieval_query": "What is Samah’s availability?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah is open to full-time opportunities.\nSamah is open to freelance and project-based work.\nSamah is open to remote, hybrid, and suitable on-site opportunities.\nSamah is especially open to opportunities in Dubai, Abu Dhabi, the UAE, and strong remote opportunities.\nCompensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement.",
+        "citations": [
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "chunk_index": 2,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+            "chunk_index": 0,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.8441342599231887,
+            "rerank_score": 0.08151976,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "chunk_index": 2,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.8387996458291771,
+            "rerank_score": 0.05665243,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.7972649279517021,
+            "rerank_score": 0.03789243,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "dbb70998-a6d8-445d-a1f9-98c54b0764df",
+            "chunk_index": 3,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.9610182568430898,
+            "rerank_score": 0.03622006,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "71551d7b-c52a-4118-b2b5-b05e383c9e1a",
+            "chunk_index": 4,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.9271639703414456,
+            "rerank_score": 0.0288709,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+            "chunk_index": 1,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.9396229106300199,
+            "rerank_score": 0.02635535,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 0,
+            "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 2,
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 5,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "compensation",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_availability",
+        "gemini_model_used": null,
+        "gemini_tried_models": []
+      }
+    }
+  ]
+}

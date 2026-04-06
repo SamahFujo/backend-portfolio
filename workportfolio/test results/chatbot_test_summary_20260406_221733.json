@@ -1,0 +1,38 @@
+[
+  {
+    "question": "i need someone with Snowflake experience can Samah handle this kind of project?",
+    "status": "success",
+    "session_id": "89b1727b-ac2f-4b2d-9aff-e2798d2bfaae",
+    "debug_history_count": 1,
+    "retrieval_query": "Snowflake experience needed?",
+    "verdict": "supported",
+    "answer": "The available information does not explicitly confirm direct experience with Snowflake. However, Samah does have strong adjacent experience in dashboard and analytics solution development, backend and API development, full-stack web application delivery, AI-enabled and automation-focused solutions. She may still be a good fit if the project involves similar dashboard, backend, data, or solution-delivery work.",
+    "applied_filters": {
+      "document_type": "projects",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 1,
+        "chunk_id": "e216b069-18a6-49ad-8049-d8077ec56560",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      },
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 8,
+        "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      },
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 4,
+        "chunk_id": "a209122a-1e4c-43c6-a47e-f27810723352",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      }
+    ]
+  }
+]

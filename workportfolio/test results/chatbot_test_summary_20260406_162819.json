@@ -1,0 +1,185 @@
+[
+  {
+    "question": "What are Samah’s skills?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah’s technical skills (from the uploaded documents):\n- Programming Languages: Python\n- Backend: Django, Django REST Framework, FastAPI, Flask\n- Frontend: React, Next.js, Tailwind CSS\n- Databases: PostgreSQL, MongoDB, MySQL, SQL Server, Oracle\n- DevOps / API / Security: Swagger, OpenAPI\n- AI / LLM: Hugging Face, BERT, RoBERTa, T5, LangChain, Ollama, Gemini, RAG, Vector Search\n- OCR / Document Processing: Tesseract, EasyOCR, OpenCV",
+    "applied_filters": {
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 0,
+        "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 9,
+        "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 6,
+        "chunk_id": "1df26f99-5f94-4755-8e6a-c1f31f7f3148",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      }
+    ]
+  },
+  {
+    "question": "What technologies does she use?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah’s technical skills (from the uploaded documents):\n- Programming Languages: Python, JavaScript, TypeScript\n- Backend: Django, Django REST Framework, FastAPI, Flask\n- Frontend: React, Next.js, Tailwind CSS, Bootstrap\n- Databases: PostgreSQL, MongoDB, MySQL, SQL Server, Oracle\n- DevOps / API / Security: Docker, NGINX, Gunicorn, JWT, RBAC, Swagger, OpenAPI\n- AI / LLM: Hugging Face, BERT, RoBERTa, T5, LangChain, Langfuse, Ollama, Gemini, RAG, Vector Search\n- OCR / Document Processing: Tesseract, EasyOCR, OpenCV",
+    "applied_filters": {
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 2,
+        "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "where i can help",
+        "document_type": "capabilities",
+        "chunk_index": 7,
+        "chunk_id": "b70b1176-5b1c-42c4-a33d-48e71f10dcbb",
+        "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 4,
+        "chunk_id": "440d3e3c-d340-4cb5-9e98-785a450378df",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      }
+    ]
+  },
+  {
+    "question": "What is her tech stack?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah’s technical skills (from the uploaded documents):\n- Programming Languages: Python, JavaScript, TypeScript\n- Backend: Django, Django REST Framework, FastAPI, Flask\n- Frontend: React, Next.js, Tailwind CSS, Bootstrap\n- Databases: Oracle\n- AI / LLM: RAG",
+    "applied_filters": {
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 0,
+        "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 9,
+        "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 10,
+        "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      }
+    ]
+  },
+  {
+    "question": "What are Samah’s strongest technical areas?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah’s technical skills (from the uploaded documents):\n- Programming Languages: Python\n- Backend: Django, Django REST Framework, FastAPI, Flask\n- Frontend: React, Next.js, Tailwind CSS\n- Databases: PostgreSQL, MongoDB, MySQL, SQL Server, Oracle\n- AI / LLM: T5, LangChain, Ollama, Gemini, RAG, Vector Search",
+    "applied_filters": {
+      "document_type": "faq",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 1,
+        "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 2,
+        "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 0,
+        "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      }
+    ]
+  },
+  {
+    "question": "What does Samah do?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah is an AI Team Lead and AI/ML Engineer with strong full-stack development experience. She builds AI-powered applications, backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms.\n\nKey points:\n- She is strongest in backend development and AI-focused work.\n- Samah excels at solving business problems by automating manual workflows, turning unstructured data into useful structured outputs, and connecting AI with business operations.\n- Her technical areas include Python backend development, Django, AI and LLM integration, workflow automation, and full-stack solution delivery using Next.js and React.\n- She has built projects such as a live smart electricity dashboard, an auditing employee payroll system, a spend analysis dashboard with AI classification, and an AI property search chatbot.\n- Samah has leadership experience as an AI Team Lead, involving technical solution delivery, project ownership, and stakeholder communication.\n- She is especially well-suited for backend and AI-focused projects, particularly those involving Django, APIs, LLM integration, automation, and document intelligence.",
+    "applied_filters": {
+      "document_type": "faq",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 0,
+        "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 2,
+        "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 8,
+        "chunk_id": "c0ebcff9-c3e2-4cbb-96a2-7075616ee82f",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 1,
+        "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 4,
+        "chunk_id": "440d3e3c-d340-4cb5-9e98-785a450378df",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 5,
+        "chunk_id": "bf3d502d-1a84-4ed5-af5e-8e7f1c3ed7e8",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      }
+    ]
+  }
+]

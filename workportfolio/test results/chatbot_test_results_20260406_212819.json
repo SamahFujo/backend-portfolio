@@ -1,0 +1,798 @@
+{
+  "run_at": "2026-04-06T21:29:03.153386",
+  "api_url": "http://127.0.0.1:8000/api/chat/ask/",
+  "total_questions": 5,
+  "results": [
+    {
+      "question": "i have a new project need skills of power BI can you develop something like that?",
+      "status": "success",
+      "response": {
+        "session_id": "588eb7a6-6c15-4714-af03-1290bb6983fa",
+        "message_id": "20e017b3-f162-4fac-ae05-0a17c8a232ea",
+        "retrieval_query": "Develop a Power BI solution like the new project?",
+        "rewrite_notes": "Simplified language for improved retrieval.",
+        "verdict": "supported",
+        "answer": "Samah’s technical skills:\n- Programming Languages: Python\n- Databases: Oracle\n- AI / LLM: Ollama, Gemini",
+        "citations": [
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "095a87f8-cf1e-41b2-99a5-c565f7849145",
+            "chunk_index": 6,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "e216b069-18a6-49ad-8049-d8077ec56560",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "b7ffbf09-d9a2-4e80-978d-e760bdb718c3",
+            "chunk_index": 2,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "095a87f8-cf1e-41b2-99a5-c565f7849145",
+            "chunk_index": 6,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.735848077063314,
+            "rerank_score": 0.36477757,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "e216b069-18a6-49ad-8049-d8077ec56560",
+            "chunk_index": 1,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.5762752511747389,
+            "rerank_score": 0.32082129,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "b7ffbf09-d9a2-4e80-978d-e760bdb718c3",
+            "chunk_index": 2,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.6442980938313113,
+            "rerank_score": 0.29665425,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "826ce965-065f-4c4b-ad1e-660ff768b581",
+            "chunk_index": 0,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.5412934285787718,
+            "rerank_score": 0.27125171,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 6,
+            "chunk_id": "095a87f8-cf1e-41b2-99a5-c565f7849145",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          },
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 1,
+            "chunk_id": "e216b069-18a6-49ad-8049-d8077ec56560",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          },
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 2,
+            "chunk_id": "b7ffbf09-d9a2-4e80-978d-e760bdb718c3",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "projects",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_skills",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "debug_history_count": 1,
+        "debug_recent_history": [
+          {
+            "role": "user",
+            "content": "i have a new project need skills of power BI can you develop something like that?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "what is her hourly rate?",
+      "status": "success",
+      "response": {
+        "session_id": "b2dba7c8-e001-4f75-afc3-636b35989857",
+        "message_id": "d769e147-6cdb-4d3b-9d92-4b4b90d9b28b",
+        "retrieval_query": "What is her hourly rate?",
+        "rewrite_notes": "Simple query for rate calculation.",
+        "verdict": "supported",
+        "answer": "Compensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement.",
+        "citations": [
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+            "chunk_index": 0,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.793469858558782,
+            "rerank_score": 0.04084571,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+            "chunk_index": 1,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.6602693694910218,
+            "rerank_score": 0.03963884,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.701841968188168,
+            "rerank_score": 0.03789243,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "dbb70998-a6d8-445d-a1f9-98c54b0764df",
+            "chunk_index": 3,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.9279366837702203,
+            "rerank_score": 0.03461884,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "chunk_index": 2,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.8815530024830097,
+            "rerank_score": 0.03210071,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "71551d7b-c52a-4118-b2b5-b05e383c9e1a",
+            "chunk_index": 4,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.7628592550754547,
+            "rerank_score": 0.02716923,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 0,
+            "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 1,
+            "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 5,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "compensation",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_availability",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "debug_history_count": 1,
+        "debug_recent_history": [
+          {
+            "role": "user",
+            "content": "what is her hourly rate?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "so she didn't have experience in power bi",
+      "status": "success",
+      "response": {
+        "session_id": "08d20d40-7695-43cc-9fbc-ab1934927dc4",
+        "message_id": "3fc4f374-bd75-423e-8862-5e76ae2d024c",
+        "retrieval_query": "So she didn't have experience in power bi",
+        "rewrite_notes": "Simple query about lack of experience with Power BI.",
+        "verdict": "not_enough_evidence",
+        "answer": "The provided evidence does not explicitly state whether Samah has experience with Power BI. While she has experience building interactive dashboards and data-driven business systems, the specific tools mentioned for visualization are Python and Dash/Plotly.",
+        "citations": [
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "e216b069-18a6-49ad-8049-d8077ec56560",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "440d3e3c-d340-4cb5-9e98-785a450378df",
+            "chunk_index": 4,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "e216b069-18a6-49ad-8049-d8077ec56560",
+            "chunk_index": 1,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.824686586856842,
+            "rerank_score": 0.11436854,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": null,
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "c960c68c-574c-45fa-8f70-394397055adb",
+            "chunk_index": 4,
+            "doc_title": "Career Timeline",
+            "document_type": "career_timeline",
+            "vector_distance": 0.8093191271614505,
+            "rerank_score": 0.10230471,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": null,
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "89d613a2-5f67-4426-89d4-32f3caef6949",
+            "chunk_index": 5,
+            "doc_title": "Career Timeline",
+            "document_type": "career_timeline",
+            "vector_distance": 0.7619287300684668,
+            "rerank_score": 0.06656919,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": null,
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "chunk_index": 0,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.8474574937658754,
+            "rerank_score": 0.063715,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": null,
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "02b926a5-3600-40be-9aab-e1de6834e82c",
+            "chunk_index": 3,
+            "doc_title": "Career Timeline",
+            "document_type": "career_timeline",
+            "vector_distance": 0.7978181185939156,
+            "rerank_score": 0.05749328,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": null,
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "chunk_index": 9,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.7830661664565699,
+            "rerank_score": 0.05033063,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": null,
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "1df26f99-5f94-4755-8e6a-c1f31f7f3148",
+            "chunk_index": 6,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.8437899407023153,
+            "rerank_score": 0.04672496,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": null,
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "440d3e3c-d340-4cb5-9e98-785a450378df",
+            "chunk_index": 4,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.808113450053735,
+            "rerank_score": 0.04468087,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": null,
+            "reason": "threshold_removed_all(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 1,
+            "chunk_id": "e216b069-18a6-49ad-8049-d8077ec56560",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          },
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 4,
+            "chunk_id": "440d3e3c-d340-4cb5-9e98-785a450378df",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          }
+        ],
+        "applied_filters": {
+          "only_active_docs": true
+        },
+        "answer_source": null,
+        "extractor_used": null,
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ],
+        "debug_history_count": 1,
+        "debug_recent_history": [
+          {
+            "role": "user",
+            "content": "so she didn't have experience in power bi"
+          }
+        ]
+      }
+    },
+    {
+      "question": "what is her hourly rate?",
+      "status": "success",
+      "response": {
+        "session_id": "f9f71674-299e-4bc3-9e81-5eaed54660f4",
+        "message_id": "8e7144f7-1b63-4683-90a9-9edb84c55795",
+        "retrieval_query": "What is her hourly rate?",
+        "rewrite_notes": "Simple query for rate information.",
+        "verdict": "supported",
+        "answer": "Compensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement.",
+        "citations": [
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+            "chunk_index": 0,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.793469858558782,
+            "rerank_score": 0.04084571,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+            "chunk_index": 1,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.6602693694910218,
+            "rerank_score": 0.03963884,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.701841968188168,
+            "rerank_score": 0.03789243,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "dbb70998-a6d8-445d-a1f9-98c54b0764df",
+            "chunk_index": 3,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.9279366837702203,
+            "rerank_score": 0.03461884,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "chunk_index": 2,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.8815530024830097,
+            "rerank_score": 0.03210071,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "71551d7b-c52a-4118-b2b5-b05e383c9e1a",
+            "chunk_index": 4,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.7628592550754547,
+            "rerank_score": 0.02716923,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 0,
+            "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 1,
+            "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 5,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "compensation",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_availability",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "debug_history_count": 1,
+        "debug_recent_history": [
+          {
+            "role": "user",
+            "content": "what is her hourly rate?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "how can i discuss it and with who?",
+      "status": "success",
+      "response": {
+        "session_id": "6cdab6d9-bd04-4419-b04c-46ab9f9d2f58",
+        "message_id": "951199b2-4fc7-4233-b79a-4d00d53f929b",
+        "retrieval_query": "How can I discuss it with someone?",
+        "rewrite_notes": "Minimal edits for clarity and natural language.",
+        "verdict": "not_enough_evidence",
+        "answer": "The provided evidence does not specify how you can discuss a topic with Samah or who you should discuss it with. While it details Samah's preferences for compensation discussions, it does not offer general contact information or a method for initiating a discussion.",
+        "citations": [
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "71551d7b-c52a-4118-b2b5-b05e383c9e1a",
+            "chunk_index": 4,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "925cae06-632d-4e16-8826-1d0643e63d04",
+            "document_title": "recommendation",
+            "chunk_id": "dcfc9384-f003-41df-95fe-d6bdb3fd0e3a",
+            "chunk_index": 2,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+            "chunk_index": 1,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.8926301864573415,
+            "rerank_score": 0.14511536,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": null,
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "71551d7b-c52a-4118-b2b5-b05e383c9e1a",
+            "chunk_index": 4,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.9101081788539886,
+            "rerank_score": 0.13568956,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": null,
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.8669437249336405,
+            "rerank_score": 0.13206615,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": null,
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "dcfc9384-f003-41df-95fe-d6bdb3fd0e3a",
+            "chunk_index": 2,
+            "doc_title": "recommendation",
+            "document_type": "recommendation",
+            "vector_distance": 0.9245895504462178,
+            "rerank_score": 0.08389039,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": null,
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "chunk_index": 2,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.9102513981165162,
+            "rerank_score": 0.07585818,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": null,
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+            "chunk_index": 9,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.9310717636666227,
+            "rerank_score": 0.07585818,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": null,
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "748016c4-de40-4d3a-a0fd-9cdf3670a43f",
+            "chunk_index": 0,
+            "doc_title": "Certificates",
+            "document_type": "certificates",
+            "vector_distance": 0.9388489312619607,
+            "rerank_score": 0.06656919,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": null,
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "280c4a97-e26a-44dc-9209-cc48ff6fc378",
+            "chunk_index": 7,
+            "doc_title": "Achievements And Impact",
+            "document_type": "achievements",
+            "vector_distance": 0.9377686455845833,
+            "rerank_score": 0.06008665,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": null,
+            "reason": "threshold_removed_all(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 1,
+            "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 4,
+            "chunk_id": "71551d7b-c52a-4118-b2b5-b05e383c9e1a",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 5,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "recommendation",
+            "document_type": "recommendation",
+            "chunk_index": 2,
+            "chunk_id": "dcfc9384-f003-41df-95fe-d6bdb3fd0e3a",
+            "document_id": "925cae06-632d-4e16-8826-1d0643e63d04"
+          }
+        ],
+        "applied_filters": {
+          "only_active_docs": true
+        },
+        "answer_source": null,
+        "extractor_used": null,
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ],
+        "debug_history_count": 1,
+        "debug_recent_history": [
+          {
+            "role": "user",
+            "content": "how can i discuss it and with who?"
+          }
+        ]
+      }
+    }
+  ]
+}

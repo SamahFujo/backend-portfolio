@@ -156,17 +156,37 @@ class AskAboutMeAPIView(APIView):
         # 2) Get or create session
         if session_id:
             session = ChatSession.objects.filter(
-                id=session_id, is_active=True).first()
+                id=session_id,
+                is_active=True
+            ).first()
             if session is None:
-                return Response({"detail": "Session not found."}, status=status.HTTP_404_NOT_FOUND)
+                return Response(
+                    {"detail": "Session not found."},
+                    status=status.HTTP_404_NOT_FOUND
+                )
         else:
             session = ChatSession.objects.create()
 
         # 3) Save user message
         ChatMessage.objects.create(
-            session=session, role="user", content=message)
+            session=session,
+            role="user",
+            content=message
+        )
 
-        # 4) Quick intents
+        # 4) Load recent history from the same session
+        recent_history = list(
+            reversed(
+                list(
+                    ChatMessage.objects
+                    .filter(session=session)
+                    .order_by("-created_at")
+                    .values("role", "content")[:6]
+                )
+            )
+        )
+
+        # 5) Quick intents
         quick = SmartChatIntentService.detect(message)
         if quick.handled:
             assistant_message = ChatMessage.objects.create(
@@ -186,16 +206,24 @@ class AskAboutMeAPIView(APIView):
                     "mode": quick.intent,
                     "intent_source": quick.source,
                     "retrieval_debug": [],
+                    "debug_history_count": len(recent_history),
+                    "debug_recent_history": recent_history[-4:],
                 },
                 status=status.HTTP_200_OK
             )
 
-        # 5) Rewrite query (kept for debug/traceability)
-        rewrite = GeminiQueryRewriter.rewrite_cached(message)
+        # 6) Rewrite query using recent history
+        rewrite = GeminiQueryRewriter.rewrite_cached(
+            user_query=message,
+            history=recent_history,
+        )
         retrieval_query = rewrite.get("rewritten_query") or message
 
-        # 6) Main QA orchestration
-        qa_result = ProfileQAService.answer_question(message)
+        # 7) Main QA orchestration
+        qa_result = ProfileQAService.answer_question(
+            question=message,
+            retrieval_query=retrieval_query,
+        )
 
         verdict = qa_result.get("verdict", "not_enough_evidence")
         answer_text = qa_result.get(
@@ -209,7 +237,7 @@ class AskAboutMeAPIView(APIView):
         retrieval_debug = qa_result.get("retrieval_debug") or []
         meta = qa_result.get("meta") or {}
 
-        # 7) Convert used_sources into response citations
+        # 8) Convert used_sources into response citations
         citations = []
         for src in used_sources:
             citations.append({
@@ -222,11 +250,13 @@ class AskAboutMeAPIView(APIView):
                 "distance": None,
             })
 
-        # 8) Save assistant message
+        # 9) Save assistant message
         confidence = 0.9 if verdict in {"yes", "no"} else 0.6
         if meta.get("answer_source") == "deterministic_extractor":
-            confidence = min(0.95, confidence +
-            float(meta.get("confidence_boost", 0.0)))
+            confidence = min(
+                0.95,
+                confidence + float(meta.get("confidence_boost", 0.0))
+            )
 
         assistant_message = ChatMessage.objects.create(
             session=session,
@@ -236,7 +266,7 @@ class AskAboutMeAPIView(APIView):
             confidence_score=confidence,
         )
 
-        # 9) Return response
+        # 10) Return response
         return Response(
             {
                 "session_id": str(session.id),
@@ -253,6 +283,8 @@ class AskAboutMeAPIView(APIView):
                 "extractor_used": meta.get("extractor_used"),
                 "gemini_model_used": meta.get("model_used"),
                 "gemini_tried_models": meta.get("tried_models"),
+                "debug_history_count": len(recent_history),
+                "debug_recent_history": recent_history[-4:],
             },
             status=status.HTTP_200_OK
         )

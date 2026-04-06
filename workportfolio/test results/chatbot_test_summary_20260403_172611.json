@@ -1,0 +1,641 @@
+[
+  {
+    "question": "What is Samah’s favorite programming language?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah’s favorite programming language is Python.",
+    "applied_filters": {
+      "document_type": "preferences",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 0,
+        "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      },
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 8,
+        "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      }
+    ]
+  },
+  {
+    "question": "Does Samah prefer Django or FastAPI?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah’s preferred backend framework is Django.\nSamah also has experience with FastAPI, but Django is her stronger and more preferred framework.",
+    "applied_filters": {
+      "document_type": "preferences",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 1,
+        "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      },
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 8,
+        "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      },
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 0,
+        "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      }
+    ]
+  },
+  {
+    "question": "What payment range is Samah looking for?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Compensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement.",
+    "applied_filters": {
+      "document_type": "compensation",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 1,
+        "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      }
+    ]
+  },
+  {
+    "question": "Is Samah open to freelance work?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah is open to freelance and project-based work.",
+    "applied_filters": {
+      "document_type": "compensation",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 2,
+        "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 5,
+        "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 3,
+        "chunk_id": "dbb70998-a6d8-445d-a1f9-98c54b0764df",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      }
+    ]
+  },
+  {
+    "question": "Can Samah build an AI chatbot?",
+    "status": "success",
+    "verdict": "yes",
+    "answer": "Yes, Samah can build an AI chatbot. Samah designed the backend logic and built advanced workflows for an AI Property Search Chatbot, which is a solution that understands natural language requests and returns matching listings.\n\nKey points:\n- The AI Property Search Chatbot extracts structured filters from natural language using LLMs like Gemini and Ollama.\n- Samah integrated the Django API with chatbot-style user experiences and implemented Next.js frontend interaction patterns for the chatbot.\n- The chatbot supports natural language query understanding for various property attributes and includes dynamic step-by-step refinement.\n- Samah's interactive portfolio website also features a 'Bot/chat-about-me concept' and a chatbot-focused section.",
+    "applied_filters": {
+      "document_type": "projects",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 6,
+        "chunk_id": "095a87f8-cf1e-41b2-99a5-c565f7849145",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      },
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 7,
+        "chunk_id": "1ffaa1ce-a644-4aac-b31f-c5b3be7ccb77",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      },
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 8,
+        "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      },
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 9,
+        "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      }
+    ]
+  },
+  {
+    "question": "What can Samah help with professionally?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah can professionally help with designing and building production-ready AI solutions, backend systems, and modern full-stack web applications, specializing in AI/LLM integration, workflow automation, and interactive frontend delivery. Samah also offers technical leadership and can support junior developers.\n\nKey points:\n- Samah can build various AI-powered applications such as chatbots, RAG systems, classification engines, and LLM-based information extraction tools.\n- Samah is capable of developing dashboard and analytics platforms, document analysis/OCR systems, and workflow automation systems.\n- Samah can create business portals with authentication and role-based permissions, and API-first platforms integrated with modern web frontends.\n- Samah's leadership capabilities include translating business requirements into technical solutions, leading development initiatives, and coordinating project delivery.\n- Samah can build end-to-end web applications using Django backend and Next.js frontend, and deliver modern, user-friendly interfaces for complex technical systems.\n- Samah can develop data and AI-powered business systems to automate tasks, classify information, and improve decision-making, including property filtering and intelligent search solutions.",
+    "applied_filters": {
+      "document_type": "capabilities",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "where i can help",
+        "document_type": "capabilities",
+        "chunk_index": 7,
+        "chunk_id": "b70b1176-5b1c-42c4-a33d-48e71f10dcbb",
+        "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+      },
+      {
+        "doc_title": "where i can help",
+        "document_type": "capabilities",
+        "chunk_index": 12,
+        "chunk_id": "7ac5d8bb-e622-41d4-851f-bfc79aaaef59",
+        "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+      },
+      {
+        "doc_title": "where i can help",
+        "document_type": "capabilities",
+        "chunk_index": 1,
+        "chunk_id": "ec033764-6477-4d7f-aa57-ed8d25870755",
+        "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+      },
+      {
+        "doc_title": "where i can help",
+        "document_type": "capabilities",
+        "chunk_index": 0,
+        "chunk_id": "903985d2-96b1-4f88-87f2-4a92d7e2e69f",
+        "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+      },
+      {
+        "doc_title": "where i can help",
+        "document_type": "capabilities",
+        "chunk_index": 3,
+        "chunk_id": "a4fe1a5e-02dc-479d-b070-e006bb5f5d94",
+        "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+      },
+      {
+        "doc_title": "where i can help",
+        "document_type": "capabilities",
+        "chunk_index": 6,
+        "chunk_id": "12edfaf6-2b2a-40d7-9992-90d355542a1c",
+        "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+      }
+    ]
+  },
+  {
+    "question": "What does Samah do?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah is an AI Team Lead and AI/ML Engineer with strong full-stack development experience. She builds AI-powered applications, backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms.\n\nKey points:\n- She is strongest in backend development and AI-focused work, with a preference for Python and Django.\n- She excels at solving business problems by automating manual workflows and transforming unstructured data into useful structured outputs.\n- Her project experience includes a live smart electricity dashboard, an auditing employee payroll system, and an AI property search chatbot.\n- She can also build RAG systems and intelligent automation platforms.\n- She has experience with various databases such as PostgreSQL, MongoDB, MySQL, SQL Server, and Oracle.",
+    "applied_filters": {
+      "document_type": "faq",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 0,
+        "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 9,
+        "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 8,
+        "chunk_id": "c0ebcff9-c3e2-4cbb-96a2-7075616ee82f",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 4,
+        "chunk_id": "440d3e3c-d340-4cb5-9e98-785a450378df",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 2,
+        "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 5,
+        "chunk_id": "bf3d502d-1a84-4ed5-af5e-8e7f1c3ed7e8",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      }
+    ]
+  },
+  {
+    "question": "What are Samah’s strongest technical areas?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah’s technical skills (from the uploaded documents):\n- What does Samah do?\n- What are Samah’s strongest technical areas?\n- Summary\n- Has Samah worked with databases?\n- Can Samah design backend APIs?\n- Does Samah have leadership experience?\n- Does Samah work directly with clients or stakeholders?\n- es in the UAE, as well as strong remote opportunities.\n- Can Samah help with backend and AI projects?\n- What kinds of business problems is Samah best at solving?\n- ication, and guiding implementation efforts.\n- What kind of work does Samah enjoy most?\n- What kind of roles fit Samah best?\n- Python\n- Django\n- Django REST Framework\n- FastAPI\n- Flask\n- React\n- Next.js\n- Tailwind CSS\n- PostgreSQL\n- MongoDB\n- MySQL\n- SQL Server",
+    "applied_filters": {
+      "document_type": "faq",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 1,
+        "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 2,
+        "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 0,
+        "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      }
+    ]
+  },
+  {
+    "question": "What impact has Samah created through her work?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah creates impact by applying AI and automation to real-world business problems, building practical, production-oriented, and business-focused solutions. Her work reduces manual effort, improves business process speed, and makes technical systems more helpful and accessible, enabling organizations to work more efficiently.\n\nKey points:\n- She converts complex or unstructured information into usable structured outputs.\n- Her work supports outcomes such as workflow automation, smarter access to information, and operational visibility through dashboards.\n- She builds functional, structured, scalable, and useful backend and full-stack systems, including designing strong APIs and creating maintainable project structures.\n- She delivers AI-driven solutions for monitoring, auditing, classification, search, and decision support.\n- She provides leadership by translating business needs into technical solutions and guiding practical solution design.\n- She ensures solutions are aligned with real needs, reducing mismatch between business requirements and technical implementation.",
+    "applied_filters": {
+      "document_type": "achievements",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Achievements And Impact",
+        "document_type": "achievements",
+        "chunk_index": 1,
+        "chunk_id": "2f8ccfa4-75dc-4e3c-9d02-c70b96313b00",
+        "document_id": "548f63b1-defe-483e-8914-58467aea30c8"
+      },
+      {
+        "doc_title": "Achievements And Impact",
+        "document_type": "achievements",
+        "chunk_index": 0,
+        "chunk_id": "69fe5d03-336d-4348-b1ec-ada88b4acac1",
+        "document_id": "548f63b1-defe-483e-8914-58467aea30c8"
+      },
+      {
+        "doc_title": "Achievements And Impact",
+        "document_type": "achievements",
+        "chunk_index": 7,
+        "chunk_id": "280c4a97-e26a-44dc-9209-cc48ff6fc378",
+        "document_id": "548f63b1-defe-483e-8914-58467aea30c8"
+      },
+      {
+        "doc_title": "Achievements And Impact",
+        "document_type": "achievements",
+        "chunk_index": 2,
+        "chunk_id": "e963a6f6-4ae2-41fd-8575-0af7837ade14",
+        "document_id": "548f63b1-defe-483e-8914-58467aea30c8"
+      },
+      {
+        "doc_title": "Achievements And Impact",
+        "document_type": "achievements",
+        "chunk_index": 3,
+        "chunk_id": "a25136ba-175c-4d4d-b33d-ba83bc5d27cb",
+        "document_id": "548f63b1-defe-483e-8914-58467aea30c8"
+      },
+      {
+        "doc_title": "Achievements And Impact",
+        "document_type": "achievements",
+        "chunk_index": 4,
+        "chunk_id": "a6460fd5-2421-413b-99a7-85d935fe1074",
+        "document_id": "548f63b1-defe-483e-8914-58467aea30c8"
+      }
+    ]
+  },
+  {
+    "question": "What did Samah do before becoming an AI Team Lead?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Before becoming an AI Team Lead, Samah's career progressed from practical technical support and customer-facing system work to backend engineering and full-stack development. She then specialized in AI and applied machine learning, focusing on delivering business-oriented AI solutions.\n\nKey points:\n- She was responsible for troubleshooting technical issues, identifying bugs, and resolving implementation problems.\n- Her work in AI included developing classification systems, document understanding workflows, and integrating LLMs.\n- She connected AI capabilities with backend systems, business workflows, and user interfaces to solve operational problems.\n- She also engaged in customer interaction, gathering requirements, and presenting technical possibilities.\n- Her early experience built a foundation in problem-solving, technical support, and understanding real user needs.\n- She developed a strong profile in Python, Django, AI workflows, and automation.",
+    "applied_filters": {
+      "document_type": "career_timeline",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Career Timeline",
+        "document_type": "career_timeline",
+        "chunk_index": 1,
+        "chunk_id": "7c019cbb-d955-4467-8b0b-9cd75f271f18",
+        "document_id": "7bf15e77-83cf-4cc7-ae9e-14dee17f1fd2"
+      },
+      {
+        "doc_title": "Career Timeline",
+        "document_type": "career_timeline",
+        "chunk_index": 5,
+        "chunk_id": "89d613a2-5f67-4426-89d4-32f3caef6949",
+        "document_id": "7bf15e77-83cf-4cc7-ae9e-14dee17f1fd2"
+      },
+      {
+        "doc_title": "Career Timeline",
+        "document_type": "career_timeline",
+        "chunk_index": 8,
+        "chunk_id": "55604ead-705a-4fc0-b98a-1c2ea4220fab",
+        "document_id": "7bf15e77-83cf-4cc7-ae9e-14dee17f1fd2"
+      },
+      {
+        "doc_title": "Career Timeline",
+        "document_type": "career_timeline",
+        "chunk_index": 4,
+        "chunk_id": "c960c68c-574c-45fa-8f70-394397055adb",
+        "document_id": "7bf15e77-83cf-4cc7-ae9e-14dee17f1fd2"
+      },
+      {
+        "doc_title": "Career Timeline",
+        "document_type": "career_timeline",
+        "chunk_index": 2,
+        "chunk_id": "c87256a9-1a48-4a63-9463-368e7b17cc12",
+        "document_id": "7bf15e77-83cf-4cc7-ae9e-14dee17f1fd2"
+      }
+    ]
+  },
+  {
+    "question": "How can I contact Samah?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "You can contact Samah using the details found in the uploaded documents:\n- Email: s.fujo@hotmail.com\n- Phone: +971 52 792 9218",
+    "applied_filters": {
+      "document_type": "cv",
+      "only_active_docs": true,
+      "document_title_contains": "cv"
+    },
+    "used_sources": [
+      {
+        "doc_title": "cv",
+        "document_type": "cv",
+        "chunk_index": 0,
+        "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+        "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+      }
+    ]
+  },
+  {
+    "question": "What is Samah’s favorite movie?What can Samah help with professionally?",
+    "status": "success",
+    "verdict": "not_enough_evidence",
+    "answer": "The provided evidence does not state Samah's favorite movie. However, Samah can professionally help with backend development, AI-focused work, and automation, including building AI-powered web applications, designing backend systems and APIs, and automating manual workflows. She also enjoys solving business problems by combining software engineering and AI, and building practical, production-ready systems.\n\nKey points:\n- Samah is comfortable using Python for NLP tasks and data-related solutions.\n- She can create chatbots, intelligent assistants, and document-based AI solutions.\n- Samah likes to convert unstructured input into structured results and connect AI with real business workflows.\n- She can help lead implementation decisions and contribute both technically and strategically.\n- Samah is proficient in building dashboards and data-driven tools.\n- She also enjoys frontend development, particularly with Next.js and React for user interfaces.",
+    "applied_filters": {
+      "document_type": "preferences",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 0,
+        "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      },
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 6,
+        "chunk_id": "189005be-1610-423d-93a0-402adfc200b6",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      },
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 3,
+        "chunk_id": "5e94575d-0dd3-4867-a7bd-e9827e1a486a",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      },
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 8,
+        "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      },
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 4,
+        "chunk_id": "aad9c8b7-ee78-40a5-9947-368b253ffc1a",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      }
+    ]
+  },
+  {
+    "question": "What can Samah do?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah can build end-to-end web applications by integrating backend services with modern frontend frameworks. Additionally, she is capable of developing data and AI-powered business systems designed to automate tasks, classify information, and enhance decision-making.\n\nKey points:\n- She can create full-stack solutions utilizing a Django backend and Next.js frontend.\n- Samah can develop responsive dashboards for analytics, monitoring, and business insights.\n- She is able to build interactive chatbot interfaces connected to backend AI services.\n- Her capabilities include developing role-based web applications for enterprise users.\n- She can support the development of portfolio, internal platform, and custom business applications.",
+    "applied_filters": {
+      "document_type": "capabilities",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "where i can help",
+        "document_type": "capabilities",
+        "chunk_index": 3,
+        "chunk_id": "a4fe1a5e-02dc-479d-b070-e006bb5f5d94",
+        "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+      }
+    ]
+  },
+  {
+    "question": "Can Samah help with backend API development?What can Samah help with professionally?",
+    "status": "success",
+    "verdict": "yes",
+    "answer": "Yes, Samah can help with backend API development. Professionally, Samah is an AI Team Lead and AI/ML Engineer specializing in building production-ready AI solutions, backend systems, and modern web applications, with strong full-stack development experience.\n\nKey points:\n- Samah's strongest areas include Python backend engineering, Django-based API development, AI/LLM integration, workflow automation, and interactive frontend delivery using Next.js and React.\n- Samah can design and implement APIs for web and AI applications, including authentication, authorization, and integration with external services.\n- Samah creates attractive, modern user interfaces using Next.js and React, including responsive design and chatbot user experiences.\n- Samah builds systems that automate tasks, classify information, and improve decision-making, such as procurement analysis and anomaly detection.\n- Samah can develop full-stack solutions using Django backend and Next.js frontend, including responsive dashboards and role-based web applications.\n- Samah can contribute both technically and from a leadership perspective, supporting junior developers or guiding implementation direction.",
+    "applied_filters": {
+      "document_type": "capabilities",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "where i can help",
+        "document_type": "capabilities",
+        "chunk_index": 2,
+        "chunk_id": "ab0c6e80-01cc-44da-ab21-223ff64e1e3d",
+        "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+      },
+      {
+        "doc_title": "where i can help",
+        "document_type": "capabilities",
+        "chunk_index": 5,
+        "chunk_id": "1c2cd405-ebaa-4a82-94fc-13f758f13d60",
+        "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+      },
+      {
+        "doc_title": "where i can help",
+        "document_type": "capabilities",
+        "chunk_index": 0,
+        "chunk_id": "903985d2-96b1-4f88-87f2-4a92d7e2e69f",
+        "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+      },
+      {
+        "doc_title": "where i can help",
+        "document_type": "capabilities",
+        "chunk_index": 3,
+        "chunk_id": "a4fe1a5e-02dc-479d-b070-e006bb5f5d94",
+        "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+      },
+      {
+        "doc_title": "where i can help",
+        "document_type": "capabilities",
+        "chunk_index": 7,
+        "chunk_id": "b70b1176-5b1c-42c4-a33d-48e71f10dcbb",
+        "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+      },
+      {
+        "doc_title": "where i can help",
+        "document_type": "capabilities",
+        "chunk_index": 4,
+        "chunk_id": "ba2298c5-b8fe-47f5-87a4-d049c1bfa3ad",
+        "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+      }
+    ]
+  },
+  {
+    "question": "What can Samah do?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah can build end-to-end web applications by combining backend services with modern frontend frameworks. Additionally, she can develop data and AI-powered business systems to automate tasks, classify information, and enhance decision-making.\n\nKey points:\n- She can create full-stack solutions using Django backend and Next.js frontend.\n- Samah is capable of building responsive dashboards for analytics, monitoring, and business insights.\n- She can develop interactive chatbot interfaces connected to backend AI services.\n- Her capabilities include building role-based web applications for enterprise users.\n- She can support portfolio, internal platform, and custom business application development.",
+    "applied_filters": {
+      "document_type": "capabilities",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "where i can help",
+        "document_type": "capabilities",
+        "chunk_index": 3,
+        "chunk_id": "a4fe1a5e-02dc-479d-b070-e006bb5f5d94",
+        "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+      }
+    ]
+  },
+  {
+    "question": "What does Samah do?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah is an AI Team Lead and AI/ML Engineer with strong full-stack development experience. She builds a variety of solutions including AI-powered applications, backend APIs, intelligent automation workflows, dashboards, chatbots, and document-processing systems.\n\nKey points:\n- She is strongest in backend development and AI-focused work, particularly with Python and Django.\n- She solves business problems by automating manual workflows, transforming unstructured data, and integrating AI with business operations to improve efficiency.\n- Her project experience includes a live smart electricity dashboard, an auditing employee payroll system, and an AI property search chatbot.\n- She can build RAG systems and data-driven business systems for monitoring, analytics, reporting, and decision support.\n- Her main strength lies in backend systems, AI workflows, APIs, and solution architecture.\n- She builds full-stack applications using Python-based backends with frontend technologies like Next.js, React, and Tailwind CSS.",
+    "applied_filters": {
+      "document_type": "faq",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 0,
+        "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 6,
+        "chunk_id": "1df26f99-5f94-4755-8e6a-c1f31f7f3148",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 9,
+        "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 8,
+        "chunk_id": "c0ebcff9-c3e2-4cbb-96a2-7075616ee82f",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 4,
+        "chunk_id": "440d3e3c-d340-4cb5-9e98-785a450378df",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 2,
+        "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      }
+    ]
+  },
+  {
+    "question": "What are Samah’s strongest technical areas?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah’s technical skills (from the uploaded documents):\n- What does Samah do?\n- What are Samah’s strongest technical areas?\n- Summary\n- Has Samah worked with databases?\n- Can Samah design backend APIs?\n- Does Samah have leadership experience?\n- Does Samah work directly with clients or stakeholders?\n- es in the UAE, as well as strong remote opportunities.\n- Can Samah help with backend and AI projects?\n- What kinds of business problems is Samah best at solving?\n- ication, and guiding implementation efforts.\n- What kind of work does Samah enjoy most?\n- What kind of roles fit Samah best?\n- Python\n- Django\n- Django REST Framework\n- FastAPI\n- Flask\n- React\n- Next.js\n- Tailwind CSS\n- PostgreSQL\n- MongoDB\n- MySQL\n- SQL Server",
+    "applied_filters": {
+      "document_type": "faq",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 1,
+        "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 2,
+        "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 0,
+        "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      }
+    ]
+  }
+]

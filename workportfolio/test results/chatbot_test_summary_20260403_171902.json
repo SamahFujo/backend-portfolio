@@ -1,0 +1,164 @@
+[
+  {
+    "question": "Is Samah open to freelance work?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah is open to freelance and project-based work.",
+    "applied_filters": {
+      "document_type": "compensation",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 2,
+        "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 5,
+        "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 3,
+        "chunk_id": "dbb70998-a6d8-445d-a1f9-98c54b0764df",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      }
+    ]
+  },
+  {
+    "question": "Is Samah open to remote work?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah is open to remote, hybrid, and suitable on-site opportunities.",
+    "applied_filters": {
+      "document_type": "compensation",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 2,
+        "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 5,
+        "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      }
+    ]
+  },
+  {
+    "question": "Which locations is Samah open to?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah is especially open to opportunities in Dubai, Abu Dhabi, the UAE, and strong remote opportunities.",
+    "applied_filters": {
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 7,
+        "chunk_id": "69dd03be-6961-43b4-8e58-20a0feb96594",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 8,
+        "chunk_id": "c0ebcff9-c3e2-4cbb-96a2-7075616ee82f",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 6,
+        "chunk_id": "1df26f99-5f94-4755-8e6a-c1f31f7f3148",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      }
+    ]
+  },
+  {
+    "question": "What payment range is Samah looking for ?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Compensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement.",
+    "applied_filters": {
+      "document_type": "compensation",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 1,
+        "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      }
+    ]
+  },
+  {
+    "question": "Is Samah open to full-time work?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah is open to full-time opportunities.",
+    "applied_filters": {
+      "document_type": "compensation",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 5,
+        "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      }
+    ]
+  },
+  {
+    "question": "What is Samah’s availability?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah is open to full-time opportunities.\nSamah is open to freelance and project-based work.\nSamah is open to remote, hybrid, and suitable on-site opportunities.\nSamah is especially open to opportunities in Dubai, Abu Dhabi, the UAE, and strong remote opportunities.\nCompensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement.",
+    "applied_filters": {
+      "document_type": "compensation",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 0,
+        "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 2,
+        "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 5,
+        "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      }
+    ]
+  }
+]

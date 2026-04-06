@@ -28,7 +28,7 @@ class ScopeResolver:
     )
 
     CONTACT = re.compile(
-        r"\b(contact|email|phone|whatsapp|linkedin|get in touch|reach)\b",
+        r"\b(contact|email|phone|whatsapp|linkedin|get in touch|reach|connect|contact details)\b",
         re.I,
     )
 
@@ -46,7 +46,9 @@ class ScopeResolver:
         r"\b("
         r"salary|payment|compensation|expected salary|salary range|pay range|"
         r"rate|availability|available|remote|hybrid|on-site|onsite|"
-        r"freelance|contract|full-time|open to work|notice period"
+        r"freelance|contract|full-time|open to work|notice period|"
+        r"location|locations|where|where can|where is|where does|"
+        r"dubai|abu dhabi|uae|united arab emirates|work arrangement"
         r")\b",
         re.I,
     )
@@ -61,7 +63,10 @@ class ScopeResolver:
     )
 
     FAQ = re.compile(
-        r"\b(faq|frequently asked questions|about samah|who is samah)\b",
+        r"\b("
+        r"faq|frequently asked questions|about samah|who is samah|"
+        r"what does samah do|strongest technical areas|what is samah"
+        r")\b",
         re.I,
     )
 
@@ -88,27 +93,10 @@ class ScopeResolver:
         if not msg:
             return None
 
-        if cls.CERT.search(msg):
+        # Contact first so direct contact questions stay strict on CV
+        if cls.CONTACT.search(msg) or cls.CV.search(msg):
             return {
-                "document_type": "certificates",
-                "only_active_docs": True,
-            }
-
-        if cls.EXPERIENCE.search(msg):
-            return {
-                "document_type": "experience_letter",
-                "only_active_docs": True,
-            }
-
-        if cls.RECOMMEND.search(msg):
-            return {
-                "document_type": "recommendation",
-                "only_active_docs": True,
-            }
-
-        if cls.PROJECT.search(msg):
-            return {
-                "document_type": "projects",
+                "document_type": "cv",
                 "only_active_docs": True,
             }
 
@@ -148,13 +136,30 @@ class ScopeResolver:
                 "only_active_docs": True,
             }
 
-        if cls.CONTACT.search(msg) or cls.CV.search(msg):
+        if cls.PROJECT.search(msg):
             return {
-                "document_type": "cv",
+                "document_type": "projects",
                 "only_active_docs": True,
             }
 
-        # default: no strict type, but still prefer active docs
+        if cls.RECOMMEND.search(msg):
+            return {
+                "document_type": "recommendation",
+                "only_active_docs": True,
+            }
+
+        if cls.EXPERIENCE.search(msg):
+            return {
+                "document_type": "experience_letter",
+                "only_active_docs": True,
+            }
+
+        if cls.CERT.search(msg):
+            return {
+                "document_type": "certificates",
+                "only_active_docs": True,
+            }
+
         return {
             "only_active_docs": True,
         }

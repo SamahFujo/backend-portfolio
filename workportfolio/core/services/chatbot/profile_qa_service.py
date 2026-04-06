@@ -8,8 +8,11 @@ from core.services.retrieval.reranked_vector_retrieval import RerankedVectorRetr
 from core.services.chatbot.extractors import (
     try_extract_contact,
     try_extract_preferences,
-    try_extract_availability,
+    try_extract_strengths,
+    try_extract_project_fit,
     try_extract_skills,
+    try_extract_availability,
+
 )
 from core.services.chatbot.gemini_grounded_answerer import GeminiGroundedAnswerer
 
@@ -90,13 +93,15 @@ class ProfileQAService:
         extractors = [
             try_extract_contact,
             try_extract_preferences,
-            try_extract_availability,
+            try_extract_strengths,
+            try_extract_project_fit,
             try_extract_skills,
+            try_extract_availability
         ]
 
         for extractor in extractors:
             handled, answer, confidence_boost = extractor(question, chunks)
-            if handled:
+            if handled and answer and confidence_boost > 0:
                 return {
                     "verdict": "supported",
                     "answer": answer,
@@ -154,6 +159,29 @@ class ProfileQAService:
         return chunks, retrieval_debug, filters
 
     @classmethod
+    def _normalize_retrieval_query(
+        cls,
+        question: str,
+        retrieval_query: str,
+    ) -> str:
+        q = (retrieval_query or question).strip()
+        lower_q = q.lower()
+
+        if "tech stack" in lower_q:
+            return (
+                "Samah technical skills technologies frameworks tools "
+                "backend frontend AI databases devops"
+            )
+
+        if "technologies does she use" in lower_q:
+            return "Samah technical skills technologies frameworks tools"
+
+        if "frameworks" in lower_q:
+            return "Samah frameworks Django Django REST Framework FastAPI Flask React Next.js Tailwind CSS LangChain"
+
+        return q
+
+    @classmethod
     def answer_question(
         cls,
         question: str,
@@ -161,6 +189,8 @@ class ProfileQAService:
     ) -> Dict[str, Any]:
         question = (question or "").strip()
         retrieval_query = (retrieval_query or question).strip()
+        retrieval_query = cls._normalize_retrieval_query(
+            question, retrieval_query)
 
         chunks, retrieval_debug, filters = cls._retrieve_chunks(
             question=question,

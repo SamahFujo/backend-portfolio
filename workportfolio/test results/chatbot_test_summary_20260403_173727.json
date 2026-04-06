@@ -1,0 +1,185 @@
+[
+  {
+    "question": "What are Samah’s skills?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah’s technical skills (from the uploaded documents):\n- What does Samah do?\n- What are Samah’s strongest technical areas?\n- Summary\n- ication, and guiding implementation efforts.\n- Does Samah work directly with clients or stakeholders?\n- What kind of work does Samah enjoy most?\n- What kind of roles fit Samah best?\n- Is Samah open to full-time work?\n- ocument-processing solutions, and modern web platforms.\n- What is Samah’s favorite programming language?\n- Samah’s favorite programming language is Python.\n- What backend framework does Samah prefer most?\n- Does Samah also know FastAPI and Flask?\n- es in the UAE, as well as strong remote opportunities.\n- Can Samah help with backend and AI projects?\n- What kinds of business problems is Samah best at solving?\n- Python\n- Django\n- Django REST Framework\n- FastAPI\n- Flask\n- React\n- Next.js\n- Tailwind CSS\n- PostgreSQL",
+    "applied_filters": {
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 0,
+        "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 9,
+        "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 6,
+        "chunk_id": "1df26f99-5f94-4755-8e6a-c1f31f7f3148",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      }
+    ]
+  },
+  {
+    "question": "What technologies does she use?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah’s technical skills (from the uploaded documents):\n- technologies does Samah prefer?\n- Samah prefers Next.js with React and Tailwind CSS for frontend development.\n- Is Samah stronger in backend, frontend, or AI?\n- Can Samah build full-stack applications?\n- Can Samah build AI-powered chatbots?\n- es - Supporting junior developers or guiding implementation direction\n- Types of Projects I Can Build\n- Technologies I Use Professionally\n- Programming Languages\n- Python\n- JavaScript\n- TypeScript\n- HTML\n- CSS\n- Backend Frameworks and Tools\n- Django\n- Django REST Framework\n- esseract, EasyOCR, OpenCV, and LLM-based extraction workflows.\n- Can Samah build business dashboards?\n- What types of projects has Samah built?\n- Has Samah worked with AI and LLM technologies?\n- ocument-processing solutions, and modern web platforms.\n- What are Samah’s strongest technical areas?\n- What is Samah’s favorite programming language?\n- Samah’s favorite programming language is Python.",
+    "applied_filters": {
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 2,
+        "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "where i can help",
+        "document_type": "capabilities",
+        "chunk_index": 7,
+        "chunk_id": "b70b1176-5b1c-42c4-a33d-48e71f10dcbb",
+        "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 4,
+        "chunk_id": "440d3e3c-d340-4cb5-9e98-785a450378df",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      }
+    ]
+  },
+  {
+    "question": "What is her tech stack?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah’s technical skills (from the uploaded documents):\n- What does Samah do?\n- What are Samah’s strongest technical areas?\n- Summary\n- Samah Fujo\n- Prepared on | 12 March 2026\n- Status | Delivered / Production-facing analytics dashboard\n- Status | Delivered / Workflow automation project\n- Technology Stack | Python, SQL, Data Analysis, Workflow Automation\n- Status | Delivered / Enterprise procurement intelligence platform\n- ocument-processing solutions, and modern web platforms.\n- What is Samah’s favorite programming language?\n- Samah’s favorite programming language is Python.\n- What backend framework does Samah prefer most?\n- Does Samah also know FastAPI and Flask?\n- ence while reducing the need for rigid manual filtering.\n- Status | In development / personal product\n- What frontend technologies does Samah prefer?\n- Samah prefers Next.js with React and Tailwind CSS for fronte\n- Python\n- JavaScript\n- TypeScript\n- Django\n- Django REST Framework\n- FastAPI\n- Flask",
+    "applied_filters": {
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 0,
+        "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 9,
+        "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 10,
+        "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      }
+    ]
+  },
+  {
+    "question": "What are Samah’s strongest technical areas?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah’s technical skills (from the uploaded documents):\n- What does Samah do?\n- What are Samah’s strongest technical areas?\n- Summary\n- Has Samah worked with databases?\n- Can Samah design backend APIs?\n- Does Samah have leadership experience?\n- Does Samah work directly with clients or stakeholders?\n- es in the UAE, as well as strong remote opportunities.\n- Can Samah help with backend and AI projects?\n- What kinds of business problems is Samah best at solving?\n- ication, and guiding implementation efforts.\n- What kind of work does Samah enjoy most?\n- What kind of roles fit Samah best?\n- Python\n- Django\n- Django REST Framework\n- FastAPI\n- Flask\n- React\n- Next.js\n- Tailwind CSS\n- PostgreSQL\n- MongoDB\n- MySQL\n- SQL Server",
+    "applied_filters": {
+      "document_type": "faq",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 1,
+        "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 2,
+        "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 0,
+        "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      }
+    ]
+  },
+  {
+    "question": "What does Samah do?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah is an AI Team Lead and AI/ML Engineer with strong full-stack development experience. She builds AI-powered applications, backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms.\n\nKey points:\n- Her strongest technical areas include Python backend development, Django, AI and LLM integration, workflow automation, document understanding pipelines, and full-stack solution delivery using Next.js and React.\n- She is strongest in backend development and AI-focused work, though she also works on frontend development for full-stack products.\n- Samah is well-suited for backend and AI-focused projects, especially those involving Django, APIs, LLM integration, automation, and document intelligence.\n- She excels at solving business problems by automating manual workflows, transforming unstructured data into useful structured outputs, and connecting AI with business operations.\n- Samah has built projects such as a live smart electricity dashboard, an auditing employee payroll system, a spend analysis dashboard with AI classification, and an AI property search chatbot.\n- She has leadership experience as an AI Team Lead, which includes technical solution delivery, project ownership, and stakeholder communication.",
+    "applied_filters": {
+      "document_type": "faq",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 0,
+        "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 8,
+        "chunk_id": "c0ebcff9-c3e2-4cbb-96a2-7075616ee82f",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 4,
+        "chunk_id": "440d3e3c-d340-4cb5-9e98-785a450378df",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 1,
+        "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 2,
+        "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 5,
+        "chunk_id": "bf3d502d-1a84-4ed5-af5e-8e7f1c3ed7e8",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      }
+    ]
+  }
+]

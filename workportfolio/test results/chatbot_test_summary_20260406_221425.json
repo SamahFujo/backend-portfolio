@@ -1,0 +1,88 @@
+[
+  {
+    "question": "i have a new project need skills of power BI can you develop something like that?",
+    "status": "success",
+    "session_id": "3676aa88-8c08-4e83-9540-3e9f03d81b02",
+    "debug_history_count": 1,
+    "retrieval_query": "Develop a Power BI solution for a new project?",
+    "verdict": "supported",
+    "answer": "The available information does not explicitly confirm direct experience with power BI. However, Samah does have strong adjacent experience in dashboard and analytics solution development, backend and API development, AI-enabled and automation-focused solutions, data-driven business system implementation. She may still be a good fit if the project involves similar dashboard, backend, data, or solution-delivery work.",
+    "applied_filters": {
+      "document_type": "projects",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 1,
+        "chunk_id": "e216b069-18a6-49ad-8049-d8077ec56560",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      },
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 0,
+        "chunk_id": "826ce965-065f-4c4b-ad1e-660ff768b581",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      },
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 6,
+        "chunk_id": "095a87f8-cf1e-41b2-99a5-c565f7849145",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      }
+    ]
+  },
+  {
+    "question": "i have a new project using Tableau can she build something like that?",
+    "status": "success",
+    "session_id": "3676aa88-8c08-4e83-9540-3e9f03d81b02",
+    "debug_history_count": 3,
+    "retrieval_query": "Can Samah develop a Tableau-based project?",
+    "verdict": "supported",
+    "answer": "The available information does not explicitly confirm direct experience with Tableau. However, Samah does have strong adjacent experience in dashboard and analytics solution development, backend and API development, full-stack web application delivery, AI-enabled and automation-focused solutions. She may still be a good fit if the project involves similar dashboard, backend, data, or solution-delivery work.",
+    "applied_filters": {
+      "document_type": "projects",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 9,
+        "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      },
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 8,
+        "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      },
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 10,
+        "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      }
+    ]
+  },
+  {
+    "question": "i need someone with Snowflake experience can Samah handle this kind of project?",
+    "status": "success",
+    "session_id": "3676aa88-8c08-4e83-9540-3e9f03d81b02",
+    "debug_history_count": 5,
+    "retrieval_query": "Can Samah handle projects requiring Snowflake experience?",
+    "verdict": "not_enough_evidence",
+    "answer": "There is no explicit mention of Samah having experience with Snowflake in the provided evidence. The listed projects and technologies do not include Snowflake.",
+    "applied_filters": {
+      "document_type": "projects",
+      "only_active_docs": true
+    },
+    "used_sources": []
+  }
+]

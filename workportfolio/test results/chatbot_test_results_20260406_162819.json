@@ -1,0 +1,880 @@
+{
+  "run_at": "2026-04-06T16:28:47.359723",
+  "api_url": "http://127.0.0.1:8000/api/chat/ask/",
+  "total_questions": 5,
+  "results": [
+    {
+      "question": "What are Samah’s skills?",
+      "status": "success",
+      "response": {
+        "session_id": "528b0ffa-b427-4023-9ac6-af5c25c511a7",
+        "message_id": "a31c0687-327d-435b-a30d-4ca81393062c",
+        "retrieval_query": "What are Samah’s skills?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah’s technical skills (from the uploaded documents):\n- Programming Languages: Python\n- Backend: Django, Django REST Framework, FastAPI, Flask\n- Frontend: React, Next.js, Tailwind CSS\n- Databases: PostgreSQL, MongoDB, MySQL, SQL Server, Oracle\n- DevOps / API / Security: Swagger, OpenAPI\n- AI / LLM: Hugging Face, BERT, RoBERTa, T5, LangChain, Ollama, Gemini, RAG, Vector Search\n- OCR / Document Processing: Tesseract, EasyOCR, OpenCV",
+        "citations": [
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "chunk_index": 9,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "1df26f99-5f94-4755-8e6a-c1f31f7f3148",
+            "chunk_index": 6,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "chunk_index": 0,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.289406397623014,
+            "rerank_score": 0.70901912,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "chunk_index": 9,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.3500882178492405,
+            "rerank_score": 0.70578504,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "1df26f99-5f94-4755-8e6a-c1f31f7f3148",
+            "chunk_index": 6,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.49147418090547124,
+            "rerank_score": 0.68846846,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+            "chunk_index": 1,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.44677834054167065,
+            "rerank_score": 0.68087858,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "c0ebcff9-c3e2-4cbb-96a2-7075616ee82f",
+            "chunk_index": 8,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.4489859342575073,
+            "rerank_score": 0.67490816,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "bf3d502d-1a84-4ed5-af5e-8e7f1c3ed7e8",
+            "chunk_index": 5,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.6255382745816354,
+            "rerank_score": 0.6627965,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "doc_title": "cv",
+            "document_type": "cv",
+            "vector_distance": 0.5244121551513672,
+            "rerank_score": 0.64243245,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "440d3e3c-d340-4cb5-9e98-785a450378df",
+            "chunk_index": 4,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.6148137335423747,
+            "rerank_score": 0.61970145,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 0,
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          },
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 9,
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          },
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 6,
+            "chunk_id": "1df26f99-5f94-4755-8e6a-c1f31f7f3148",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          }
+        ],
+        "applied_filters": {
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_skills",
+        "gemini_model_used": null,
+        "gemini_tried_models": []
+      }
+    },
+    {
+      "question": "What technologies does she use?",
+      "status": "success",
+      "response": {
+        "session_id": "5255b5d0-75dd-42f0-b1be-9dcaea4f071d",
+        "message_id": "d0b0e278-1845-4712-ac5e-dfb3274d090c",
+        "retrieval_query": "What technologies does she use?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah’s technical skills (from the uploaded documents):\n- Programming Languages: Python, JavaScript, TypeScript\n- Backend: Django, Django REST Framework, FastAPI, Flask\n- Frontend: React, Next.js, Tailwind CSS, Bootstrap\n- Databases: PostgreSQL, MongoDB, MySQL, SQL Server, Oracle\n- DevOps / API / Security: Docker, NGINX, Gunicorn, JWT, RBAC, Swagger, OpenAPI\n- AI / LLM: Hugging Face, BERT, RoBERTa, T5, LangChain, Langfuse, Ollama, Gemini, RAG, Vector Search\n- OCR / Document Processing: Tesseract, EasyOCR, OpenCV",
+        "citations": [
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+            "chunk_index": 2,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9",
+            "document_title": "where i can help",
+            "chunk_id": "b70b1176-5b1c-42c4-a33d-48e71f10dcbb",
+            "chunk_index": 7,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "440d3e3c-d340-4cb5-9e98-785a450378df",
+            "chunk_index": 4,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+            "chunk_index": 2,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.49829141770175345,
+            "rerank_score": 0.54891527,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "b70b1176-5b1c-42c4-a33d-48e71f10dcbb",
+            "chunk_index": 7,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.7059994427561862,
+            "rerank_score": 0.45519865,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "440d3e3c-d340-4cb5-9e98-785a450378df",
+            "chunk_index": 4,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.6224106100095039,
+            "rerank_score": 0.45181018,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+            "chunk_index": 1,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5481264052541731,
+            "rerank_score": 0.40544873,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "c47958dc-9f8b-44fe-8707-1679c27f2e7d",
+            "chunk_index": 8,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.6603877836812528,
+            "rerank_score": 0.39140594,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "02b926a5-3600-40be-9aab-e1de6834e82c",
+            "chunk_index": 3,
+            "doc_title": "Career Timeline",
+            "document_type": "career_timeline",
+            "vector_distance": 0.6873989794433353,
+            "rerank_score": 0.36658973,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "chunk_index": 9,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.6450181199615594,
+            "rerank_score": 0.33025515,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "c960c68c-574c-45fa-8f70-394397055adb",
+            "chunk_index": 4,
+            "doc_title": "Career Timeline",
+            "document_type": "career_timeline",
+            "vector_distance": 0.6616772505160048,
+            "rerank_score": 0.32852942,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 2,
+            "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          },
+          {
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "chunk_index": 7,
+            "chunk_id": "b70b1176-5b1c-42c4-a33d-48e71f10dcbb",
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+          },
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 4,
+            "chunk_id": "440d3e3c-d340-4cb5-9e98-785a450378df",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          }
+        ],
+        "applied_filters": {
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_skills",
+        "gemini_model_used": null,
+        "gemini_tried_models": []
+      }
+    },
+    {
+      "question": "What is her tech stack?",
+      "status": "success",
+      "response": {
+        "session_id": "b275e155-657c-4fcb-816e-536dd883a44f",
+        "message_id": "599067f0-7c80-41d3-9a3a-c50c071a1c43",
+        "retrieval_query": "What is her tech stack?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah’s technical skills (from the uploaded documents):\n- Programming Languages: Python, JavaScript, TypeScript\n- Backend: Django, Django REST Framework, FastAPI, Flask\n- Frontend: React, Next.js, Tailwind CSS, Bootstrap\n- Databases: Oracle\n- AI / LLM: RAG",
+        "citations": [
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "chunk_index": 9,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+            "chunk_index": 10,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "chunk_index": 0,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.6627194385910188,
+            "rerank_score": 0.30074561,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "chunk_index": 9,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.6349255877821938,
+            "rerank_score": 0.28776783,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+            "chunk_index": 10,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.6295321804563885,
+            "rerank_score": 0.27669051,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+            "chunk_index": 1,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.547310902258427,
+            "rerank_score": 0.24798745,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "eaffcc26-49cc-407a-a0b4-013c49b0aff0",
+            "chunk_index": 12,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.6123724214808683,
+            "rerank_score": 0.23370637,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+            "chunk_index": 2,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5479758977889982,
+            "rerank_score": 0.22270013,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 0,
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          },
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 9,
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          },
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 10,
+            "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          }
+        ],
+        "applied_filters": {
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_skills",
+        "gemini_model_used": null,
+        "gemini_tried_models": []
+      }
+    },
+    {
+      "question": "What are Samah’s strongest technical areas?",
+      "status": "success",
+      "response": {
+        "session_id": "e13d1f63-b7cc-43a9-b117-70eaf828d4bf",
+        "message_id": "d92c2076-e6bc-43ae-bfe6-19fd5c4bc872",
+        "retrieval_query": "What are Samah’s strongest technical areas?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah’s technical skills (from the uploaded documents):\n- Programming Languages: Python\n- Backend: Django, Django REST Framework, FastAPI, Flask\n- Frontend: React, Next.js, Tailwind CSS\n- Databases: PostgreSQL, MongoDB, MySQL, SQL Server, Oracle\n- AI / LLM: T5, LangChain, Ollama, Gemini, RAG, Vector Search",
+        "citations": [
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+            "chunk_index": 2,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+            "chunk_index": 1,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.25657735039524254,
+            "rerank_score": 0.72252703,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+            "chunk_index": 2,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.35919984335898303,
+            "rerank_score": 0.71859437,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "chunk_index": 0,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.31737325541297334,
+            "rerank_score": 0.71462798,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "chunk_index": 9,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.33574483777613295,
+            "rerank_score": 0.70901912,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "bf3d502d-1a84-4ed5-af5e-8e7f1c3ed7e8",
+            "chunk_index": 5,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5411368559435745,
+            "rerank_score": 0.70007521,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "c0ebcff9-c3e2-4cbb-96a2-7075616ee82f",
+            "chunk_index": 8,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.37736284732818604,
+            "rerank_score": 0.68257374,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "1df26f99-5f94-4755-8e6a-c1f31f7f3148",
+            "chunk_index": 6,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.4489031701626274,
+            "rerank_score": 0.66627967,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "69dd03be-6961-43b4-8e58-20a0feb96594",
+            "chunk_index": 7,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5053867101669312,
+            "rerank_score": 0.55904937,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 1,
+            "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          },
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 2,
+            "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          },
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 0,
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "faq",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_skills",
+        "gemini_model_used": null,
+        "gemini_tried_models": []
+      }
+    },
+    {
+      "question": "What does Samah do?",
+      "status": "success",
+      "response": {
+        "session_id": "2749c1f5-adb5-44bf-ab60-403b7900de23",
+        "message_id": "86f26f80-65be-4844-a268-83dc0af86e7a",
+        "retrieval_query": "What does Samah do?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah is an AI Team Lead and AI/ML Engineer with strong full-stack development experience. She builds AI-powered applications, backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms.\n\nKey points:\n- She is strongest in backend development and AI-focused work.\n- Samah excels at solving business problems by automating manual workflows, turning unstructured data into useful structured outputs, and connecting AI with business operations.\n- Her technical areas include Python backend development, Django, AI and LLM integration, workflow automation, and full-stack solution delivery using Next.js and React.\n- She has built projects such as a live smart electricity dashboard, an auditing employee payroll system, a spend analysis dashboard with AI classification, and an AI property search chatbot.\n- Samah has leadership experience as an AI Team Lead, involving technical solution delivery, project ownership, and stakeholder communication.\n- She is especially well-suited for backend and AI-focused projects, particularly those involving Django, APIs, LLM integration, automation, and document intelligence.",
+        "citations": [
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+            "chunk_index": 2,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "c0ebcff9-c3e2-4cbb-96a2-7075616ee82f",
+            "chunk_index": 8,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "440d3e3c-d340-4cb5-9e98-785a450378df",
+            "chunk_index": 4,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "bf3d502d-1a84-4ed5-af5e-8e7f1c3ed7e8",
+            "chunk_index": 5,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "chunk_index": 0,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.23789222466303261,
+            "rerank_score": 0.74167407,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "1df26f99-5f94-4755-8e6a-c1f31f7f3148",
+            "chunk_index": 6,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.4615239615610801,
+            "rerank_score": 0.71859437,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "chunk_index": 9,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.33511950567008275,
+            "rerank_score": 0.70659554,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "c0ebcff9-c3e2-4cbb-96a2-7075616ee82f",
+            "chunk_index": 8,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.40682409426045674,
+            "rerank_score": 0.67747402,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "440d3e3c-d340-4cb5-9e98-785a450378df",
+            "chunk_index": 4,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.599683916549916,
+            "rerank_score": 0.66454029,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+            "chunk_index": 1,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5221158577272806,
+            "rerank_score": 0.6215409,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+            "chunk_index": 2,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5277280683274328,
+            "rerank_score": 0.60952419,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "bf3d502d-1a84-4ed5-af5e-8e7f1c3ed7e8",
+            "chunk_index": 5,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.6726375514890917,
+            "rerank_score": 0.608594,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 0,
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          },
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 2,
+            "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          },
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 8,
+            "chunk_id": "c0ebcff9-c3e2-4cbb-96a2-7075616ee82f",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          },
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 1,
+            "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          },
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 4,
+            "chunk_id": "440d3e3c-d340-4cb5-9e98-785a450378df",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          },
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 5,
+            "chunk_id": "bf3d502d-1a84-4ed5-af5e-8e7f1c3ed7e8",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "faq",
+          "only_active_docs": true
+        },
+        "answer_source": null,
+        "extractor_used": null,
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ]
+      }
+    }
+  ]
+}

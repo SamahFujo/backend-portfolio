@@ -1,0 +1,98 @@
+[
+  {
+    "question": "What is her tech stack?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah’s technical skills:\n- Programming Languages: Python, JavaScript, TypeScript\n- Backend: Django, Django REST Framework, FastAPI, Flask\n- Frontend: React, Next.js, Tailwind CSS, Bootstrap\n- Databases: PostgreSQL, MongoDB, MySQL, SQL Server, Oracle\n- DevOps / API / Security: Docker, NGINX, Gunicorn, JWT, RBAC, Swagger, OpenAPI\n- AI / LLM: Hugging Face, BERT, RoBERTa, T5, LangChain, Langfuse, Ollama, Gemini, RAG, Vector Search\n- OCR / Document Processing: Tesseract, EasyOCR, OpenCV",
+    "applied_filters": {
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 5,
+        "chunk_id": "bf3d502d-1a84-4ed5-af5e-8e7f1c3ed7e8",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "cv",
+        "document_type": "cv",
+        "chunk_index": 0,
+        "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+        "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 1,
+        "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      }
+    ]
+  },
+  {
+    "question": "What technologies does she use?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah’s technical skills:\n- Programming Languages: Python, JavaScript\n- Backend: Django, Django REST Framework, FastAPI, Flask\n- Frontend: React, Next.js, Tailwind CSS, Bootstrap\n- Databases: PostgreSQL, MongoDB, MySQL, SQL Server, Oracle\n- DevOps / API / Security: Swagger, OpenAPI\n- AI / LLM: Hugging Face, BERT, RoBERTa, T5, LangChain, Ollama, Gemini, RAG, Vector Search\n- OCR / Document Processing: Tesseract, EasyOCR, OpenCV",
+    "applied_filters": {
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "cv",
+        "document_type": "cv",
+        "chunk_index": 0,
+        "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+        "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 1,
+        "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 5,
+        "chunk_id": "bf3d502d-1a84-4ed5-af5e-8e7f1c3ed7e8",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      }
+    ]
+  },
+  {
+    "question": "What frameworks does Samah use?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah’s technical skills:\n- Programming Languages: Python, TypeScript\n- Backend: Django, Django REST Framework, FastAPI, Flask\n- Frontend: React, Next.js, Tailwind CSS\n- Databases: PostgreSQL, MongoDB, MySQL, SQL Server, Oracle\n- DevOps / API / Security: Swagger, OpenAPI\n- AI / LLM: Hugging Face, BERT, RoBERTa, T5, LangChain, Ollama, Gemini, RAG, Vector Search\n- OCR / Document Processing: Tesseract, EasyOCR, OpenCV",
+    "applied_filters": {
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 1,
+        "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 5,
+        "chunk_id": "bf3d502d-1a84-4ed5-af5e-8e7f1c3ed7e8",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 2,
+        "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      }
+    ]
+  }
+]

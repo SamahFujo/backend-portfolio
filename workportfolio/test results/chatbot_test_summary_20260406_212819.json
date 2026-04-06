@@ -1,0 +1,165 @@
+[
+  {
+    "question": "i have a new project need skills of power BI can you develop something like that?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Samah’s technical skills:\n- Programming Languages: Python\n- Databases: Oracle\n- AI / LLM: Ollama, Gemini",
+    "applied_filters": {
+      "document_type": "projects",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 6,
+        "chunk_id": "095a87f8-cf1e-41b2-99a5-c565f7849145",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      },
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 1,
+        "chunk_id": "e216b069-18a6-49ad-8049-d8077ec56560",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      },
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 2,
+        "chunk_id": "b7ffbf09-d9a2-4e80-978d-e760bdb718c3",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      }
+    ]
+  },
+  {
+    "question": "what is her hourly rate?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Compensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement.",
+    "applied_filters": {
+      "document_type": "compensation",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 0,
+        "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 1,
+        "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 5,
+        "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      }
+    ]
+  },
+  {
+    "question": "so she didn't have experience in power bi",
+    "status": "success",
+    "verdict": "not_enough_evidence",
+    "answer": "The provided evidence does not explicitly state whether Samah has experience with Power BI. While she has experience building interactive dashboards and data-driven business systems, the specific tools mentioned for visualization are Python and Dash/Plotly.",
+    "applied_filters": {
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 1,
+        "chunk_id": "e216b069-18a6-49ad-8049-d8077ec56560",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 4,
+        "chunk_id": "440d3e3c-d340-4cb5-9e98-785a450378df",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      }
+    ]
+  },
+  {
+    "question": "what is her hourly rate?",
+    "status": "success",
+    "verdict": "supported",
+    "answer": "Compensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement.",
+    "applied_filters": {
+      "document_type": "compensation",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 0,
+        "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 1,
+        "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 5,
+        "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      }
+    ]
+  },
+  {
+    "question": "how can i discuss it and with who?",
+    "status": "success",
+    "verdict": "not_enough_evidence",
+    "answer": "The provided evidence does not specify how you can discuss a topic with Samah or who you should discuss it with. While it details Samah's preferences for compensation discussions, it does not offer general contact information or a method for initiating a discussion.",
+    "applied_filters": {
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 1,
+        "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 4,
+        "chunk_id": "71551d7b-c52a-4118-b2b5-b05e383c9e1a",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 5,
+        "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "recommendation",
+        "document_type": "recommendation",
+        "chunk_index": 2,
+        "chunk_id": "dcfc9384-f003-41df-95fe-d6bdb3fd0e3a",
+        "document_id": "925cae06-632d-4e16-8826-1d0643e63d04"
+      }
+    ]
+  }
+]

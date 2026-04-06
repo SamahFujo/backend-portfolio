@@ -1,0 +1,801 @@
+{
+  "run_at": "2026-04-06T22:11:33.671236",
+  "api_url": "http://127.0.0.1:8000/api/chat/ask/",
+  "total_questions": 5,
+  "final_session_id": "a8f99d10-c119-48d3-80a9-5f44f6335b87",
+  "results": [
+    {
+      "question": "i have a new project need skills of power BI can you develop something like that?",
+      "status": "success",
+      "response": {
+        "session_id": "a8f99d10-c119-48d3-80a9-5f44f6335b87",
+        "message_id": "ef2a792d-63db-4e2e-b2cd-a06af8c9ff75",
+        "retrieval_query": "Develop a Power BI solution for a new project?",
+        "rewrite_notes": "This query focuses on the core need for a Power BI development project.",
+        "verdict": "supported",
+        "answer": "The available information does not explicitly confirm direct experience with power BI can you develop something like that. However, Samah does have strong adjacent experience in dashboard and analytics solution development, backend and API development, AI-enabled and automation-focused solutions, data-driven business system implementation. She may still be a good fit if the project involves similar dashboard, backend, data, or solution-delivery work.",
+        "citations": [
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "e216b069-18a6-49ad-8049-d8077ec56560",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "826ce965-065f-4c4b-ad1e-660ff768b581",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "095a87f8-cf1e-41b2-99a5-c565f7849145",
+            "chunk_index": 6,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "e216b069-18a6-49ad-8049-d8077ec56560",
+            "chunk_index": 1,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.5604768395423889,
+            "rerank_score": 0.34864512,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "826ce965-065f-4c4b-ad1e-660ff768b581",
+            "chunk_index": 0,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.5704993861616017,
+            "rerank_score": 0.33807713,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "095a87f8-cf1e-41b2-99a5-c565f7849145",
+            "chunk_index": 6,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.7236744792849427,
+            "rerank_score": 0.3328523,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "b7ffbf09-d9a2-4e80-978d-e760bdb718c3",
+            "chunk_index": 2,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.647027213782883,
+            "rerank_score": 0.31573597,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 1,
+            "chunk_id": "e216b069-18a6-49ad-8049-d8077ec56560",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          },
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 0,
+            "chunk_id": "826ce965-065f-4c4b-ad1e-660ff768b581",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          },
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 6,
+            "chunk_id": "095a87f8-cf1e-41b2-99a5-c565f7849145",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "projects",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_project_fit",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "debug_history_count": 1,
+        "debug_recent_history": [
+          {
+            "role": "user",
+            "content": "i have a new project need skills of power BI can you develop something like that?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "i have a new project using Tableau can she build something like that?",
+      "status": "success",
+      "response": {
+        "session_id": "a8f99d10-c119-48d3-80a9-5f44f6335b87",
+        "message_id": "61340e35-2508-41a4-8547-0455cac8b24d",
+        "retrieval_query": "Can Samah build a Tableau-based project like this?",
+        "rewrite_notes": "Focuses on the user's specific project type (Tableau) and asks for assistance with building a similar project.",
+        "verdict": "supported",
+        "answer": "The available information does not explicitly confirm direct experience with Tableau can she build something like that. However, Samah does have strong adjacent experience in dashboard and analytics solution development, backend and API development, full-stack web application delivery, AI-enabled and automation-focused solutions. She may still be a good fit if the project involves similar dashboard, backend, data, or solution-delivery work.",
+        "citations": [
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+            "chunk_index": 9,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+            "chunk_index": 8,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+            "chunk_index": 10,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+            "chunk_index": 9,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.516617939371405,
+            "rerank_score": 0.5278033,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+            "chunk_index": 8,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.5233543515205383,
+            "rerank_score": 0.4807224,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+            "chunk_index": 10,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.5552639067173004,
+            "rerank_score": 0.40403706,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "1ffaa1ce-a644-4aac-b31f-c5b3be7ccb77",
+            "chunk_index": 7,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.6290929759629967,
+            "rerank_score": 0.31912139,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 9,
+            "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          },
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 8,
+            "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          },
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 10,
+            "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "projects",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_project_fit",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "debug_history_count": 3,
+        "debug_recent_history": [
+          {
+            "role": "user",
+            "content": "i have a new project need skills of power BI can you develop something like that?"
+          },
+          {
+            "role": "assistant",
+            "content": "The available information does not explicitly confirm direct experience with power BI can you develop something like that. However, Samah does have strong adjacent experience in dashboard and analytics solution development, backend and API development, AI-enabled and automation-focused solutions, data-driven business system implementation. She may still be a good fit if the project involves similar dashboard, backend, data, or solution-delivery work."
+          },
+          {
+            "role": "user",
+            "content": "i have a new project using Tableau can she build something like that?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "i need someone with Snowflake experience can Samah handle this kind of project?",
+      "status": "success",
+      "response": {
+        "session_id": "a8f99d10-c119-48d3-80a9-5f44f6335b87",
+        "message_id": "bfb8f8a2-023a-4650-9b75-240bc3d679d0",
+        "retrieval_query": "Can Samah handle projects requiring Snowflake experience?",
+        "rewrite_notes": "Focuses on the core need of Snowflake experience.",
+        "verdict": "not_enough_evidence",
+        "answer": "There is no explicit mention of Samah having Snowflake experience in the provided evidence. The listed projects utilize technologies such as Python, SQL, Oracle Database, Next.js, TypeScript, and Django API, but Snowflake is not among them.",
+        "citations": [
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+            "chunk_index": 8,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+            "chunk_index": 10,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "1ffaa1ce-a644-4aac-b31f-c5b3be7ccb77",
+            "chunk_index": 7,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+            "chunk_index": 9,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+            "chunk_index": 8,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.6384412836563969,
+            "rerank_score": 0.4016878,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+            "chunk_index": 10,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.552192704444906,
+            "rerank_score": 0.34598863,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "1ffaa1ce-a644-4aac-b31f-c5b3be7ccb77",
+            "chunk_index": 7,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.6664399206841025,
+            "rerank_score": 0.26740819,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+            "chunk_index": 9,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.575445626702644,
+            "rerank_score": 0.24364243,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 8,
+            "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          },
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 10,
+            "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          },
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 7,
+            "chunk_id": "1ffaa1ce-a644-4aac-b31f-c5b3be7ccb77",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          },
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 9,
+            "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "projects",
+          "only_active_docs": true
+        },
+        "answer_source": null,
+        "extractor_used": null,
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ],
+        "debug_history_count": 5,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "The available information does not explicitly confirm direct experience with power BI can you develop something like that. However, Samah does have strong adjacent experience in dashboard and analytics solution development, backend and API development, AI-enabled and automation-focused solutions, data-driven business system implementation. She may still be a good fit if the project involves similar dashboard, backend, data, or solution-delivery work."
+          },
+          {
+            "role": "user",
+            "content": "i have a new project using Tableau can she build something like that?"
+          },
+          {
+            "role": "assistant",
+            "content": "The available information does not explicitly confirm direct experience with Tableau can she build something like that. However, Samah does have strong adjacent experience in dashboard and analytics solution development, backend and API development, full-stack web application delivery, AI-enabled and automation-focused solutions. She may still be a good fit if the project involves similar dashboard, backend, data, or solution-delivery work."
+          },
+          {
+            "role": "user",
+            "content": "i need someone with Snowflake experience can Samah handle this kind of project?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "can she build this kind of data platform?",
+      "status": "success",
+      "response": {
+        "session_id": "a8f99d10-c119-48d3-80a9-5f44f6335b87",
+        "message_id": "2f9cc23a-7cc2-455b-9a77-36debd3e1483",
+        "retrieval_query": "Can she build this kind of data platform?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "yes",
+        "answer": "Yes, Samah can build data platforms, including dashboard and analytics platforms, as well as monitoring dashboards with alerts, forecasts, and visual insights. She can also build data and AI-powered business systems to automate tasks and improve decision-making.\n\nKey points:\n- She can create responsive dashboards for analytics, monitoring, and business insights.\n- Her capabilities include building systems for procurement and spend analysis.\n- She can develop payroll auditing and anomaly detection systems.\n- Samah can build backend systems and APIs using Python, which are essential for data platforms.\n- She is proficient in technologies like PostgreSQL, MongoDB, MySQL, SQL Server, and Oracle for databases.\n- She can connect AI capabilities with practical web applications, including those for data analysis.",
+        "citations": [
+          {
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9",
+            "document_title": "where i can help",
+            "chunk_id": "a4fe1a5e-02dc-479d-b070-e006bb5f5d94",
+            "chunk_index": 3,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9",
+            "document_title": "where i can help",
+            "chunk_id": "b70b1176-5b1c-42c4-a33d-48e71f10dcbb",
+            "chunk_index": 7,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9",
+            "document_title": "where i can help",
+            "chunk_id": "ab0c6e80-01cc-44da-ab21-223ff64e1e3d",
+            "chunk_index": 2,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9",
+            "document_title": "where i can help",
+            "chunk_id": "ba2298c5-b8fe-47f5-87a4-d049c1bfa3ad",
+            "chunk_index": 4,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9",
+            "document_title": "where i can help",
+            "chunk_id": "5704c60d-b39b-4e26-b93d-10050089e6c9",
+            "chunk_index": 11,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9",
+            "document_title": "where i can help",
+            "chunk_id": "c47958dc-9f8b-44fe-8707-1679c27f2e7d",
+            "chunk_index": 8,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "a4fe1a5e-02dc-479d-b070-e006bb5f5d94",
+            "chunk_index": 3,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.6606763904682011,
+            "rerank_score": 0.30239108,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "ec033764-6477-4d7f-aa57-ed8d25870755",
+            "chunk_index": 1,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.7522860913106109,
+            "rerank_score": 0.24077459,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "b70b1176-5b1c-42c4-a33d-48e71f10dcbb",
+            "chunk_index": 7,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.6987649324500722,
+            "rerank_score": 0.23091978,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "ab0c6e80-01cc-44da-ab21-223ff64e1e3d",
+            "chunk_index": 2,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.7079433674846025,
+            "rerank_score": 0.22135067,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "ba2298c5-b8fe-47f5-87a4-d049c1bfa3ad",
+            "chunk_index": 4,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.7023179797245845,
+            "rerank_score": 0.18126321,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "5704c60d-b39b-4e26-b93d-10050089e6c9",
+            "chunk_index": 11,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.7199471759827583,
+            "rerank_score": 0.15304215,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "c47958dc-9f8b-44fe-8707-1679c27f2e7d",
+            "chunk_index": 8,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.7997238576741375,
+            "rerank_score": 0.12421302,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "chunk_index": 3,
+            "chunk_id": "a4fe1a5e-02dc-479d-b070-e006bb5f5d94",
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+          },
+          {
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "chunk_index": 7,
+            "chunk_id": "b70b1176-5b1c-42c4-a33d-48e71f10dcbb",
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+          },
+          {
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "chunk_index": 2,
+            "chunk_id": "ab0c6e80-01cc-44da-ab21-223ff64e1e3d",
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+          },
+          {
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "chunk_index": 4,
+            "chunk_id": "ba2298c5-b8fe-47f5-87a4-d049c1bfa3ad",
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+          },
+          {
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "chunk_index": 11,
+            "chunk_id": "5704c60d-b39b-4e26-b93d-10050089e6c9",
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+          },
+          {
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "chunk_index": 8,
+            "chunk_id": "c47958dc-9f8b-44fe-8707-1679c27f2e7d",
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "capabilities",
+          "only_active_docs": true
+        },
+        "answer_source": null,
+        "extractor_used": null,
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "The available information does not explicitly confirm direct experience with Tableau can she build something like that. However, Samah does have strong adjacent experience in dashboard and analytics solution development, backend and API development, full-stack web application delivery, AI-enabled and automation-focused solutions. She may still be a good fit if the project involves similar dashboard, backend, data, or solution-delivery work."
+          },
+          {
+            "role": "user",
+            "content": "i need someone with Snowflake experience can Samah handle this kind of project?"
+          },
+          {
+            "role": "assistant",
+            "content": "There is no explicit mention of Samah having Snowflake experience in the provided evidence. The listed projects utilize technologies such as Python, SQL, Oracle Database, Next.js, TypeScript, and Django API, but Snowflake is not among them."
+          },
+          {
+            "role": "user",
+            "content": "can she build this kind of data platform?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "is she a fit for this project?",
+      "status": "success",
+      "response": {
+        "session_id": "a8f99d10-c119-48d3-80a9-5f44f6335b87",
+        "message_id": "bcfd3ebd-50ba-4535-9d77-a89ba1462eb4",
+        "retrieval_query": "Is Samah a fit for this project?",
+        "rewrite_notes": "The user is asking if Samah is suitable for the project.",
+        "verdict": "supported",
+        "answer": "Samah appears to be a reasonable fit for this kind of project based on her background in dashboard and analytics solution development, backend and API development, full-stack web application delivery, AI-enabled and automation-focused solutions. The exact fit would depend on the required tools, implementation scope, and whether the project needs a highly specialized technology.",
+        "citations": [
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+            "chunk_index": 9,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+            "chunk_index": 8,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+            "chunk_index": 10,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+            "chunk_index": 9,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.5366038818179386,
+            "rerank_score": 0.50729316,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+            "chunk_index": 8,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.6288275939924952,
+            "rerank_score": 0.44143218,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+            "chunk_index": 10,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.7149670889993252,
+            "rerank_score": 0.43878523,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "1ffaa1ce-a644-4aac-b31f-c5b3be7ccb77",
+            "chunk_index": 7,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.7122844376055406,
+            "rerank_score": 0.28616926,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 9,
+            "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          },
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 8,
+            "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          },
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 10,
+            "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "projects",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_project_fit",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "There is no explicit mention of Samah having Snowflake experience in the provided evidence. The listed projects utilize technologies such as Python, SQL, Oracle Database, Next.js, TypeScript, and Django API, but Snowflake is not among them."
+          },
+          {
+            "role": "user",
+            "content": "can she build this kind of data platform?"
+          },
+          {
+            "role": "assistant",
+            "content": "Yes, Samah can build data platforms, including dashboard and analytics platforms, as well as monitoring dashboards with alerts, forecasts, and visual insights. She can also build data and AI-powered business systems to automate tasks and improve decision-making.\n\nKey points:\n- She can create responsive dashboards for analytics, monitoring, and business insights.\n- Her capabilities include building systems for procurement and spend analysis.\n- She can develop payroll auditing and anomaly detection systems.\n- Samah can build backend systems and APIs using Python, which are essential for data platforms.\n- She is proficient in technologies like PostgreSQL, MongoDB, MySQL, SQL Server, and Oracle for databases.\n- She can connect AI capabilities with practical web applications, including those for data analysis."
+          },
+          {
+            "role": "user",
+            "content": "is she a fit for this project?"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "run_at": "2026-04-03T17:16:34.411829",
+  "api_url": "http://127.0.0.1:8000/api/chat/ask/",
+  "total_questions": 1,
+  "results": [
+    {
+      "question": "Is Samah open to freelance work? and what is the hourly rate if yes?",
+      "status": "success",
+      "response": {
+        "session_id": "35533aa1-5450-4746-afd5-3df3fbe4d840",
+        "message_id": "a7b23b0a-c34e-435c-8407-e40cf5b6c9d3",
+        "retrieval_query": "Is Samah interested in freelance work? And what is the hourly rate if yes?",
+        "rewrite_notes": "The query is straightforward and maintains the original meaning and intent. No changes are needed.",
+        "verdict": "supported",
+        "answer": "Samah is open to freelance and project-based work.",
+        "citations": [
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "chunk_index": 2,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "dbb70998-a6d8-445d-a1f9-98c54b0764df",
+            "chunk_index": 3,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.5180678942122585,
+            "rerank_score": 0.1732882,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "chunk_index": 2,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.6126492984681842,
+            "rerank_score": 0.17217185,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "dbb70998-a6d8-445d-a1f9-98c54b0764df",
+            "chunk_index": 3,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.7204681932926158,
+            "rerank_score": 0.10818896,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+            "chunk_index": 1,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.6128528829558809,
+            "rerank_score": 0.07807817,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+            "chunk_index": 0,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.6651360493736208,
+            "rerank_score": 0.06465349,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "71551d7b-c52a-4118-b2b5-b05e383c9e1a",
+            "chunk_index": 4,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.6528231112466383,
+            "rerank_score": 0.02716923,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 5,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 2,
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 3,
+            "chunk_id": "dbb70998-a6d8-445d-a1f9-98c54b0764df",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "compensation",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_availability",
+        "gemini_model_used": null,
+        "gemini_tried_models": []
+      }
+    }
+  ]
+}
