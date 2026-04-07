@@ -1,21 +1,26 @@
+import logging
+
+from django.conf import settings
 from .services.resend_contact_email import send_get_in_touch_email
 from .serializers import GetInTouchSerializer
-from rest_framework.authentication import BasicAuthentication, SessionAuthentication
-from django.conf import settings
 from .serializers import AskQuestionSerializer
 from .models import ChatSession, ChatMessage, ProfileDocument, DocumentChunk
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import AllowAny
-from rest_framework.throttling import AnonRateThrottle
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.authentication import SessionAuthentication
 from .serializers import StartProjectRequestSerializer, ProfileDocumentUploadSerializer, ProfileDocumentSerializer
 from .services.resend_email import send_start_project_email
 from .services.documents.ingestion_service import IngestionService
 from .services.chatbot.hybrid_query_rewriter import GeminiQueryRewriter
 from .services.chatbot.smart_chat_intents import SmartChatIntentService
 from .services.chatbot.profile_qa_service import ProfileQAService
+from .permissions import HasInternalAPIKey
+from .throttles import ChatRateThrottle, ContactRateThrottle, UploadRateThrottle
+
+
+logger = logging.getLogger(__name__)
 
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
@@ -33,10 +38,8 @@ class CsrfExemptSessionAuthentication(SessionAuthentication):
 
 class StartProjectRequestView(APIView):
     permission_classes = [AllowAny]
-    authentication_classes = [
-        CsrfExemptSessionAuthentication, BasicAuthentication]
-    # optional, but nice if DRF throttling is configured
-    throttle_classes = [AnonRateThrottle]
+    authentication_classes = [CsrfExemptSessionAuthentication]
+    throttle_classes = [ContactRateThrottle]
 
     def post(self, request, *args, **kwargs):
         serializer = StartProjectRequestSerializer(data=request.data)
@@ -53,13 +56,12 @@ class StartProjectRequestView(APIView):
                 },
                 status=status.HTTP_200_OK,
             )
-        except Exception as e:
-            # Keep response user-friendly, log detailed error server-side in production
+        except Exception:
+            logger.exception("Failed to send project request email")
             return Response(
                 {
                     "success": False,
                     "message": "Could not send project request email right now. Please try again later.",
-                    "error": str(e),  # You can remove this in production
                 },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
@@ -71,9 +73,8 @@ class StartProjectRequestView(APIView):
 
 class GetInTouchView(APIView):
     permission_classes = [AllowAny]
-    authentication_classes = [
-        CsrfExemptSessionAuthentication, BasicAuthentication]
-    throttle_classes = [AnonRateThrottle]
+    authentication_classes = [CsrfExemptSessionAuthentication]
+    throttle_classes = [ContactRateThrottle]
 
     def post(self, request, *args, **kwargs):
         serializer = GetInTouchSerializer(data=request.data)
@@ -90,12 +91,12 @@ class GetInTouchView(APIView):
                 },
                 status=status.HTTP_200_OK,
             )
-        except Exception as e:
+        except Exception:
+            logger.exception("Failed to send get-in-touch email")
             return Response(
                 {
                     "success": False,
                     "message": "Could not send your message right now. Please try again later.",
-                    "error": str(e),  # remove in production
                 },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
@@ -105,6 +106,8 @@ class GetInTouchView(APIView):
 
 
 class ProfileDocumentStatsAPIView(APIView):
+    permission_classes = [HasInternalAPIKey]
+
     def get(self, request, doc_id, *args, **kwargs):
         doc = ProfileDocument.objects.filter(id=doc_id).first()
         if not doc:
@@ -144,6 +147,8 @@ class AskAboutMeAPIView(APIView):
         * Gemini grounded fallback
     - Save assistant message
     """
+
+    throttle_classes = [ChatRateThrottle]
 
     def post(self, request, *args, **kwargs):
         # 1) Validate input
@@ -197,7 +202,7 @@ class AskAboutMeAPIView(APIView):
                 confidence_score=quick.confidence,
             )
             return Response(
-                {
+                self._with_optional_debug({
                     "session_id": str(session.id),
                     "message_id": str(assistant_message.id),
                     "answer": quick.reply,
@@ -205,10 +210,7 @@ class AskAboutMeAPIView(APIView):
                     "confidence": quick.confidence,
                     "mode": quick.intent,
                     "intent_source": quick.source,
-                    "retrieval_debug": [],
-                    "debug_history_count": len(recent_history),
-                    "debug_recent_history": recent_history[-4:],
-                },
+                }, retrieval_debug=[], debug_history_count=len(recent_history), debug_recent_history=recent_history[-4:]),
                 status=status.HTTP_200_OK
             )
 
@@ -268,7 +270,7 @@ class AskAboutMeAPIView(APIView):
 
         # 10) Return response
         return Response(
-            {
+            self._with_optional_debug({
                 "session_id": str(session.id),
                 "message_id": str(assistant_message.id),
                 "retrieval_query": retrieval_query,
@@ -276,24 +278,29 @@ class AskAboutMeAPIView(APIView):
                 "verdict": verdict,
                 "answer": answer_text,
                 "citations": citations,
-                "retrieval_debug": retrieval_debug,
-                "used_sources": used_sources,
                 "applied_filters": qa_result.get("applied_filters"),
                 "answer_source": meta.get("answer_source"),
                 "extractor_used": meta.get("extractor_used"),
                 "gemini_model_used": meta.get("model_used"),
                 "gemini_tried_models": meta.get("tried_models"),
-                "debug_history_count": len(recent_history),
-                "debug_recent_history": recent_history[-4:],
-            },
+            }, retrieval_debug=retrieval_debug, used_sources=used_sources, debug_history_count=len(recent_history), debug_recent_history=recent_history[-4:]),
             status=status.HTTP_200_OK
         )
+
+    @staticmethod
+    def _with_optional_debug(payload, **debug_fields):
+        if settings.DEBUG:
+            payload.update(debug_fields)
+        return payload
 
 
 class ProfileDocumentUploadAPIView(APIView):
     """
     Upload a profile-related document and process it immediately.
     """
+
+    permission_classes = [HasInternalAPIKey]
+    throttle_classes = [UploadRateThrottle]
 
     def post(self, request, *args, **kwargs):
         serializer = ProfileDocumentUploadSerializer(data=request.data)
@@ -312,6 +319,8 @@ class ProfileDocumentListAPIView(APIView):
     """
     List all uploaded profile documents.
     """
+
+    permission_classes = [HasInternalAPIKey]
 
     def get(self, request, *args, **kwargs):
         documents = ProfileDocument.objects.all().order_by("-created_at")

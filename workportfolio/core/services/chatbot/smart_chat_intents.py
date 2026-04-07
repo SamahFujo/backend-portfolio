@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from typing import Dict, Any
 
 from django.conf import settings
-from core.services.llm.gemini_client import GeminiClient
+from core.services.llm.router import LLMRouter
 
 
 @dataclass(frozen=True)
@@ -42,7 +42,6 @@ class SmartChatIntentService:
         re.I,
     )
 
-    # Narrowed generic help intent
     _help_hint = re.compile(
         r"\b("
         r"what can you do|"
@@ -55,8 +54,6 @@ class SmartChatIntentService:
         re.I,
     )
 
-    # If the question is clearly about Samah/profile/capabilities,
-    # do not trap it as generic assistant help.
     _profile_question_hint = re.compile(
         r"\b("
         r"samah|she|her|build|project|projects|experience|skills|"
@@ -72,6 +69,8 @@ class SmartChatIntentService:
     _arabic_bye_hint = re.compile(r"\b(مع السلامه|سلام)\b", re.I)
     _arabic_thanks_hint = re.compile(r"\b(شكرا|مشكور)\b", re.I)
 
+    ALLOWED_INTENTS = {"greeting", "goodbye", "thanks", "help", "other"}
+
     @classmethod
     def detect(cls, message: str) -> SmartIntentResult:
         msg = (message or "").strip()
@@ -86,8 +85,7 @@ class SmartChatIntentService:
             )
 
         h = cls._heuristic_classify(msg)
-
-        # If confident and not a normal content question, handle here
+        
         if h["confidence"] >= 0.75 and h["intent"] != "other":
             return SmartIntentResult(
                 handled=True,
@@ -97,9 +95,8 @@ class SmartChatIntentService:
                 source="heuristic",
             )
 
-        # Gemini fallback disabled for now
-        if cls._should_use_gemini(msg, h):
-            g = cls._gemini_classify(msg)
+        if cls._should_use_llm(msg, h):
+            g = cls._llm_classify(msg)
 
             if g["intent"] != "other":
                 return SmartIntentResult(
@@ -136,7 +133,6 @@ class SmartChatIntentService:
             "other": 0.0,
         }
 
-        # Short messages are often greetings/thanks/goodbye
         if token_count <= 3 or char_count <= 15:
             scores["greeting"] += 0.15
             scores["thanks"] += 0.10
@@ -158,13 +154,10 @@ class SmartChatIntentService:
         if cls._help_hint.search(text):
             scores["help"] += 0.55
 
-        # If this looks like a real question about Samah/profile/capabilities,
-        # reduce generic help score so retrieval can handle it.
         if cls._profile_question_hint.search(text):
             scores["help"] -= 0.35
             scores["other"] += 0.20
 
-        # Longer question-like text is more likely to be a real content query
         if "?" in text and token_count > 4:
             scores["other"] += 0.25
 
@@ -173,7 +166,6 @@ class SmartChatIntentService:
 
         confidence = min(0.95, 0.4 + max(best_score, 0.0))
 
-        # If score is too weak, let retrieval handle it
         if best_score < 0.35:
             best_intent = "other"
             confidence = 0.45
@@ -185,49 +177,79 @@ class SmartChatIntentService:
         }
 
     @classmethod
-    def _should_use_gemini(cls, msg: str, heuristic: Dict[str, Any]) -> bool:
-        return False
+    def _should_use_llm(cls, msg: str, heuristic: Dict[str, Any]) -> bool:
+        low = msg.lower().strip()
+        tokens = re.findall(r"\b\w+\b", low)
 
-        # Re-enable later if needed:
-        # low = msg.lower().strip()
-        # tokens = re.findall(r"\b\w+\b", low)
-        # if len(tokens) > 10:
-        #     return False
-        # if heuristic["intent"] == "other" and heuristic["confidence"] >= 0.6:
-        #     return False
-        # return bool(getattr(settings, "GEMINI_API_KEY", None))
+        # Avoid wasting LLM calls on long real-content questions.
+        if len(tokens) > 10:
+            return False
+
+        # If heuristic already thinks it is normal content, do not call LLM.
+        if heuristic["intent"] == "other" and heuristic["confidence"] >= 0.6:
+            return False
+
+        # Only call LLM when heuristic is uncertain.
+        if heuristic["confidence"] >= 0.75:
+            return False
+
+        return bool(getattr(settings, "GEMINI_INTENT_API_KEY", None))
 
     @classmethod
-    def _gemini_classify(cls, msg: str) -> Dict[str, Any]:
+    def _llm_classify(cls, msg: str) -> Dict[str, Any]:
         system_instruction = (
             "Classify the user's message into exactly one intent.\n"
-            "Intents: greeting, goodbye, thanks, help, other.\n"
+            "Allowed intents: greeting, goodbye, thanks, help, other.\n"
             "Return JSON only."
         )
 
         prompt = (
             "Return JSON like:\n"
-            "{ \"intent\": \"greeting|goodbye|thanks|help|other\", \"confidence\": 0.0-1.0 }\n\n"
+            "{"
+            "\"intent\":\"greeting|goodbye|thanks|help|other\","
+            "\"confidence\":0.0"
+            "}\n\n"
             f"Message: {msg}"
         )
 
-        client = GeminiClient.client()
-        resp = client.models.generate_content(
-            model=settings.GEMINI_MODEL,
-            contents=prompt,
-            config={
-                "system_instruction": system_instruction,
-                "response_mime_type": "application/json",
-                "temperature": 0.0,
+        schema = {
+            "type": "object",
+            "properties": {
+                "intent": {
+                    "type": "string",
+                    "enum": ["greeting", "goodbye", "thanks", "help", "other"],
+                },
+                "confidence": {
+                    "type": "number",
+                },
             },
+            "required": ["intent", "confidence"],
+            "additionalProperties": False,
+        }
+
+        chain = [getattr(settings, "INTENT_PRIMARY_MODEL", "gemini-2.5-flash-lite")] + \
+            getattr(settings, "INTENT_FALLBACK_MODELS", ["gemini-2.5-flash"])
+
+        ok, text, meta = LLMRouter.generate_json(
+            prompt=prompt,
+            system_instruction=system_instruction,
+            temperature=0.0,
+            model_chain=chain,
+            json_schema=schema,
+            task=LLMRouter.TASK_INTENT,
         )
 
+        if not ok:
+            return {"intent": "other", "confidence": 0.5}
+
         try:
-            data = json.loads(resp.text)
+            data = json.loads(text)
             intent = data.get("intent", "other")
             conf = float(data.get("confidence", 0.6))
-            if intent not in {"greeting", "goodbye", "thanks", "help", "other"}:
+
+            if intent not in cls.ALLOWED_INTENTS:
                 intent = "other"
+
             conf = max(0.0, min(1.0, conf))
             return {"intent": intent, "confidence": conf}
         except Exception:

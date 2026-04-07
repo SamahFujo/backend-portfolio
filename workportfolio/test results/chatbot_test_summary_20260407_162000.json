@@ -1,0 +1,161 @@
+[
+  {
+    "question": "What does Samah do?",
+    "status": "success",
+    "session_id": "350a703c-1c75-42c7-9c0d-dacbfaebdffb",
+    "debug_history_count": 1,
+    "retrieval_query": "What does Samah do?",
+    "verdict": "not_enough_evidence",
+    "answer": "Based on the retrieved documents, Samah works as an AI/ML and full-stack engineer focused on backend systems, AI-enabled applications, automation workflows, dashboards, and practical business solutions.",
+    "applied_filters": {
+      "document_type": "faq",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 0,
+        "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 6,
+        "chunk_id": "1df26f99-5f94-4755-8e6a-c1f31f7f3148",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      }
+    ]
+  },
+  {
+    "question": "What are Samah’s skills?",
+    "status": "success",
+    "session_id": "350a703c-1c75-42c7-9c0d-dacbfaebdffb",
+    "debug_history_count": 3,
+    "retrieval_query": "What are Samah’s skills?",
+    "verdict": "supported",
+    "answer": "Samah’s technical skills:\n- Programming Languages: Python\n- Backend: Django, Django REST Framework, FastAPI, Flask\n- Frontend: React, Next.js, Tailwind CSS\n- Databases: PostgreSQL, MongoDB, MySQL, SQL Server, Oracle\n- DevOps / API / Security: Swagger, OpenAPI\n- AI / LLM: Hugging Face, BERT, RoBERTa, T5, LangChain, Ollama, Gemini, RAG, Vector Search\n- OCR / Document Processing: Tesseract, EasyOCR, OpenCV",
+    "applied_filters": {
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 0,
+        "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 9,
+        "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 6,
+        "chunk_id": "1df26f99-5f94-4755-8e6a-c1f31f7f3148",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      }
+    ]
+  },
+  {
+    "question": "What is Samah’s hourly rate?",
+    "status": "success",
+    "session_id": "350a703c-1c75-42c7-9c0d-dacbfaebdffb",
+    "debug_history_count": 5,
+    "retrieval_query": "What is Samah’s hourly rate?",
+    "verdict": "supported",
+    "answer": "Compensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement.",
+    "applied_filters": {
+      "document_type": "compensation",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 5,
+        "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 0,
+        "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 1,
+        "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      }
+    ]
+  },
+  {
+    "question": "How can I contact Samah?",
+    "status": "success",
+    "session_id": "350a703c-1c75-42c7-9c0d-dacbfaebdffb",
+    "debug_history_count": 6,
+    "retrieval_query": "How can I contact Samah?",
+    "verdict": "supported",
+    "answer": "You can contact Samah using the contact details:\n- Email: s.fujo@hotmail.com\n- Phone: +971 52 792 9218",
+    "applied_filters": {
+      "document_type": "cv",
+      "only_active_docs": true,
+      "document_title_contains": "cv"
+    },
+    "used_sources": [
+      {
+        "doc_title": "cv",
+        "document_type": "cv",
+        "chunk_index": 0,
+        "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+        "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+      }
+    ]
+  },
+  {
+    "question": "I need someone with Snowflake experience can Samah handle this kind of project?",
+    "status": "success",
+    "session_id": "350a703c-1c75-42c7-9c0d-dacbfaebdffb",
+    "debug_history_count": 6,
+    "retrieval_query": "Can Samah handle projects requiring Snowflake experience?",
+    "verdict": "supported",
+    "answer": "The available information does not explicitly confirm direct experience with Snowflake. However, Samah does have strong adjacent experience in dashboard and analytics solution development, backend and API development, full-stack web application delivery, AI-enabled and automation-focused solutions. She may still be a good fit if the project involves similar dashboard, backend, data, or solution-delivery work.",
+    "applied_filters": {
+      "document_type": "projects",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 8,
+        "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      },
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 10,
+        "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      },
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 7,
+        "chunk_id": "1ffaa1ce-a644-4aac-b31f-c5b3be7ccb77",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      }
+    ]
+  }
+]

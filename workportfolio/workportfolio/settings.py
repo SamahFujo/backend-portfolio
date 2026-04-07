@@ -14,14 +14,32 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+def env_bool(name: str, default: bool = False) -> bool:
+    return os.getenv(name, str(default)).strip().lower() in {"1", "true", "yes", "on"}
+
+
+def env_list(name: str, default: str = "") -> list[str]:
+    value = os.getenv(name, default)
+    return [item.strip() for item in value.split(",") if item.strip()]
+
 SECRET_KEY = os.getenv("SECRET_KEY")
-DEBUG = os.getenv("DEBUG", "False") == "True"
+DEBUG = env_bool("DEBUG", False)
+
+if not SECRET_KEY:
+    if DEBUG:
+        SECRET_KEY = "dev-only-insecure-secret-key-change-me"
+    else:
+        raise ValueError("SECRET_KEY must be set when DEBUG is False.")
 
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MAX_DOCUMENT_UPLOAD_SIZE = int(os.getenv("MAX_DOCUMENT_UPLOAD_SIZE", str(5 * 1024 * 1024)))
+ALLOWED_DOCUMENT_EXTENSIONS = {".pdf", ".docx", ".txt"}
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = env_list("ALLOWED_HOSTS", "127.0.0.1,localhost")
+CSRF_TRUSTED_ORIGINS = env_list("CSRF_TRUSTED_ORIGINS", "")
 
 
 RESEND_API_KEY = config("RESEND_API_KEY", default="")
@@ -29,6 +47,8 @@ CONTACT_TO_EMAIL = config(
     "CONTACT_TO_EMAIL", default="s.fujo@hotmail.com")  # your receiving email
 CONTACT_FROM_EMAIL = config(
     "CONTACT_FROM_EMAIL", default="onboarding@resend.dev")
+CONTACT_BCC_EMAIL = config("CONTACT_BCC_EMAIL", default="")
+ADMIN_API_KEY = config("ADMIN_API_KEY", default="")
 # Later change CONTACT_FROM_EMAIL to your verified domain sender, e.g. no-reply@samah.ai
 
 # Application definition
@@ -65,15 +85,17 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_THROTTLE_RATES": {
         "anon": "10/min",
+        "contact": os.getenv("CONTACT_THROTTLE_RATE", "5/min"),
+        "chat": os.getenv("CHAT_THROTTLE_RATE", "20/min"),
+        "upload": os.getenv("UPLOAD_THROTTLE_RATE", "10/hour"),
     },
 }
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "http://localhost:4028",
-    "http://127.0.0.1:4028",
-]
+CORS_ALLOWED_ORIGINS = env_list(
+    "CORS_ALLOWED_ORIGINS",
+    "http://localhost:3000,http://127.0.0.1:3000,http://localhost:4028,http://127.0.0.1:4028",
+)
+CORS_ALLOW_CREDENTIALS = False
 
 ROOT_URLCONF = 'workportfolio.urls'
 
@@ -144,6 +166,21 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_REFERRER_POLICY = "same-origin"
+X_FRAME_OPTIONS = "DENY"
+SESSION_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SECURE = env_bool("SESSION_COOKIE_SECURE", not DEBUG)
+CSRF_COOKIE_SECURE = env_bool("CSRF_COOKIE_SECURE", not DEBUG)
+SECURE_SSL_REDIRECT = env_bool("SECURE_SSL_REDIRECT", False)
+SECURE_HSTS_SECONDS = int(os.getenv("SECURE_HSTS_SECONDS", "0"))
+SECURE_HSTS_INCLUDE_SUBDOMAINS = env_bool("SECURE_HSTS_INCLUDE_SUBDOMAINS", False)
+SECURE_HSTS_PRELOAD = env_bool("SECURE_HSTS_PRELOAD", False)
+
+if env_bool("USE_X_FORWARDED_PROTO", False):
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 EMBEDDING_PROVIDER = os.getenv("EMBEDDING_PROVIDER", "jina")
@@ -154,38 +191,15 @@ EMBEDDING_DIM = int(os.getenv("EMBEDDING_DIM", "1024"))
 # ============================================================
 # gemini settings
 # ============================================================
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-GEMINI_PRIMARY_MODEL = os.getenv("GEMINI_PRIMARY_MODEL", "gemini-2.5-flash-lite")
-GEMINI_FALLBACK_MODELS = [m.strip() for m in os.getenv("GEMINI_FALLBACK_MODELS", "").split(",") if m.strip()]
+GEMINI_REWRITE_API_KEY = config("GEMINI_REWRITE_API_KEY", default="")
+GEMINI_GROUNDED_API_KEY = config("GEMINI_GROUNDED_API_KEY", default="")
 
-GEMINI_REWRITE_PRIMARY = os.getenv("GEMINI_REWRITE_PRIMARY", "gemini-2.5-flash-lite")
-GEMINI_REWRITE_FALLBACKS = [m.strip() for m in os.getenv("GEMINI_REWRITE_FALLBACKS", "").split(",") if m.strip()]
+REWRITE_PRIMARY_MODEL = "gemini-2.5-flash-lite"
+REWRITE_FALLBACK_MODELS = ["gemini-2.5-flash"]
 
-# ============================================================
-# Generic LLM provider switch
-# ============================================================
+GROUNDED_PRIMARY_MODEL = "gemini-2.5-flash"
+GROUNDED_FALLBACK_MODELS = ["gemini-2.5-flash-lite"]
 
-LLM_PROVIDER = os.getenv("LLM_PROVIDER", "ollama")  # options: "gemini", "ollama", "huggingface"
-
-
-# ============================================================
-# Ollama settings
-# ============================================================
-# OLLAMA_API_URL = os.getenv("OLLAMA_API_URL", "http://localhost:11434/api/generate")
-
-# OLLAMA_PRIMARY_MODEL = os.getenv("OLLAMA_PRIMARY_MODEL", "gemma3:4b")
-# OLLAMA_FALLBACK_MODELS = [
-#     m.strip()
-#     for m in os.getenv("OLLAMA_FALLBACK_MODELS", "gemma3:4b").split(",")
-#     if m.strip()
-# ]
-
-OLLAMA_REWRITE_PRIMARY = os.getenv("OLLAMA_REWRITE_PRIMARY", "gemma3:1b")
-OLLAMA_REWRITE_FALLBACKS = [
-    m.strip()
-    for m in os.getenv("OLLAMA_REWRITE_FALLBACKS", "qwen2.5-coder:7b").split(",")
-    if m.strip()
-]
 
 # ============================================================
 # Reranker settings

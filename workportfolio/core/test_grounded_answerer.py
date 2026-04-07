@@ -10,59 +10,75 @@ TIMEOUT = 120
 DELAY_BETWEEN_REQUESTS = 0.5
 
 QUESTIONS = [
-    "What are Samah’s skills?",
-    "What technologies does she use?",
-    "What is her tech stack?",
-    "What frameworks does Samah use?",
-    "What tools does Samah use?",
+    # "What are Samah’s skills?",
+    # "What technologies does she use?",
+    # "What is her tech stack?",
+    # "What frameworks does Samah use?",
+    # "What tools does Samah use?",
 
-    "What are Samah’s strongest technical areas?",
-    "What is Samah strongest in?",
-    "What are her core strengths?",
+    # "What are Samah’s strongest technical areas?",
+    # "What is Samah strongest in?",
+    # "What are her core strengths?",
 
-    "What does Samah do?",
-    "What kind of work does Samah do?",
-    "What is Samah’s background?",
-    "Can Samah help with backend API development?",
-    "Can Samah build an AI chatbot?",
-    "What can Samah help with professionally?",
-    "What can Samah do?",
+    # "What does Samah do?",
+    # "What kind of work does Samah do?",
+    # "What is Samah’s background?",
+    # "Can Samah help with backend API development?",
+    # "Can Samah build an AI chatbot?",
+    # "What can Samah help with professionally?",
+    # "What can Samah do?",
+
+    # "What is Samah’s favorite programming language?",
+    # "Does Samah prefer Django or FastAPI?",
+    # "What backend framework does Samah prefer?",
+    # "What frontend stack does Samah prefer?",
+    # "Is Samah stronger in backend or frontend?",
+
+    # "How can I contact Samah?",
+    # "What is Samah’s email?",
+    # "What is Samah’s phone number?",
+    # "Does Samah have LinkedIn?",
+    # "What is Samah’s LinkedIn?",
+
+    # "Is Samah open to freelance work?",
+    # "Is Samah open to remote work?",
+    # "Which locations is Samah open to?",
+    # "What payment range is Samah looking for?",
+    # "What is Samah’s hourly rate?",
+    # "Is Samah open to full-time work?",
+    # "What is Samah’s availability?",
+    # "What are Samah’s compensation expectations?",
+
+    # "I have a new project need skills of power BI can you develop something like that?",
+    # "I have a new project using Tableau can she build something like that?",
+    # "I need someone with Snowflake experience can Samah handle this kind of project?",
+    # "Can she build this kind of data platform?",
+    # "Is she a fit for this project?",
+    # "Can Samah help with this type of dashboard project?",
+    # "Can Samah build this kind of analytics solution?",
+    # "Can Samah work on this kind of data-driven project?",
+
+    # "What is Samah’s GitHub?",
+    # "What is Samah’s home address?",
+    # "What is Samah’s university GPA?",
+    # "What is Samah’s exact salary?",
+    # "What is Samah’s favorite movie?"
+
+    # "What does Samah do?",
+    # "What are Samah’s skills?",
+    # "What is Samah’s hourly rate?",
+    # "How can I contact Samah?",
+    # "I need someone with Snowflake experience can Samah handle this kind of project?"
+
+    # "What does Samah do?",
+    # "What is Samah’s hourly rate?"
+
 
     "What is Samah’s favorite programming language?",
     "Does Samah prefer Django or FastAPI?",
     "What backend framework does Samah prefer?",
     "What frontend stack does Samah prefer?",
-    "Is Samah stronger in backend or frontend?",
-
-    "How can I contact Samah?",
-    "What is Samah’s email?",
-    "What is Samah’s phone number?",
-    "Does Samah have LinkedIn?",
-    "What is Samah’s LinkedIn?",
-
-    "Is Samah open to freelance work?",
-    "Is Samah open to remote work?",
-    "Which locations is Samah open to?",
-    "What payment range is Samah looking for?",
-    "What is Samah’s hourly rate?",
-    "Is Samah open to full-time work?",
-    "What is Samah’s availability?",
-    "What are Samah’s compensation expectations?",
-
-    "I have a new project need skills of power BI can you develop something like that?",
-    "I have a new project using Tableau can she build something like that?",
-    "I need someone with Snowflake experience can Samah handle this kind of project?",
-    "Can she build this kind of data platform?",
-    "Is she a fit for this project?",
-    "Can Samah help with this type of dashboard project?",
-    "Can Samah build this kind of analytics solution?",
-    "Can Samah work on this kind of data-driven project?",
-
-    "What is Samah’s GitHub?",
-    "What is Samah’s home address?",
-    "What is Samah’s university GPA?",
-    "What is Samah’s exact salary?",
-    "What is Samah’s favorite movie?"
+    "Is Samah stronger in backend or frontend?"
 ]
 
 

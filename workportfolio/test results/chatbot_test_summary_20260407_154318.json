@@ -1,0 +1,1166 @@
+[
+  {
+    "question": "What are Samah’s skills?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 1,
+    "retrieval_query": "What are Samah’s skills?",
+    "verdict": "supported",
+    "answer": "Samah’s technical skills:\n- Programming Languages: Python\n- Backend: Django, Django REST Framework, FastAPI, Flask\n- Frontend: React, Next.js, Tailwind CSS\n- Databases: PostgreSQL, MongoDB, MySQL, SQL Server, Oracle\n- DevOps / API / Security: Swagger, OpenAPI\n- AI / LLM: Hugging Face, BERT, RoBERTa, T5, LangChain, Ollama, Gemini, RAG, Vector Search\n- OCR / Document Processing: Tesseract, EasyOCR, OpenCV",
+    "applied_filters": {
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 0,
+        "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 9,
+        "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 6,
+        "chunk_id": "1df26f99-5f94-4755-8e6a-c1f31f7f3148",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      }
+    ]
+  },
+  {
+    "question": "What technologies does she use?",
+    "status": "failed",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "verdict": null,
+    "answer": null,
+    "applied_filters": null,
+    "used_sources": null,
+    "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/api/chat/ask/"
+  },
+  {
+    "question": "What is her tech stack?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 4,
+    "retrieval_query": "What is her tech stack?",
+    "verdict": "supported",
+    "answer": "Samah’s technical skills:\n- Programming Languages: Python, JavaScript, TypeScript\n- Backend: Django, Django REST Framework, FastAPI, Flask\n- Frontend: React, Next.js, Tailwind CSS, Bootstrap\n- Databases: PostgreSQL, MongoDB, MySQL, SQL Server, Oracle\n- DevOps / API / Security: Docker, NGINX, Gunicorn, JWT, RBAC, Swagger, OpenAPI\n- AI / LLM: Hugging Face, BERT, RoBERTa, T5, LangChain, Langfuse, Ollama, Gemini, RAG, Vector Search\n- OCR / Document Processing: Tesseract, EasyOCR, OpenCV",
+    "applied_filters": {
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 2,
+        "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 1,
+        "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 5,
+        "chunk_id": "bf3d502d-1a84-4ed5-af5e-8e7f1c3ed7e8",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      }
+    ]
+  },
+  {
+    "question": "What frameworks does Samah use?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "What frameworks does Samah use?",
+    "verdict": "supported",
+    "answer": "Samah’s technical skills:\n- Programming Languages: Python, JavaScript, TypeScript\n- Backend: Django, Django REST Framework, FastAPI, Flask\n- Frontend: React, Next.js, Tailwind CSS\n- Databases: PostgreSQL, MongoDB, MySQL, SQL Server, Oracle\n- DevOps / API / Security: Docker, NGINX, Gunicorn, JWT, RBAC, Swagger, OpenAPI\n- AI / LLM: Hugging Face, BERT, RoBERTa, T5, LangChain, Langfuse, Ollama, Gemini, RAG, Vector Search\n- OCR / Document Processing: Tesseract, EasyOCR, OpenCV",
+    "applied_filters": {
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 2,
+        "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 12,
+        "chunk_id": "eaffcc26-49cc-407a-a0b4-013c49b0aff0",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 1,
+        "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      }
+    ]
+  },
+  {
+    "question": "What tools does Samah use?",
+    "status": "failed",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "verdict": null,
+    "answer": null,
+    "applied_filters": null,
+    "used_sources": null,
+    "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/api/chat/ask/"
+  },
+  {
+    "question": "What are Samah’s strongest technical areas?",
+    "status": "failed",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "verdict": null,
+    "answer": null,
+    "applied_filters": null,
+    "used_sources": null,
+    "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/api/chat/ask/"
+  },
+  {
+    "question": "What is Samah strongest in?",
+    "status": "failed",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "verdict": null,
+    "answer": null,
+    "applied_filters": null,
+    "used_sources": null,
+    "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/api/chat/ask/"
+  },
+  {
+    "question": "What are her core strengths?",
+    "status": "failed",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "verdict": null,
+    "answer": null,
+    "applied_filters": null,
+    "used_sources": null,
+    "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/api/chat/ask/"
+  },
+  {
+    "question": "What does Samah do?",
+    "status": "failed",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "verdict": null,
+    "answer": null,
+    "applied_filters": null,
+    "used_sources": null,
+    "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/api/chat/ask/"
+  },
+  {
+    "question": "What kind of work does Samah do?",
+    "status": "failed",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "verdict": null,
+    "answer": null,
+    "applied_filters": null,
+    "used_sources": null,
+    "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/api/chat/ask/"
+  },
+  {
+    "question": "What is Samah’s background?",
+    "status": "failed",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "verdict": null,
+    "answer": null,
+    "applied_filters": null,
+    "used_sources": null,
+    "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/api/chat/ask/"
+  },
+  {
+    "question": "Can Samah help with backend API development?",
+    "status": "failed",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "verdict": null,
+    "answer": null,
+    "applied_filters": null,
+    "used_sources": null,
+    "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/api/chat/ask/"
+  },
+  {
+    "question": "Can Samah build an AI chatbot?",
+    "status": "failed",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "verdict": null,
+    "answer": null,
+    "applied_filters": null,
+    "used_sources": null,
+    "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/api/chat/ask/"
+  },
+  {
+    "question": "What can Samah help with professionally?",
+    "status": "failed",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "verdict": null,
+    "answer": null,
+    "applied_filters": null,
+    "used_sources": null,
+    "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/api/chat/ask/"
+  },
+  {
+    "question": "What can Samah do?",
+    "status": "failed",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "verdict": null,
+    "answer": null,
+    "applied_filters": null,
+    "used_sources": null,
+    "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/api/chat/ask/"
+  },
+  {
+    "question": "What is Samah’s favorite programming language?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "What is Samah’s favorite programming language?",
+    "verdict": "supported",
+    "answer": "Samah’s favorite programming language is Python.",
+    "applied_filters": {
+      "document_type": "preferences",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 0,
+        "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      },
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 8,
+        "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      }
+    ]
+  },
+  {
+    "question": "Does Samah prefer Django or FastAPI?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "Does Samah prefer Django or FastAPI?",
+    "verdict": "supported",
+    "answer": "Samah’s preferred backend framework is Django.\nSamah also has experience with FastAPI, but Django is her stronger and more preferred framework.",
+    "applied_filters": {
+      "document_type": "preferences",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 1,
+        "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      },
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 8,
+        "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      },
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 0,
+        "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      }
+    ]
+  },
+  {
+    "question": "What backend framework does Samah prefer?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "What backend framework does Samah prefer?",
+    "verdict": "not_enough_evidence",
+    "answer": "I couldn’t generate the usual final answer right now, but based on the retrieved documents, ork My preferred backend framework is Django, especially Django REST Framework for API development. I prefer Django because it provides a strong structure for building secure, scalable, and production-ready applications. It is especially useful for business sy... gle Gemini - Ollama - LangChain - OCR and document-processing tools Type of Problems I Like Solving I especially like solving problems where I need to: - convert unstructured input into structured results - connect AI with real business workflows - automate re...",
+    "applied_filters": {
+      "document_type": "preferences",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 1,
+        "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      },
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 8,
+        "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      }
+    ]
+  },
+  {
+    "question": "What frontend stack does Samah prefer?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "What frontend stack does Samah prefer?",
+    "verdict": "supported",
+    "answer": "Samah’s technical skills:\n- Programming Languages: Python\n- Backend: Django, Django REST Framework, FastAPI, Flask\n- Frontend: React, Next.js, Tailwind CSS\n- AI / LLM: LangChain, Ollama, Gemini",
+    "applied_filters": {
+      "document_type": "preferences",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 2,
+        "chunk_id": "044c6f3e-c9f7-4ff9-915f-c3928688a0e3",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      },
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 1,
+        "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      },
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 8,
+        "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      }
+    ]
+  },
+  {
+    "question": "Is Samah stronger in backend or frontend?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "Is Samah stronger in backend or frontend?",
+    "verdict": "not_enough_evidence",
+    "answer": "I couldn’t generate the usual final answer right now, but based on the retrieved documents, Frontend vs AI My strongest preference is a combination of backend development and AI-focused work. I enjoy frontend development as well, especially when building polished user interfaces with Next.js and React, but my strongest technical comfort zone is in ba... ork My preferred backend framework is Django, especially Django REST Framework for API development. I prefer Django because it provides a strong structure for building secure, scalable, and production-ready applications. It is especially useful for business sy...",
+    "applied_filters": {
+      "document_type": "preferences",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 4,
+        "chunk_id": "aad9c8b7-ee78-40a5-9947-368b253ffc1a",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      },
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 1,
+        "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      }
+    ]
+  },
+  {
+    "question": "How can I contact Samah?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "How can I contact Samah?",
+    "verdict": "supported",
+    "answer": "You can contact Samah using the contact details:\n- Email: s.fujo@hotmail.com\n- Phone: +971 52 792 9218",
+    "applied_filters": {
+      "document_type": "cv",
+      "only_active_docs": true,
+      "document_title_contains": "cv"
+    },
+    "used_sources": [
+      {
+        "doc_title": "cv",
+        "document_type": "cv",
+        "chunk_index": 0,
+        "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+        "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+      }
+    ]
+  },
+  {
+    "question": "What is Samah’s email?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "What is Samah’s email?",
+    "verdict": "supported",
+    "answer": "Samah’s email is s.fujo@hotmail.com.",
+    "applied_filters": {
+      "document_type": "cv",
+      "only_active_docs": true,
+      "document_title_contains": "cv"
+    },
+    "used_sources": [
+      {
+        "doc_title": "cv",
+        "document_type": "cv",
+        "chunk_index": 0,
+        "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+        "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+      }
+    ]
+  },
+  {
+    "question": "What is Samah’s phone number?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "What is Samah’s phone number?",
+    "verdict": "supported",
+    "answer": "Samah’s phone number is +971 52 792 9218.",
+    "applied_filters": {
+      "document_type": "cv",
+      "only_active_docs": true,
+      "document_title_contains": "cv"
+    },
+    "used_sources": [
+      {
+        "doc_title": "cv",
+        "document_type": "cv",
+        "chunk_index": 0,
+        "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+        "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+      }
+    ]
+  },
+  {
+    "question": "Does Samah have LinkedIn?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "Does Samah have LinkedIn?",
+    "verdict": "not_enough_evidence",
+    "answer": "I couldn’t generate the usual final answer right now, but the retrieved documents do contain contact-related information for Samah. Please check the cited source below.",
+    "applied_filters": {
+      "document_type": "cv",
+      "only_active_docs": true,
+      "document_title_contains": "cv"
+    },
+    "used_sources": [
+      {
+        "doc_title": "cv",
+        "document_type": "cv",
+        "chunk_index": 0,
+        "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+        "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+      }
+    ]
+  },
+  {
+    "question": "What is Samah’s LinkedIn?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "What is Samah’s LinkedIn?",
+    "verdict": "not_enough_evidence",
+    "answer": "I couldn’t generate the usual final answer right now, but the retrieved documents do contain contact-related information for Samah. Please check the cited source below.",
+    "applied_filters": {
+      "document_type": "cv",
+      "only_active_docs": true,
+      "document_title_contains": "cv"
+    },
+    "used_sources": [
+      {
+        "doc_title": "cv",
+        "document_type": "cv",
+        "chunk_index": 0,
+        "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+        "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+      }
+    ]
+  },
+  {
+    "question": "Is Samah open to freelance work?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "Is Samah open to freelance work?",
+    "verdict": "supported",
+    "answer": "Samah is open to freelance and project-based work.",
+    "applied_filters": {
+      "document_type": "compensation",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 2,
+        "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 5,
+        "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 3,
+        "chunk_id": "dbb70998-a6d8-445d-a1f9-98c54b0764df",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      }
+    ]
+  },
+  {
+    "question": "Is Samah open to remote work?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "Is Samah open to remote work?",
+    "verdict": "supported",
+    "answer": "Samah is open to remote, hybrid, and suitable on-site opportunities.",
+    "applied_filters": {
+      "document_type": "compensation",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 2,
+        "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 5,
+        "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      }
+    ]
+  },
+  {
+    "question": "Which locations is Samah open to?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "Which locations is Samah open to?",
+    "verdict": "supported",
+    "answer": "Samah is especially open to opportunities in Dubai, Abu Dhabi, the UAE, and strong remote opportunities.",
+    "applied_filters": {
+      "document_type": "compensation",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 5,
+        "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 2,
+        "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 1,
+        "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      }
+    ]
+  },
+  {
+    "question": "What payment range is Samah looking for?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "What payment range is Samah looking for?",
+    "verdict": "supported",
+    "answer": "Compensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement.",
+    "applied_filters": {
+      "document_type": "compensation",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 1,
+        "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      }
+    ]
+  },
+  {
+    "question": "What is Samah’s hourly rate?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "What is Samah’s hourly rate?",
+    "verdict": "supported",
+    "answer": "Compensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement.",
+    "applied_filters": {
+      "document_type": "compensation",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 5,
+        "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 0,
+        "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 1,
+        "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      }
+    ]
+  },
+  {
+    "question": "Is Samah open to full-time work?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "Is Samah open to full-time work?",
+    "verdict": "supported",
+    "answer": "Samah is open to full-time opportunities.",
+    "applied_filters": {
+      "document_type": "compensation",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 5,
+        "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      }
+    ]
+  },
+  {
+    "question": "What is Samah’s availability?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "What is Samah’s availability?",
+    "verdict": "supported",
+    "answer": "Samah is open to full-time opportunities.\nSamah is open to freelance and project-based work.\nSamah is open to remote, hybrid, and suitable on-site opportunities.\nSamah is especially open to opportunities in Dubai, Abu Dhabi, the UAE, and strong remote opportunities.\nCompensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement.",
+    "applied_filters": {
+      "document_type": "compensation",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 0,
+        "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 2,
+        "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 5,
+        "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      }
+    ]
+  },
+  {
+    "question": "What are Samah’s compensation expectations?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "What are Samah’s compensation expectations?",
+    "verdict": "supported",
+    "answer": "Compensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement.",
+    "applied_filters": {
+      "document_type": "compensation",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 0,
+        "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 5,
+        "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      }
+    ]
+  },
+  {
+    "question": "I have a new project need skills of power BI can you develop something like that?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "Develop power BI project",
+    "verdict": "supported",
+    "answer": "The available information does not explicitly confirm direct experience with power BI. However, Samah does have strong adjacent experience in dashboard and analytics solution development, backend and API development, full-stack web application delivery, AI-enabled and automation-focused solutions. She may still be a good fit if the project involves similar dashboard, backend, data, or solution-delivery work.",
+    "applied_filters": {
+      "document_type": "projects",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 0,
+        "chunk_id": "826ce965-065f-4c4b-ad1e-660ff768b581",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      },
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 1,
+        "chunk_id": "e216b069-18a6-49ad-8049-d8077ec56560",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      },
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 2,
+        "chunk_id": "b7ffbf09-d9a2-4e80-978d-e760bdb718c3",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      }
+    ]
+  },
+  {
+    "question": "I have a new project using Tableau can she build something like that?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "Samah Tableau project",
+    "verdict": "supported",
+    "answer": "The available information does not explicitly confirm direct experience with Tableau. However, Samah does have strong adjacent experience in dashboard and analytics solution development, backend and API development, full-stack web application delivery, AI-enabled and automation-focused solutions. She may still be a good fit if the project involves similar dashboard, backend, data, or solution-delivery work.",
+    "applied_filters": {
+      "document_type": "projects",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 10,
+        "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      },
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 9,
+        "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      },
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 8,
+        "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      }
+    ]
+  },
+  {
+    "question": "I need someone with Snowflake experience can Samah handle this kind of project?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "Samah Snowflake experience project handling",
+    "verdict": "supported",
+    "answer": "The available information does not explicitly confirm direct experience with Snowflake. However, Samah does have strong adjacent experience in dashboard and analytics solution development, backend and API development, full-stack web application delivery, AI-enabled and automation-focused solutions. She may still be a good fit if the project involves similar dashboard, backend, data, or solution-delivery work.",
+    "applied_filters": {
+      "document_type": "projects",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 9,
+        "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      },
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 8,
+        "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      },
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 10,
+        "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      }
+    ]
+  },
+  {
+    "question": "Can she build this kind of data platform?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "Can she build this kind of data platform?",
+    "verdict": "not_enough_evidence",
+    "answer": "The retrieved documents suggest that Samah has relevant adjacent experience in backend development, dashboard and analytics work, full-stack delivery, and AI-enabled business solutions. However, the documents may not explicitly confirm every requested specialized technology.",
+    "applied_filters": {
+      "document_type": "capabilities",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "where i can help",
+        "document_type": "capabilities",
+        "chunk_index": 3,
+        "chunk_id": "a4fe1a5e-02dc-479d-b070-e006bb5f5d94",
+        "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+      },
+      {
+        "doc_title": "where i can help",
+        "document_type": "capabilities",
+        "chunk_index": 1,
+        "chunk_id": "ec033764-6477-4d7f-aa57-ed8d25870755",
+        "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+      }
+    ]
+  },
+  {
+    "question": "Is she a fit for this project?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "Is Samah a fit for this project?",
+    "verdict": "supported",
+    "answer": "Samah appears to be a reasonable fit for this kind of project based on her background in dashboard and analytics solution development, backend and API development, full-stack web application delivery, AI-enabled and automation-focused solutions. The exact fit would depend on the required tools, implementation scope, and whether the project needs a highly specialized technology.",
+    "applied_filters": {
+      "document_type": "projects",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 9,
+        "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      },
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 8,
+        "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      },
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 10,
+        "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      }
+    ]
+  },
+  {
+    "question": "Can Samah help with this type of dashboard project?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "Can Samah help with dashboard projects?",
+    "verdict": "supported",
+    "answer": "Samah appears to be a reasonable fit for this kind of project based on her background in dashboard and analytics solution development, backend and API development, full-stack web application delivery, AI-enabled and automation-focused solutions. The exact fit would depend on the required tools, implementation scope, and whether the project needs a highly specialized technology.",
+    "applied_filters": {
+      "document_type": "capabilities",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "where i can help",
+        "document_type": "capabilities",
+        "chunk_index": 12,
+        "chunk_id": "7ac5d8bb-e622-41d4-851f-bfc79aaaef59",
+        "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+      },
+      {
+        "doc_title": "where i can help",
+        "document_type": "capabilities",
+        "chunk_index": 5,
+        "chunk_id": "1c2cd405-ebaa-4a82-94fc-13f758f13d60",
+        "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+      },
+      {
+        "doc_title": "where i can help",
+        "document_type": "capabilities",
+        "chunk_index": 7,
+        "chunk_id": "b70b1176-5b1c-42c4-a33d-48e71f10dcbb",
+        "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+      }
+    ]
+  },
+  {
+    "question": "Can Samah build this kind of analytics solution?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "Can Samah build this kind of analytics solution?",
+    "verdict": "not_enough_evidence",
+    "answer": "The retrieved documents suggest that Samah has relevant adjacent experience in backend development, dashboard and analytics work, full-stack delivery, and AI-enabled business solutions. However, the documents may not explicitly confirm every requested specialized technology.",
+    "applied_filters": {
+      "document_type": "capabilities",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "where i can help",
+        "document_type": "capabilities",
+        "chunk_index": 3,
+        "chunk_id": "a4fe1a5e-02dc-479d-b070-e006bb5f5d94",
+        "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+      },
+      {
+        "doc_title": "where i can help",
+        "document_type": "capabilities",
+        "chunk_index": 4,
+        "chunk_id": "ba2298c5-b8fe-47f5-87a4-d049c1bfa3ad",
+        "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+      }
+    ]
+  },
+  {
+    "question": "Can Samah work on this kind of data-driven project?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "Can Samah work on this kind of data-driven project?",
+    "verdict": "not_enough_evidence",
+    "answer": "The retrieved documents suggest that Samah has relevant adjacent experience in backend development, dashboard and analytics work, full-stack delivery, and AI-enabled business solutions. However, the documents may not explicitly confirm every requested specialized technology.",
+    "applied_filters": {
+      "document_type": "projects",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 8,
+        "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      },
+      {
+        "doc_title": "Projects",
+        "document_type": "projects",
+        "chunk_index": 10,
+        "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+        "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+      }
+    ]
+  },
+  {
+    "question": "What is Samah’s GitHub?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "Samah GitHub",
+    "verdict": "not_enough_evidence",
+    "answer": "I couldn’t generate the usual final answer right now, but based on the retrieved documents, ess operations, and building practical systems that improve efficiency and decision-making. Summary Samah is an AI Team Lead and AI/ML Engineer with strong experience in Python, Django, backend engineering, AI workflows, full-stack development, and practical b... Samah FAQ Overview This FAQ document contains direct questions and grounded answers about Samah’s background, skills, preferences, project experience, and work profile. It is designed to improve chatbot retrieval by matching natural user questions with clear s...",
+    "applied_filters": {
+      "document_type": "faq",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 9,
+        "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 0,
+        "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      }
+    ]
+  },
+  {
+    "question": "What is Samah’s home address?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "What is Samah’s home address?",
+    "verdict": "not_enough_evidence",
+    "answer": "I couldn’t generate the usual final answer right now, but based on the retrieved documents, Samah FAQ Overview This FAQ document contains direct questions and grounded answers about Samah’s background, skills, preferences, project experience, and work profile. It is designed to improve chatbot retrieval by matching natural user questions with clear s... ess operations, and building practical systems that improve efficiency and decision-making. Summary Samah is an AI Team Lead and AI/ML Engineer with strong experience in Python, Django, backend engineering, AI workflows, full-stack development, and practical b...",
+    "applied_filters": {
+      "document_type": "faq",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 0,
+        "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 9,
+        "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      }
+    ]
+  },
+  {
+    "question": "What is Samah’s university GPA?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "What is Samah's university GPA?",
+    "verdict": "not_enough_evidence",
+    "answer": "I couldn’t generate the usual final answer right now, but based on the retrieved documents, ess operations, and building practical systems that improve efficiency and decision-making. Summary Samah is an AI Team Lead and AI/ML Engineer with strong experience in Python, Django, backend engineering, AI workflows, full-stack development, and practical b... Samah FAQ Overview This FAQ document contains direct questions and grounded answers about Samah’s background, skills, preferences, project experience, and work profile. It is designed to improve chatbot retrieval by matching natural user questions with clear s...",
+    "applied_filters": {
+      "document_type": "faq",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 9,
+        "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      },
+      {
+        "doc_title": "faq",
+        "document_type": "faq",
+        "chunk_index": 0,
+        "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+        "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+      }
+    ]
+  },
+  {
+    "question": "What is Samah’s exact salary?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "What is Samah’s exact salary?",
+    "verdict": "supported",
+    "answer": "Compensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement.",
+    "applied_filters": {
+      "document_type": "compensation",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 5,
+        "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 0,
+        "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      },
+      {
+        "doc_title": "Compensation And Availability",
+        "document_type": "compensation",
+        "chunk_index": 1,
+        "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+        "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+      }
+    ]
+  },
+  {
+    "question": "What is Samah’s favorite movie?",
+    "status": "success",
+    "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+    "debug_history_count": 6,
+    "retrieval_query": "What is Samah's favorite movie?",
+    "verdict": "not_enough_evidence",
+    "answer": "I couldn’t generate the usual final answer right now, but based on the retrieved documents, Preferences and Work Style Overview This document describes my professional preferences, working style, technical likes, and the kinds of projects I enjoy most. It is intended to help answer questions about how I prefer to work, what technologies I enjoy using... gle Gemini - Ollama - LangChain - OCR and document-processing tools Type of Problems I Like Solving I especially like solving problems where I need to: - convert unstructured input into structured results - connect AI with real business workflows - automate re...",
+    "applied_filters": {
+      "document_type": "preferences",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 0,
+        "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      },
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 8,
+        "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      }
+    ]
+  }
+]

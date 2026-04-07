@@ -1,0 +1,701 @@
+{
+  "run_at": "2026-04-07T16:30:06.668767",
+  "api_url": "http://127.0.0.1:8000/api/chat/ask/",
+  "total_questions": 5,
+  "final_session_id": "c57c7e5b-d147-4095-af14-a0009e26b1e2",
+  "results": [
+    {
+      "question": "What is Samah’s favorite programming language?",
+      "status": "success",
+      "response": {
+        "session_id": "c57c7e5b-d147-4095-af14-a0009e26b1e2",
+        "message_id": "025c486a-6bf9-46df-adf2-731d1e81929e",
+        "retrieval_query": "What is Samah’s favorite programming language?",
+        "rewrite_notes": "The user is asking for Samah's favorite programming language. The query is clear and does not require modification.",
+        "verdict": "supported",
+        "answer": "Samah’s favorite programming language is Python.",
+        "citations": [
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "chunk_index": 8,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "preferences",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_preferences",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+            "chunk_index": 0,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.5253123782481931,
+            "rerank_score": 0.41537303,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "chunk_index": 8,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.48315761732423546,
+            "rerank_score": 0.34334174,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 0,
+            "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          },
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 8,
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          }
+        ],
+        "debug_history_count": 1,
+        "debug_recent_history": [
+          {
+            "role": "user",
+            "content": "What is Samah’s favorite programming language?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "Does Samah prefer Django or FastAPI?",
+      "status": "success",
+      "response": {
+        "session_id": "c57c7e5b-d147-4095-af14-a0009e26b1e2",
+        "message_id": "c600c91b-e804-4223-8102-d20cb500ba98",
+        "retrieval_query": "Does Samah prefer Django or FastAPI?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah’s preferred backend framework is Django.\nSamah also has experience with FastAPI, but Django is her stronger and more preferred framework.",
+        "citations": [
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "chunk_index": 8,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "preferences",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_preferences",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+            "chunk_index": 1,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.5011355280199323,
+            "rerank_score": 0.56985265,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "chunk_index": 8,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.6210335267206142,
+            "rerank_score": 0.24653332,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+            "chunk_index": 0,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.6273530569847727,
+            "rerank_score": 0.23651622,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "044c6f3e-c9f7-4ff9-915f-c3928688a0e3",
+            "chunk_index": 2,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.6349752980500079,
+            "rerank_score": 0.21601155,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 1,
+            "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          },
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 8,
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          },
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 0,
+            "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          }
+        ],
+        "debug_history_count": 3,
+        "debug_recent_history": [
+          {
+            "role": "user",
+            "content": "What is Samah’s favorite programming language?"
+          },
+          {
+            "role": "assistant",
+            "content": "Samah’s favorite programming language is Python."
+          },
+          {
+            "role": "user",
+            "content": "Does Samah prefer Django or FastAPI?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "What backend framework does Samah prefer?",
+      "status": "success",
+      "response": {
+        "session_id": "c57c7e5b-d147-4095-af14-a0009e26b1e2",
+        "message_id": "6111285a-c72b-4190-803a-41671af73f38",
+        "retrieval_query": "What backend framework does Samah prefer?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "I couldn’t generate the usual final answer right now, but here is the most relevant grounded evidence: ork My preferred backend framework is Django, especially Django REST Framework for API development. I prefer Django because it provides a strong structure for building secure, scal... gle Gemini - Ollama - LangChain - OCR and document-processing tools Type of Problems I Like Solving I especially like solving problems where I need to: - convert unstructured input...",
+        "citations": [
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "chunk_index": 8,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "preferences",
+          "only_active_docs": true
+        },
+        "answer_source": null,
+        "extractor_used": null,
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+            "chunk_index": 1,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.42880061693187754,
+            "rerank_score": 0.53461248,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "chunk_index": 8,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.587262784675525,
+            "rerank_score": 0.39326853,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+            "chunk_index": 0,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.6006424903103693,
+            "rerank_score": 0.39326853,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "3963517a-980e-4fce-967c-21b6da8ceabf",
+            "chunk_index": 5,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.6073336005210876,
+            "rerank_score": 0.37662312,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "044c6f3e-c9f7-4ff9-915f-c3928688a0e3",
+            "chunk_index": 2,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.5442605859922631,
+            "rerank_score": 0.33720353,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "aad9c8b7-ee78-40a5-9947-368b253ffc1a",
+            "chunk_index": 4,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.6164537737640001,
+            "rerank_score": 0.3015677,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "5e94575d-0dd3-4867-a7bd-e9827e1a486a",
+            "chunk_index": 3,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.7266993143170866,
+            "rerank_score": 0.21469143,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 1,
+            "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          },
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 8,
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          }
+        ],
+        "debug_history_count": 5,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "Samah’s favorite programming language is Python."
+          },
+          {
+            "role": "user",
+            "content": "Does Samah prefer Django or FastAPI?"
+          },
+          {
+            "role": "assistant",
+            "content": "Samah’s preferred backend framework is Django.\nSamah also has experience with FastAPI, but Django is her stronger and more preferred framework."
+          },
+          {
+            "role": "user",
+            "content": "What backend framework does Samah prefer?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "What frontend stack does Samah prefer?",
+      "status": "success",
+      "response": {
+        "session_id": "c57c7e5b-d147-4095-af14-a0009e26b1e2",
+        "message_id": "6c9e2edc-7b2b-46c0-b38e-9ae4629697ba",
+        "retrieval_query": "What frontend stack does Samah prefer?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah’s technical skills:\n- Programming Languages: Python\n- Backend: Django, Django REST Framework, FastAPI, Flask\n- Frontend: React, Next.js, Tailwind CSS\n- AI / LLM: LangChain, Ollama, Gemini",
+        "citations": [
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "044c6f3e-c9f7-4ff9-915f-c3928688a0e3",
+            "chunk_index": 2,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "chunk_index": 8,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "preferences",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_skills",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "044c6f3e-c9f7-4ff9-915f-c3928688a0e3",
+            "chunk_index": 2,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.455151953372009,
+            "rerank_score": 0.59125125,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+            "chunk_index": 1,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.5160354356723504,
+            "rerank_score": 0.47901624,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "chunk_index": 8,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.6074069142341586,
+            "rerank_score": 0.4016878,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "aad9c8b7-ee78-40a5-9947-368b253ffc1a",
+            "chunk_index": 4,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.590399742126462,
+            "rerank_score": 0.35042137,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "3963517a-980e-4fce-967c-21b6da8ceabf",
+            "chunk_index": 5,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.6533252803489393,
+            "rerank_score": 0.32594952,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 2,
+            "chunk_id": "044c6f3e-c9f7-4ff9-915f-c3928688a0e3",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          },
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 1,
+            "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          },
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 8,
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "Samah’s preferred backend framework is Django.\nSamah also has experience with FastAPI, but Django is her stronger and more preferred framework."
+          },
+          {
+            "role": "user",
+            "content": "What backend framework does Samah prefer?"
+          },
+          {
+            "role": "assistant",
+            "content": "I couldn’t generate the usual final answer right now, but here is the most relevant grounded evidence: ork My preferred backend framework is Django, especially Django REST Framework for API development. I prefer Django because it provides a strong structure for building secure, scal... gle Gemini - Ollama - LangChain - OCR and document-processing tools Type of Problems I Like Solving I especially like solving problems where I need to: - convert unstructured input..."
+          },
+          {
+            "role": "user",
+            "content": "What frontend stack does Samah prefer?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "Is Samah stronger in backend or frontend?",
+      "status": "success",
+      "response": {
+        "session_id": "c57c7e5b-d147-4095-af14-a0009e26b1e2",
+        "message_id": "ea9a68bd-c4b1-4e29-8d82-53cd65d810eb",
+        "retrieval_query": "Is Samah stronger in backend or frontend?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "not_enough_evidence",
+        "answer": "I couldn’t generate the usual final answer right now, but here is the most relevant grounded evidence: Frontend vs AI My strongest preference is a combination of backend development and AI-focused work. I enjoy frontend development as well, especially when building polished user int... ork My preferred backend framework is Django, especially Django REST Framework for API development. I prefer Django because it provides a strong structure for building secure, scal...",
+        "citations": [
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "aad9c8b7-ee78-40a5-9947-368b253ffc1a",
+            "chunk_index": 4,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "preferences",
+          "only_active_docs": true
+        },
+        "answer_source": null,
+        "extractor_used": null,
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "aad9c8b7-ee78-40a5-9947-368b253ffc1a",
+            "chunk_index": 4,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.6487685723991905,
+            "rerank_score": 0.51757091,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+            "chunk_index": 1,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.5750751323975567,
+            "rerank_score": 0.32509187,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "5e94575d-0dd3-4867-a7bd-e9827e1a486a",
+            "chunk_index": 3,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.7652326384325407,
+            "rerank_score": 0.29017562,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "3963517a-980e-4fce-967c-21b6da8ceabf",
+            "chunk_index": 5,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.7543115840647096,
+            "rerank_score": 0.27202454,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "chunk_index": 8,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.6888980587331703,
+            "rerank_score": 0.22000711,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "044c6f3e-c9f7-4ff9-915f-c3928688a0e3",
+            "chunk_index": 2,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.600389873946614,
+            "rerank_score": 0.21469143,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 4,
+            "chunk_id": "aad9c8b7-ee78-40a5-9947-368b253ffc1a",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          },
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 1,
+            "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "I couldn’t generate the usual final answer right now, but here is the most relevant grounded evidence: ork My preferred backend framework is Django, especially Django REST Framework for API development. I prefer Django because it provides a strong structure for building secure, scal... gle Gemini - Ollama - LangChain - OCR and document-processing tools Type of Problems I Like Solving I especially like solving problems where I need to: - convert unstructured input..."
+          },
+          {
+            "role": "user",
+            "content": "What frontend stack does Samah prefer?"
+          },
+          {
+            "role": "assistant",
+            "content": "Samah’s technical skills:\n- Programming Languages: Python\n- Backend: Django, Django REST Framework, FastAPI, Flask\n- Frontend: React, Next.js, Tailwind CSS\n- AI / LLM: LangChain, Ollama, Gemini"
+          },
+          {
+            "role": "user",
+            "content": "Is Samah stronger in backend or frontend?"
+          }
+        ]
+      }
+    }
+  ]
+}

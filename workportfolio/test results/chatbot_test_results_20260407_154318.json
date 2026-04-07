@@ -1,0 +1,4748 @@
+{
+  "run_at": "2026-04-07T15:50:05.262585",
+  "api_url": "http://127.0.0.1:8000/api/chat/ask/",
+  "total_questions": 46,
+  "final_session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+  "results": [
+    {
+      "question": "What are Samah’s skills?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "28028c18-c91d-4196-8878-0463f7efc475",
+        "retrieval_query": "What are Samah’s skills?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah’s technical skills:\n- Programming Languages: Python\n- Backend: Django, Django REST Framework, FastAPI, Flask\n- Frontend: React, Next.js, Tailwind CSS\n- Databases: PostgreSQL, MongoDB, MySQL, SQL Server, Oracle\n- DevOps / API / Security: Swagger, OpenAPI\n- AI / LLM: Hugging Face, BERT, RoBERTa, T5, LangChain, Ollama, Gemini, RAG, Vector Search\n- OCR / Document Processing: Tesseract, EasyOCR, OpenCV",
+        "citations": [
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "chunk_index": 9,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "1df26f99-5f94-4755-8e6a-c1f31f7f3148",
+            "chunk_index": 6,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_skills",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "chunk_index": 0,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.289406397623014,
+            "rerank_score": 0.70901912,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "chunk_index": 9,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.3500882178492405,
+            "rerank_score": 0.70578504,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "1df26f99-5f94-4755-8e6a-c1f31f7f3148",
+            "chunk_index": 6,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.49147418090547124,
+            "rerank_score": 0.68846846,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+            "chunk_index": 1,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.44677834054167065,
+            "rerank_score": 0.68087858,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "c0ebcff9-c3e2-4cbb-96a2-7075616ee82f",
+            "chunk_index": 8,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.4489859342575073,
+            "rerank_score": 0.67490816,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "bf3d502d-1a84-4ed5-af5e-8e7f1c3ed7e8",
+            "chunk_index": 5,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.6255382745816354,
+            "rerank_score": 0.6627965,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "doc_title": "cv",
+            "document_type": "cv",
+            "vector_distance": 0.5244121551513672,
+            "rerank_score": 0.64243245,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "440d3e3c-d340-4cb5-9e98-785a450378df",
+            "chunk_index": 4,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.6148137335423747,
+            "rerank_score": 0.61970145,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 0,
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          },
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 9,
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          },
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 6,
+            "chunk_id": "1df26f99-5f94-4755-8e6a-c1f31f7f3148",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          }
+        ],
+        "debug_history_count": 1,
+        "debug_recent_history": [
+          {
+            "role": "user",
+            "content": "What are Samah’s skills?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "What technologies does she use?",
+      "status": "failed",
+      "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/api/chat/ask/"
+    },
+    {
+      "question": "What is her tech stack?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "44afd78d-9089-4d94-bbc6-eb798d0db389",
+        "retrieval_query": "What is her tech stack?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah’s technical skills:\n- Programming Languages: Python, JavaScript, TypeScript\n- Backend: Django, Django REST Framework, FastAPI, Flask\n- Frontend: React, Next.js, Tailwind CSS, Bootstrap\n- Databases: PostgreSQL, MongoDB, MySQL, SQL Server, Oracle\n- DevOps / API / Security: Docker, NGINX, Gunicorn, JWT, RBAC, Swagger, OpenAPI\n- AI / LLM: Hugging Face, BERT, RoBERTa, T5, LangChain, Langfuse, Ollama, Gemini, RAG, Vector Search\n- OCR / Document Processing: Tesseract, EasyOCR, OpenCV",
+        "citations": [
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+            "chunk_index": 2,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "bf3d502d-1a84-4ed5-af5e-8e7f1c3ed7e8",
+            "chunk_index": 5,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_skills",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+            "chunk_index": 2,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.2976057110789829,
+            "rerank_score": null,
+            "source": "vector_fallback",
+            "matched_filter_document_type": null,
+            "reason": "reranker_empty"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+            "chunk_index": 1,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.29898671206792304,
+            "rerank_score": null,
+            "source": "vector_fallback",
+            "matched_filter_document_type": null,
+            "reason": "reranker_empty"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "bf3d502d-1a84-4ed5-af5e-8e7f1c3ed7e8",
+            "chunk_index": 5,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.3063740365059283,
+            "rerank_score": null,
+            "source": "vector_fallback",
+            "matched_filter_document_type": null,
+            "reason": "reranker_empty"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "chunk_index": 9,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.31760792031240814,
+            "rerank_score": null,
+            "source": "vector_fallback",
+            "matched_filter_document_type": null,
+            "reason": "reranker_empty"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "c0ebcff9-c3e2-4cbb-96a2-7075616ee82f",
+            "chunk_index": 8,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.3568207621574402,
+            "rerank_score": null,
+            "source": "vector_fallback",
+            "matched_filter_document_type": null,
+            "reason": "reranker_empty"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "db5f697e-6248-4c1f-93ad-2acac7c03c35",
+            "chunk_index": 3,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.37995338439941406,
+            "rerank_score": null,
+            "source": "vector_fallback",
+            "matched_filter_document_type": null,
+            "reason": "reranker_empty"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "903985d2-96b1-4f88-87f2-4a92d7e2e69f",
+            "chunk_index": 0,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.427852988243103,
+            "rerank_score": null,
+            "source": "vector_fallback",
+            "matched_filter_document_type": null,
+            "reason": "reranker_empty"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "c47958dc-9f8b-44fe-8707-1679c27f2e7d",
+            "chunk_index": 8,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.44049525260925293,
+            "rerank_score": null,
+            "source": "vector_fallback",
+            "matched_filter_document_type": null,
+            "reason": "reranker_empty"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 2,
+            "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          },
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 1,
+            "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          },
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 5,
+            "chunk_id": "bf3d502d-1a84-4ed5-af5e-8e7f1c3ed7e8",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          }
+        ],
+        "debug_history_count": 4,
+        "debug_recent_history": [
+          {
+            "role": "user",
+            "content": "What are Samah’s skills?"
+          },
+          {
+            "role": "assistant",
+            "content": "Samah’s technical skills:\n- Programming Languages: Python\n- Backend: Django, Django REST Framework, FastAPI, Flask\n- Frontend: React, Next.js, Tailwind CSS\n- Databases: PostgreSQL, MongoDB, MySQL, SQL Server, Oracle\n- DevOps / API / Security: Swagger, OpenAPI\n- AI / LLM: Hugging Face, BERT, RoBERTa, T5, LangChain, Ollama, Gemini, RAG, Vector Search\n- OCR / Document Processing: Tesseract, EasyOCR, OpenCV"
+          },
+          {
+            "role": "user",
+            "content": "What technologies does she use?"
+          },
+          {
+            "role": "user",
+            "content": "What is her tech stack?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "What frameworks does Samah use?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "d4ff00c0-c5fa-4dee-be92-f8a3421b0a30",
+        "retrieval_query": "What frameworks does Samah use?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah’s technical skills:\n- Programming Languages: Python, JavaScript, TypeScript\n- Backend: Django, Django REST Framework, FastAPI, Flask\n- Frontend: React, Next.js, Tailwind CSS\n- Databases: PostgreSQL, MongoDB, MySQL, SQL Server, Oracle\n- DevOps / API / Security: Docker, NGINX, Gunicorn, JWT, RBAC, Swagger, OpenAPI\n- AI / LLM: Hugging Face, BERT, RoBERTa, T5, LangChain, Langfuse, Ollama, Gemini, RAG, Vector Search\n- OCR / Document Processing: Tesseract, EasyOCR, OpenCV",
+        "citations": [
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+            "chunk_index": 2,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "eaffcc26-49cc-407a-a0b4-013c49b0aff0",
+            "chunk_index": 12,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_skills",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+            "chunk_index": 2,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.38706555289420697,
+            "rerank_score": null,
+            "source": "vector_fallback",
+            "matched_filter_document_type": null,
+            "reason": "reranker_empty"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "eaffcc26-49cc-407a-a0b4-013c49b0aff0",
+            "chunk_index": 12,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.403658390045166,
+            "rerank_score": null,
+            "source": "vector_fallback",
+            "matched_filter_document_type": null,
+            "reason": "reranker_empty"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+            "chunk_index": 1,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.44249938257036725,
+            "rerank_score": null,
+            "source": "vector_fallback",
+            "matched_filter_document_type": null,
+            "reason": "reranker_empty"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "db5f697e-6248-4c1f-93ad-2acac7c03c35",
+            "chunk_index": 3,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.47043561935424805,
+            "rerank_score": null,
+            "source": "vector_fallback",
+            "matched_filter_document_type": null,
+            "reason": "reranker_empty"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "182a71e3-321e-42f3-a0c3-a68585de846a",
+            "chunk_index": 5,
+            "doc_title": "cv",
+            "document_type": "cv",
+            "vector_distance": 0.48238426446914673,
+            "rerank_score": null,
+            "source": "vector_fallback",
+            "matched_filter_document_type": null,
+            "reason": "reranker_empty"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "1ffaa1ce-a644-4aac-b31f-c5b3be7ccb77",
+            "chunk_index": 7,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.4937787659431939,
+            "rerank_score": null,
+            "source": "vector_fallback",
+            "matched_filter_document_type": null,
+            "reason": "reranker_empty"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "doc_title": "cv",
+            "document_type": "cv",
+            "vector_distance": 0.5076436102390289,
+            "rerank_score": null,
+            "source": "vector_fallback",
+            "matched_filter_document_type": null,
+            "reason": "reranker_empty"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "1c2cd405-ebaa-4a82-94fc-13f758f13d60",
+            "chunk_index": 5,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.5097772479057312,
+            "rerank_score": null,
+            "source": "vector_fallback",
+            "matched_filter_document_type": null,
+            "reason": "reranker_empty"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 2,
+            "chunk_id": "daa85841-da8b-4d87-b7c6-08335753b2f4",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          },
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 12,
+            "chunk_id": "eaffcc26-49cc-407a-a0b4-013c49b0aff0",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          },
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 1,
+            "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "user",
+            "content": "What technologies does she use?"
+          },
+          {
+            "role": "user",
+            "content": "What is her tech stack?"
+          },
+          {
+            "role": "assistant",
+            "content": "Samah’s technical skills:\n- Programming Languages: Python, JavaScript, TypeScript\n- Backend: Django, Django REST Framework, FastAPI, Flask\n- Frontend: React, Next.js, Tailwind CSS, Bootstrap\n- Databases: PostgreSQL, MongoDB, MySQL, SQL Server, Oracle\n- DevOps / API / Security: Docker, NGINX, Gunicorn, JWT, RBAC, Swagger, OpenAPI\n- AI / LLM: Hugging Face, BERT, RoBERTa, T5, LangChain, Langfuse, Ollama, Gemini, RAG, Vector Search\n- OCR / Document Processing: Tesseract, EasyOCR, OpenCV"
+          },
+          {
+            "role": "user",
+            "content": "What frameworks does Samah use?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "What tools does Samah use?",
+      "status": "failed",
+      "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/api/chat/ask/"
+    },
+    {
+      "question": "What are Samah’s strongest technical areas?",
+      "status": "failed",
+      "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/api/chat/ask/"
+    },
+    {
+      "question": "What is Samah strongest in?",
+      "status": "failed",
+      "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/api/chat/ask/"
+    },
+    {
+      "question": "What are her core strengths?",
+      "status": "failed",
+      "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/api/chat/ask/"
+    },
+    {
+      "question": "What does Samah do?",
+      "status": "failed",
+      "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/api/chat/ask/"
+    },
+    {
+      "question": "What kind of work does Samah do?",
+      "status": "failed",
+      "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/api/chat/ask/"
+    },
+    {
+      "question": "What is Samah’s background?",
+      "status": "failed",
+      "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/api/chat/ask/"
+    },
+    {
+      "question": "Can Samah help with backend API development?",
+      "status": "failed",
+      "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/api/chat/ask/"
+    },
+    {
+      "question": "Can Samah build an AI chatbot?",
+      "status": "failed",
+      "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/api/chat/ask/"
+    },
+    {
+      "question": "What can Samah help with professionally?",
+      "status": "failed",
+      "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/api/chat/ask/"
+    },
+    {
+      "question": "What can Samah do?",
+      "status": "failed",
+      "error": "500 Server Error: Internal Server Error for url: http://127.0.0.1:8000/api/chat/ask/"
+    },
+    {
+      "question": "What is Samah’s favorite programming language?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "7818da3e-7079-4d6e-a1de-28543088f0c5",
+        "retrieval_query": "What is Samah’s favorite programming language?",
+        "rewrite_notes": "rewrite_fallback:all_models_failed",
+        "verdict": "supported",
+        "answer": "Samah’s favorite programming language is Python.",
+        "citations": [
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "chunk_index": 8,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "preferences",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_preferences",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+            "chunk_index": 0,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.5253123782481931,
+            "rerank_score": 0.41442481,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "chunk_index": 8,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.48315761732423546,
+            "rerank_score": 0.34422299,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 0,
+            "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          },
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 8,
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "user",
+            "content": "Can Samah build an AI chatbot?"
+          },
+          {
+            "role": "user",
+            "content": "What can Samah help with professionally?"
+          },
+          {
+            "role": "user",
+            "content": "What can Samah do?"
+          },
+          {
+            "role": "user",
+            "content": "What is Samah’s favorite programming language?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "Does Samah prefer Django or FastAPI?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "8c97e901-664a-423f-9418-ef65558927cd",
+        "retrieval_query": "Does Samah prefer Django or FastAPI?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah’s preferred backend framework is Django.\nSamah also has experience with FastAPI, but Django is her stronger and more preferred framework.",
+        "citations": [
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "chunk_index": 8,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "preferences",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_preferences",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+            "chunk_index": 1,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.5011355280199323,
+            "rerank_score": 0.57033134,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "chunk_index": 8,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.6210335267206142,
+            "rerank_score": 0.24653332,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+            "chunk_index": 0,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.6273530569847727,
+            "rerank_score": 0.23510839,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "044c6f3e-c9f7-4ff9-915f-c3928688a0e3",
+            "chunk_index": 2,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.6349752980500079,
+            "rerank_score": 0.21601155,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 1,
+            "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          },
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 8,
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          },
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 0,
+            "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "user",
+            "content": "What can Samah do?"
+          },
+          {
+            "role": "user",
+            "content": "What is Samah’s favorite programming language?"
+          },
+          {
+            "role": "assistant",
+            "content": "Samah’s favorite programming language is Python."
+          },
+          {
+            "role": "user",
+            "content": "Does Samah prefer Django or FastAPI?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "What backend framework does Samah prefer?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "d92e9b04-1601-406d-871f-2b031bf17921",
+        "retrieval_query": "What backend framework does Samah prefer?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "not_enough_evidence",
+        "answer": "I couldn’t generate the usual final answer right now, but based on the retrieved documents, ork My preferred backend framework is Django, especially Django REST Framework for API development. I prefer Django because it provides a strong structure for building secure, scalable, and production-ready applications. It is especially useful for business sy... gle Gemini - Ollama - LangChain - OCR and document-processing tools Type of Problems I Like Solving I especially like solving problems where I need to: - convert unstructured input into structured results - connect AI with real business workflows - automate re...",
+        "citations": [
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "chunk_index": 8,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "preferences",
+          "only_active_docs": true
+        },
+        "answer_source": null,
+        "extractor_used": null,
+        "gemini_model_used": "gemini-2.5-flash-lite",
+        "gemini_tried_models": [
+          "gemini-2.5-flash",
+          "gemini-2.5-flash-lite"
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+            "chunk_index": 1,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.42880061693187754,
+            "rerank_score": 0.53461248,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "chunk_index": 8,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.587262784675525,
+            "rerank_score": 0.39326853,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+            "chunk_index": 0,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.6006424903103693,
+            "rerank_score": 0.39326853,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "3963517a-980e-4fce-967c-21b6da8ceabf",
+            "chunk_index": 5,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.6073336005210876,
+            "rerank_score": 0.37662312,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "044c6f3e-c9f7-4ff9-915f-c3928688a0e3",
+            "chunk_index": 2,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.5442605859922631,
+            "rerank_score": 0.33720353,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "aad9c8b7-ee78-40a5-9947-368b253ffc1a",
+            "chunk_index": 4,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.6164537737640001,
+            "rerank_score": 0.3015677,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "5e94575d-0dd3-4867-a7bd-e9827e1a486a",
+            "chunk_index": 3,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.7266993143170866,
+            "rerank_score": 0.21469143,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 1,
+            "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          },
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 8,
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "Samah’s favorite programming language is Python."
+          },
+          {
+            "role": "user",
+            "content": "Does Samah prefer Django or FastAPI?"
+          },
+          {
+            "role": "assistant",
+            "content": "Samah’s preferred backend framework is Django.\nSamah also has experience with FastAPI, but Django is her stronger and more preferred framework."
+          },
+          {
+            "role": "user",
+            "content": "What backend framework does Samah prefer?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "What frontend stack does Samah prefer?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "911ef7d7-8efa-4378-95e5-167704d1d08d",
+        "retrieval_query": "What frontend stack does Samah prefer?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah’s technical skills:\n- Programming Languages: Python\n- Backend: Django, Django REST Framework, FastAPI, Flask\n- Frontend: React, Next.js, Tailwind CSS\n- AI / LLM: LangChain, Ollama, Gemini",
+        "citations": [
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "044c6f3e-c9f7-4ff9-915f-c3928688a0e3",
+            "chunk_index": 2,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "chunk_index": 8,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "preferences",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_skills",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "044c6f3e-c9f7-4ff9-915f-c3928688a0e3",
+            "chunk_index": 2,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.45414251635759484,
+            "rerank_score": 0.59125125,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+            "chunk_index": 1,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.5151069751318103,
+            "rerank_score": 0.47901624,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "chunk_index": 8,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.6063005987584941,
+            "rerank_score": 0.4016878,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "aad9c8b7-ee78-40a5-9947-368b253ffc1a",
+            "chunk_index": 4,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.5889463775722006,
+            "rerank_score": 0.35042137,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "3963517a-980e-4fce-967c-21b6da8ceabf",
+            "chunk_index": 5,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.6524794697761536,
+            "rerank_score": 0.32594952,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 2,
+            "chunk_id": "044c6f3e-c9f7-4ff9-915f-c3928688a0e3",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          },
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 1,
+            "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          },
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 8,
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "Samah’s preferred backend framework is Django.\nSamah also has experience with FastAPI, but Django is her stronger and more preferred framework."
+          },
+          {
+            "role": "user",
+            "content": "What backend framework does Samah prefer?"
+          },
+          {
+            "role": "assistant",
+            "content": "I couldn’t generate the usual final answer right now, but based on the retrieved documents, ork My preferred backend framework is Django, especially Django REST Framework for API development. I prefer Django because it provides a strong structure for building secure, scalable, and production-ready applications. It is especially useful for business sy... gle Gemini - Ollama - LangChain - OCR and document-processing tools Type of Problems I Like Solving I especially like solving problems where I need to: - convert unstructured input into structured results - connect AI with real business workflows - automate re..."
+          },
+          {
+            "role": "user",
+            "content": "What frontend stack does Samah prefer?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "Is Samah stronger in backend or frontend?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "fde3483a-a0a3-4a08-ad79-2a8ca91ee24d",
+        "retrieval_query": "Is Samah stronger in backend or frontend?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "not_enough_evidence",
+        "answer": "I couldn’t generate the usual final answer right now, but based on the retrieved documents, Frontend vs AI My strongest preference is a combination of backend development and AI-focused work. I enjoy frontend development as well, especially when building polished user interfaces with Next.js and React, but my strongest technical comfort zone is in ba... ork My preferred backend framework is Django, especially Django REST Framework for API development. I prefer Django because it provides a strong structure for building secure, scalable, and production-ready applications. It is especially useful for business sy...",
+        "citations": [
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "aad9c8b7-ee78-40a5-9947-368b253ffc1a",
+            "chunk_index": 4,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "preferences",
+          "only_active_docs": true
+        },
+        "answer_source": null,
+        "extractor_used": null,
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "aad9c8b7-ee78-40a5-9947-368b253ffc1a",
+            "chunk_index": 4,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.6495607077551732,
+            "rerank_score": 0.51732707,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+            "chunk_index": 1,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.5757578611373871,
+            "rerank_score": 0.32594952,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "5e94575d-0dd3-4867-a7bd-e9827e1a486a",
+            "chunk_index": 3,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.7661379962686892,
+            "rerank_score": 0.29421496,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "3963517a-980e-4fce-967c-21b6da8ceabf",
+            "chunk_index": 5,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.7549428942765526,
+            "rerank_score": 0.27125171,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "chunk_index": 8,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.6895038115386738,
+            "rerank_score": 0.22000711,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "044c6f3e-c9f7-4ff9-915f-c3928688a0e3",
+            "chunk_index": 2,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.6013312279384533,
+            "rerank_score": 0.21469143,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 4,
+            "chunk_id": "aad9c8b7-ee78-40a5-9947-368b253ffc1a",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          },
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 1,
+            "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "I couldn’t generate the usual final answer right now, but based on the retrieved documents, ork My preferred backend framework is Django, especially Django REST Framework for API development. I prefer Django because it provides a strong structure for building secure, scalable, and production-ready applications. It is especially useful for business sy... gle Gemini - Ollama - LangChain - OCR and document-processing tools Type of Problems I Like Solving I especially like solving problems where I need to: - convert unstructured input into structured results - connect AI with real business workflows - automate re..."
+          },
+          {
+            "role": "user",
+            "content": "What frontend stack does Samah prefer?"
+          },
+          {
+            "role": "assistant",
+            "content": "Samah’s technical skills:\n- Programming Languages: Python\n- Backend: Django, Django REST Framework, FastAPI, Flask\n- Frontend: React, Next.js, Tailwind CSS\n- AI / LLM: LangChain, Ollama, Gemini"
+          },
+          {
+            "role": "user",
+            "content": "Is Samah stronger in backend or frontend?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "How can I contact Samah?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "4bae8d54-dd25-437c-866c-3a7fc9fff62d",
+        "retrieval_query": "How can I contact Samah?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "You can contact Samah using the contact details:\n- Email: s.fujo@hotmail.com\n- Phone: +971 52 792 9218",
+        "citations": [
+          {
+            "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491",
+            "document_title": "cv",
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "cv",
+          "only_active_docs": true,
+          "document_title_contains": "cv"
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_contact",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "doc_title": "cv",
+            "document_type": "cv",
+            "vector_distance": 0.5088801980018616,
+            "rerank_score": 0.68341953,
+            "source": "reranked",
+            "matched_filter_document_type": "cv",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "cv",
+            "document_type": "cv",
+            "chunk_index": 0,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "Samah’s technical skills:\n- Programming Languages: Python\n- Backend: Django, Django REST Framework, FastAPI, Flask\n- Frontend: React, Next.js, Tailwind CSS\n- AI / LLM: LangChain, Ollama, Gemini"
+          },
+          {
+            "role": "user",
+            "content": "Is Samah stronger in backend or frontend?"
+          },
+          {
+            "role": "assistant",
+            "content": "I couldn’t generate the usual final answer right now, but based on the retrieved documents, Frontend vs AI My strongest preference is a combination of backend development and AI-focused work. I enjoy frontend development as well, especially when building polished user interfaces with Next.js and React, but my strongest technical comfort zone is in ba... ork My preferred backend framework is Django, especially Django REST Framework for API development. I prefer Django because it provides a strong structure for building secure, scalable, and production-ready applications. It is especially useful for business sy..."
+          },
+          {
+            "role": "user",
+            "content": "How can I contact Samah?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "What is Samah’s email?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "04a03515-2827-4295-9162-b40032eeda8e",
+        "retrieval_query": "What is Samah’s email?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah’s email is s.fujo@hotmail.com.",
+        "citations": [
+          {
+            "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491",
+            "document_title": "cv",
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "cv",
+          "only_active_docs": true,
+          "document_title_contains": "cv"
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_contact",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "doc_title": "cv",
+            "document_type": "cv",
+            "vector_distance": 0.4701519012451172,
+            "rerank_score": 0.66888028,
+            "source": "reranked",
+            "matched_filter_document_type": "cv",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "cv",
+            "document_type": "cv",
+            "chunk_index": 0,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "I couldn’t generate the usual final answer right now, but based on the retrieved documents, Frontend vs AI My strongest preference is a combination of backend development and AI-focused work. I enjoy frontend development as well, especially when building polished user interfaces with Next.js and React, but my strongest technical comfort zone is in ba... ork My preferred backend framework is Django, especially Django REST Framework for API development. I prefer Django because it provides a strong structure for building secure, scalable, and production-ready applications. It is especially useful for business sy..."
+          },
+          {
+            "role": "user",
+            "content": "How can I contact Samah?"
+          },
+          {
+            "role": "assistant",
+            "content": "You can contact Samah using the contact details:\n- Email: s.fujo@hotmail.com\n- Phone: +971 52 792 9218"
+          },
+          {
+            "role": "user",
+            "content": "What is Samah’s email?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "What is Samah’s phone number?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "2213155e-45a9-4167-bd16-945cebd998ce",
+        "retrieval_query": "What is Samah’s phone number?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah’s phone number is +971 52 792 9218.",
+        "citations": [
+          {
+            "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491",
+            "document_title": "cv",
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "cv",
+          "only_active_docs": true,
+          "document_title_contains": "cv"
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_contact",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "doc_title": "cv",
+            "document_type": "cv",
+            "vector_distance": 0.5271851420402527,
+            "rerank_score": 0.66192287,
+            "source": "reranked",
+            "matched_filter_document_type": "cv",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "cv",
+            "document_type": "cv",
+            "chunk_index": 0,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "You can contact Samah using the contact details:\n- Email: s.fujo@hotmail.com\n- Phone: +971 52 792 9218"
+          },
+          {
+            "role": "user",
+            "content": "What is Samah’s email?"
+          },
+          {
+            "role": "assistant",
+            "content": "Samah’s email is s.fujo@hotmail.com."
+          },
+          {
+            "role": "user",
+            "content": "What is Samah’s phone number?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "Does Samah have LinkedIn?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "30e8ee92-e59c-4d58-8008-b945acecdd03",
+        "retrieval_query": "Does Samah have LinkedIn?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "not_enough_evidence",
+        "answer": "I couldn’t generate the usual final answer right now, but the retrieved documents do contain contact-related information for Samah. Please check the cited source below.",
+        "citations": [
+          {
+            "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491",
+            "document_title": "cv",
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "cv",
+          "only_active_docs": true,
+          "document_title_contains": "cv"
+        },
+        "answer_source": null,
+        "extractor_used": null,
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "doc_title": "cv",
+            "document_type": "cv",
+            "vector_distance": 0.516247837767133,
+            "rerank_score": 0.40215731,
+            "source": "reranked",
+            "matched_filter_document_type": "cv",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "cv",
+            "document_type": "cv",
+            "chunk_index": 0,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "Samah’s email is s.fujo@hotmail.com."
+          },
+          {
+            "role": "user",
+            "content": "What is Samah’s phone number?"
+          },
+          {
+            "role": "assistant",
+            "content": "Samah’s phone number is +971 52 792 9218."
+          },
+          {
+            "role": "user",
+            "content": "Does Samah have LinkedIn?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "What is Samah’s LinkedIn?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "57329c58-5656-4b7b-ae21-8531fc1cc6a1",
+        "retrieval_query": "What is Samah’s LinkedIn?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "not_enough_evidence",
+        "answer": "I couldn’t generate the usual final answer right now, but the retrieved documents do contain contact-related information for Samah. Please check the cited source below.",
+        "citations": [
+          {
+            "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491",
+            "document_title": "cv",
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "cv",
+          "only_active_docs": true,
+          "document_title_contains": "cv"
+        },
+        "answer_source": null,
+        "extractor_used": null,
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "chunk_index": 0,
+            "doc_title": "cv",
+            "document_type": "cv",
+            "vector_distance": 0.4729206247878438,
+            "rerank_score": 0.34158251,
+            "source": "reranked",
+            "matched_filter_document_type": "cv",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "cv",
+            "document_type": "cv",
+            "chunk_index": 0,
+            "chunk_id": "26153f90-9501-44da-87fe-998cb8bb5bb3",
+            "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "Samah’s phone number is +971 52 792 9218."
+          },
+          {
+            "role": "user",
+            "content": "Does Samah have LinkedIn?"
+          },
+          {
+            "role": "assistant",
+            "content": "I couldn’t generate the usual final answer right now, but the retrieved documents do contain contact-related information for Samah. Please check the cited source below."
+          },
+          {
+            "role": "user",
+            "content": "What is Samah’s LinkedIn?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "Is Samah open to freelance work?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "1eaaf997-0a83-428c-9712-de9c486862df",
+        "retrieval_query": "Is Samah open to freelance work?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah is open to freelance and project-based work.",
+        "citations": [
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "chunk_index": 2,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "dbb70998-a6d8-445d-a1f9-98c54b0764df",
+            "chunk_index": 3,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "compensation",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_availability",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "chunk_index": 2,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.57861007197023,
+            "rerank_score": 0.34598863,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.5843155631830945,
+            "rerank_score": 0.32680833,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "dbb70998-a6d8-445d-a1f9-98c54b0764df",
+            "chunk_index": 3,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.6901512855381534,
+            "rerank_score": 0.30819026,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 2,
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 5,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 3,
+            "chunk_id": "dbb70998-a6d8-445d-a1f9-98c54b0764df",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "I couldn’t generate the usual final answer right now, but the retrieved documents do contain contact-related information for Samah. Please check the cited source below."
+          },
+          {
+            "role": "user",
+            "content": "What is Samah’s LinkedIn?"
+          },
+          {
+            "role": "assistant",
+            "content": "I couldn’t generate the usual final answer right now, but the retrieved documents do contain contact-related information for Samah. Please check the cited source below."
+          },
+          {
+            "role": "user",
+            "content": "Is Samah open to freelance work?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "Is Samah open to remote work?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "c8076449-f586-4b4c-a493-258bac0b09c1",
+        "retrieval_query": "Is Samah open to remote work?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah is open to remote, hybrid, and suitable on-site opportunities.",
+        "citations": [
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "chunk_index": 2,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "compensation",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_availability",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "chunk_index": 2,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.5964436233043555,
+            "rerank_score": 0.36387292,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.642560545940301,
+            "rerank_score": 0.32338011,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 2,
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 5,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "I couldn’t generate the usual final answer right now, but the retrieved documents do contain contact-related information for Samah. Please check the cited source below."
+          },
+          {
+            "role": "user",
+            "content": "Is Samah open to freelance work?"
+          },
+          {
+            "role": "assistant",
+            "content": "Samah is open to freelance and project-based work."
+          },
+          {
+            "role": "user",
+            "content": "Is Samah open to remote work?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "Which locations is Samah open to?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "771460a8-d316-4dd9-8ea9-0b7a469caf6e",
+        "retrieval_query": "Which locations is Samah open to?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah is especially open to opportunities in Dubai, Abu Dhabi, the UAE, and strong remote opportunities.",
+        "citations": [
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "chunk_index": 2,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "compensation",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_availability",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.7494879216260952,
+            "rerank_score": 0.16238002,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "chunk_index": 2,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.7635785059426416,
+            "rerank_score": 0.15002881,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+            "chunk_index": 1,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.9292788782500886,
+            "rerank_score": 0.05108274,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "dbb70998-a6d8-445d-a1f9-98c54b0764df",
+            "chunk_index": 3,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.917371074400608,
+            "rerank_score": 0.03904829,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "71551d7b-c52a-4118-b2b5-b05e383c9e1a",
+            "chunk_index": 4,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.9244540929794312,
+            "rerank_score": 0.02368947,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+            "chunk_index": 0,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.9214998306930164,
+            "rerank_score": 0.02333077,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 5,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 2,
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 1,
+            "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "Samah is open to freelance and project-based work."
+          },
+          {
+            "role": "user",
+            "content": "Is Samah open to remote work?"
+          },
+          {
+            "role": "assistant",
+            "content": "Samah is open to remote, hybrid, and suitable on-site opportunities."
+          },
+          {
+            "role": "user",
+            "content": "Which locations is Samah open to?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "What payment range is Samah looking for?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "5853b16c-8e9a-4637-8def-25dc5ee23395",
+        "retrieval_query": "What payment range is Samah looking for?",
+        "rewrite_notes": "rule_based_followup",
+        "verdict": "supported",
+        "answer": "Compensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement.",
+        "citations": [
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "compensation",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_availability",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+            "chunk_index": 1,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.5409372312109835,
+            "rerank_score": 0.24508502,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 1,
+            "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "Samah is open to remote, hybrid, and suitable on-site opportunities."
+          },
+          {
+            "role": "user",
+            "content": "Which locations is Samah open to?"
+          },
+          {
+            "role": "assistant",
+            "content": "Samah is especially open to opportunities in Dubai, Abu Dhabi, the UAE, and strong remote opportunities."
+          },
+          {
+            "role": "user",
+            "content": "What payment range is Samah looking for?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "What is Samah’s hourly rate?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "f958b649-5de8-49ef-ac1e-7702211be40b",
+        "retrieval_query": "What is Samah’s hourly rate?",
+        "rewrite_notes": "rule_based_followup",
+        "verdict": "supported",
+        "answer": "Compensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement.",
+        "citations": [
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "compensation",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_availability",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.6465760382070512,
+            "rerank_score": 0.03846619,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+            "chunk_index": 0,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.8010741292790093,
+            "rerank_score": 0.03622006,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+            "chunk_index": 1,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.6911609676826287,
+            "rerank_score": 0.03308598,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "chunk_index": 2,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.8369972809549894,
+            "rerank_score": 0.02931223,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "dbb70998-a6d8-445d-a1f9-98c54b0764df",
+            "chunk_index": 3,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.9272780449556137,
+            "rerank_score": 0.0288709,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "71551d7b-c52a-4118-b2b5-b05e383c9e1a",
+            "chunk_index": 4,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.7482249736785889,
+            "rerank_score": 0.02442309,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 5,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 0,
+            "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 1,
+            "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "Samah is especially open to opportunities in Dubai, Abu Dhabi, the UAE, and strong remote opportunities."
+          },
+          {
+            "role": "user",
+            "content": "What payment range is Samah looking for?"
+          },
+          {
+            "role": "assistant",
+            "content": "Compensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement."
+          },
+          {
+            "role": "user",
+            "content": "What is Samah’s hourly rate?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "Is Samah open to full-time work?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "219a9107-a4cd-49d4-84e2-27e83ae38ce7",
+        "retrieval_query": "Is Samah open to full-time work?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "supported",
+        "answer": "Samah is open to full-time opportunities.",
+        "citations": [
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "compensation",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_availability",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.6334600746631596,
+            "rerank_score": 0.29992473,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 5,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "Compensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement."
+          },
+          {
+            "role": "user",
+            "content": "What is Samah’s hourly rate?"
+          },
+          {
+            "role": "assistant",
+            "content": "Compensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement."
+          },
+          {
+            "role": "user",
+            "content": "Is Samah open to full-time work?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "What is Samah’s availability?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "54a75910-d957-4e07-8202-e7f80b4b118b",
+        "retrieval_query": "What is Samah’s availability?",
+        "rewrite_notes": "The user is asking about Samah's availability. This is a direct question and does not require modification.",
+        "verdict": "supported",
+        "answer": "Samah is open to full-time opportunities.\nSamah is open to freelance and project-based work.\nSamah is open to remote, hybrid, and suitable on-site opportunities.\nSamah is especially open to opportunities in Dubai, Abu Dhabi, the UAE, and strong remote opportunities.\nCompensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement.",
+        "citations": [
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "chunk_index": 2,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "compensation",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_availability",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+            "chunk_index": 0,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.8441342599231887,
+            "rerank_score": 0.08151976,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "chunk_index": 2,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.8387996458291771,
+            "rerank_score": 0.05665243,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.7972649279517021,
+            "rerank_score": 0.03789243,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "dbb70998-a6d8-445d-a1f9-98c54b0764df",
+            "chunk_index": 3,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.9610182568430898,
+            "rerank_score": 0.03622006,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "71551d7b-c52a-4118-b2b5-b05e383c9e1a",
+            "chunk_index": 4,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.9271639703414456,
+            "rerank_score": 0.0288709,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+            "chunk_index": 1,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.9396229106300199,
+            "rerank_score": 0.02635535,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 0,
+            "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 2,
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 5,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "Compensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement."
+          },
+          {
+            "role": "user",
+            "content": "Is Samah open to full-time work?"
+          },
+          {
+            "role": "assistant",
+            "content": "Samah is open to full-time opportunities."
+          },
+          {
+            "role": "user",
+            "content": "What is Samah’s availability?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "What are Samah’s compensation expectations?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "50db862d-d229-4868-bb3f-ded4c985caa3",
+        "retrieval_query": "What are Samah’s compensation expectations?",
+        "rewrite_notes": "rule_based_followup",
+        "verdict": "supported",
+        "answer": "Compensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement.",
+        "citations": [
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "compensation",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_availability",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+            "chunk_index": 0,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.6960469963522551,
+            "rerank_score": 0.30569732,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.5487295658153546,
+            "rerank_score": 0.29421496,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 0,
+            "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 5,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "Samah is open to full-time opportunities."
+          },
+          {
+            "role": "user",
+            "content": "What is Samah’s availability?"
+          },
+          {
+            "role": "assistant",
+            "content": "Samah is open to full-time opportunities.\nSamah is open to freelance and project-based work.\nSamah is open to remote, hybrid, and suitable on-site opportunities.\nSamah is especially open to opportunities in Dubai, Abu Dhabi, the UAE, and strong remote opportunities.\nCompensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement."
+          },
+          {
+            "role": "user",
+            "content": "What are Samah’s compensation expectations?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "I have a new project need skills of power BI can you develop something like that?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "900ceedb-65d9-4f64-be9e-72c8dae490bb",
+        "retrieval_query": "Develop power BI project",
+        "rewrite_notes": "The user is asking about the development of a new project requiring Power BI skills.",
+        "verdict": "supported",
+        "answer": "The available information does not explicitly confirm direct experience with power BI. However, Samah does have strong adjacent experience in dashboard and analytics solution development, backend and API development, full-stack web application delivery, AI-enabled and automation-focused solutions. She may still be a good fit if the project involves similar dashboard, backend, data, or solution-delivery work.",
+        "citations": [
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "826ce965-065f-4c4b-ad1e-660ff768b581",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "e216b069-18a6-49ad-8049-d8077ec56560",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "b7ffbf09-d9a2-4e80-978d-e760bdb718c3",
+            "chunk_index": 2,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "projects",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_project_fit",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "826ce965-065f-4c4b-ad1e-660ff768b581",
+            "chunk_index": 0,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.6046981451095249,
+            "rerank_score": 0.54722214,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "e216b069-18a6-49ad-8049-d8077ec56560",
+            "chunk_index": 1,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.6071532666683197,
+            "rerank_score": 0.45326185,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "b7ffbf09-d9a2-4e80-978d-e760bdb718c3",
+            "chunk_index": 2,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.6828935647873151,
+            "rerank_score": 0.22953522,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+            "chunk_index": 9,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.6213938481031014,
+            "rerank_score": 0.20561504,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 0,
+            "chunk_id": "826ce965-065f-4c4b-ad1e-660ff768b581",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          },
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 1,
+            "chunk_id": "e216b069-18a6-49ad-8049-d8077ec56560",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          },
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 2,
+            "chunk_id": "b7ffbf09-d9a2-4e80-978d-e760bdb718c3",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "Samah is open to full-time opportunities.\nSamah is open to freelance and project-based work.\nSamah is open to remote, hybrid, and suitable on-site opportunities.\nSamah is especially open to opportunities in Dubai, Abu Dhabi, the UAE, and strong remote opportunities.\nCompensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement."
+          },
+          {
+            "role": "user",
+            "content": "What are Samah’s compensation expectations?"
+          },
+          {
+            "role": "assistant",
+            "content": "Compensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement."
+          },
+          {
+            "role": "user",
+            "content": "I have a new project need skills of power BI can you develop something like that?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "I have a new project using Tableau can she build something like that?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "1e885fc5-1ce7-4563-98fc-dd245f0a3e1e",
+        "retrieval_query": "Samah Tableau project",
+        "rewrite_notes": "User is asking if Samah can build something using Tableau for a new project.",
+        "verdict": "supported",
+        "answer": "The available information does not explicitly confirm direct experience with Tableau. However, Samah does have strong adjacent experience in dashboard and analytics solution development, backend and API development, full-stack web application delivery, AI-enabled and automation-focused solutions. She may still be a good fit if the project involves similar dashboard, backend, data, or solution-delivery work.",
+        "citations": [
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+            "chunk_index": 10,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+            "chunk_index": 9,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+            "chunk_index": 8,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "projects",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_project_fit",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+            "chunk_index": 10,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.6203243732452393,
+            "rerank_score": 0.68087858,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+            "chunk_index": 9,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.5740203730470052,
+            "rerank_score": 0.67917871,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+            "chunk_index": 8,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.5925978720188141,
+            "rerank_score": 0.59971958,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "1ffaa1ce-a644-4aac-b31f-c5b3be7ccb77",
+            "chunk_index": 7,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.698013758896139,
+            "rerank_score": 0.44770172,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "e216b069-18a6-49ad-8049-d8077ec56560",
+            "chunk_index": 1,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.7762048691511154,
+            "rerank_score": 0.20055769,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 10,
+            "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          },
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 9,
+            "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          },
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 8,
+            "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "Compensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement."
+          },
+          {
+            "role": "user",
+            "content": "I have a new project need skills of power BI can you develop something like that?"
+          },
+          {
+            "role": "assistant",
+            "content": "The available information does not explicitly confirm direct experience with power BI. However, Samah does have strong adjacent experience in dashboard and analytics solution development, backend and API development, full-stack web application delivery, AI-enabled and automation-focused solutions. She may still be a good fit if the project involves similar dashboard, backend, data, or solution-delivery work."
+          },
+          {
+            "role": "user",
+            "content": "I have a new project using Tableau can she build something like that?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "I need someone with Snowflake experience can Samah handle this kind of project?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "c5eab235-bd56-4e92-9257-19428e687f4d",
+        "retrieval_query": "Samah Snowflake experience project handling",
+        "rewrite_notes": "The user is asking about Samah's ability to handle a project requiring Snowflake experience.",
+        "verdict": "supported",
+        "answer": "The available information does not explicitly confirm direct experience with Snowflake. However, Samah does have strong adjacent experience in dashboard and analytics solution development, backend and API development, full-stack web application delivery, AI-enabled and automation-focused solutions. She may still be a good fit if the project involves similar dashboard, backend, data, or solution-delivery work.",
+        "citations": [
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+            "chunk_index": 9,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+            "chunk_index": 8,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+            "chunk_index": 10,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "projects",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_project_fit",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+            "chunk_index": 9,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.5696737638018655,
+            "rerank_score": 0.57128835,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+            "chunk_index": 8,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.6696071922779083,
+            "rerank_score": 0.55084896,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+            "chunk_index": 10,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.574713259935379,
+            "rerank_score": 0.49682617,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "1ffaa1ce-a644-4aac-b31f-c5b3be7ccb77",
+            "chunk_index": 7,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.7406158756475578,
+            "rerank_score": 0.3738758,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "e216b069-18a6-49ad-8049-d8077ec56560",
+            "chunk_index": 1,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.7087617218494415,
+            "rerank_score": 0.21733753,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 9,
+            "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          },
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 8,
+            "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          },
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 10,
+            "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "The available information does not explicitly confirm direct experience with power BI. However, Samah does have strong adjacent experience in dashboard and analytics solution development, backend and API development, full-stack web application delivery, AI-enabled and automation-focused solutions. She may still be a good fit if the project involves similar dashboard, backend, data, or solution-delivery work."
+          },
+          {
+            "role": "user",
+            "content": "I have a new project using Tableau can she build something like that?"
+          },
+          {
+            "role": "assistant",
+            "content": "The available information does not explicitly confirm direct experience with Tableau. However, Samah does have strong adjacent experience in dashboard and analytics solution development, backend and API development, full-stack web application delivery, AI-enabled and automation-focused solutions. She may still be a good fit if the project involves similar dashboard, backend, data, or solution-delivery work."
+          },
+          {
+            "role": "user",
+            "content": "I need someone with Snowflake experience can Samah handle this kind of project?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "Can she build this kind of data platform?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "f6210b4d-61be-41d7-a80f-d43eafaa2618",
+        "retrieval_query": "Can she build this kind of data platform?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "not_enough_evidence",
+        "answer": "The retrieved documents suggest that Samah has relevant adjacent experience in backend development, dashboard and analytics work, full-stack delivery, and AI-enabled business solutions. However, the documents may not explicitly confirm every requested specialized technology.",
+        "citations": [
+          {
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9",
+            "document_title": "where i can help",
+            "chunk_id": "a4fe1a5e-02dc-479d-b070-e006bb5f5d94",
+            "chunk_index": 3,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9",
+            "document_title": "where i can help",
+            "chunk_id": "ec033764-6477-4d7f-aa57-ed8d25870755",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "capabilities",
+          "only_active_docs": true
+        },
+        "answer_source": null,
+        "extractor_used": null,
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "a4fe1a5e-02dc-479d-b070-e006bb5f5d94",
+            "chunk_index": 3,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.6606763904682011,
+            "rerank_score": 0.3015677,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "ec033764-6477-4d7f-aa57-ed8d25870755",
+            "chunk_index": 1,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.7522860913106109,
+            "rerank_score": 0.24220563,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "b70b1176-5b1c-42c4-a33d-48e71f10dcbb",
+            "chunk_index": 7,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.6987649324500722,
+            "rerank_score": 0.23091978,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "ab0c6e80-01cc-44da-ab21-223ff64e1e3d",
+            "chunk_index": 2,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.7079433674846025,
+            "rerank_score": 0.22135067,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "ba2298c5-b8fe-47f5-87a4-d049c1bfa3ad",
+            "chunk_index": 4,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.7023179797245845,
+            "rerank_score": 0.18359363,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "5704c60d-b39b-4e26-b93d-10050089e6c9",
+            "chunk_index": 11,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.7199471759827583,
+            "rerank_score": 0.15405758,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "c47958dc-9f8b-44fe-8707-1679c27f2e7d",
+            "chunk_index": 8,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.7997238576741375,
+            "rerank_score": 0.12421302,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "chunk_index": 3,
+            "chunk_id": "a4fe1a5e-02dc-479d-b070-e006bb5f5d94",
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+          },
+          {
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "chunk_index": 1,
+            "chunk_id": "ec033764-6477-4d7f-aa57-ed8d25870755",
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "The available information does not explicitly confirm direct experience with Tableau. However, Samah does have strong adjacent experience in dashboard and analytics solution development, backend and API development, full-stack web application delivery, AI-enabled and automation-focused solutions. She may still be a good fit if the project involves similar dashboard, backend, data, or solution-delivery work."
+          },
+          {
+            "role": "user",
+            "content": "I need someone with Snowflake experience can Samah handle this kind of project?"
+          },
+          {
+            "role": "assistant",
+            "content": "The available information does not explicitly confirm direct experience with Snowflake. However, Samah does have strong adjacent experience in dashboard and analytics solution development, backend and API development, full-stack web application delivery, AI-enabled and automation-focused solutions. She may still be a good fit if the project involves similar dashboard, backend, data, or solution-delivery work."
+          },
+          {
+            "role": "user",
+            "content": "Can she build this kind of data platform?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "Is she a fit for this project?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "7a806fbe-591f-4fdf-bf4c-c283cf5b0dc6",
+        "retrieval_query": "Is Samah a fit for this project?",
+        "rewrite_notes": "The user is asking if Samah is a suitable candidate for the project, building on the previous conversation about her skills and experience.",
+        "verdict": "supported",
+        "answer": "Samah appears to be a reasonable fit for this kind of project based on her background in dashboard and analytics solution development, backend and API development, full-stack web application delivery, AI-enabled and automation-focused solutions. The exact fit would depend on the required tools, implementation scope, and whether the project needs a highly specialized technology.",
+        "citations": [
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+            "chunk_index": 9,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+            "chunk_index": 8,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+            "chunk_index": 10,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "projects",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_project_fit",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+            "chunk_index": 9,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.536454274164011,
+            "rerank_score": 0.50622523,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+            "chunk_index": 8,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.628405950760486,
+            "rerank_score": 0.44143218,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+            "chunk_index": 10,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.7141867450364379,
+            "rerank_score": 0.43878523,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "1ffaa1ce-a644-4aac-b31f-c5b3be7ccb77",
+            "chunk_index": 7,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.7121896662372942,
+            "rerank_score": 0.28696784,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 9,
+            "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          },
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 8,
+            "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          },
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 10,
+            "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "The available information does not explicitly confirm direct experience with Snowflake. However, Samah does have strong adjacent experience in dashboard and analytics solution development, backend and API development, full-stack web application delivery, AI-enabled and automation-focused solutions. She may still be a good fit if the project involves similar dashboard, backend, data, or solution-delivery work."
+          },
+          {
+            "role": "user",
+            "content": "Can she build this kind of data platform?"
+          },
+          {
+            "role": "assistant",
+            "content": "The retrieved documents suggest that Samah has relevant adjacent experience in backend development, dashboard and analytics work, full-stack delivery, and AI-enabled business solutions. However, the documents may not explicitly confirm every requested specialized technology."
+          },
+          {
+            "role": "user",
+            "content": "Is she a fit for this project?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "Can Samah help with this type of dashboard project?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "6f54e73b-0d16-4734-bb47-c4cf1f08b4a5",
+        "retrieval_query": "Can Samah help with dashboard projects?",
+        "rewrite_notes": "The user is asking about Samah's ability to contribute to dashboard projects, building on the previous discussion about her skills and fit for a project.",
+        "verdict": "supported",
+        "answer": "Samah appears to be a reasonable fit for this kind of project based on her background in dashboard and analytics solution development, backend and API development, full-stack web application delivery, AI-enabled and automation-focused solutions. The exact fit would depend on the required tools, implementation scope, and whether the project needs a highly specialized technology.",
+        "citations": [
+          {
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9",
+            "document_title": "where i can help",
+            "chunk_id": "7ac5d8bb-e622-41d4-851f-bfc79aaaef59",
+            "chunk_index": 12,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9",
+            "document_title": "where i can help",
+            "chunk_id": "1c2cd405-ebaa-4a82-94fc-13f758f13d60",
+            "chunk_index": 5,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9",
+            "document_title": "where i can help",
+            "chunk_id": "b70b1176-5b1c-42c4-a33d-48e71f10dcbb",
+            "chunk_index": 7,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "capabilities",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_project_fit",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "7ac5d8bb-e622-41d4-851f-bfc79aaaef59",
+            "chunk_index": 12,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.7724960540976572,
+            "rerank_score": 0.35042137,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "1c2cd405-ebaa-4a82-94fc-13f758f13d60",
+            "chunk_index": 5,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.6177764605150491,
+            "rerank_score": 0.3165805,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "b70b1176-5b1c-42c4-a33d-48e71f10dcbb",
+            "chunk_index": 7,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.6149765482558815,
+            "rerank_score": 0.31573597,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "ba2298c5-b8fe-47f5-87a4-d049c1bfa3ad",
+            "chunk_index": 4,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.5941142076952045,
+            "rerank_score": 0.29178745,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "a4fe1a5e-02dc-479d-b070-e006bb5f5d94",
+            "chunk_index": 3,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.6516434238830289,
+            "rerank_score": 0.28776783,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "chunk_index": 12,
+            "chunk_id": "7ac5d8bb-e622-41d4-851f-bfc79aaaef59",
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+          },
+          {
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "chunk_index": 5,
+            "chunk_id": "1c2cd405-ebaa-4a82-94fc-13f758f13d60",
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+          },
+          {
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "chunk_index": 7,
+            "chunk_id": "b70b1176-5b1c-42c4-a33d-48e71f10dcbb",
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "The retrieved documents suggest that Samah has relevant adjacent experience in backend development, dashboard and analytics work, full-stack delivery, and AI-enabled business solutions. However, the documents may not explicitly confirm every requested specialized technology."
+          },
+          {
+            "role": "user",
+            "content": "Is she a fit for this project?"
+          },
+          {
+            "role": "assistant",
+            "content": "Samah appears to be a reasonable fit for this kind of project based on her background in dashboard and analytics solution development, backend and API development, full-stack web application delivery, AI-enabled and automation-focused solutions. The exact fit would depend on the required tools, implementation scope, and whether the project needs a highly specialized technology."
+          },
+          {
+            "role": "user",
+            "content": "Can Samah help with this type of dashboard project?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "Can Samah build this kind of analytics solution?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "001c4bfe-5921-4d9c-93e8-d47f3fac30d4",
+        "retrieval_query": "Can Samah build this kind of analytics solution?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "not_enough_evidence",
+        "answer": "The retrieved documents suggest that Samah has relevant adjacent experience in backend development, dashboard and analytics work, full-stack delivery, and AI-enabled business solutions. However, the documents may not explicitly confirm every requested specialized technology.",
+        "citations": [
+          {
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9",
+            "document_title": "where i can help",
+            "chunk_id": "a4fe1a5e-02dc-479d-b070-e006bb5f5d94",
+            "chunk_index": 3,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9",
+            "document_title": "where i can help",
+            "chunk_id": "ba2298c5-b8fe-47f5-87a4-d049c1bfa3ad",
+            "chunk_index": 4,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "capabilities",
+          "only_active_docs": true
+        },
+        "answer_source": null,
+        "extractor_used": null,
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "a4fe1a5e-02dc-479d-b070-e006bb5f5d94",
+            "chunk_index": 3,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.5760561950189993,
+            "rerank_score": 0.36116472,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "ba2298c5-b8fe-47f5-87a4-d049c1bfa3ad",
+            "chunk_index": 4,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.5227759622700207,
+            "rerank_score": 0.28696784,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "b70b1176-5b1c-42c4-a33d-48e71f10dcbb",
+            "chunk_index": 7,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.6258777154902722,
+            "rerank_score": 0.23510839,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "ec033764-6477-4d7f-aa57-ed8d25870755",
+            "chunk_index": 1,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.6185183525085423,
+            "rerank_score": 0.17895588,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "ab0c6e80-01cc-44da-ab21-223ff64e1e3d",
+            "chunk_index": 2,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.6110678911209079,
+            "rerank_score": 0.13477591,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "1c2cd405-ebaa-4a82-94fc-13f758f13d60",
+            "chunk_index": 5,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.6594549620476382,
+            "rerank_score": 0.11596072,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "5704c60d-b39b-4e26-b93d-10050089e6c9",
+            "chunk_index": 11,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.6520516276359534,
+            "rerank_score": 0.1066906,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "903985d2-96b1-4f88-87f2-4a92d7e2e69f",
+            "chunk_index": 0,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.6393805957209702,
+            "rerank_score": 0.10521054,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "chunk_index": 3,
+            "chunk_id": "a4fe1a5e-02dc-479d-b070-e006bb5f5d94",
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+          },
+          {
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "chunk_index": 4,
+            "chunk_id": "ba2298c5-b8fe-47f5-87a4-d049c1bfa3ad",
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "Samah appears to be a reasonable fit for this kind of project based on her background in dashboard and analytics solution development, backend and API development, full-stack web application delivery, AI-enabled and automation-focused solutions. The exact fit would depend on the required tools, implementation scope, and whether the project needs a highly specialized technology."
+          },
+          {
+            "role": "user",
+            "content": "Can Samah help with this type of dashboard project?"
+          },
+          {
+            "role": "assistant",
+            "content": "Samah appears to be a reasonable fit for this kind of project based on her background in dashboard and analytics solution development, backend and API development, full-stack web application delivery, AI-enabled and automation-focused solutions. The exact fit would depend on the required tools, implementation scope, and whether the project needs a highly specialized technology."
+          },
+          {
+            "role": "user",
+            "content": "Can Samah build this kind of analytics solution?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "Can Samah work on this kind of data-driven project?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "2770d02f-6e63-4989-8987-447d5e7b3060",
+        "retrieval_query": "Can Samah work on this kind of data-driven project?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "not_enough_evidence",
+        "answer": "The retrieved documents suggest that Samah has relevant adjacent experience in backend development, dashboard and analytics work, full-stack delivery, and AI-enabled business solutions. However, the documents may not explicitly confirm every requested specialized technology.",
+        "citations": [
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+            "chunk_index": 8,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+            "chunk_index": 10,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "projects",
+          "only_active_docs": true
+        },
+        "answer_source": null,
+        "extractor_used": null,
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+            "chunk_index": 8,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.5393106341362,
+            "rerank_score": 0.50860512,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+            "chunk_index": 10,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.5057246088981628,
+            "rerank_score": 0.49775693,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "ceed3223-dc0b-49b2-b3f4-4960e8b0fe11",
+            "chunk_index": 9,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.49662683894118165,
+            "rerank_score": 0.44697744,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "1ffaa1ce-a644-4aac-b31f-c5b3be7ccb77",
+            "chunk_index": 7,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.5931851156729293,
+            "rerank_score": 0.38260272,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 8,
+            "chunk_id": "31394cf0-5c02-4e9d-8f32-6feaff44321b",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          },
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 10,
+            "chunk_id": "4dc62826-7574-4c24-b64f-03e0ed76cba1",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "Samah appears to be a reasonable fit for this kind of project based on her background in dashboard and analytics solution development, backend and API development, full-stack web application delivery, AI-enabled and automation-focused solutions. The exact fit would depend on the required tools, implementation scope, and whether the project needs a highly specialized technology."
+          },
+          {
+            "role": "user",
+            "content": "Can Samah build this kind of analytics solution?"
+          },
+          {
+            "role": "assistant",
+            "content": "The retrieved documents suggest that Samah has relevant adjacent experience in backend development, dashboard and analytics work, full-stack delivery, and AI-enabled business solutions. However, the documents may not explicitly confirm every requested specialized technology."
+          },
+          {
+            "role": "user",
+            "content": "Can Samah work on this kind of data-driven project?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "What is Samah’s GitHub?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "6beacb7a-0da3-48ba-beea-6ce4a0746ac4",
+        "retrieval_query": "Samah GitHub",
+        "rewrite_notes": "The user is asking for Samah's GitHub profile.",
+        "verdict": "not_enough_evidence",
+        "answer": "I couldn’t generate the usual final answer right now, but based on the retrieved documents, ess operations, and building practical systems that improve efficiency and decision-making. Summary Samah is an AI Team Lead and AI/ML Engineer with strong experience in Python, Django, backend engineering, AI workflows, full-stack development, and practical b... Samah FAQ Overview This FAQ document contains direct questions and grounded answers about Samah’s background, skills, preferences, project experience, and work profile. It is designed to improve chatbot retrieval by matching natural user questions with clear s...",
+        "citations": [
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "chunk_index": 9,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "faq",
+          "only_active_docs": true
+        },
+        "answer_source": null,
+        "extractor_used": null,
+        "gemini_model_used": "gemini-2.5-flash-lite",
+        "gemini_tried_models": [
+          "gemini-2.5-flash",
+          "gemini-2.5-flash-lite"
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "chunk_index": 9,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.38822042942046686,
+            "rerank_score": 0.65577704,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "chunk_index": 0,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.4088720150773536,
+            "rerank_score": 0.61230963,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "1df26f99-5f94-4755-8e6a-c1f31f7f3148",
+            "chunk_index": 6,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5521103205812359,
+            "rerank_score": 0.52585578,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "c0ebcff9-c3e2-4cbb-96a2-7075616ee82f",
+            "chunk_index": 8,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.4669791142332016,
+            "rerank_score": 0.52317673,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+            "chunk_index": 1,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.49479921115629755,
+            "rerank_score": 0.49633798,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "69dd03be-6961-43b4-8e58-20a0feb96594",
+            "chunk_index": 7,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5350967964587678,
+            "rerank_score": 0.47414416,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "440d3e3c-d340-4cb5-9e98-785a450378df",
+            "chunk_index": 4,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5469004106730588,
+            "rerank_score": 0.46368712,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "bf3d502d-1a84-4ed5-af5e-8e7f1c3ed7e8",
+            "chunk_index": 5,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.6164514651029367,
+            "rerank_score": 0.4605315,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 9,
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          },
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 0,
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "The retrieved documents suggest that Samah has relevant adjacent experience in backend development, dashboard and analytics work, full-stack delivery, and AI-enabled business solutions. However, the documents may not explicitly confirm every requested specialized technology."
+          },
+          {
+            "role": "user",
+            "content": "Can Samah work on this kind of data-driven project?"
+          },
+          {
+            "role": "assistant",
+            "content": "The retrieved documents suggest that Samah has relevant adjacent experience in backend development, dashboard and analytics work, full-stack delivery, and AI-enabled business solutions. However, the documents may not explicitly confirm every requested specialized technology."
+          },
+          {
+            "role": "user",
+            "content": "What is Samah’s GitHub?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "What is Samah’s home address?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "afcdc14e-8cf9-4b2e-8bb2-23acd43b339c",
+        "retrieval_query": "What is Samah’s home address?",
+        "rewrite_notes": "local_fast_path",
+        "verdict": "not_enough_evidence",
+        "answer": "I couldn’t generate the usual final answer right now, but based on the retrieved documents, Samah FAQ Overview This FAQ document contains direct questions and grounded answers about Samah’s background, skills, preferences, project experience, and work profile. It is designed to improve chatbot retrieval by matching natural user questions with clear s... ess operations, and building practical systems that improve efficiency and decision-making. Summary Samah is an AI Team Lead and AI/ML Engineer with strong experience in Python, Django, backend engineering, AI workflows, full-stack development, and practical b...",
+        "citations": [
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "chunk_index": 9,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "faq",
+          "only_active_docs": true
+        },
+        "answer_source": null,
+        "extractor_used": null,
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "chunk_index": 0,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.41757546119616784,
+            "rerank_score": 0.35220176,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "chunk_index": 9,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.46470597596728846,
+            "rerank_score": 0.32680833,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "c0ebcff9-c3e2-4cbb-96a2-7075616ee82f",
+            "chunk_index": 8,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5722302794456482,
+            "rerank_score": 0.29746994,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "1df26f99-5f94-4755-8e6a-c1f31f7f3148",
+            "chunk_index": 6,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5939615126825273,
+            "rerank_score": 0.22678363,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+            "chunk_index": 1,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.6263048537464395,
+            "rerank_score": 0.2043419,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "69dd03be-6961-43b4-8e58-20a0feb96594",
+            "chunk_index": 7,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5257731080055237,
+            "rerank_score": 0.20055769,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "440d3e3c-d340-4cb5-9e98-785a450378df",
+            "chunk_index": 4,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.6967885999914585,
+            "rerank_score": 0.19559409,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "bf3d502d-1a84-4ed5-af5e-8e7f1c3ed7e8",
+            "chunk_index": 5,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.8072618326828666,
+            "rerank_score": 0.1943678,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 0,
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          },
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 9,
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "The retrieved documents suggest that Samah has relevant adjacent experience in backend development, dashboard and analytics work, full-stack delivery, and AI-enabled business solutions. However, the documents may not explicitly confirm every requested specialized technology."
+          },
+          {
+            "role": "user",
+            "content": "What is Samah’s GitHub?"
+          },
+          {
+            "role": "assistant",
+            "content": "I couldn’t generate the usual final answer right now, but based on the retrieved documents, ess operations, and building practical systems that improve efficiency and decision-making. Summary Samah is an AI Team Lead and AI/ML Engineer with strong experience in Python, Django, backend engineering, AI workflows, full-stack development, and practical b... Samah FAQ Overview This FAQ document contains direct questions and grounded answers about Samah’s background, skills, preferences, project experience, and work profile. It is designed to improve chatbot retrieval by matching natural user questions with clear s..."
+          },
+          {
+            "role": "user",
+            "content": "What is Samah’s home address?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "What is Samah’s university GPA?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "c422c407-3011-4840-b7d1-e8251a127d73",
+        "retrieval_query": "What is Samah's university GPA?",
+        "rewrite_notes": "The user is asking for Samah's university GPA. The query is already specific and does not require modification.",
+        "verdict": "not_enough_evidence",
+        "answer": "I couldn’t generate the usual final answer right now, but based on the retrieved documents, ess operations, and building practical systems that improve efficiency and decision-making. Summary Samah is an AI Team Lead and AI/ML Engineer with strong experience in Python, Django, backend engineering, AI workflows, full-stack development, and practical b... Samah FAQ Overview This FAQ document contains direct questions and grounded answers about Samah’s background, skills, preferences, project experience, and work profile. It is designed to improve chatbot retrieval by matching natural user questions with clear s...",
+        "citations": [
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "chunk_index": 9,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9",
+            "document_title": "faq",
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "faq",
+          "only_active_docs": true
+        },
+        "answer_source": null,
+        "extractor_used": null,
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "chunk_index": 9,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.4874988198280298,
+            "rerank_score": 0.26588047,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "chunk_index": 0,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.48885925014548726,
+            "rerank_score": 0.25091279,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "c0ebcff9-c3e2-4cbb-96a2-7075616ee82f",
+            "chunk_index": 8,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5773043082537828,
+            "rerank_score": 0.24653332,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "1df26f99-5f94-4755-8e6a-c1f31f7f3148",
+            "chunk_index": 6,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.6447069221385624,
+            "rerank_score": 0.19930799,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "f1bd5b48-8ff6-432d-baef-000f28c2c3e4",
+            "chunk_index": 1,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5998237967333611,
+            "rerank_score": 0.17441027,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "bf3d502d-1a84-4ed5-af5e-8e7f1c3ed7e8",
+            "chunk_index": 5,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.7395315325539349,
+            "rerank_score": 0.17217185,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "440d3e3c-d340-4cb5-9e98-785a450378df",
+            "chunk_index": 4,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.7199363458099672,
+            "rerank_score": 0.14414886,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "69dd03be-6961-43b4-8e58-20a0feb96594",
+            "chunk_index": 7,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.6563733313306166,
+            "rerank_score": 0.11920292,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 9,
+            "chunk_id": "8f90b6fc-eb0e-4d23-9cba-ca724df4ce2d",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          },
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 0,
+            "chunk_id": "c617d86d-2e91-4ac3-bd5f-2e64165210c9",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "I couldn’t generate the usual final answer right now, but based on the retrieved documents, ess operations, and building practical systems that improve efficiency and decision-making. Summary Samah is an AI Team Lead and AI/ML Engineer with strong experience in Python, Django, backend engineering, AI workflows, full-stack development, and practical b... Samah FAQ Overview This FAQ document contains direct questions and grounded answers about Samah’s background, skills, preferences, project experience, and work profile. It is designed to improve chatbot retrieval by matching natural user questions with clear s..."
+          },
+          {
+            "role": "user",
+            "content": "What is Samah’s home address?"
+          },
+          {
+            "role": "assistant",
+            "content": "I couldn’t generate the usual final answer right now, but based on the retrieved documents, Samah FAQ Overview This FAQ document contains direct questions and grounded answers about Samah’s background, skills, preferences, project experience, and work profile. It is designed to improve chatbot retrieval by matching natural user questions with clear s... ess operations, and building practical systems that improve efficiency and decision-making. Summary Samah is an AI Team Lead and AI/ML Engineer with strong experience in Python, Django, backend engineering, AI workflows, full-stack development, and practical b..."
+          },
+          {
+            "role": "user",
+            "content": "What is Samah’s university GPA?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "What is Samah’s exact salary?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "9b3e05a6-fe28-4e16-b83a-85436afba780",
+        "retrieval_query": "What is Samah’s exact salary?",
+        "rewrite_notes": "rule_based_followup",
+        "verdict": "supported",
+        "answer": "Compensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement.",
+        "citations": [
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "compensation",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_availability",
+        "gemini_model_used": null,
+        "gemini_tried_models": [],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "chunk_index": 5,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.6666206717573389,
+            "rerank_score": 0.0726367,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+            "chunk_index": 0,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.8277563611704655,
+            "rerank_score": 0.05582314,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+            "chunk_index": 1,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.7388289208267075,
+            "rerank_score": 0.05340333,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "dbb70998-a6d8-445d-a1f9-98c54b0764df",
+            "chunk_index": 3,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.9884441185179876,
+            "rerank_score": 0.04146227,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "98436706-7038-4891-8f9f-8d2730621e85",
+            "chunk_index": 2,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.8966724425554247,
+            "rerank_score": 0.03846619,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "71551d7b-c52a-4118-b2b5-b05e383c9e1a",
+            "chunk_index": 4,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.7926373728945988,
+            "rerank_score": 0.03021458,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 5,
+            "chunk_id": "df758330-0e53-4970-83fd-93663954be50",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 0,
+            "chunk_id": "3e674a54-15ff-4139-948d-8f600d9333eb",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 1,
+            "chunk_id": "3a935fe3-de64-43e9-8f94-56a3f1fb18e4",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "I couldn’t generate the usual final answer right now, but based on the retrieved documents, Samah FAQ Overview This FAQ document contains direct questions and grounded answers about Samah’s background, skills, preferences, project experience, and work profile. It is designed to improve chatbot retrieval by matching natural user questions with clear s... ess operations, and building practical systems that improve efficiency and decision-making. Summary Samah is an AI Team Lead and AI/ML Engineer with strong experience in Python, Django, backend engineering, AI workflows, full-stack development, and practical b..."
+          },
+          {
+            "role": "user",
+            "content": "What is Samah’s university GPA?"
+          },
+          {
+            "role": "assistant",
+            "content": "I couldn’t generate the usual final answer right now, but based on the retrieved documents, ess operations, and building practical systems that improve efficiency and decision-making. Summary Samah is an AI Team Lead and AI/ML Engineer with strong experience in Python, Django, backend engineering, AI workflows, full-stack development, and practical b... Samah FAQ Overview This FAQ document contains direct questions and grounded answers about Samah’s background, skills, preferences, project experience, and work profile. It is designed to improve chatbot retrieval by matching natural user questions with clear s..."
+          },
+          {
+            "role": "user",
+            "content": "What is Samah’s exact salary?"
+          }
+        ]
+      }
+    },
+    {
+      "question": "What is Samah’s favorite movie?",
+      "status": "success",
+      "response": {
+        "session_id": "4c9c71db-ee40-4190-a3c9-1612ed961d7b",
+        "message_id": "86f898e6-cc9b-4ba4-98b1-e11d55a59b0a",
+        "retrieval_query": "What is Samah's favorite movie?",
+        "rewrite_notes": "The user is asking a direct question about Samah's favorite movie. No context from previous turns is needed.",
+        "verdict": "not_enough_evidence",
+        "answer": "I couldn’t generate the usual final answer right now, but based on the retrieved documents, Preferences and Work Style Overview This document describes my professional preferences, working style, technical likes, and the kinds of projects I enjoy most. It is intended to help answer questions about how I prefer to work, what technologies I enjoy using... gle Gemini - Ollama - LangChain - OCR and document-processing tools Type of Problems I Like Solving I especially like solving problems where I need to: - convert unstructured input into structured results - connect AI with real business workflows - automate re...",
+        "citations": [
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "chunk_index": 8,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "preferences",
+          "only_active_docs": true
+        },
+        "answer_source": null,
+        "extractor_used": null,
+        "gemini_model_used": "gemini-2.5-flash",
+        "gemini_tried_models": [
+          "gemini-2.5-flash"
+        ],
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+            "chunk_index": 0,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.829065402857612,
+            "rerank_score": 0.03461884,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "preferences",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "chunk_index": 8,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.831989188908886,
+            "rerank_score": 0.02931223,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "preferences",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "5e94575d-0dd3-4867-a7bd-e9827e1a486a",
+            "chunk_index": 3,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.8840637694020202,
+            "rerank_score": 0.02635535,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "preferences",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "044c6f3e-c9f7-4ff9-915f-c3928688a0e3",
+            "chunk_index": 2,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.847816455624525,
+            "rerank_score": 0.02556521,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "preferences",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "3963517a-980e-4fce-967c-21b6da8ceabf",
+            "chunk_index": 5,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.9906505327671766,
+            "rerank_score": 0.02479816,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "preferences",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "aad9c8b7-ee78-40a5-9947-368b253ffc1a",
+            "chunk_index": 4,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.9077680726509136,
+            "rerank_score": 0.02442309,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "preferences",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "189005be-1610-423d-93a0-402adfc200b6",
+            "chunk_index": 6,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 1.0092411125078797,
+            "rerank_score": 0.02405355,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "preferences",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "6ffaff53-eb90-49ac-b29e-d89f930742e0",
+            "chunk_index": 7,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.9601970799267292,
+            "rerank_score": 0.02405355,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "preferences",
+            "reason": "threshold_removed_all(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 0,
+            "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          },
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 8,
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          }
+        ],
+        "debug_history_count": 6,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "I couldn’t generate the usual final answer right now, but based on the retrieved documents, ess operations, and building practical systems that improve efficiency and decision-making. Summary Samah is an AI Team Lead and AI/ML Engineer with strong experience in Python, Django, backend engineering, AI workflows, full-stack development, and practical b... Samah FAQ Overview This FAQ document contains direct questions and grounded answers about Samah’s background, skills, preferences, project experience, and work profile. It is designed to improve chatbot retrieval by matching natural user questions with clear s..."
+          },
+          {
+            "role": "user",
+            "content": "What is Samah’s exact salary?"
+          },
+          {
+            "role": "assistant",
+            "content": "Compensation is intended to be discussed based on role scope, technical depth, leadership responsibility, and work arrangement."
+          },
+          {
+            "role": "user",
+            "content": "What is Samah’s favorite movie?"
+          }
+        ]
+      }
+    }
+  ]
+}

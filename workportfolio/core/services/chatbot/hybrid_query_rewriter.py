@@ -144,8 +144,8 @@ class GeminiQueryRewriter:
             "additionalProperties": False,
         }
 
-        chain = [getattr(settings, "OLLAMA_REWRITE_PRIMARY", "gemma3:1b")] + \
-            getattr(settings, "OLLAMA_REWRITE_FALLBACKS", [])
+        chain = [getattr(settings, "REWRITE_PRIMARY_MODEL", "gemini-2.5-flash-lite")] + \
+            getattr(settings, "REWRITE_FALLBACK_MODELS", ["gemini-2.5-flash"])
 
         ok, text, meta = LLMRouter.generate_json(
             prompt=prompt,
@@ -153,6 +153,7 @@ class GeminiQueryRewriter:
             temperature=0.1,
             model_chain=chain,
             json_schema=schema,
+            task=LLMRouter.TASK_REWRITE,
         )
 
         if not ok:

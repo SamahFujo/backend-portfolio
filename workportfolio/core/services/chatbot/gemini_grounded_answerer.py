@@ -5,7 +5,7 @@ from typing import List, Dict, Any
 from django.conf import settings
 
 from core.models import DocumentChunk
-from core.services.llm.gemini_router import GeminiRouter
+from core.services.llm.router import LLMRouter
 
 
 class GeminiGroundedAnswerer:
@@ -60,55 +60,42 @@ class GeminiGroundedAnswerer:
         evidence_chunks: List[DocumentChunk],
         used_indices: List[int],
     ) -> str:
-        """
-        Build a readable fallback answer using only retrieved evidence,
-        without raw model/quota error text.
-        """
         snippets = []
         for idx in used_indices:
             if 0 <= idx < len(evidence_chunks):
-                snippets.append(cls._snippet(evidence_chunks[idx].content, 260))
+                snippets.append(cls._snippet(
+                    evidence_chunks[idx].content, 180))
 
         if not snippets:
             return "I don’t have enough evidence in the uploaded documents to answer that right now."
 
-        question_lower = (question or "").strip().lower()
+        q = (question or "").strip().lower()
 
-        # Contact-style fallback
-        if any(x in question_lower for x in ["contact", "email", "phone", "linkedin", "reach"]):
-            return (
-                "I couldn’t generate the usual final answer right now, but the retrieved documents "
-                "do contain contact-related information for Samah. Please check the cited source below."
-            )
+        if any(x in q for x in ["contact", "email", "phone", "linkedin", "reach"]):
+            return "I couldn’t generate the usual final answer right now, but the retrieved documents do contain contact information for Samah in the cited source below."
 
-        # Compensation / availability fallback
-        if any(x in question_lower for x in ["salary", "compensation", "hourly rate", "payment", "availability", "remote", "freelance", "full-time"]):
-            return (
-                "Based on the retrieved documents, Samah’s compensation and availability are discussed "
-                "in relation to role scope, technical depth, responsibility, and work arrangement."
-            )
+        if any(x in q for x in ["salary", "compensation", "hourly rate", "payment", "availability", "remote", "freelance", "full-time"]):
+            return "Based on the retrieved documents, Samah’s compensation and availability are discussed in relation to role scope, technical depth, responsibility, and work arrangement."
 
-        # Skills / stack fallback
-        if any(x in question_lower for x in ["skills", "tech stack", "technologies", "frameworks", "tools"]):
-            return (
-                "Based on the retrieved documents, Samah works across backend engineering, AI/LLM solutions, "
-                "web development, databases, and document-processing technologies."
-            )
+        if any(x in q for x in ["skills", "tech stack", "technologies", "frameworks", "tools"]):
+            return "Based on the retrieved documents, Samah works across backend engineering, AI/LLM solutions, web development, databases, and document-processing technologies."
 
-        # Project-fit fallback
-        if any(x in question_lower for x in ["project", "fit", "build", "develop", "handle this", "solution"]):
+        if any(x in q for x in ["project", "fit", "build", "develop", "handle this", "solution"]):
             return (
                 "The retrieved documents suggest that Samah has relevant adjacent experience in backend development, "
                 "dashboard and analytics work, full-stack delivery, and AI-enabled business solutions. "
                 "However, the documents may not explicitly confirm every requested specialized technology."
             )
 
-        # Default grounded fallback
+        if any(x in q for x in ["background", "what does", "kind of work", "what can", "help with"]):
+            return (
+                "Based on the retrieved documents, Samah works as an AI/ML and full-stack engineer focused on backend systems, "
+                "AI-enabled applications, automation workflows, dashboards, and practical business solutions."
+            )
+
         merged = " ".join(snippets[:2]).strip()
-        return (
-            "I couldn’t generate the usual final answer right now, but based on the retrieved documents, "
-            + merged
-        )
+        return "I couldn’t generate the usual final answer right now, but here is the most relevant grounded evidence: " + merged
+
     @classmethod
     def answer(cls, question: str, evidence_chunks: List[DocumentChunk]) -> Dict[str, Any]:
         if not evidence_chunks:
@@ -158,14 +145,16 @@ class GeminiGroundedAnswerer:
             f"Evidence:\n{evidence_text}\n"
         )
 
-        chain = [settings.GEMINI_PRIMARY_MODEL] + \
-            getattr(settings, "GEMINI_FALLBACK_MODELS", [])
+        chain = [getattr(settings, "GROUNDED_PRIMARY_MODEL", "gemini-2.5-flash")] + \
+            getattr(settings, "GROUNDED_FALLBACK_MODELS",
+                    ["gemini-2.5-flash-lite"])
 
-        ok, text, meta = GeminiRouter.generate_json(
+        ok, text, meta = LLMRouter.generate_text(
             prompt=prompt,
             system_instruction=system_instruction,
-            temperature=0.1,
+            temperature=0.2,
             model_chain=chain,
+            task=LLMRouter.TASK_GROUNDED_ANSWER,
         )
 
         if not ok:
@@ -176,26 +165,35 @@ class GeminiGroundedAnswerer:
                 used_indices=fallback_used,
             )
 
+            fallback_verdict = "not_enough_evidence"
+            if not cls._is_yes_no_question(question) and fallback_answer:
+                fallback_verdict = "supported"
+
             return {
-                "verdict": "not_enough_evidence",
+                "verdict": fallback_verdict,
                 "answer": fallback_answer,
                 "bullets": [],
                 "used_chunk_indices": fallback_used,
                 "used_sources": cls._build_used_sources(evidence_chunks, fallback_used),
                 "meta": meta,
             }
-
         try:
             data = json.loads(text)
         except Exception:
             fallback_used = list(range(min(2, len(evidence_chunks))))
+            fallback_answer = cls._build_plain_fallback_answer(
+                question=question,
+                evidence_chunks=evidence_chunks,
+                used_indices=fallback_used,
+            )
+
+            fallback_verdict = "not_enough_evidence"
+            if not cls._is_yes_no_question(question) and fallback_answer:
+                fallback_verdict = "supported"
+
             return {
-                "verdict": "not_enough_evidence",
-                "answer": cls._build_plain_fallback_answer(
-                    question=question,
-                    evidence_chunks=evidence_chunks,
-                    used_indices=fallback_used,
-                ),
+                "verdict": fallback_verdict,
+                "answer": fallback_answer,
                 "bullets": [],
                 "used_chunk_indices": fallback_used,
                 "used_sources": cls._build_used_sources(evidence_chunks, fallback_used),

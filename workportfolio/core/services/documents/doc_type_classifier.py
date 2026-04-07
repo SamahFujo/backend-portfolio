@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from typing import List, Optional
 from django.conf import settings
 
-from core.services.llm.gemini_router import GeminiRouter
+from core.services.llm.router import LLMRouter
 
 
 @dataclass(frozen=True)
@@ -164,7 +164,7 @@ class DocumentTypeClassifier:
         if rule_result.confidence >= 0.75:
             return rule_result
 
-        if getattr(settings, "GEMINI_API_KEY", None):
+        if getattr(settings, "GEMINI_REWRITE_API_KEY", None):
             gemini_result = cls._gemini_classify(title=title, raw_text=text)
             if gemini_result:
                 return gemini_result
@@ -310,14 +310,15 @@ class DocumentTypeClassifier:
             f"Content snippet:\n{snippet}\n"
         )
 
-        chain = [settings.GEMINI_REWRITE_PRIMARY] + \
-            getattr(settings, "GEMINI_REWRITE_FALLBACKS", [])
+        chain = [getattr(settings, "REWRITE_PRIMARY_MODEL", "gemini-2.5-flash-lite")] + \
+            getattr(settings, "REWRITE_FALLBACK_MODELS", ["gemini-2.5-flash"])
 
-        ok, text, meta = GeminiRouter.generate_json(
+        ok, text, meta = LLMRouter.generate_json(
             prompt=prompt,
             system_instruction=system_instruction,
             temperature=0.0,
             model_chain=chain,
+            task=LLMRouter.TASK_REWRITE,
         )
         if not ok:
             return None

@@ -1,0 +1,161 @@
+[
+  {
+    "question": "What is Samah’s favorite programming language?",
+    "status": "success",
+    "session_id": "c57c7e5b-d147-4095-af14-a0009e26b1e2",
+    "debug_history_count": 1,
+    "retrieval_query": "What is Samah’s favorite programming language?",
+    "verdict": "supported",
+    "answer": "Samah’s favorite programming language is Python.",
+    "applied_filters": {
+      "document_type": "preferences",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 0,
+        "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      },
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 8,
+        "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      }
+    ]
+  },
+  {
+    "question": "Does Samah prefer Django or FastAPI?",
+    "status": "success",
+    "session_id": "c57c7e5b-d147-4095-af14-a0009e26b1e2",
+    "debug_history_count": 3,
+    "retrieval_query": "Does Samah prefer Django or FastAPI?",
+    "verdict": "supported",
+    "answer": "Samah’s preferred backend framework is Django.\nSamah also has experience with FastAPI, but Django is her stronger and more preferred framework.",
+    "applied_filters": {
+      "document_type": "preferences",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 1,
+        "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      },
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 8,
+        "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      },
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 0,
+        "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      }
+    ]
+  },
+  {
+    "question": "What backend framework does Samah prefer?",
+    "status": "success",
+    "session_id": "c57c7e5b-d147-4095-af14-a0009e26b1e2",
+    "debug_history_count": 5,
+    "retrieval_query": "What backend framework does Samah prefer?",
+    "verdict": "supported",
+    "answer": "I couldn’t generate the usual final answer right now, but here is the most relevant grounded evidence: ork My preferred backend framework is Django, especially Django REST Framework for API development. I prefer Django because it provides a strong structure for building secure, scal... gle Gemini - Ollama - LangChain - OCR and document-processing tools Type of Problems I Like Solving I especially like solving problems where I need to: - convert unstructured input...",
+    "applied_filters": {
+      "document_type": "preferences",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 1,
+        "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      },
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 8,
+        "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      }
+    ]
+  },
+  {
+    "question": "What frontend stack does Samah prefer?",
+    "status": "success",
+    "session_id": "c57c7e5b-d147-4095-af14-a0009e26b1e2",
+    "debug_history_count": 6,
+    "retrieval_query": "What frontend stack does Samah prefer?",
+    "verdict": "supported",
+    "answer": "Samah’s technical skills:\n- Programming Languages: Python\n- Backend: Django, Django REST Framework, FastAPI, Flask\n- Frontend: React, Next.js, Tailwind CSS\n- AI / LLM: LangChain, Ollama, Gemini",
+    "applied_filters": {
+      "document_type": "preferences",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 2,
+        "chunk_id": "044c6f3e-c9f7-4ff9-915f-c3928688a0e3",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      },
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 1,
+        "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      },
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 8,
+        "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      }
+    ]
+  },
+  {
+    "question": "Is Samah stronger in backend or frontend?",
+    "status": "success",
+    "session_id": "c57c7e5b-d147-4095-af14-a0009e26b1e2",
+    "debug_history_count": 6,
+    "retrieval_query": "Is Samah stronger in backend or frontend?",
+    "verdict": "not_enough_evidence",
+    "answer": "I couldn’t generate the usual final answer right now, but here is the most relevant grounded evidence: Frontend vs AI My strongest preference is a combination of backend development and AI-focused work. I enjoy frontend development as well, especially when building polished user int... ork My preferred backend framework is Django, especially Django REST Framework for API development. I prefer Django because it provides a strong structure for building secure, scal...",
+    "applied_filters": {
+      "document_type": "preferences",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 4,
+        "chunk_id": "aad9c8b7-ee78-40a5-9947-368b253ffc1a",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      },
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 1,
+        "chunk_id": "ee66a19d-5f05-4127-a4a6-27d6528b9c89",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      }
+    ]
+  }
+]

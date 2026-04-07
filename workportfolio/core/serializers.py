@@ -1,5 +1,7 @@
 from .models import ProfileDocument, DocumentChunk, ChatSession, ChatMessage
 from rest_framework import serializers
+from django.conf import settings
+from pathlib import Path
 
 """
 Serializers for the public "Start Project" form API endpoint.
@@ -17,6 +19,12 @@ class StartProjectRequestSerializer(serializers.Serializer):
     projectDescription = serializers.CharField(min_length=20)
     yourName = serializers.CharField(min_length=2, max_length=120)
     yourEmail = serializers.EmailField()
+    website = serializers.CharField(required=False, allow_blank=True, max_length=200)
+
+    def validate(self, attrs):
+        if attrs.get("website"):
+            raise serializers.ValidationError("Spam detected.")
+        return attrs
 
 
 
@@ -57,6 +65,27 @@ class DocumentChunkSerializer(serializers.ModelSerializer):
 
 
 class ProfileDocumentUploadSerializer(serializers.ModelSerializer):
+    def validate_file(self, value):
+        extension = Path(value.name).suffix.lower()
+        allowed_extensions = getattr(
+            settings,
+            "ALLOWED_DOCUMENT_EXTENSIONS",
+            {".pdf", ".docx", ".txt"},
+        )
+        if extension not in allowed_extensions:
+            allowed = ", ".join(sorted(allowed_extensions))
+            raise serializers.ValidationError(
+                f"Unsupported file type. Allowed types: {allowed}."
+            )
+
+        max_size = getattr(settings, "MAX_DOCUMENT_UPLOAD_SIZE", 5 * 1024 * 1024)
+        if value.size > max_size:
+            raise serializers.ValidationError(
+                f"File too large. Maximum size is {max_size // (1024 * 1024)} MB."
+            )
+
+        return value
+
     class Meta:
         model = ProfileDocument
         fields = ["id", "title", "file", "document_type", "source_label"]
@@ -87,4 +116,4 @@ class AskQuestionSerializer(serializers.Serializer):
     Input serializer for the chat endpoint.
     """
     session_id = serializers.UUIDField(required=False)
-    message = serializers.CharField()
+    message = serializers.CharField(min_length=2, max_length=2000, trim_whitespace=True)
