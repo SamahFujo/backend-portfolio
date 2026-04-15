@@ -1,16 +1,14 @@
-"""
-Document parser service.
-
-Supports:
-- PDF
-- DOCX
-- TXT
-"""
-
 from pathlib import Path
 import re
 import fitz  # PyMuPDF
 from docx import Document
+
+# New imports for ordered DOCX traversal
+from docx.table import Table
+from docx.text.paragraph import Paragraph
+from docx.document import Document as DocxDocument
+from docx.oxml.text.paragraph import CT_P
+from docx.oxml.table import CT_Tbl
 
 
 class ParserService:
@@ -32,12 +30,6 @@ class ParserService:
     def extract_text(file_path: str) -> str:
         """
         Extract text based on file extension.
-
-        Args:
-            file_path (str): Absolute or relative file path.
-
-        Returns:
-            str: Extracted text.
         """
         suffix = Path(file_path).suffix.lower()
 
@@ -68,28 +60,46 @@ class ParserService:
         return "\n".join(text_parts).strip()
 
     @staticmethod
+    def _iter_block_items(parent):
+        """
+        Yield paragraphs and tables in the original document order.
+        """
+        if isinstance(parent, DocxDocument):
+            parent_elm = parent.element.body
+        else:
+            parent_elm = parent._element
+
+        for child in parent_elm.iterchildren():
+            if isinstance(child, CT_P):
+                yield Paragraph(child, parent)
+            elif isinstance(child, CT_Tbl):
+                yield Table(child, parent)
+
+    @staticmethod
     def _extract_from_docx(file_path: str) -> str:
         """
-        Extract text from a DOCX, including both paragraphs and tables.
+        Extract text from DOCX while preserving document order,
+        including paragraphs and tables.
         """
         doc = Document(file_path)
         parts = []
 
-        # Paragraphs
-        for p in doc.paragraphs:
-            if p.text and p.text.strip():
-                parts.append(p.text.strip())
+        for block in ParserService._iter_block_items(doc):
+            if isinstance(block, Paragraph):
+                text = (block.text or "").strip()
+                if text:
+                    parts.append(text)
 
-        # Tables
-        for table in doc.tables:
-            for row in table.rows:
-                cells = []
-                for cell in row.cells:
-                    cell_text = cell.text.strip()
-                    if cell_text:
-                        cells.append(cell_text)
-                if cells:
-                    parts.append(" | ".join(cells))
+            elif isinstance(block, Table):
+                for row in block.rows:
+                    cells = []
+                    for cell in row.cells:
+                        cell_text = (cell.text or "").strip()
+                        if cell_text:
+                            cells.append(cell_text)
+
+                    if cells:
+                        parts.append(" | ".join(cells))
 
         return "\n".join(parts).strip()
 

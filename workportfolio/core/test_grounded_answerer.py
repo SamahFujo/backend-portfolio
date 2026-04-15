@@ -75,10 +75,10 @@ QUESTIONS = [
 
 
     "What is Samah’s favorite programming language?",
-    "Does Samah prefer Django or FastAPI?",
-    "What backend framework does Samah prefer?",
-    "What frontend stack does Samah prefer?",
-    "Is Samah stronger in backend or frontend?"
+    # "Does Samah prefer Django or FastAPI?",
+    # "What backend framework does Samah prefer?",
+    # "What frontend stack does Samah prefer?",
+    # "Is Samah stronger in backend or frontend?"
 ]
 
 
@@ -181,3 +181,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

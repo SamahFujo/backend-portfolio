@@ -1,0 +1,31 @@
+[
+  {
+    "question": "What is Samah’s favorite programming language?",
+    "status": "success",
+    "session_id": "a8d36ead-058c-41f5-999a-76a3e604c8e9",
+    "debug_history_count": 1,
+    "retrieval_query": "What is Samah’s favorite programming language?",
+    "verdict": "supported",
+    "answer": "Samah’s favorite programming language is Python.",
+    "applied_filters": {
+      "document_type": "preferences",
+      "only_active_docs": true
+    },
+    "used_sources": [
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 0,
+        "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      },
+      {
+        "doc_title": "Preferences And Work Style",
+        "document_type": "preferences",
+        "chunk_index": 8,
+        "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+        "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+      }
+    ]
+  }
+]

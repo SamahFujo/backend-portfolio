@@ -14,7 +14,7 @@ from core.services.chatbot.extractors import (
     try_extract_availability,
 
 )
-from core.services.chatbot.gemini_grounded_answerer import GeminiGroundedAnswerer
+from core.services.chatbot.grounded_answerer import GroundedAnswerer
 
 
 class ProfileQAService:
@@ -111,6 +111,10 @@ class ProfileQAService:
                     "meta": {
                         "model_used": None,
                         "tried_models": [],
+                        "provider_used": "deterministic_extractor",
+                        "fallback_used": False,
+                        "generation_ok": True,
+                        "safe_fallback": False,
                         "error": None,
                         "answer_source": "deterministic_extractor",
                         "extractor_used": extractor.__name__,
@@ -167,6 +171,17 @@ class ProfileQAService:
         q = (retrieval_query or question).strip()
         lower_q = q.lower()
 
+        # Keep project/tool-specific questions as-is
+        if any(k in lower_q for k in [
+            "used to build",
+            "built with",
+            "used in",
+            "technologies used in",
+            "tools used in",
+            "frameworks used in",
+        ]):
+            return q
+
         if "tech stack" in lower_q:
             return (
                 "Samah technical skills technologies frameworks tools "
@@ -190,12 +205,23 @@ class ProfileQAService:
         question = (question or "").strip()
         retrieval_query = (retrieval_query or question).strip()
         retrieval_query = cls._normalize_retrieval_query(
-            question, retrieval_query)
+            question, retrieval_query
+        )
 
         chunks, retrieval_debug, filters = cls._retrieve_chunks(
             question=question,
             retrieval_query=retrieval_query,
         )
+
+        # TEMP DEBUG: inspect retrieved chunk contents before any extractor or LLM
+        debug_chunks = []
+        for c in chunks[:5]:
+            debug_chunks.append({
+                "chunk_index": c.chunk_index,
+                "doc_title": c.document.title,
+                "document_type": getattr(c.document, "document_type", None),
+                "content_preview": (c.content or "")[:1200],
+            })
 
         deterministic_result = cls._try_deterministic_answer(question, chunks)
         if deterministic_result:
@@ -203,12 +229,16 @@ class ProfileQAService:
             deterministic_result["rewrite_notes"] = "local_fast_path"
             deterministic_result["retrieval_debug"] = retrieval_debug
             deterministic_result["applied_filters"] = filters
+            deterministic_result["debug_chunks_before_llm"] = debug_chunks
             return deterministic_result
 
-        result = GeminiGroundedAnswerer.answer(
-            question=question, evidence_chunks=chunks)
+        result = GroundedAnswerer.answer(
+            question=question,
+            evidence_chunks=chunks,
+        )
         result["retrieval_query"] = retrieval_query
         result["rewrite_notes"] = "local_fast_path"
         result["retrieval_debug"] = retrieval_debug
         result["applied_filters"] = filters
+        result["debug_chunks_before_llm"] = debug_chunks
         return result

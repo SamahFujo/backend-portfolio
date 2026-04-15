@@ -1,0 +1,101 @@
+{
+  "run_at": "2026-04-09T00:01:25.314122",
+  "api_url": "http://127.0.0.1:8000/api/chat/ask/",
+  "total_questions": 1,
+  "final_session_id": "a8d36ead-058c-41f5-999a-76a3e604c8e9",
+  "results": [
+    {
+      "question": "What is Samah’s favorite programming language?",
+      "status": "success",
+      "response": {
+        "session_id": "a8d36ead-058c-41f5-999a-76a3e604c8e9",
+        "message_id": "2fa48202-2ba5-4422-afdb-3d79b3ba1c4c",
+        "retrieval_query": "What is Samah’s favorite programming language?",
+        "rewrite_notes": "The user is asking a direct question about Samah's favorite programming language. The query is already clear and specific, so no significant changes are needed.",
+        "verdict": "supported",
+        "answer": "Samah’s favorite programming language is Python.",
+        "citations": [
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+            "chunk_index": 0,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf",
+            "document_title": "Preferences And Work Style",
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "chunk_index": 8,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "preferences",
+          "only_active_docs": true
+        },
+        "answer_source": "deterministic_extractor",
+        "extractor_used": "try_extract_preferences",
+        "model_used": null,
+        "tried_models": [],
+        "provider_used": "deterministic_extractor",
+        "fallback_used": false,
+        "generation_ok": true,
+        "safe_fallback": false,
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+            "chunk_index": 0,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.5253123782481931,
+            "rerank_score": 0.41537303,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "chunk_index": 8,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.48315761732423546,
+            "rerank_score": 0.34334174,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 0,
+            "chunk_id": "86b3c4c1-06f8-40a2-acc9-834faee98c9f",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          },
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 8,
+            "chunk_id": "27fb1c4b-9c95-442b-8adb-e8bf01a9d72b",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          }
+        ],
+        "debug_history_count": 1,
+        "debug_recent_history": [
+          {
+            "role": "user",
+            "content": "What is Samah’s favorite programming language?"
+          }
+        ]
+      }
+    }
+  ]
+}

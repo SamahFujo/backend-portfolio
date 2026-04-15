@@ -1,5 +1,5 @@
 import re
-from typing import List, Tuple
+from typing import List, Tuple, Optional
 from core.models import DocumentChunk
 
 EMAIL_RE = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
@@ -570,54 +570,78 @@ def _extract_requested_topic_from_question(question: str) -> str:
 
 def try_extract_skills(question: str, chunks: List[DocumentChunk]) -> Tuple[bool, str, float]:
     """
-    Applies only if the question is clearly about skills / technologies / tools.
-    Uses strict filtering to avoid returning FAQ questions, labels, and broken fragments.
+    Handles only broad/general skills questions.
+    It should NOT answer project-specific tool/technology questions.
     """
-    q = (question or "").lower()
+    q = (question or "").strip().lower()
 
-    keywords = [
-        "skills",
-        "technical",
-        "tech stack",
-        "tools",
-        "frameworks",
-        "technologies",
-        "stack",
-        "what does she know",
-        "what can she use",
+    general_patterns = [
+        r"\bwhat skills\b",
+        r"\btechnical skills\b",
+        r"\bwhat technologies does (she|samah) know\b",
+        r"\bwhat tools does (she|samah) know\b",
+        r"\btech stack\b",
+        r"\btechnology stack\b",
+        r"\bframeworks (does she use|used by samah)?\b",
+        r"\bwhat can (she|samah) use\b",
+        r"\bwhat does (she|samah) know\b",
     ]
 
-    if not any(k in q for k in keywords):
+    # If question looks project-specific, do NOT let this extractor handle it
+    project_specific_markers = [
+        "build",
+        "used in",
+        "used for",
+        "used to build",
+        "for the dashboard",
+        "for this project",
+        "in this project",
+        "in the project",
+        "for spend analysis",
+        "for property chatbot",
+        "for payroll",
+        "for electricity",
+        "dashboard",
+        "project",
+        "chatbot",
+        "system",
+        "platform",
+        "solution",
+    ]
+
+    is_general = any(re.search(p, q) for p in general_patterns)
+    is_project_specific = any(
+        marker in q for marker in project_specific_markers)
+
+    if not is_general or is_project_specific:
         return False, "", 0.0
 
     text = _joined_text(chunks)
 
-    # Conservative extraction:
-    # 1) detect explicitly known skills from the text
-    # 2) optionally merge in clean structured lines if they also resemble skills
     found_known = _find_known_skills(text)
     structured_lines = _extract_structured_skill_lines(text)
 
-    # Only keep structured lines if they exactly match known skills
     known_skill_lookup = {skill.lower(): skill for skill in KNOWN_SKILLS}
     structured_as_known = []
 
     for line in structured_lines:
-        normalized = line.lower()
+        normalized = line.strip().lower()
         if normalized in known_skill_lookup:
             structured_as_known.append(known_skill_lookup[normalized])
 
     combined = _dedupe_preserve_order(found_known + structured_as_known)
 
     if not combined:
-        return True, "I couldn’t extract a clean skills list from the uploaded documents yet.", 0.0
+        return True, "I couldn’t extract a clean general skills list from the uploaded documents yet.", 0.0
 
     answer = _group_skills(combined)
     if not answer:
         answer = "Samah’s technical skills (from the uploaded documents):\n- " + \
             "\n- ".join(combined[:20])
 
-    return True, answer, 0.20
+    return True, answer, 0.45
+
+
 
 
 def try_extract_strengths(question: str, chunks: List[DocumentChunk]) -> Tuple[bool, str, float]:

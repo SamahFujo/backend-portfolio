@@ -1,175 +1,578 @@
 """
-Chunking service for document text.
+Chunking service with document-type-specific strategies.
+
+Goals:
+- Preserve structure when documents are clearly sectioned
+- Improve retrieval quality for FAQ, projects, certificates, preferences, etc.
+- Still provide a safe generic fallback for unknown document types
 """
 
+from __future__ import annotations
+
 import re
-from typing import List
+from typing import List, Dict, Optional
 
 
 class ChunkService:
     """
-    Splits raw text into smaller chunks for retrieval.
-    Prefers paragraph-aware chunking over blind character slicing.
+    Provides multiple chunking strategies based on document type.
     """
+
+    DEFAULT_MAX_CHARS = 900
+    DEFAULT_OVERLAP = 120
+
+    @classmethod
+    def chunk_document(
+        cls,
+        raw_text: str,
+        document_type: Optional[str] = None,
+        title: Optional[str] = None,
+    ) -> List[str]:
+        """
+        Main entry point.
+        Routes chunking strategy based on document type.
+        """
+        text = cls._normalize_text(raw_text)
+        if not text:
+            return []
+
+        doc_type = (document_type or "").strip().lower()
+
+        if doc_type == "projects":
+            return cls.chunk_projects(text)
+
+        if doc_type == "faq":
+            return cls.chunk_faq(text)
+
+        if doc_type == "certificates":
+            return cls.chunk_certificates(text)
+
+        if doc_type in {
+            "preferences",
+            "compensation",
+            "achievements",
+            "career_timeline",
+            "capabilities",
+        }:
+            return cls.chunk_by_headings(text)
+
+        if doc_type == "cv":
+            return cls.chunk_resume(text)
+
+        if doc_type in {"experience_letter", "recommendation"}:
+            return cls.chunk_official_letter(text)
+
+        return cls.chunk_generic(text)
+
+    # ---------------------------------------------------------------------
+    # Generic helpers
+    # ---------------------------------------------------------------------
 
     @staticmethod
     def _normalize_text(text: str) -> str:
         """
-        Normalize line endings and extra whitespace while preserving paragraph breaks.
+        Normalize extracted text while preserving line breaks for structure detection.
         """
-        text = (text or "").replace("\r\n", "\n").replace("\r", "\n").strip()
         if not text:
             return ""
 
-        # remove excessive spaces/tabs inside lines
-        text = re.sub(r"[ \t]+", " ", text)
+        text = text.replace("\r\n", "\n").replace("\r", "\n")
+        text = text.replace("\t", " ")
 
-        # collapse too many blank lines, but preserve paragraph separation
-        text = re.sub(r"\n{3,}", "\n\n", text)
+        # Trim trailing spaces per line
+        lines = [line.strip() for line in text.split("\n")]
 
-        return text.strip()
+        # Collapse excessive blank lines
+        cleaned_lines: List[str] = []
+        blank_count = 0
+        for line in lines:
+            if not line:
+                blank_count += 1
+                if blank_count <= 1:
+                    cleaned_lines.append("")
+            else:
+                blank_count = 0
+                cleaned_lines.append(line)
 
-    @staticmethod
-    def _split_paragraphs(text: str) -> List[str]:
-        """
-        Split text into paragraphs using blank lines first.
-        Falls back to line-based splitting if needed.
-        """
-        if not text:
-            return []
-
-        paragraphs = [p.strip() for p in re.split(r"\n\s*\n", text) if p.strip()]
-
-        # fallback: if everything is one giant paragraph, split by lines
-        if len(paragraphs) <= 1:
-            paragraphs = [line.strip() for line in text.split("\n") if line.strip()]
-
-        return paragraphs
+        return "\n".join(cleaned_lines).strip()
 
     @staticmethod
-    def chunk_text(
+    def _is_heading(line: str) -> bool:
+        """
+        Heuristic heading detector.
+        Works for docs like:
+        - Overview
+        - Technology Stack
+        - Preferred Backend Framework
+        - Summary
+        """
+        if not line:
+            return False
+
+        lower = line.lower().strip()
+
+        blocked = {
+            "prepared for",
+            "prepared on",
+            "document purpose",
+            "date",
+            "sincerely,",
+            "summary",
+        }
+
+        if lower in blocked:
+            return True
+
+        # Short title-like line
+        if len(line) <= 80 and not line.endswith("."):
+            # Few words and title-ish
+            words = line.split()
+            if 1 <= len(words) <= 8:
+                return True
+
+        return False
+
+    @classmethod
+    def _chunk_long_text(
+        cls,
         text: str,
-        chunk_size: int = 800,
-        overlap: int = 100,
-        min_chunk_size: int = 80,
-    ) -> list[str]:
+        max_chars: Optional[int] = None,
+        overlap: Optional[int] = None,
+        prefix: str = "",
+    ) -> List[str]:
         """
-        Split text into semantically better overlapping chunks.
-
-        Strategy:
-        - normalize text
-        - split into paragraphs
-        - accumulate paragraphs until chunk_size is reached
-        - add lightweight overlap from the previous chunk tail
-
-        Args:
-            text (str): Raw extracted text
-            chunk_size (int): Approximate max characters per chunk
-            overlap (int): Approximate overlap between chunks
-            min_chunk_size (int): Skip very tiny chunks unless they are the only content
-
-        Returns:
-            list[str]: List of chunk strings
+        Generic sliding chunker for long text blocks.
         """
-        text = ChunkService._normalize_text(text)
+        text = (text or "").strip()
         if not text:
             return []
 
-        paragraphs = ChunkService._split_paragraphs(text)
-        if not paragraphs:
-            return []
+        max_chars = max_chars or cls.DEFAULT_MAX_CHARS
+        overlap = overlap or cls.DEFAULT_OVERLAP
+
+        if len(text) <= max_chars:
+            return [f"{prefix}\n{text}".strip() if prefix else text]
 
         chunks: List[str] = []
-        current_parts: List[str] = []
-        current_len = 0
+        start = 0
+        text_len = len(text)
 
-        for para in paragraphs:
-            para = para.strip()
-            if not para:
+        while start < text_len:
+            end = min(start + max_chars, text_len)
+
+            # Prefer breaking near sentence or newline boundaries
+            if end < text_len:
+                backtrack_zone = text[start:end]
+                split_candidates = [
+                    backtrack_zone.rfind("\n\n"),
+                    backtrack_zone.rfind("\n"),
+                    backtrack_zone.rfind(". "),
+                    backtrack_zone.rfind("; "),
+                ]
+                best = max(split_candidates)
+                if best > max_chars * 0.55:
+                    end = start + best + 1
+
+            piece = text[start:end].strip()
+            if piece:
+                chunks.append(f"{prefix}\n{piece}".strip() if prefix else piece)
+
+            if end >= text_len:
+                break
+
+            start = max(0, end - overlap)
+
+        return chunks
+
+    @staticmethod
+    def _split_lines(text: str) -> List[str]:
+        return [line.strip() for line in text.split("\n")]
+
+    @classmethod
+    def _extract_heading_sections(cls, text: str) -> List[Dict[str, str]]:
+        """
+        Split a text into sections based on heading-like lines.
+        Returns:
+            [
+                {"heading": "Overview", "body": "..."},
+                {"heading": "Preferred Backend Framework", "body": "..."},
+            ]
+        """
+        lines = cls._split_lines(text)
+        sections: List[Dict[str, str]] = []
+
+        current_heading = "Introduction"
+        current_body: List[str] = []
+
+        for line in lines:
+            if not line:
+                current_body.append("")
                 continue
 
-            # If a single paragraph is too large, split it safely by sentences / hard slices
-            if len(para) > chunk_size:
-                if current_parts:
-                    chunk = "\n\n".join(current_parts).strip()
-                    if chunk and (len(chunk) >= min_chunk_size or not chunks):
-                        chunks.append(chunk)
-                    current_parts = []
-                    current_len = 0
-
-                sentence_parts = re.split(r"(?<=[.!?])\s+", para)
-                temp = ""
-
-                for part in sentence_parts:
-                    part = part.strip()
-                    if not part:
-                        continue
-
-                    candidate = f"{temp} {part}".strip() if temp else part
-                    if len(candidate) <= chunk_size:
-                        temp = candidate
-                    else:
-                        if temp:
-                            chunks.append(temp.strip())
-                        # if one sentence itself is still too long, hard split it
-                        if len(part) > chunk_size:
-                            start = 0
-                            while start < len(part):
-                                end = min(start + chunk_size, len(part))
-                                sub = part[start:end].strip()
-                                if sub:
-                                    chunks.append(sub)
-                                start = max(end - overlap, end)
-                            temp = ""
-                        else:
-                            temp = part
-
-                if temp:
-                    chunks.append(temp.strip())
-
-                continue
-
-            candidate_len = current_len + (2 if current_parts else 0) + len(para)
-
-            if candidate_len <= chunk_size:
-                current_parts.append(para)
-                current_len = candidate_len
+            if cls._is_heading(line):
+                if current_body:
+                    sections.append({
+                        "heading": current_heading,
+                        "body": "\n".join(current_body).strip(),
+                    })
+                current_heading = line
+                current_body = []
             else:
-                chunk = "\n\n".join(current_parts).strip()
-                if chunk and (len(chunk) >= min_chunk_size or not chunks):
-                    chunks.append(chunk)
+                current_body.append(line)
 
-                # create paragraph-aware overlap
-                overlap_text = ""
-                if chunks and overlap > 0:
-                    prev_chunk = chunks[-1]
-                    overlap_text = prev_chunk[-overlap:].strip()
+        if current_body:
+            sections.append({
+                "heading": current_heading,
+                "body": "\n".join(current_body).strip(),
+            })
 
-                if overlap_text:
-                    current_parts = [overlap_text, para]
-                    current_len = len(overlap_text) + 2 + len(para)
-                else:
-                    current_parts = [para]
-                    current_len = len(para)
+        # Remove empty sections
+        return [
+            s for s in sections
+            if s["body"].strip()
+        ]
 
-        # flush last chunk
-        if current_parts:
-            chunk = "\n\n".join(current_parts).strip()
-            if chunk and (len(chunk) >= min_chunk_size or not chunks):
+    # ---------------------------------------------------------------------
+    # Generic fallback
+    # ---------------------------------------------------------------------
+
+    @classmethod
+    def chunk_generic(cls, text: str) -> List[str]:
+        """
+        Generic fallback chunking.
+        """
+        return cls._chunk_long_text(text)
+
+    # ---------------------------------------------------------------------
+    # Projects
+    # ---------------------------------------------------------------------
+
+    @classmethod
+    def chunk_projects(cls, text: str) -> List[str]:
+        """
+        Chunk a project portfolio into project-aware and section-aware chunks.
+
+        Strategy:
+        - detect project starts from numbered titles like:
+          '1. Live Smart Electricity Dashboard for Power Consumption'
+        - split each project block
+        - within each project block, try to extract sections
+        - keep project title embedded into every chunk for better retrieval
+        """
+        project_pattern = re.compile(r"(?m)^\s*\d+\.\s+.+$")
+
+        matches = list(project_pattern.finditer(text))
+        if not matches:
+            # fallback to heading sections if numbering is absent
+            return cls.chunk_by_headings(text)
+
+        chunks: List[str] = []
+
+        for i, match in enumerate(matches):
+            start = match.start()
+            end = matches[i + 1].start() if i + 1 < len(matches) else len(text)
+
+            project_block = text[start:end].strip()
+            if not project_block:
+                continue
+
+            first_line = project_block.split("\n", 1)[0].strip()
+            project_title = re.sub(r"^\d+\.\s*", "", first_line).strip()
+
+            # Remove title from body for cleaner section parsing
+            remainder = project_block[len(first_line):].strip()
+
+            sections = cls._extract_heading_sections(remainder)
+            if not sections:
+                chunks.extend(
+                    cls._chunk_long_text(
+                        project_block,
+                        prefix=f"Project: {project_title}"
+                    )
+                )
+                continue
+
+            for section in sections:
+                heading = section["heading"].strip()
+                body = section["body"].strip()
+
+                prefix = f"Project: {project_title}\nSection: {heading}"
+                section_chunks = cls._chunk_long_text(
+                    body,
+                    max_chars=750,
+                    overlap=80,
+                    prefix=prefix,
+                )
+                chunks.extend(section_chunks)
+
+        return cls._dedupe_chunks(chunks)
+
+    # ---------------------------------------------------------------------
+    # FAQ
+    # ---------------------------------------------------------------------
+
+    @classmethod
+    def chunk_faq(cls, text: str) -> List[str]:
+        """
+        Chunk FAQ docs as question-answer pairs.
+
+        Expected pattern:
+        Question?
+        Answer...
+
+        This format is ideal for retrieval.
+        """
+        lines = [line.strip() for line in text.split("\n") if line.strip()]
+        chunks: List[str] = []
+
+        current_question: Optional[str] = None
+        current_answer: List[str] = []
+
+        def flush():
+            if current_question and current_answer:
+                answer_text = " ".join(current_answer).strip()
+                chunk = f"FAQ Question: {current_question}\nFAQ Answer: {answer_text}"
                 chunks.append(chunk)
 
-        # final dedup / cleanup
-        cleaned_chunks: List[str] = []
+        for line in lines:
+            if line.endswith("?"):
+                flush()
+                current_question = line
+                current_answer = []
+            else:
+                if current_question:
+                    current_answer.append(line)
+
+        flush()
+        return cls._dedupe_chunks(chunks) if chunks else cls.chunk_by_headings(text)
+
+    # ---------------------------------------------------------------------
+    # Certificates
+    # ---------------------------------------------------------------------
+
+    @classmethod
+    def chunk_certificates(cls, text: str) -> List[str]:
+        """
+        Chunk certificates as exactly one rich chunk per certificate.
+
+        Strategy:
+        1. Prefer detailed certificate sections:
+        - Title
+        - Issuer / Date
+        - Focus
+        - Why it matters
+        2. Ignore the register/table rows if detailed sections exist
+        3. Fall back to register rows only if detailed sections cannot be found
+        """
+        lines = [line.strip() for line in cls._split_lines(text)]
+        lines = [line for line in lines if line]
+
+        chunks: List[str] = []
+
+        def is_noise(line: str) -> bool:
+            lower = line.lower().strip()
+            return lower in {
+                "certificates portfolio",
+                "samah fujo",
+                "certificate register",
+                "note",
+                "document purpose: this portfolio groups the certifications currently identified from previously shared information. it can be used as a base document for cvs, portfolios, client proposals, or linkedin updates.",
+            }
+
+        def is_certificate_title(line: str) -> bool:
+            """
+            Detect real certificate titles, not field labels or table rows.
+            """
+            lower = line.lower().strip()
+
+            if not line or is_noise(line):
+                return False
+
+            # Reject field lines
+            if lower.startswith("issuer:") or lower.startswith("focus:") or lower.startswith("why it matters:"):
+                return False
+
+            # Reject register row style lines containing many separators
+            if line.count("|") >= 2:
+                return False
+
+            # Good certificate title heuristics
+            title_markers = [
+                "master of",
+                "react & django",
+                "fundamentals of",
+                "certificate",
+                "certification",
+            ]
+
+            return any(marker in lower for marker in title_markers)
+
+        i = 0
+        while i < len(lines):
+            line = lines[i]
+
+            if not is_certificate_title(line):
+                i += 1
+                continue
+
+            title = line
+            issuer_line = ""
+            focus_line = ""
+            why_line = ""
+
+            j = i + 1
+            while j < len(lines):
+                current = lines[j]
+                lower = current.lower().strip()
+
+                # Stop if next certificate starts
+                if j > i + 1 and is_certificate_title(current):
+                    break
+
+                if lower.startswith("issuer:"):
+                    issuer_line = current
+                elif lower.startswith("focus:"):
+                    focus_line = current
+                elif lower.startswith("why it matters:"):
+                    why_line = current
+
+                j += 1
+
+            # Only keep well-formed detailed certificate blocks
+            if issuer_line:
+                block_parts = [f"Certificate: {title}", title, issuer_line]
+
+                if focus_line:
+                    block_parts.append(focus_line)
+
+                if why_line:
+                    block_parts.append(why_line)
+
+                block_text = "\n".join(block_parts).strip()
+                chunks.append(block_text)
+
+                i = j
+            else:
+                i += 1
+
+        # If detailed sections were found, use them only
+        if chunks:
+            return cls._dedupe_chunks(chunks)
+
+        # Fallback: parse certificate register rows
+        fallback_chunks: List[str] = []
+        for line in lines:
+            # Example row:
+            # 1 | Master of ChatGPT | Coursiv | 5 February 2026 | Supports ...
+            if line.count("|") >= 4:
+                parts = [p.strip() for p in line.split("|")]
+                if len(parts) >= 5 and parts[0].isdigit():
+                    _, cert_name, issuer, date, relevance = parts[:5]
+                    fallback_chunks.append(
+                        "\n".join([
+                            f"Certificate: {cert_name}",
+                            f"Issuer: {issuer}",
+                            f"Date: {date}",
+                            f"Why it matters: {relevance}",
+                        ])
+                    )
+
+        return cls._dedupe_chunks(fallback_chunks) if fallback_chunks else cls.chunk_by_headings(text)
+
+    # ---------------------------------------------------------------------
+    # Heading-based docs
+    # ---------------------------------------------------------------------
+
+    @classmethod
+    def chunk_by_headings(cls, text: str) -> List[str]:
+        """
+        Chunk documents that are mainly section-based:
+        - preferences
+        - compensation
+        - achievements
+        - career timeline
+        - capabilities
+        """
+        sections = cls._extract_heading_sections(text)
+        if not sections:
+            return cls.chunk_generic(text)
+
+        chunks: List[str] = []
+        for section in sections:
+            heading = section["heading"].strip()
+            body = section["body"].strip()
+
+            prefix = f"Section: {heading}"
+            section_chunks = cls._chunk_long_text(
+                body,
+                max_chars=850,
+                overlap=100,
+                prefix=prefix,
+            )
+            chunks.extend(section_chunks)
+
+        return cls._dedupe_chunks(chunks)
+
+    # ---------------------------------------------------------------------
+    # Resume / CV
+    # ---------------------------------------------------------------------
+
+    @classmethod
+    def chunk_resume(cls, text: str) -> List[str]:
+        """
+        Chunk resume/CV by major sections.
+        """
+        sections = cls._extract_heading_sections(text)
+        if not sections:
+            return cls.chunk_generic(text)
+
+        chunks: List[str] = []
+        for section in sections:
+            heading = section["heading"].strip()
+            body = section["body"].strip()
+
+            prefix = f"Resume Section: {heading}"
+            section_chunks = cls._chunk_long_text(
+                body,
+                max_chars=850,
+                overlap=100,
+                prefix=prefix,
+            )
+            chunks.extend(section_chunks)
+
+        return cls._dedupe_chunks(chunks)
+
+    # ---------------------------------------------------------------------
+    # Official letters
+    # ---------------------------------------------------------------------
+
+    @classmethod
+    def chunk_official_letter(cls, text: str) -> List[str]:
+        """
+        Keep official short letters mostly intact to avoid losing important facts.
+        """
+        text = text.strip()
+        if not text:
+            return []
+
+        if len(text) <= 1400:
+            return [text]
+
+        return cls._chunk_long_text(text, max_chars=1000, overlap=100)
+
+    # ---------------------------------------------------------------------
+    # Utilities
+    # ---------------------------------------------------------------------
+
+    @staticmethod
+    def _dedupe_chunks(chunks: List[str]) -> List[str]:
         seen = set()
+        output: List[str] = []
 
         for chunk in chunks:
-            normalized = chunk.strip()
-            if not normalized:
-                continue
-            key = normalized.lower()
-            if key in seen:
-                continue
-            seen.add(key)
-            cleaned_chunks.append(normalized)
+            normalized = " ".join(chunk.split()).strip().lower()
+            if normalized and normalized not in seen:
+                seen.add(normalized)
+                output.append(chunk.strip())
 
-        return cleaned_chunks
+        return output

@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import AllowAny
+from rest_framework.throttling import AnonRateThrottle
 from rest_framework.authentication import SessionAuthentication
 from .serializers import StartProjectRequestSerializer, ProfileDocumentUploadSerializer, ProfileDocumentSerializer
 from .services.resend_email import send_start_project_email
@@ -56,7 +57,7 @@ class StartProjectRequestView(APIView):
                 },
                 status=status.HTTP_200_OK,
             )
-        except Exception:
+        except Exception as e:
             logger.exception("Failed to send project request email")
             return Response(
                 {
@@ -107,6 +108,7 @@ class GetInTouchView(APIView):
 
 class ProfileDocumentStatsAPIView(APIView):
     permission_classes = [HasInternalAPIKey]
+    admin_api_key = settings.ADMIN_API_KEY
 
     def get(self, request, doc_id, *args, **kwargs):
         doc = ProfileDocument.objects.filter(id=doc_id).first()
@@ -228,16 +230,14 @@ class AskAboutMeAPIView(APIView):
         )
 
         verdict = qa_result.get("verdict", "not_enough_evidence")
-        answer_text = qa_result.get(
-            "answer") or "I don’t have enough evidence to answer that."
+        answer_text = qa_result.get("answer") or "I don’t have enough evidence to answer that."
         bullets = qa_result.get("bullets") or []
-
-        if bullets:
-            answer_text += "\n\nKey points:\n- " + "\n- ".join(bullets)
-
+        meta = qa_result.get("meta") or {}
         used_sources = qa_result.get("used_sources") or []
         retrieval_debug = qa_result.get("retrieval_debug") or []
-        meta = qa_result.get("meta") or {}
+
+        if bullets and not meta.get("safe_fallback"):
+            answer_text += "\n\nKey points:\n- " + "\n- ".join(bullets)
 
         # 8) Convert used_sources into response citations
         citations = []
@@ -254,6 +254,17 @@ class AskAboutMeAPIView(APIView):
 
         # 9) Save assistant message
         confidence = 0.9 if verdict in {"yes", "no"} else 0.6
+
+        if meta.get("safe_fallback"):
+            confidence = 0.2
+        elif meta.get("fallback_used"):
+            confidence = min(confidence, 0.5)
+
+        if meta.get("answer_source") == "deterministic_extractor":
+            confidence = min(
+                0.95,
+                confidence + float(meta.get("confidence_boost", 0.0))
+            )
         if meta.get("answer_source") == "deterministic_extractor":
             confidence = min(
                 0.95,
@@ -268,7 +279,6 @@ class AskAboutMeAPIView(APIView):
             confidence_score=confidence,
         )
 
-        # 10) Return response
         return Response(
             self._with_optional_debug({
                 "session_id": str(session.id),
@@ -281,12 +291,26 @@ class AskAboutMeAPIView(APIView):
                 "applied_filters": qa_result.get("applied_filters"),
                 "answer_source": meta.get("answer_source"),
                 "extractor_used": meta.get("extractor_used"),
-                "gemini_model_used": meta.get("model_used"),
-                "gemini_tried_models": meta.get("tried_models"),
-            }, retrieval_debug=retrieval_debug, used_sources=used_sources, debug_history_count=len(recent_history), debug_recent_history=recent_history[-4:]),
+                "model_used": meta.get("model_used"),
+                "tried_models": meta.get("tried_models"),
+                "provider_used": meta.get("provider_used"),
+                "fallback_used": meta.get("fallback_used"),
+                "generation_ok": meta.get("generation_ok"),
+                "safe_fallback": meta.get("safe_fallback"),
+                "primary_meta": meta.get("primary_meta"),
+                "secondary_meta": meta.get("secondary_meta"),
+            },
+                retrieval_debug=retrieval_debug,
+                used_sources=used_sources,
+                debug_history_count=len(recent_history),
+                debug_recent_history=recent_history[-4:],
+                debug_chunks_before_llm=qa_result.get("debug_chunks_before_llm"),
+                debug_prompt_chunks=meta.get("debug_prompt_chunks"),
+                prompt_mode=meta.get("prompt_mode"),
+                chunk_budget=meta.get("chunk_budget"),
+            ),
             status=status.HTTP_200_OK
         )
-
     @staticmethod
     def _with_optional_debug(payload, **debug_fields):
         if settings.DEBUG:
@@ -301,6 +325,7 @@ class ProfileDocumentUploadAPIView(APIView):
 
     permission_classes = [HasInternalAPIKey]
     throttle_classes = [UploadRateThrottle]
+    admin_api_key = settings.ADMIN_API_KEY
 
     def post(self, request, *args, **kwargs):
         serializer = ProfileDocumentUploadSerializer(data=request.data)
@@ -321,6 +346,7 @@ class ProfileDocumentListAPIView(APIView):
     """
 
     permission_classes = [HasInternalAPIKey]
+    admin_api_key = settings.ADMIN_API_KEY
 
     def get(self, request, *args, **kwargs):
         documents = ProfileDocument.objects.all().order_by("-created_at")

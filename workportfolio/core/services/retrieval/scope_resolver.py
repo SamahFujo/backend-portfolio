@@ -47,8 +47,18 @@ class ScopeResolver:
         r"salary|payment|compensation|expected salary|salary range|pay range|"
         r"rate|availability|available|remote|hybrid|on-site|onsite|"
         r"freelance|contract|full-time|open to work|notice period|"
-        r"location|locations|where|where can|where is|where does|"
-        r"dubai|abu dhabi|uae|united arab emirates|work arrangement"
+        r"work arrangement|preferred location|work location"
+        r")\b",
+        re.I,
+    )
+
+    TECH_EXPERIENCE = re.compile(
+        r"\b("
+        r"oracle|postgresql|mysql|sql server|mongodb|mongo|database|databases|"
+        r"django|django rest framework|drf|fastapi|flask|react|next\.?js|tailwind|"
+        r"python|javascript|typescript|bootstrap|langchain|ollama|gemini|"
+        r"tool|tools|technology|technologies|framework|frameworks|stack|tech stack|"
+        r"worked with|experience with|used|use|built with|used to build"
         r")\b",
         re.I,
     )
@@ -56,7 +66,7 @@ class ScopeResolver:
     CAPABILITIES = re.compile(
         r"\b("
         r"can you do|can samah do|can she do|help with|capabilities|services|"
-        r"what can you do|what can samah do|able to|experience with|worked with|"
+        r"what can you do|what can samah do|able to|"
         r"can build|build this|handle this project"
         r")\b",
         re.I,
@@ -88,12 +98,15 @@ class ScopeResolver:
     )
 
     @classmethod
+    def _is_project_tech_question(cls, msg: str) -> bool:
+        return bool(cls.PROJECT.search(msg)) and bool(cls.TECH_EXPERIENCE.search(msg))
+
+    @classmethod
     def resolve_filters(cls, message: str):
         msg = (message or "").strip()
         if not msg:
             return None
 
-        # Contact first so direct contact questions stay strict on CV
         if cls.CONTACT.search(msg) or cls.CV.search(msg):
             return {
                 "document_type": "cv",
@@ -109,6 +122,17 @@ class ScopeResolver:
         if cls.COMPENSATION.search(msg):
             return {
                 "document_type": "compensation",
+                "only_active_docs": True,
+            }
+
+        if cls._is_project_tech_question(msg):
+            return {
+                "document_type": "projects",
+                "only_active_docs": True,
+            }
+
+        if cls.TECH_EXPERIENCE.search(msg):
+            return {
                 "only_active_docs": True,
             }
 

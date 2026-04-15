@@ -5,7 +5,7 @@ Pipeline:
 - parse file
 - store raw text
 - classify document type
-- create chunks
+- create chunks using document-type-aware chunking
 - generate embeddings
 - save chunks
 """
@@ -36,8 +36,7 @@ class IngestionService:
             if not raw_text:
                 document.raw_text = ""
                 document.status = "failed"
-                document.save(
-                    update_fields=["raw_text", "status", "updated_at"])
+                document.save(update_fields=["raw_text", "status", "updated_at"])
                 return document
 
             result = DocumentTypeClassifier.classify(
@@ -45,16 +44,26 @@ class IngestionService:
                 raw_text=raw_text,
             )
 
-            chunks = ChunkService.chunk_text(raw_text)
+            chunks = ChunkService.chunk_document(
+                raw_text=raw_text,
+                document_type=result.doc_type,
+                title=document.title,
+            )
+
             if not chunks:
                 document.raw_text = raw_text
                 document.document_type = result.doc_type
                 document.tags = result.tags
                 document.status = "failed"
-                update_fields = ["raw_text", "document_type",
-                                 "tags", "status", "updated_at"]
 
-                # Optional fields if your model supports them
+                update_fields = [
+                    "raw_text",
+                    "document_type",
+                    "tags",
+                    "status",
+                    "updated_at",
+                ]
+
                 if hasattr(document, "doc_type_confidence"):
                     document.doc_type_confidence = result.confidence
                     update_fields.append("doc_type_confidence")
@@ -82,10 +91,14 @@ class IngestionService:
                 document.tags = result.tags
                 document.status = "processed"
 
-                update_fields = ["raw_text", "document_type",
-                "tags", "status", "updated_at"]
+                update_fields = [
+                    "raw_text",
+                    "document_type",
+                    "tags",
+                    "status",
+                    "updated_at",
+                ]
 
-                # Optional fields if your model supports them
                 if hasattr(document, "doc_type_confidence"):
                     document.doc_type_confidence = result.confidence
                     update_fields.append("doc_type_confidence")
