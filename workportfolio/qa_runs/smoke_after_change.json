@@ -1,0 +1,3382 @@
+{
+  "generated_at": "2026-04-16T11:45:43.627860Z",
+  "question_count": 20,
+  "results": [
+    {
+      "question": "What tools did she use in the Live Smart Electricity Dashboard?",
+      "retrieval_query": "What tools were used in the Live Smart Electricity Dashboard?",
+      "rewrite_notes": "Reworded to be more direct and improve searchability. Preserved project name and intent.",
+      "timestamp": "2026-04-16T11:44:14.345441Z",
+      "result": {
+        "verdict": "supported",
+        "answer": "She used Python, Dash/Plotly, JavaScript, HTML, CSS, Bootstrap, and Oracle Database.",
+        "bullets": [],
+        "used_chunk_indices": [
+          1,
+          2
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 0,
+            "chunk_id": "68d598b6-8c87-47a7-af69-7c5ddf0daa6c",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          },
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 2,
+            "chunk_id": "bdbccb4b-1fe0-420d-9562-42c8385dd704",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          }
+        ],
+        "meta": {
+          "provider": "gemini",
+          "model_used": "gemini-2.5-flash-lite",
+          "error": null,
+          "tried_models": [
+            "gemini-2.5-flash-lite"
+          ],
+          "task": "grounded_answer",
+          "provider_used": "gemini",
+          "generation_ok": true,
+          "fallback_used": false,
+          "debug_prompt_chunks": [
+            {
+              "prompt_index": 0,
+              "chunk_index": 3,
+              "doc_title": "Projects",
+              "document_type": "projects",
+              "full_content_preview": "Project: Live Smart Electricity Dashboard for Power Consumption\nSection: Key Features\n• Live monitoring of electricity consumption, voltage, and ampere metrics.\n• Interactive dashboards for decision support and operational tracking.\n• Configurable alarm settings and email notification options.\n• Forecasting capabilities using deep learning, including CNN-based prediction workflows.\nOutcome / Business Value. Provided real-time visibility, faster response to risky electrical conditions, and predictive insights that supported more informed operational planning.",
+              "snippet_sent_to_llm": "Project: Live Smart Electricity Dashboard for Power Consumption Section: Key Features • Live monitoring of electricity consumption, voltage, and ampere metrics. • Interactive dashboards for decision support and operational tracking. • Configurable alarm settings and email notification options. • Forecasting capabilitie..."
+            },
+            {
+              "prompt_index": 1,
+              "chunk_index": 0,
+              "doc_title": "Projects",
+              "document_type": "projects",
+              "full_content_preview": "Project: Live Smart Electricity Dashboard for Power Consumption\nSection: Status | Delivered / Production-facing analytics dashboard\nTechnology Stack | Python, Dash/Plotly, JavaScript, HTML, CSS, Bootstrap, Oracle Database, Deep Learning\nOverview. An enterprise dashboard built to collect electricity sensor data, store it in Oracle, analyze usage patterns, and present live operational insights to the client through interactive dashboards.",
+              "snippet_sent_to_llm": "Project: Live Smart Electricity Dashboard for Power Consumption Section: Status | Delivered / Production-facing analytics dashboard Technology Stack | Python, Dash/Plotly, JavaScript, HTML, CSS, Bootstrap, Oracle Database, Deep Learning Overview. An enterprise dashboard built to collect electricity sensor data, store i..."
+            },
+            {
+              "prompt_index": 2,
+              "chunk_index": 2,
+              "doc_title": "Projects",
+              "document_type": "projects",
+              "full_content_preview": "Project: Live Smart Electricity Dashboard for Power Consumption\nSection: Your Contribution\n• Collected and integrated data from sensors into Oracle Database.\n• Built the analytics and visualization layer using Python and Dash/Plotly.\n• Implemented alert logic for risk conditions such as abnormal voltage or other critical thresholds.\n• Worked on forecasting future electricity consumption for daily, monthly, and yearly horizons using deep learning models.",
+              "snippet_sent_to_llm": "Project: Live Smart Electricity Dashboard for Power Consumption Section: Your Contribution • Collected and integrated data from sensors into Oracle Database. • Built the analytics and visualization layer using Python and Dash/Plotly. • Implemented alert logic for risk conditions such as abnormal voltage or other critic..."
+            },
+            {
+              "prompt_index": 3,
+              "chunk_index": 1,
+              "doc_title": "Projects",
+              "document_type": "projects",
+              "full_content_preview": "Project: Live Smart Electricity Dashboard for Power Consumption\nSection: Business Need\n• The client needed a centralized way to monitor electricity consumption, voltage, current, and operational anomalies across a large data stream.\n• They also required proactive alerting and forecasting rather than relying only on historical reporting.",
+              "snippet_sent_to_llm": "Project: Live Smart Electricity Dashboard for Power Consumption Section: Business Need • The client needed a centralized way to monitor electricity consumption, voltage, current, and operational anomalies across a large data stream. • They also required proactive alerting and forecasting rather than relying only on his..."
+            }
+          ],
+          "prompt_mode": "small",
+          "chunk_budget": 4
+        },
+        "retrieval_query": "What tools were used in the Live Smart Electricity Dashboard?",
+        "rewrite_notes": "local_fast_path",
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "d66f7bc4-488a-4049-bbe3-81a14cfe796e",
+            "chunk_index": 3,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.27473787815940975,
+            "rerank_score": 0.60579908,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "68d598b6-8c87-47a7-af69-7c5ddf0daa6c",
+            "chunk_index": 0,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.26900744438171387,
+            "rerank_score": 0.60299706,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "bdbccb4b-1fe0-420d-9562-42c8385dd704",
+            "chunk_index": 2,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.26916104555130005,
+            "rerank_score": 0.52037448,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "b66f27b2-b640-4edc-a8cf-4d7934c908da",
+            "chunk_index": 1,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.3289071721489911,
+            "rerank_score": 0.43254271,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "projects",
+          "only_active_docs": true
+        },
+        "debug_chunks_before_llm": [
+          {
+            "chunk_index": 3,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "content_preview": "Project: Live Smart Electricity Dashboard for Power Consumption\nSection: Key Features\n• Live monitoring of electricity consumption, voltage, and ampere metrics.\n• Interactive dashboards for decision support and operational tracking.\n• Configurable alarm settings and email notification options.\n• Forecasting capabilities using deep learning, including CNN-based prediction workflows.\nOutcome / Business Value. Provided real-time visibility, faster response to risky electrical conditions, and predictive insights that supported more informed operational planning."
+          },
+          {
+            "chunk_index": 0,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "content_preview": "Project: Live Smart Electricity Dashboard for Power Consumption\nSection: Status | Delivered / Production-facing analytics dashboard\nTechnology Stack | Python, Dash/Plotly, JavaScript, HTML, CSS, Bootstrap, Oracle Database, Deep Learning\nOverview. An enterprise dashboard built to collect electricity sensor data, store it in Oracle, analyze usage patterns, and present live operational insights to the client through interactive dashboards."
+          },
+          {
+            "chunk_index": 2,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "content_preview": "Project: Live Smart Electricity Dashboard for Power Consumption\nSection: Your Contribution\n• Collected and integrated data from sensors into Oracle Database.\n• Built the analytics and visualization layer using Python and Dash/Plotly.\n• Implemented alert logic for risk conditions such as abnormal voltage or other critical thresholds.\n• Worked on forecasting future electricity consumption for daily, monthly, and yearly horizons using deep learning models."
+          },
+          {
+            "chunk_index": 1,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "content_preview": "Project: Live Smart Electricity Dashboard for Power Consumption\nSection: Business Need\n• The client needed a centralized way to monitor electricity consumption, voltage, current, and operational anomalies across a large data stream.\n• They also required proactive alerting and forecasting rather than relying only on historical reporting."
+          }
+        ]
+      }
+    },
+    {
+      "question": "Which technologies were used in the Spend Analysis Dashboard?",
+      "retrieval_query": "Which technologies were used in the Spend Analysis Dashboard?",
+      "rewrite_notes": "local_fast_path",
+      "timestamp": "2026-04-16T11:44:19.263336Z",
+      "result": {
+        "verdict": "supported",
+        "answer": "The Spend Analysis Dashboard utilized Django, Django REST Framework, React, Next.js, PostgreSQL/SQL, Azure AD, Python, BERT, RoBERTa, and NLP.",
+        "bullets": [],
+        "used_chunk_indices": [
+          0
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 8,
+            "chunk_id": "12bcf254-f93f-4493-aff8-cc6a02c93849",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          }
+        ],
+        "meta": {
+          "provider": "gemini",
+          "model_used": "gemini-2.5-flash-lite",
+          "error": null,
+          "tried_models": [
+            "gemini-2.5-flash-lite"
+          ],
+          "task": "grounded_answer",
+          "provider_used": "gemini",
+          "generation_ok": true,
+          "fallback_used": false,
+          "debug_prompt_chunks": [
+            {
+              "prompt_index": 0,
+              "chunk_index": 8,
+              "doc_title": "Projects",
+              "document_type": "projects",
+              "full_content_preview": "Project: Spend Analysis Dashboard with AI-based UNSPSC Classification\nSection: Status | Delivered / Enterprise procurement intelligence platform\nTechnology Stack | Django, Django REST Framework, React, Next.js, PostgreSQL/SQL, Azure AD, Python, BERT, RoBERTa, NLP\nOverview. A spend analytics platform designed to visualize procurement activity, track agreement leakage, manage role-based access, and classify purchase order descriptions into UNSPSC categories using NLP models.",
+              "snippet_sent_to_llm": "Project: Spend Analysis Dashboard with AI-based UNSPSC Classification Section: Status | Delivered / Enterprise procurement intelligence platform Technology Stack | Django, Django REST Framework, React, Next.js, PostgreSQL/SQL, Azure AD, Python, BERT, RoBERTa, NLP Overview. A spend analytics platform designed to visuali..."
+            },
+            {
+              "prompt_index": 1,
+              "chunk_index": 10,
+              "doc_title": "Projects",
+              "document_type": "projects",
+              "full_content_preview": "Project: Spend Analysis Dashboard with AI-based UNSPSC Classification\nSection: Your Contribution\n• Led and developed the backend using Django and Django REST Framework and supported the React/Next.js frontend workflow.\n• Worked on authentication and authorization using Azure AD and RBAC logic.\n• Built or integrated AI/NLP components for PO description categorization using models such as BERT and RoBERTa.\n• Designed data models, filters, logs, and analytics layers for procurement reporting.",
+              "snippet_sent_to_llm": "Project: Spend Analysis Dashboard with AI-based UNSPSC Classification Section: Your Contribution • Led and developed the backend using Django and Django REST Framework and supported the React/Next.js frontend workflow. • Worked on authentication and authorization using Azure AD and RBAC logic. • Built or integrated AI/..."
+            },
+            {
+              "prompt_index": 2,
+              "chunk_index": 11,
+              "doc_title": "Projects",
+              "document_type": "projects",
+              "full_content_preview": "Project: Spend Analysis Dashboard with AI-based UNSPSC Classification\nSection: Key Features\n• Interactive spend dashboards with filtering and analytics.\n• Agreement leakage highlights and user activity logs for admins.\n• UNSPSC categorization support for PO lines and stock items.\n• Role-based views by department and user permissions.\n• Data handling across warehouse-style procurement structures.\nOutcome / Business Value. Improved procurement visibility, supported smarter decision-making, and reduced the manual burden of spend categorization.",
+              "snippet_sent_to_llm": "Project: Spend Analysis Dashboard with AI-based UNSPSC Classification Section: Key Features • Interactive spend dashboards with filtering and analytics. • Agreement leakage highlights and user activity logs for admins. • UNSPSC categorization support for PO lines and stock items. • Role-based views by department and us..."
+            },
+            {
+              "prompt_index": 3,
+              "chunk_index": 9,
+              "doc_title": "Projects",
+              "document_type": "projects",
+              "full_content_preview": "Project: Spend Analysis Dashboard with AI-based UNSPSC Classification\nSection: Business Need\n• Procurement teams needed better visibility into spend patterns, agreement compliance, and category intelligence.\n• Manual categorization of purchase order lines into UNSPSC standards was slow and inconsistent.",
+              "snippet_sent_to_llm": "Project: Spend Analysis Dashboard with AI-based UNSPSC Classification Section: Business Need • Procurement teams needed better visibility into spend patterns, agreement compliance, and category intelligence. • Manual categorization of purchase order lines into UNSPSC standards was slow and inconsistent."
+            }
+          ],
+          "prompt_mode": "small",
+          "chunk_budget": 4
+        },
+        "retrieval_query": "Which technologies were used in the Spend Analysis Dashboard?",
+        "rewrite_notes": "local_fast_path",
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "12bcf254-f93f-4493-aff8-cc6a02c93849",
+            "chunk_index": 8,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.4033022763313209,
+            "rerank_score": 0.68257374,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "1d0fd422-7013-46f0-8933-4e8a91ab924d",
+            "chunk_index": 10,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.44017359970965286,
+            "rerank_score": 0.59971958,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "ad421874-463f-42ad-a419-380c7256433c",
+            "chunk_index": 11,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.37667582561599666,
+            "rerank_score": 0.58983451,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "161b5049-f836-431b-8a88-a6c36384c64a",
+            "chunk_index": 9,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.39578914642333984,
+            "rerank_score": 0.55736351,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "68d598b6-8c87-47a7-af69-7c5ddf0daa6c",
+            "chunk_index": 0,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.4491646885871887,
+            "rerank_score": 0.25091279,
+            "source": "reranked",
+            "matched_filter_document_type": "projects",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "projects",
+          "only_active_docs": true
+        },
+        "debug_chunks_before_llm": [
+          {
+            "chunk_index": 8,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "content_preview": "Project: Spend Analysis Dashboard with AI-based UNSPSC Classification\nSection: Status | Delivered / Enterprise procurement intelligence platform\nTechnology Stack | Django, Django REST Framework, React, Next.js, PostgreSQL/SQL, Azure AD, Python, BERT, RoBERTa, NLP\nOverview. A spend analytics platform designed to visualize procurement activity, track agreement leakage, manage role-based access, and classify purchase order descriptions into UNSPSC categories using NLP models."
+          },
+          {
+            "chunk_index": 10,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "content_preview": "Project: Spend Analysis Dashboard with AI-based UNSPSC Classification\nSection: Your Contribution\n• Led and developed the backend using Django and Django REST Framework and supported the React/Next.js frontend workflow.\n• Worked on authentication and authorization using Azure AD and RBAC logic.\n• Built or integrated AI/NLP components for PO description categorization using models such as BERT and RoBERTa.\n• Designed data models, filters, logs, and analytics layers for procurement reporting."
+          },
+          {
+            "chunk_index": 11,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "content_preview": "Project: Spend Analysis Dashboard with AI-based UNSPSC Classification\nSection: Key Features\n• Interactive spend dashboards with filtering and analytics.\n• Agreement leakage highlights and user activity logs for admins.\n• UNSPSC categorization support for PO lines and stock items.\n• Role-based views by department and user permissions.\n• Data handling across warehouse-style procurement structures.\nOutcome / Business Value. Improved procurement visibility, supported smarter decision-making, and reduced the manual burden of spend categorization."
+          },
+          {
+            "chunk_index": 9,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "content_preview": "Project: Spend Analysis Dashboard with AI-based UNSPSC Classification\nSection: Business Need\n• Procurement teams needed better visibility into spend patterns, agreement compliance, and category intelligence.\n• Manual categorization of purchase order lines into UNSPSC standards was slow and inconsistent."
+          },
+          {
+            "chunk_index": 0,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "content_preview": "Project: Live Smart Electricity Dashboard for Power Consumption\nSection: Status | Delivered / Production-facing analytics dashboard\nTechnology Stack | Python, Dash/Plotly, JavaScript, HTML, CSS, Bootstrap, Oracle Database, Deep Learning\nOverview. An enterprise dashboard built to collect electricity sensor data, store it in Oracle, analyze usage patterns, and present live operational insights to the client through interactive dashboards."
+          }
+        ]
+      }
+    },
+    {
+      "question": "What certificates does she have?",
+      "retrieval_query": "What certificates does she have?",
+      "rewrite_notes": "local_fast_path",
+      "timestamp": "2026-04-16T11:44:24.273768Z",
+      "result": {
+        "verdict": "supported",
+        "answer": "Samah holds several certificates, including Master of Claude, Master of ChatGPT, Fundamentals of Building AI Agents, and React & Django Full Stack.",
+        "bullets": [
+          "Master of Claude and Master of ChatGPT from Coursiv focus on AI usage and prompt design.",
+          "Fundamentals of Building AI Agents is from IBM via Coursera, and React & Django Full Stack is from Udemy."
+        ],
+        "used_chunk_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Certificates",
+            "document_type": "certificates",
+            "chunk_index": 1,
+            "chunk_id": "85d321b4-ec99-4077-9b16-967410ccb678",
+            "document_id": "dde57657-e4c2-4062-bafb-3e5898703fea"
+          },
+          {
+            "doc_title": "Certificates",
+            "document_type": "certificates",
+            "chunk_index": 0,
+            "chunk_id": "8fad3f9a-8fe7-4b95-920f-ccdf89f624a5",
+            "document_id": "dde57657-e4c2-4062-bafb-3e5898703fea"
+          },
+          {
+            "doc_title": "Certificates",
+            "document_type": "certificates",
+            "chunk_index": 2,
+            "chunk_id": "d0170385-4779-43c5-9d2f-31773140b58e",
+            "document_id": "dde57657-e4c2-4062-bafb-3e5898703fea"
+          },
+          {
+            "doc_title": "Certificates",
+            "document_type": "certificates",
+            "chunk_index": 3,
+            "chunk_id": "d3bb3ef3-a21b-462c-9080-9dd6a5c106c8",
+            "document_id": "dde57657-e4c2-4062-bafb-3e5898703fea"
+          }
+        ],
+        "meta": {
+          "provider": "gemini",
+          "model_used": "gemini-2.5-flash-lite",
+          "error": null,
+          "tried_models": [
+            "gemini-2.5-flash-lite"
+          ],
+          "task": "grounded_answer",
+          "provider_used": "gemini",
+          "generation_ok": true,
+          "fallback_used": false,
+          "debug_prompt_chunks": [
+            {
+              "prompt_index": 0,
+              "chunk_index": 1,
+              "doc_title": "Certificates",
+              "document_type": "certificates",
+              "full_content_preview": "Certificate: Master of Claude\nMaster of Claude\nIssuer: Coursiv | Date: 16 February 2026\nFocus: In-depth training focused on Claude usage, prompt design, and high-quality AI-assisted reasoning workflows.\nWhy it matters: Strengthens multi-model AI fluency and professional use of generative AI systems.",
+              "snippet_sent_to_llm": "Certificate: Master of Claude Master of Claude Issuer: Coursiv | Date: 16 February 2026 Focus: In-depth training focused on Claude usage, prompt design, and high-quality AI-assisted reasoning workflows. Why it matters: Strengthens multi-model AI fluency and professional use of generative AI systems."
+            },
+            {
+              "prompt_index": 1,
+              "chunk_index": 0,
+              "doc_title": "Certificates",
+              "document_type": "certificates",
+              "full_content_preview": "Certificate: Master of ChatGPT\nMaster of ChatGPT\nIssuer: Coursiv | Date: 5 February 2026\nFocus: Prompting, advanced usage patterns, and practical application of ChatGPT in professional workflows.\nWhy it matters: Supports AI productivity, prompt engineering, and structured assistant usage for solution delivery.",
+              "snippet_sent_to_llm": "Certificate: Master of ChatGPT Master of ChatGPT Issuer: Coursiv | Date: 5 February 2026 Focus: Prompting, advanced usage patterns, and practical application of ChatGPT in professional workflows. Why it matters: Supports AI productivity, prompt engineering, and structured assistant usage for solution delivery."
+            },
+            {
+              "prompt_index": 2,
+              "chunk_index": 2,
+              "doc_title": "Certificates",
+              "document_type": "certificates",
+              "full_content_preview": "Certificate: React & Django Full Stack: Web App, Backend API, Mobile Apps\nReact & Django Full Stack: Web App, Backend API, Mobile Apps\nIssuer: Udemy | Date: 25 January 2025\nFocus: Full-stack development spanning React, Django, backend APIs, and end-to-end web application implementation.\nWhy it matters: Directly supports production delivery of full-stack solutions using Django and React/Next.js ecosystems.",
+              "snippet_sent_to_llm": "Certificate: React & Django Full Stack: Web App, Backend API, Mobile Apps React & Django Full Stack: Web App, Backend API, Mobile Apps Issuer: Udemy | Date: 25 January 2025 Focus: Full-stack development spanning React, Django, backend APIs, and end-to-end web application implementation. Why it matters: Directly support..."
+            },
+            {
+              "prompt_index": 3,
+              "chunk_index": 3,
+              "doc_title": "Certificates",
+              "document_type": "certificates",
+              "full_content_preview": "Certificate: Fundamentals of Building AI Agents\nFundamentals of Building AI Agents\nIssuer: IBM via Coursera | Date: 16 November 2025\nFocus: Core concepts for agentic AI systems, orchestration logic, task execution flows, and practical AI agent design.\nWhy it matters: Aligns with the design of intelligent automation systems, AI assistants, and workflow agents.",
+              "snippet_sent_to_llm": "Certificate: Fundamentals of Building AI Agents Fundamentals of Building AI Agents Issuer: IBM via Coursera | Date: 16 November 2025 Focus: Core concepts for agentic AI systems, orchestration logic, task execution flows, and practical AI agent design. Why it matters: Aligns with the design of intelligent automation sys..."
+            }
+          ],
+          "prompt_mode": "standard",
+          "chunk_budget": 4
+        },
+        "retrieval_query": "What certificates does she have?",
+        "rewrite_notes": "local_fast_path",
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "85d321b4-ec99-4077-9b16-967410ccb678",
+            "chunk_index": 1,
+            "doc_title": "Certificates",
+            "document_type": "certificates",
+            "vector_distance": 0.7222621954161581,
+            "rerank_score": 0.32167304,
+            "source": "reranked",
+            "matched_filter_document_type": "certificates",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "8fad3f9a-8fe7-4b95-920f-ccdf89f624a5",
+            "chunk_index": 0,
+            "doc_title": "Certificates",
+            "document_type": "certificates",
+            "vector_distance": 0.7451220002843142,
+            "rerank_score": 0.26588047,
+            "source": "reranked",
+            "matched_filter_document_type": "certificates",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "d0170385-4779-43c5-9d2f-31773140b58e",
+            "chunk_index": 2,
+            "doc_title": "Certificates",
+            "document_type": "certificates",
+            "vector_distance": 0.7206485784247092,
+            "rerank_score": 0.25238404,
+            "source": "reranked",
+            "matched_filter_document_type": "certificates",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "d3bb3ef3-a21b-462c-9080-9dd6a5c106c8",
+            "chunk_index": 3,
+            "doc_title": "Certificates",
+            "document_type": "certificates",
+            "vector_distance": 0.7940539779050945,
+            "rerank_score": 0.21733753,
+            "source": "reranked",
+            "matched_filter_document_type": "certificates",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "certificates",
+          "only_active_docs": true
+        },
+        "debug_chunks_before_llm": [
+          {
+            "chunk_index": 1,
+            "doc_title": "Certificates",
+            "document_type": "certificates",
+            "content_preview": "Certificate: Master of Claude\nMaster of Claude\nIssuer: Coursiv | Date: 16 February 2026\nFocus: In-depth training focused on Claude usage, prompt design, and high-quality AI-assisted reasoning workflows.\nWhy it matters: Strengthens multi-model AI fluency and professional use of generative AI systems."
+          },
+          {
+            "chunk_index": 0,
+            "doc_title": "Certificates",
+            "document_type": "certificates",
+            "content_preview": "Certificate: Master of ChatGPT\nMaster of ChatGPT\nIssuer: Coursiv | Date: 5 February 2026\nFocus: Prompting, advanced usage patterns, and practical application of ChatGPT in professional workflows.\nWhy it matters: Supports AI productivity, prompt engineering, and structured assistant usage for solution delivery."
+          },
+          {
+            "chunk_index": 2,
+            "doc_title": "Certificates",
+            "document_type": "certificates",
+            "content_preview": "Certificate: React & Django Full Stack: Web App, Backend API, Mobile Apps\nReact & Django Full Stack: Web App, Backend API, Mobile Apps\nIssuer: Udemy | Date: 25 January 2025\nFocus: Full-stack development spanning React, Django, backend APIs, and end-to-end web application implementation.\nWhy it matters: Directly supports production delivery of full-stack solutions using Django and React/Next.js ecosystems."
+          },
+          {
+            "chunk_index": 3,
+            "doc_title": "Certificates",
+            "document_type": "certificates",
+            "content_preview": "Certificate: Fundamentals of Building AI Agents\nFundamentals of Building AI Agents\nIssuer: IBM via Coursera | Date: 16 November 2025\nFocus: Core concepts for agentic AI systems, orchestration logic, task execution flows, and practical AI agent design.\nWhy it matters: Aligns with the design of intelligent automation systems, AI assistants, and workflow agents."
+          }
+        ]
+      }
+    },
+    {
+      "question": "Which certificate relates to AI agents?",
+      "retrieval_query": "Which certificate relates to AI agents?",
+      "rewrite_notes": "local_fast_path",
+      "timestamp": "2026-04-16T11:44:27.892796Z",
+      "result": {
+        "verdict": "supported",
+        "answer": "The certificate that relates to AI agents is \"Fundamentals of Building AI Agents\" issued by IBM via Coursera.",
+        "bullets": [
+          "This certificate focuses on core concepts for agentic AI systems, orchestration logic, task execution flows, and practical AI agent design."
+        ],
+        "used_chunk_indices": [
+          0
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Certificates",
+            "document_type": "certificates",
+            "chunk_index": 3,
+            "chunk_id": "d3bb3ef3-a21b-462c-9080-9dd6a5c106c8",
+            "document_id": "dde57657-e4c2-4062-bafb-3e5898703fea"
+          }
+        ],
+        "meta": {
+          "provider": "gemini",
+          "model_used": "gemini-2.5-flash-lite",
+          "error": null,
+          "tried_models": [
+            "gemini-2.5-flash-lite"
+          ],
+          "task": "grounded_answer",
+          "provider_used": "gemini",
+          "generation_ok": true,
+          "fallback_used": false,
+          "debug_prompt_chunks": [
+            {
+              "prompt_index": 0,
+              "chunk_index": 3,
+              "doc_title": "Certificates",
+              "document_type": "certificates",
+              "full_content_preview": "Certificate: Fundamentals of Building AI Agents\nFundamentals of Building AI Agents\nIssuer: IBM via Coursera | Date: 16 November 2025\nFocus: Core concepts for agentic AI systems, orchestration logic, task execution flows, and practical AI agent design.\nWhy it matters: Aligns with the design of intelligent automation systems, AI assistants, and workflow agents.",
+              "snippet_sent_to_llm": "Certificate: Fundamentals of Building AI Agents Fundamentals of Building AI Agents Issuer: IBM via Coursera | Date: 16 November 2025 Focus: Core concepts for agentic AI systems, orchestration logic, task execution flows, and practical AI agent design. Why it matters: Aligns with the design of intelligent automation sys..."
+            },
+            {
+              "prompt_index": 1,
+              "chunk_index": 1,
+              "doc_title": "Certificates",
+              "document_type": "certificates",
+              "full_content_preview": "Certificate: Master of Claude\nMaster of Claude\nIssuer: Coursiv | Date: 16 February 2026\nFocus: In-depth training focused on Claude usage, prompt design, and high-quality AI-assisted reasoning workflows.\nWhy it matters: Strengthens multi-model AI fluency and professional use of generative AI systems.",
+              "snippet_sent_to_llm": "Certificate: Master of Claude Master of Claude Issuer: Coursiv | Date: 16 February 2026 Focus: In-depth training focused on Claude usage, prompt design, and high-quality AI-assisted reasoning workflows. Why it matters: Strengthens multi-model AI fluency and professional use of generative AI systems."
+            }
+          ],
+          "prompt_mode": "standard",
+          "chunk_budget": 2
+        },
+        "retrieval_query": "Which certificate relates to AI agents?",
+        "rewrite_notes": "local_fast_path",
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "d3bb3ef3-a21b-462c-9080-9dd6a5c106c8",
+            "chunk_index": 3,
+            "doc_title": "Certificates",
+            "document_type": "certificates",
+            "vector_distance": 0.36219424009322665,
+            "rerank_score": 0.80193585,
+            "source": "reranked",
+            "matched_filter_document_type": "certificates",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "85d321b4-ec99-4077-9b16-967410ccb678",
+            "chunk_index": 1,
+            "doc_title": "Certificates",
+            "document_type": "certificates",
+            "vector_distance": 0.5953671393017248,
+            "rerank_score": 0.47012839,
+            "source": "reranked",
+            "matched_filter_document_type": "certificates",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "8fad3f9a-8fe7-4b95-920f-ccdf89f624a5",
+            "chunk_index": 0,
+            "doc_title": "Certificates",
+            "document_type": "certificates",
+            "vector_distance": 0.6436578908852836,
+            "rerank_score": 0.40497804,
+            "source": "reranked",
+            "matched_filter_document_type": "certificates",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "d0170385-4779-43c5-9d2f-31773140b58e",
+            "chunk_index": 2,
+            "doc_title": "Certificates",
+            "document_type": "certificates",
+            "vector_distance": 0.7021552146765713,
+            "rerank_score": 0.22953522,
+            "source": "reranked",
+            "matched_filter_document_type": "certificates",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "certificates",
+          "only_active_docs": true
+        },
+        "debug_chunks_before_llm": [
+          {
+            "chunk_index": 3,
+            "doc_title": "Certificates",
+            "document_type": "certificates",
+            "content_preview": "Certificate: Fundamentals of Building AI Agents\nFundamentals of Building AI Agents\nIssuer: IBM via Coursera | Date: 16 November 2025\nFocus: Core concepts for agentic AI systems, orchestration logic, task execution flows, and practical AI agent design.\nWhy it matters: Aligns with the design of intelligent automation systems, AI assistants, and workflow agents."
+          },
+          {
+            "chunk_index": 1,
+            "doc_title": "Certificates",
+            "document_type": "certificates",
+            "content_preview": "Certificate: Master of Claude\nMaster of Claude\nIssuer: Coursiv | Date: 16 February 2026\nFocus: In-depth training focused on Claude usage, prompt design, and high-quality AI-assisted reasoning workflows.\nWhy it matters: Strengthens multi-model AI fluency and professional use of generative AI systems."
+          },
+          {
+            "chunk_index": 0,
+            "doc_title": "Certificates",
+            "document_type": "certificates",
+            "content_preview": "Certificate: Master of ChatGPT\nMaster of ChatGPT\nIssuer: Coursiv | Date: 5 February 2026\nFocus: Prompting, advanced usage patterns, and practical application of ChatGPT in professional workflows.\nWhy it matters: Supports AI productivity, prompt engineering, and structured assistant usage for solution delivery."
+          },
+          {
+            "chunk_index": 2,
+            "doc_title": "Certificates",
+            "document_type": "certificates",
+            "content_preview": "Certificate: React & Django Full Stack: Web App, Backend API, Mobile Apps\nReact & Django Full Stack: Web App, Backend API, Mobile Apps\nIssuer: Udemy | Date: 25 January 2025\nFocus: Full-stack development spanning React, Django, backend APIs, and end-to-end web application implementation.\nWhy it matters: Directly supports production delivery of full-stack solutions using Django and React/Next.js ecosystems."
+          }
+        ]
+      }
+    },
+    {
+      "question": "What backend framework does Samah prefer most?",
+      "retrieval_query": "What backend framework does Samah prefer most?",
+      "rewrite_notes": "local_fast_path",
+      "timestamp": "2026-04-16T11:44:31.893734Z",
+      "result": {
+        "verdict": "supported",
+        "answer": "Samah's preferred backend framework is Django, particularly Django REST Framework for API development. This preference stems from Django's robust structure for creating secure, scalable, and production-ready applications.",
+        "bullets": [
+          "Django is preferred for its strong structure in building secure, scalable, and production-ready applications.",
+          "Django REST Framework is specifically favored for API development."
+        ],
+        "used_chunk_indices": [
+          0,
+          1
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 2,
+            "chunk_id": "6c33b2c5-5a8d-49f4-8198-794af74fc0ec",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          },
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 14,
+            "chunk_id": "d42fb664-9f25-47a5-8373-f318c4b51e52",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          }
+        ],
+        "meta": {
+          "provider": "gemini",
+          "model_used": "gemini-2.5-flash-lite",
+          "error": null,
+          "tried_models": [
+            "gemini-2.5-flash-lite"
+          ],
+          "task": "grounded_answer",
+          "provider_used": "gemini",
+          "generation_ok": true,
+          "fallback_used": false,
+          "debug_prompt_chunks": [
+            {
+              "prompt_index": 0,
+              "chunk_index": 2,
+              "doc_title": "Preferences And Work Style",
+              "document_type": "preferences",
+              "full_content_preview": "Section: Preferred Backend Framework\nMy preferred backend framework is Django, especially Django REST Framework for API development.\nI prefer Django because it provides a strong structure for building secure, scalable, and production-ready applications. It is especially useful for business systems, admin panels, enterprise workflows, role-based platforms, and AI-powered web applications.\nI also have experience with FastAPI and Flask, but Django is my strongest and most preferred framework for serious production projects.",
+              "snippet_sent_to_llm": "Section: Preferred Backend Framework My preferred backend framework is Django, especially Django REST Framework for API development. I prefer Django because it provides a strong structure for building secure, scalable, and production-ready applications. It is especially useful for business systems, admin panels, enterp..."
+            },
+            {
+              "prompt_index": 1,
+              "chunk_index": 14,
+              "doc_title": "Preferences And Work Style",
+              "document_type": "preferences",
+              "full_content_preview": "Section: Summary\nMy favorite programming language is Python. My preferred backend framework is Django, and my preferred frontend stack is Next.js with React and Tailwind CSS. I am strongest in backend and AI-focused work, and I enjoy building practical, production-ready systems that combine software engineering, AI, automation, and user-friendly interfaces.",
+              "snippet_sent_to_llm": "Section: Summary My favorite programming language is Python. My preferred backend framework is Django, and my preferred frontend stack is Next.js with React and Tailwind CSS. I am strongest in backend and AI-focused work, and I enjoy building practical, production-ready systems that combine software engineering, AI, au..."
+            }
+          ],
+          "prompt_mode": "standard",
+          "chunk_budget": 2
+        },
+        "retrieval_query": "What backend framework does Samah prefer most?",
+        "rewrite_notes": "local_fast_path",
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "6c33b2c5-5a8d-49f4-8198-794af74fc0ec",
+            "chunk_index": 2,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.3634096167439439,
+            "rerank_score": 0.62977463,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "d42fb664-9f25-47a5-8373-f318c4b51e52",
+            "chunk_index": 14,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.4552429047082114,
+            "rerank_score": 0.45253593,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "176d9201-5a22-474a-8a38-8ef7012bae6a",
+            "chunk_index": 8,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.5601644849875255,
+            "rerank_score": 0.43254271,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "8de4fc39-ac98-4225-9709-4a2a839d9101",
+            "chunk_index": 3,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.4430195689201355,
+            "rerank_score": 0.35131106,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "3eb93b29-b387-4a5e-80ca-7a7ce08fc1d6",
+            "chunk_index": 6,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.5896187898403044,
+            "rerank_score": 0.33372033,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "d4b102c2-e977-4a17-a1c4-3b163959a8ab",
+            "chunk_index": 12,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.5099500709801861,
+            "rerank_score": 0.32082129,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "edb665b1-83c0-4215-a229-7acd3ecaa714",
+            "chunk_index": 4,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.6439712325308815,
+            "rerank_score": 0.22815649,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "preferences",
+          "only_active_docs": true
+        },
+        "debug_chunks_before_llm": [
+          {
+            "chunk_index": 2,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "content_preview": "Section: Preferred Backend Framework\nMy preferred backend framework is Django, especially Django REST Framework for API development.\nI prefer Django because it provides a strong structure for building secure, scalable, and production-ready applications. It is especially useful for business systems, admin panels, enterprise workflows, role-based platforms, and AI-powered web applications.\nI also have experience with FastAPI and Flask, but Django is my strongest and most preferred framework for serious production projects."
+          },
+          {
+            "chunk_index": 14,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "content_preview": "Section: Summary\nMy favorite programming language is Python. My preferred backend framework is Django, and my preferred frontend stack is Next.js with React and Tailwind CSS. I am strongest in backend and AI-focused work, and I enjoy building practical, production-ready systems that combine software engineering, AI, automation, and user-friendly interfaces."
+          },
+          {
+            "chunk_index": 8,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "content_preview": "Section: Preferred Technical Environment\nI prefer: - clean and organized codebases - modular and maintainable project structure - enterprise-style architecture - strong validation and error handling - API-first thinking for backend systems - clear separation between frontend, backend, and AI services"
+          },
+          {
+            "chunk_index": 3,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "content_preview": "Section: Preferred Frontend Stack\nMy preferred frontend stack is Next.js with React and Tailwind CSS.\nI like this stack because it allows me to build modern, responsive, and interactive user interfaces while keeping the frontend well-structured and scalable. It works especially well when connected to Django or API-based backends."
+          },
+          {
+            "chunk_index": 6,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "content_preview": "Section: Backend vs Frontend vs AI\nMy strongest preference is a combination of backend development and AI-focused work.\nI enjoy frontend development as well, especially when building polished user interfaces with Next.js and React, but my strongest technical comfort zone is in backend systems, APIs, AI workflows, automation logic, and overall solution design."
+          }
+        ]
+      }
+    },
+    {
+      "question": "What frontend technologies does Samah prefer?",
+      "retrieval_query": "What frontend technologies does Samah prefer?",
+      "rewrite_notes": "local_fast_path",
+      "timestamp": "2026-04-16T11:44:35.555915Z",
+      "result": {
+        "verdict": "supported",
+        "answer": "Samah prefers a frontend stack consisting of Next.js with React and Tailwind CSS. This combination is favored for its ability to create modern, responsive, and interactive user interfaces that are well-structured and scalable.",
+        "bullets": [
+          "This stack works particularly well when integrated with Django or API-based backends."
+        ],
+        "used_chunk_indices": [
+          0
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 3,
+            "chunk_id": "8de4fc39-ac98-4225-9709-4a2a839d9101",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          }
+        ],
+        "meta": {
+          "provider": "gemini",
+          "model_used": "gemini-2.5-flash-lite",
+          "error": null,
+          "tried_models": [
+            "gemini-2.5-flash-lite"
+          ],
+          "task": "grounded_answer",
+          "provider_used": "gemini",
+          "generation_ok": true,
+          "fallback_used": false,
+          "debug_prompt_chunks": [
+            {
+              "prompt_index": 0,
+              "chunk_index": 3,
+              "doc_title": "Preferences And Work Style",
+              "document_type": "preferences",
+              "full_content_preview": "Section: Preferred Frontend Stack\nMy preferred frontend stack is Next.js with React and Tailwind CSS.\nI like this stack because it allows me to build modern, responsive, and interactive user interfaces while keeping the frontend well-structured and scalable. It works especially well when connected to Django or API-based backends.",
+              "snippet_sent_to_llm": "Section: Preferred Frontend Stack My preferred frontend stack is Next.js with React and Tailwind CSS. I like this stack because it allows me to build modern, responsive, and interactive user interfaces while keeping the frontend well-structured and scalable. It works especially well when connected to Django or API-base..."
+            },
+            {
+              "prompt_index": 1,
+              "chunk_index": 12,
+              "doc_title": "Preferences And Work Style",
+              "document_type": "preferences",
+              "full_content_preview": "Section: Technologies I Prefer Working With\nI especially enjoy working with: - Python - Django - Django REST Framework - Next.js - React - Tailwind CSS - PostgreSQL - MongoDB - Hugging Face Transformers - Google Gemini - Ollama - LangChain - OCR and document-processing tools",
+              "snippet_sent_to_llm": "Section: Technologies I Prefer Working With I especially enjoy working with: - Python - Django - Django REST Framework - Next.js - React - Tailwind CSS - PostgreSQL - MongoDB - Hugging Face Transformers - Google Gemini - Ollama - LangChain - OCR and document-processing tools"
+            }
+          ],
+          "prompt_mode": "standard",
+          "chunk_budget": 2
+        },
+        "retrieval_query": "What frontend technologies does Samah prefer?",
+        "rewrite_notes": "local_fast_path",
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "8de4fc39-ac98-4225-9709-4a2a839d9101",
+            "chunk_index": 3,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.4473438858985901,
+            "rerank_score": 0.45713669,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "d4b102c2-e977-4a17-a1c4-3b163959a8ab",
+            "chunk_index": 12,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.47919163231899453,
+            "rerank_score": 0.42727721,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "176d9201-5a22-474a-8a38-8ef7012bae6a",
+            "chunk_index": 8,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.5932132061250921,
+            "rerank_score": 0.40922078,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "3eb93b29-b387-4a5e-80ca-7a7ce08fc1d6",
+            "chunk_index": 6,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.5227222002363858,
+            "rerank_score": 0.40591964,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "d42fb664-9f25-47a5-8373-f318c4b51e52",
+            "chunk_index": 14,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.47248605057680215,
+            "rerank_score": 0.35846534,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "6c33b2c5-5a8d-49f4-8198-794af74fc0ec",
+            "chunk_index": 2,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.5436263058408308,
+            "rerank_score": 0.30074561,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "544657e4-0b53-4c0b-b08d-9346fa63d7c7",
+            "chunk_index": 7,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.6160389184951782,
+            "rerank_score": 0.21076629,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "preferences",
+          "only_active_docs": true
+        },
+        "debug_chunks_before_llm": [
+          {
+            "chunk_index": 3,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "content_preview": "Section: Preferred Frontend Stack\nMy preferred frontend stack is Next.js with React and Tailwind CSS.\nI like this stack because it allows me to build modern, responsive, and interactive user interfaces while keeping the frontend well-structured and scalable. It works especially well when connected to Django or API-based backends."
+          },
+          {
+            "chunk_index": 12,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "content_preview": "Section: Technologies I Prefer Working With\nI especially enjoy working with: - Python - Django - Django REST Framework - Next.js - React - Tailwind CSS - PostgreSQL - MongoDB - Hugging Face Transformers - Google Gemini - Ollama - LangChain - OCR and document-processing tools"
+          },
+          {
+            "chunk_index": 8,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "content_preview": "Section: Preferred Technical Environment\nI prefer: - clean and organized codebases - modular and maintainable project structure - enterprise-style architecture - strong validation and error handling - API-first thinking for backend systems - clear separation between frontend, backend, and AI services"
+          },
+          {
+            "chunk_index": 6,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "content_preview": "Section: Backend vs Frontend vs AI\nMy strongest preference is a combination of backend development and AI-focused work.\nI enjoy frontend development as well, especially when building polished user interfaces with Next.js and React, but my strongest technical comfort zone is in backend systems, APIs, AI workflows, automation logic, and overall solution design."
+          },
+          {
+            "chunk_index": 14,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "content_preview": "Section: Summary\nMy favorite programming language is Python. My preferred backend framework is Django, and my preferred frontend stack is Next.js with React and Tailwind CSS. I am strongest in backend and AI-focused work, and I enjoy building practical, production-ready systems that combine software engineering, AI, automation, and user-friendly interfaces."
+          }
+        ]
+      }
+    },
+    {
+      "question": "Is Samah open to freelance work?",
+      "retrieval_query": "Is Samah open to freelance work?",
+      "rewrite_notes": "local_fast_path",
+      "timestamp": "2026-04-16T11:44:38.085393Z",
+      "result": {
+        "verdict": "supported",
+        "answer": "Samah is open to freelance and project-based work.",
+        "bullets": [],
+        "used_chunk_indices": [
+          0,
+          1,
+          2
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 6,
+            "chunk_id": "f09b8031-3a42-46d3-aeed-de90188040e2",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 9,
+            "chunk_id": "dd8afe16-12c7-4425-a480-af4dcd35e6c6",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 2,
+            "chunk_id": "ab6257f5-2218-4306-a284-94a4b955cb39",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          }
+        ],
+        "meta": {
+          "model_used": null,
+          "tried_models": [],
+          "provider_used": "deterministic_extractor",
+          "fallback_used": false,
+          "generation_ok": true,
+          "safe_fallback": false,
+          "error": null,
+          "answer_source": "deterministic_extractor",
+          "extractor_used": "try_extract_availability",
+          "confidence_boost": 0.1
+        },
+        "retrieval_query": "Is Samah open to freelance work?",
+        "rewrite_notes": "local_fast_path",
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "f09b8031-3a42-46d3-aeed-de90188040e2",
+            "chunk_index": 6,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.550052252408727,
+            "rerank_score": 0.38722676,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "dd8afe16-12c7-4425-a480-af4dcd35e6c6",
+            "chunk_index": 9,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.5276919288818871,
+            "rerank_score": 0.37296188,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "ab6257f5-2218-4306-a284-94a4b955cb39",
+            "chunk_index": 2,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.6579550794918892,
+            "rerank_score": 0.22953522,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "compensation",
+          "only_active_docs": true
+        },
+        "debug_chunks_before_llm": [
+          {
+            "chunk_index": 6,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "content_preview": "Section: Freelance and Project-Based Work\nI am open to freelance or project-based work when the project is well-defined, practical, and aligned with my technical strengths.\nI am especially suited for freelance or consulting work involving: - backend APIs - AI chatbot systems - RAG-based assistants - document processing and OCR workflows - dashboard and portal development - business process automation - Django and Next.js-based solutions"
+          },
+          {
+            "chunk_index": 9,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "content_preview": "Section: Summary\nI am open to full-time, contract, freelance, and consulting opportunities. I am especially open to roles in Dubai, Abu Dhabi, the UAE, or remote when the fit is strong. My compensation expectations should be discussed based on role scope, technical depth, leadership responsibility, and work arrangement."
+          },
+          {
+            "chunk_index": 2,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "content_preview": "Section: Preferred Work Type\nI am open to the following work types: - full-time employment - contract-based roles - freelance projects - consulting or solution-based technical work"
+          }
+        ]
+      }
+    },
+    {
+      "question": "Which locations is Samah especially open to?",
+      "retrieval_query": "Which locations is Samah especially open to?",
+      "rewrite_notes": "local_fast_path",
+      "timestamp": "2026-04-16T11:44:39.923741Z",
+      "result": {
+        "verdict": "supported",
+        "answer": "Samah is especially open to opportunities in Dubai, Abu Dhabi, the UAE, and strong remote opportunities.",
+        "bullets": [],
+        "used_chunk_indices": [
+          0,
+          1,
+          2
+        ],
+        "used_sources": [
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 23,
+            "chunk_id": "e94cb5b2-41f0-42ac-adc8-a74b8c2ae56c",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          },
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 3,
+            "chunk_id": "828d6690-e60e-4811-95ce-75625ba19842",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          },
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 21,
+            "chunk_id": "03e8db33-af38-410a-895e-e4487c5f6b0f",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          }
+        ],
+        "meta": {
+          "model_used": null,
+          "tried_models": [],
+          "provider_used": "deterministic_extractor",
+          "fallback_used": false,
+          "generation_ok": true,
+          "safe_fallback": false,
+          "error": null,
+          "answer_source": "deterministic_extractor",
+          "extractor_used": "try_extract_availability",
+          "confidence_boost": 0.1
+        },
+        "retrieval_query": "Which locations is Samah especially open to?",
+        "rewrite_notes": "local_fast_path",
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "e94cb5b2-41f0-42ac-adc8-a74b8c2ae56c",
+            "chunk_index": 23,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.1639268745162148,
+            "rerank_score": 0.69760895,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "828d6690-e60e-4811-95ce-75625ba19842",
+            "chunk_index": 3,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5284613230365907,
+            "rerank_score": 0.36749724,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "03e8db33-af38-410a-895e-e4487c5f6b0f",
+            "chunk_index": 21,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.38669527054088715,
+            "rerank_score": 0.3165805,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "3312aa78-7343-4677-bd31-ad06da788bbf",
+            "chunk_index": 0,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.4461113975610891,
+            "rerank_score": 0.30321571,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "dc01c0f7-c1d4-49ef-977b-a3e6671eea24",
+            "chunk_index": 1,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.4529515341803886,
+            "rerank_score": 0.29583988,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "2fe9cb3c-f8f3-43f6-83ae-392424599778",
+            "chunk_index": 16,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.6526941553561136,
+            "rerank_score": 0.28776783,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "e71fbd37-6732-48b7-9929-651d11020316",
+            "chunk_index": 18,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.4551487240283921,
+            "rerank_score": 0.27512974,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "dc580889-2fe1-4a92-95cc-7affe6b7b30e",
+            "chunk_index": 4,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.5801944607554214,
+            "rerank_score": 0.27435136,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "applied_filters": {
+          "only_active_docs": true
+        },
+        "debug_chunks_before_llm": [
+          {
+            "chunk_index": 23,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: Which locations is Samah especially open to?\nFAQ Answer: Samah is especially open to opportunities in Dubai, Abu Dhabi, and other suitable opportunities in the UAE, as well as strong remote opportunities."
+          },
+          {
+            "chunk_index": 3,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: What backend framework does Samah prefer most?\nFAQ Answer: Samah’s preferred backend framework is Django, especially Django REST Framework for API development."
+          },
+          {
+            "chunk_index": 21,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: Is Samah open to freelance or contract work?\nFAQ Answer: Yes. Samah is open to freelance, contract-based, consulting, and project-based opportunities when the work is a good fit."
+          },
+          {
+            "chunk_index": 0,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: What does Samah do?\nFAQ Answer: Samah is an AI Team Lead and AI/ML Engineer with strong full-stack development experience. She builds AI-powered applications, backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms."
+          },
+          {
+            "chunk_index": 1,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: What are Samah’s strongest technical areas?\nFAQ Answer: Samah’s strongest technical areas are Python backend development, Django and Django REST Framework, AI and LLM integration, workflow automation, document understanding pipelines, and full-stack solution delivery using Next.js and React."
+          }
+        ]
+      }
+    },
+    {
+      "question": "When did she work at Nasser Centre?",
+      "retrieval_query": "When did she work at Nasser Centre?",
+      "rewrite_notes": "local_fast_path",
+      "timestamp": "2026-04-16T11:44:44.863753Z",
+      "result": {
+        "verdict": "supported",
+        "answer": "Samah worked at the Nasser Centre for Science and Technology from October 3, 2021, until August 14, 2025.",
+        "bullets": [
+          "Her role was Sr AI & Data Scientist.",
+          "The center is also known as Nasser Artificial Intelligence Research & Development Centre (NAIRDC)."
+        ],
+        "used_chunk_indices": [
+          0,
+          1
+        ],
+        "used_sources": [
+          {
+            "doc_title": "exper letter",
+            "document_type": "experience_letter",
+            "chunk_index": 0,
+            "chunk_id": "55df5226-d418-446e-b22f-ba46693c7032",
+            "document_id": "fb400b2d-7cf9-4159-ac1a-15292c21d6f6"
+          },
+          {
+            "doc_title": "cv",
+            "document_type": "cv",
+            "chunk_index": 2,
+            "chunk_id": "0a870304-403a-4802-8118-6769097c9ed0",
+            "document_id": "d91425c3-7927-47ef-8994-50c2ad1b7491"
+          }
+        ],
+        "meta": {
+          "provider": "gemini",
+          "model_used": "gemini-2.5-flash-lite",
+          "error": null,
+          "tried_models": [
+            "gemini-2.5-flash-lite"
+          ],
+          "task": "grounded_answer",
+          "provider_used": "gemini",
+          "generation_ok": true,
+          "fallback_used": false,
+          "debug_prompt_chunks": [
+            {
+              "prompt_index": 0,
+              "chunk_index": 0,
+              "doc_title": "exper letter",
+              "document_type": "experience_letter",
+              "full_content_preview": "Nasser Centre For Science & Technology\nDate: 12-Aug-2025\nExperience Letter\nThis is to certify that Samah Wael Fujo, holding State of Palestine nationality and ID No 930317092, has been employed by Nasser Center for Science and Technology (NCST) from 03-Oct-2021 till 14-Aug-2025 as Sr AI & Data Scientist.\nThis certificate has been issued at the Employee's request.\nSincerely,\nAysha Abdulrahman Alfadhel\nDirector of Human Resources & Services",
+              "snippet_sent_to_llm": "Nasser Centre For Science & Technology Date: 12-Aug-2025 Experience Letter This is to certify that Samah Wael Fujo, holding State of Palestine nationality and ID No 930317092, has been employed by Nasser Center for Science and Technology (NCST) from 03-Oct-2021 till 14-Aug-2025 as Sr AI & Data Scientist. This certifica..."
+            },
+            {
+              "prompt_index": 1,
+              "chunk_index": 2,
+              "doc_title": "cv",
+              "document_type": "cv",
+              "full_content_preview": "Resume Section: Nasser Artificial Intelligence Research & Development Centre (NAIRDC)\nDepartment of Nasser Centre for Science and Technology / Bahrain/Jan 2022 -",
+              "snippet_sent_to_llm": "Resume Section: Nasser Artificial Intelligence Research & Development Centre (NAIRDC) Department of Nasser Centre for Science and Technology / Bahrain/Jan 2022 -"
+            }
+          ],
+          "prompt_mode": "standard",
+          "chunk_budget": 2
+        },
+        "retrieval_query": "When did she work at Nasser Centre?",
+        "rewrite_notes": "local_fast_path",
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "55df5226-d418-446e-b22f-ba46693c7032",
+            "chunk_index": 0,
+            "doc_title": "exper letter",
+            "document_type": "experience_letter",
+            "vector_distance": 0.488342434862706,
+            "rerank_score": 0.62200022,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "0a870304-403a-4802-8118-6769097c9ed0",
+            "chunk_index": 2,
+            "doc_title": "cv",
+            "document_type": "cv",
+            "vector_distance": 0.6315755844116211,
+            "rerank_score": 0.50692707,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "eee032be-459b-46d9-8fff-da9c7f6d5c8d",
+            "chunk_index": 5,
+            "doc_title": "cv",
+            "document_type": "cv",
+            "vector_distance": 0.6272845788428432,
+            "rerank_score": 0.4922491,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "e97b43e9-be4a-4ccc-8b89-49bd05db1ce0",
+            "chunk_index": 0,
+            "doc_title": "recommendation",
+            "document_type": "recommendation",
+            "vector_distance": 0.7718821167945862,
+            "rerank_score": 0.32594952,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "applied_filters": {
+          "only_active_docs": true
+        },
+        "debug_chunks_before_llm": [
+          {
+            "chunk_index": 0,
+            "doc_title": "exper letter",
+            "document_type": "experience_letter",
+            "content_preview": "Nasser Centre For Science & Technology\nDate: 12-Aug-2025\nExperience Letter\nThis is to certify that Samah Wael Fujo, holding State of Palestine nationality and ID No 930317092, has been employed by Nasser Center for Science and Technology (NCST) from 03-Oct-2021 till 14-Aug-2025 as Sr AI & Data Scientist.\nThis certificate has been issued at the Employee's request.\nSincerely,\nAysha Abdulrahman Alfadhel\nDirector of Human Resources & Services"
+          },
+          {
+            "chunk_index": 2,
+            "doc_title": "cv",
+            "document_type": "cv",
+            "content_preview": "Resume Section: Nasser Artificial Intelligence Research & Development Centre (NAIRDC)\nDepartment of Nasser Centre for Science and Technology / Bahrain/Jan 2022 -"
+          },
+          {
+            "chunk_index": 5,
+            "doc_title": "cv",
+            "document_type": "cv",
+            "content_preview": "Resume Section: Nasser Artificial Intelligence Research & Development Centre (NAIRDC)\nDepartment of Nasser Centre for Science and Technology / Bahrain/Jan 2021 -"
+          },
+          {
+            "chunk_index": 0,
+            "doc_title": "recommendation",
+            "document_type": "recommendation",
+            "content_preview": "Nasser Centre For Science & Technology\n12-08-2025\nTo Whom It May Concern,\nIt is my pleasure to provide this letter of recommendation for Ms. Samah Fujo, AI Team Leader in the Artificial Intelligence Research and Development Arm of the Nasser Centre for Science & Technology, who has been a highly valued member of our team.\nMs. Fujo has consistently demonstrated an exceptional level of professionalism, reliability, and commitment to her responsibilities. She approaches her work with integrity, meticulous attention to detail, and a strong sense of accountability. Her ability to collaborate effectively with colleagues, adapt to new challenges, and maintain a positive and proactive attitude has made her an indispensable asset to the organization.\nFrom an HR perspective, Ms. Fujo has exhibited outstanding interpersonal skills, fostering strong and collaborative relationships with both internal teams and external partners."
+          }
+        ]
+      }
+    },
+    {
+      "question": "What role did Samah hold at Nasser Centre for Science and Technology?",
+      "retrieval_query": "What role did Samah hold at Nasser Centre for Science and Technology?",
+      "rewrite_notes": "local_fast_path",
+      "timestamp": "2026-04-16T11:44:48.682063Z",
+      "result": {
+        "verdict": "supported",
+        "answer": "Samah held the role of Sr AI & Data Scientist at Nasser Centre for Science and Technology from October 3, 2021, to August 14, 2025. She also served as the AI Team Leader in the Artificial Intelligence Research and Development Arm of the same institution.",
+        "bullets": [
+          "Sr AI & Data Scientist",
+          "AI Team Leader"
+        ],
+        "used_chunk_indices": [
+          0,
+          1
+        ],
+        "used_sources": [
+          {
+            "doc_title": "exper letter",
+            "document_type": "experience_letter",
+            "chunk_index": 0,
+            "chunk_id": "55df5226-d418-446e-b22f-ba46693c7032",
+            "document_id": "fb400b2d-7cf9-4159-ac1a-15292c21d6f6"
+          },
+          {
+            "doc_title": "recommendation",
+            "document_type": "recommendation",
+            "chunk_index": 0,
+            "chunk_id": "e97b43e9-be4a-4ccc-8b89-49bd05db1ce0",
+            "document_id": "925cae06-632d-4e16-8826-1d0643e63d04"
+          }
+        ],
+        "meta": {
+          "provider": "gemini",
+          "model_used": "gemini-2.5-flash-lite",
+          "error": null,
+          "tried_models": [
+            "gemini-2.5-flash-lite"
+          ],
+          "task": "grounded_answer",
+          "provider_used": "gemini",
+          "generation_ok": true,
+          "fallback_used": false,
+          "debug_prompt_chunks": [
+            {
+              "prompt_index": 0,
+              "chunk_index": 0,
+              "doc_title": "exper letter",
+              "document_type": "experience_letter",
+              "full_content_preview": "Nasser Centre For Science & Technology\nDate: 12-Aug-2025\nExperience Letter\nThis is to certify that Samah Wael Fujo, holding State of Palestine nationality and ID No 930317092, has been employed by Nasser Center for Science and Technology (NCST) from 03-Oct-2021 till 14-Aug-2025 as Sr AI & Data Scientist.\nThis certificate has been issued at the Employee's request.\nSincerely,\nAysha Abdulrahman Alfadhel\nDirector of Human Resources & Services",
+              "snippet_sent_to_llm": "Nasser Centre For Science & Technology Date: 12-Aug-2025 Experience Letter This is to certify that Samah Wael Fujo, holding State of Palestine nationality and ID No 930317092, has been employed by Nasser Center for Science and Technology (NCST) from 03-Oct-2021 till 14-Aug-2025 as Sr AI & Data Scientist. This certifica..."
+            },
+            {
+              "prompt_index": 1,
+              "chunk_index": 0,
+              "doc_title": "recommendation",
+              "document_type": "recommendation",
+              "full_content_preview": "Nasser Centre For Science & Technology\n12-08-2025\nTo Whom It May Concern,\nIt is my pleasure to provide this letter of recommendation for Ms. Samah Fujo, AI Team Leader in the Artificial Intelligence Research and Development Arm of the Nasser Centre for Science & Technology, who has been a highly valued member of our team.\nMs. Fujo has consistently demonstrated an exceptional level of professionalism, reliability, and commitment to her responsibilities. She approaches her work with integrity, meticulous attention to detail, and a strong sense of accountability. Her ability to collaborate effectively with colleagues, adapt to new challenges, and maintain a positive and proactive attitude has made her an indispensable asset to the organization.\nFrom an HR perspective, Ms. Fujo has exhibited outstanding interpersonal skills, fostering strong and collaborative relationships with both internal teams and external partners.",
+              "snippet_sent_to_llm": "Nasser Centre For Science & Technology 12-08-2025 To Whom It May Concern, It is my pleasure to provide this letter of recommendation for Ms. Samah Fujo, AI Team Leader in the Artificial Intelligence Research and Development Arm of the Nasser Centre for Science & Technology, who has been a highly valued member of our te..."
+            }
+          ],
+          "prompt_mode": "standard",
+          "chunk_budget": 2
+        },
+        "retrieval_query": "What role did Samah hold at Nasser Centre for Science and Technology?",
+        "rewrite_notes": "local_fast_path",
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "55df5226-d418-446e-b22f-ba46693c7032",
+            "chunk_index": 0,
+            "doc_title": "exper letter",
+            "document_type": "experience_letter",
+            "vector_distance": 0.4176858663558919,
+            "rerank_score": 0.7634837,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "e97b43e9-be4a-4ccc-8b89-49bd05db1ce0",
+            "chunk_index": 0,
+            "doc_title": "recommendation",
+            "document_type": "recommendation",
+            "vector_distance": 0.7251553967687719,
+            "rerank_score": 0.71780378,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "0a870304-403a-4802-8118-6769097c9ed0",
+            "chunk_index": 2,
+            "doc_title": "cv",
+            "document_type": "cv",
+            "vector_distance": 0.5888226085199473,
+            "rerank_score": 0.4632014,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "eee032be-459b-46d9-8fff-da9c7f6d5c8d",
+            "chunk_index": 5,
+            "doc_title": "cv",
+            "document_type": "cv",
+            "vector_distance": 0.5820558071136446,
+            "rerank_score": 0.45495641,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "3312aa78-7343-4677-bd31-ad06da788bbf",
+            "chunk_index": 0,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.36223518848418734,
+            "rerank_score": 0.4330222,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "c41e94f5-78a1-48a4-8b8e-a1326bd6fa51",
+            "chunk_index": 16,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.45356380939483254,
+            "rerank_score": 0.40922078,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "b92f510a-0235-4460-9099-179a67911ae1",
+            "chunk_index": 19,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5166892717295443,
+            "rerank_score": 0.36568317,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "45654774-f128-4880-92c5-b30a3663c1bd",
+            "chunk_index": 17,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.49809381354414217,
+            "rerank_score": 0.35846534,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "applied_filters": {
+          "only_active_docs": true
+        },
+        "debug_chunks_before_llm": [
+          {
+            "chunk_index": 0,
+            "doc_title": "exper letter",
+            "document_type": "experience_letter",
+            "content_preview": "Nasser Centre For Science & Technology\nDate: 12-Aug-2025\nExperience Letter\nThis is to certify that Samah Wael Fujo, holding State of Palestine nationality and ID No 930317092, has been employed by Nasser Center for Science and Technology (NCST) from 03-Oct-2021 till 14-Aug-2025 as Sr AI & Data Scientist.\nThis certificate has been issued at the Employee's request.\nSincerely,\nAysha Abdulrahman Alfadhel\nDirector of Human Resources & Services"
+          },
+          {
+            "chunk_index": 0,
+            "doc_title": "recommendation",
+            "document_type": "recommendation",
+            "content_preview": "Nasser Centre For Science & Technology\n12-08-2025\nTo Whom It May Concern,\nIt is my pleasure to provide this letter of recommendation for Ms. Samah Fujo, AI Team Leader in the Artificial Intelligence Research and Development Arm of the Nasser Centre for Science & Technology, who has been a highly valued member of our team.\nMs. Fujo has consistently demonstrated an exceptional level of professionalism, reliability, and commitment to her responsibilities. She approaches her work with integrity, meticulous attention to detail, and a strong sense of accountability. Her ability to collaborate effectively with colleagues, adapt to new challenges, and maintain a positive and proactive attitude has made her an indispensable asset to the organization.\nFrom an HR perspective, Ms. Fujo has exhibited outstanding interpersonal skills, fostering strong and collaborative relationships with both internal teams and external partners."
+          },
+          {
+            "chunk_index": 2,
+            "doc_title": "cv",
+            "document_type": "cv",
+            "content_preview": "Resume Section: Nasser Artificial Intelligence Research & Development Centre (NAIRDC)\nDepartment of Nasser Centre for Science and Technology / Bahrain/Jan 2022 -"
+          },
+          {
+            "chunk_index": 5,
+            "doc_title": "cv",
+            "document_type": "cv",
+            "content_preview": "Resume Section: Nasser Artificial Intelligence Research & Development Centre (NAIRDC)\nDepartment of Nasser Centre for Science and Technology / Bahrain/Jan 2021 -"
+          },
+          {
+            "chunk_index": 0,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: What does Samah do?\nFAQ Answer: Samah is an AI Team Lead and AI/ML Engineer with strong full-stack development experience. She builds AI-powered applications, backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms."
+          }
+        ]
+      }
+    },
+    {
+      "question": "Does Samah have leadership experience?",
+      "retrieval_query": "Does Samah have leadership experience?",
+      "rewrite_notes": "local_fast_path",
+      "timestamp": "2026-04-16T11:44:57.561646Z",
+      "result": {
+        "verdict": "yes",
+        "answer": "Yes, Samah has leadership experience as an AI Team Lead. She has experience in technical solution delivery, project ownership, stakeholder communication, and guiding implementation efforts.",
+        "bullets": [],
+        "used_chunk_indices": [
+          0
+        ],
+        "used_sources": [
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 16,
+            "chunk_id": "c41e94f5-78a1-48a4-8b8e-a1326bd6fa51",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          }
+        ],
+        "meta": {
+          "provider": "gemini",
+          "model_used": "gemini-2.5-flash-lite",
+          "error": null,
+          "tried_models": [
+            "gemini-2.5-flash-lite"
+          ],
+          "task": "grounded_answer",
+          "provider_used": "gemini",
+          "generation_ok": true,
+          "fallback_used": false,
+          "debug_prompt_chunks": [
+            {
+              "prompt_index": 0,
+              "chunk_index": 16,
+              "doc_title": "faq",
+              "document_type": "faq",
+              "full_content_preview": "FAQ Question: Does Samah have leadership experience?\nFAQ Answer: Yes. Samah has leadership experience as an AI Team Lead and has worked on technical solution delivery, project ownership, stakeholder communication, and guiding implementation efforts.",
+              "snippet_sent_to_llm": "FAQ Question: Does Samah have leadership experience? FAQ Answer: Yes. Samah has leadership experience as an AI Team Lead and has worked on technical solution delivery, project ownership, stakeholder communication, and guiding implementation efforts."
+            },
+            {
+              "prompt_index": 1,
+              "chunk_index": 0,
+              "doc_title": "faq",
+              "document_type": "faq",
+              "full_content_preview": "FAQ Question: What does Samah do?\nFAQ Answer: Samah is an AI Team Lead and AI/ML Engineer with strong full-stack development experience. She builds AI-powered applications, backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms.",
+              "snippet_sent_to_llm": "FAQ Question: What does Samah do? FAQ Answer: Samah is an AI Team Lead and AI/ML Engineer with strong full-stack development experience. She builds AI-powered applications, backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms."
+            },
+            {
+              "prompt_index": 2,
+              "chunk_index": 25,
+              "doc_title": "faq",
+              "document_type": "faq",
+              "full_content_preview": "FAQ Question: What kinds of business problems is Samah best at solving?\nFAQ Answer: Samah is strongest at solving problems that involve automating manual workflows, turning unstructured data into useful structured outputs, connecting AI with business operations, and building practical systems that improve efficiency and decision-making. Summary Samah is an AI Team Lead and AI/ML Engineer with strong experience in Python, Django, backend engineering, AI workflows, full-stack development, and practical business solution delivery. She is strongest in backend and AI-focused work, prefers Python and Django, and can build chatbots, RAG systems, APIs, dashboards, document-processing solutions, and intelligent automation platforms.",
+              "snippet_sent_to_llm": "FAQ Question: What kinds of business problems is Samah best at solving? FAQ Answer: Samah is strongest at solving problems that involve automating manual workflows, turning unstructured data into useful structured outputs, connecting AI with business operations, and building practical systems that improve efficiency an..."
+            },
+            {
+              "prompt_index": 3,
+              "chunk_index": 0,
+              "doc_title": "recommendation",
+              "document_type": "recommendation",
+              "full_content_preview": "Nasser Centre For Science & Technology\n12-08-2025\nTo Whom It May Concern,\nIt is my pleasure to provide this letter of recommendation for Ms. Samah Fujo, AI Team Leader in the Artificial Intelligence Research and Development Arm of the Nasser Centre for Science & Technology, who has been a highly valued member of our team.\nMs. Fujo has consistently demonstrated an exceptional level of professionalism, reliability, and commitment to her responsibilities. She approaches her work with integrity, meticulous attention to detail, and a strong sense of accountability. Her ability to collaborate effectively with colleagues, adapt to new challenges, and maintain a positive and proactive attitude has made her an indispensable asset to the organization.\nFrom an HR perspective, Ms. Fujo has exhibited outstanding interpersonal skills, fostering strong and collaborative relationships with both internal teams and external partners.",
+              "snippet_sent_to_llm": "Nasser Centre For Science & Technology 12-08-2025 To Whom It May Concern, It is my pleasure to provide this letter of recommendation for Ms. Samah Fujo, AI Team Leader in the Artificial Intelligence Research and Development Arm of the Nasser Centre for Science & Technology, who has been a highly valued member of our te..."
+            }
+          ],
+          "prompt_mode": "small",
+          "chunk_budget": 4
+        },
+        "retrieval_query": "Does Samah have leadership experience?",
+        "rewrite_notes": "local_fast_path",
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "c41e94f5-78a1-48a4-8b8e-a1326bd6fa51",
+            "chunk_index": 16,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.13958261733262334,
+            "rerank_score": 0.715424,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "3312aa78-7343-4677-bd31-ad06da788bbf",
+            "chunk_index": 0,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.3573464921299825,
+            "rerank_score": 0.62886339,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "01607679-5d8a-49bf-beb1-ac7c98c3898a",
+            "chunk_index": 25,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.41971121489140384,
+            "rerank_score": 0.57176661,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "e97b43e9-be4a-4ccc-8b89-49bd05db1ce0",
+            "chunk_index": 0,
+            "doc_title": "recommendation",
+            "document_type": "recommendation",
+            "vector_distance": 0.672981371105827,
+            "rerank_score": 0.51915568,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "b92f510a-0235-4460-9099-179a67911ae1",
+            "chunk_index": 19,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.422030244944676,
+            "rerank_score": 0.49777225,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "45654774-f128-4880-92c5-b30a3663c1bd",
+            "chunk_index": 17,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.4350154736628836,
+            "rerank_score": 0.43590149,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "0812a263-4464-4d2a-846d-897fcd698e85",
+            "chunk_index": 15,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5692769761186277,
+            "rerank_score": 0.42155182,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "f3b5d297-f201-40ef-9101-58af02dd5ead",
+            "chunk_index": 14,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5039692220706202,
+            "rerank_score": 0.39326853,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "applied_filters": {
+          "only_active_docs": true
+        },
+        "debug_chunks_before_llm": [
+          {
+            "chunk_index": 16,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: Does Samah have leadership experience?\nFAQ Answer: Yes. Samah has leadership experience as an AI Team Lead and has worked on technical solution delivery, project ownership, stakeholder communication, and guiding implementation efforts."
+          },
+          {
+            "chunk_index": 0,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: What does Samah do?\nFAQ Answer: Samah is an AI Team Lead and AI/ML Engineer with strong full-stack development experience. She builds AI-powered applications, backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms."
+          },
+          {
+            "chunk_index": 25,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: What kinds of business problems is Samah best at solving?\nFAQ Answer: Samah is strongest at solving problems that involve automating manual workflows, turning unstructured data into useful structured outputs, connecting AI with business operations, and building practical systems that improve efficiency and decision-making. Summary Samah is an AI Team Lead and AI/ML Engineer with strong experience in Python, Django, backend engineering, AI workflows, full-stack development, and practical business solution delivery. She is strongest in backend and AI-focused work, prefers Python and Django, and can build chatbots, RAG systems, APIs, dashboards, document-processing solutions, and intelligent automation platforms."
+          },
+          {
+            "chunk_index": 0,
+            "doc_title": "recommendation",
+            "document_type": "recommendation",
+            "content_preview": "Nasser Centre For Science & Technology\n12-08-2025\nTo Whom It May Concern,\nIt is my pleasure to provide this letter of recommendation for Ms. Samah Fujo, AI Team Leader in the Artificial Intelligence Research and Development Arm of the Nasser Centre for Science & Technology, who has been a highly valued member of our team.\nMs. Fujo has consistently demonstrated an exceptional level of professionalism, reliability, and commitment to her responsibilities. She approaches her work with integrity, meticulous attention to detail, and a strong sense of accountability. Her ability to collaborate effectively with colleagues, adapt to new challenges, and maintain a positive and proactive attitude has made her an indispensable asset to the organization.\nFrom an HR perspective, Ms. Fujo has exhibited outstanding interpersonal skills, fostering strong and collaborative relationships with both internal teams and external partners."
+          },
+          {
+            "chunk_index": 19,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: What kind of roles fit Samah best?\nFAQ Answer: The roles that fit Samah best include AI Engineer, AI/ML Engineer, Backend Engineer, Senior Python Developer, Django Developer, Full-Stack Developer with strong backend focus, and Technical Lead or AI Team Lead roles."
+          }
+        ]
+      }
+    },
+    {
+      "question": "What does the recommendation letter say about Samah’s professionalism?",
+      "retrieval_query": "What does the recommendation letter say about Samah’s professionalism?",
+      "rewrite_notes": "local_fast_path",
+      "timestamp": "2026-04-16T11:45:01.136468Z",
+      "result": {
+        "verdict": "not_enough_evidence",
+        "answer": "The provided evidence does not contain information about the recommendation letter's content regarding Samah's professionalism.",
+        "bullets": [],
+        "used_chunk_indices": [],
+        "used_sources": [],
+        "meta": {
+          "provider": "gemini",
+          "model_used": "gemini-2.5-flash-lite",
+          "error": null,
+          "tried_models": [
+            "gemini-2.5-flash-lite"
+          ],
+          "task": "grounded_answer",
+          "provider_used": "gemini",
+          "generation_ok": true,
+          "fallback_used": false,
+          "debug_prompt_chunks": [
+            {
+              "prompt_index": 0,
+              "chunk_index": 0,
+              "doc_title": "faq",
+              "document_type": "faq",
+              "full_content_preview": "FAQ Question: What does Samah do?\nFAQ Answer: Samah is an AI Team Lead and AI/ML Engineer with strong full-stack development experience. She builds AI-powered applications, backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms.",
+              "snippet_sent_to_llm": "FAQ Question: What does Samah do? FAQ Answer: Samah is an AI Team Lead and AI/ML Engineer with strong full-stack development experience. She builds AI-powered applications, backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms."
+            },
+            {
+              "prompt_index": 1,
+              "chunk_index": 25,
+              "doc_title": "faq",
+              "document_type": "faq",
+              "full_content_preview": "FAQ Question: What kinds of business problems is Samah best at solving?\nFAQ Answer: Samah is strongest at solving problems that involve automating manual workflows, turning unstructured data into useful structured outputs, connecting AI with business operations, and building practical systems that improve efficiency and decision-making. Summary Samah is an AI Team Lead and AI/ML Engineer with strong experience in Python, Django, backend engineering, AI workflows, full-stack development, and practical business solution delivery. She is strongest in backend and AI-focused work, prefers Python and Django, and can build chatbots, RAG systems, APIs, dashboards, document-processing solutions, and intelligent automation platforms.",
+              "snippet_sent_to_llm": "FAQ Question: What kinds of business problems is Samah best at solving? FAQ Answer: Samah is strongest at solving problems that involve automating manual workflows, turning unstructured data into useful structured outputs, connecting AI with business operations, and building practical systems that improve efficiency an..."
+            }
+          ],
+          "prompt_mode": "standard",
+          "chunk_budget": 2
+        },
+        "retrieval_query": "What does the recommendation letter say about Samah’s professionalism?",
+        "rewrite_notes": "local_fast_path",
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "3312aa78-7343-4677-bd31-ad06da788bbf",
+            "chunk_index": 0,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.48881019685237814,
+            "rerank_score": 0.36568317,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "01607679-5d8a-49bf-beb1-ac7c98c3898a",
+            "chunk_index": 25,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5498632252053283,
+            "rerank_score": 0.33458945,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "7f65d495-c110-4cab-973b-ba9c61fec442",
+            "chunk_index": 6,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5314079662737838,
+            "rerank_score": 0.29992473,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "e71fbd37-6732-48b7-9929-651d11020316",
+            "chunk_index": 18,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5469724265916602,
+            "rerank_score": 0.29502675,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "c41e94f5-78a1-48a4-8b8e-a1326bd6fa51",
+            "chunk_index": 16,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5045935659231653,
+            "rerank_score": 0.28856909,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "45654774-f128-4880-92c5-b30a3663c1bd",
+            "chunk_index": 17,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5211638367522904,
+            "rerank_score": 0.25091279,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "03e8db33-af38-410a-895e-e4487c5f6b0f",
+            "chunk_index": 21,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5195831226929832,
+            "rerank_score": 0.23651622,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "b92f510a-0235-4460-9099-179a67911ae1",
+            "chunk_index": 19,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5366844992841628,
+            "rerank_score": 0.23370637,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "faq",
+          "only_active_docs": true
+        },
+        "debug_chunks_before_llm": [
+          {
+            "chunk_index": 0,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: What does Samah do?\nFAQ Answer: Samah is an AI Team Lead and AI/ML Engineer with strong full-stack development experience. She builds AI-powered applications, backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms."
+          },
+          {
+            "chunk_index": 25,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: What kinds of business problems is Samah best at solving?\nFAQ Answer: Samah is strongest at solving problems that involve automating manual workflows, turning unstructured data into useful structured outputs, connecting AI with business operations, and building practical systems that improve efficiency and decision-making. Summary Samah is an AI Team Lead and AI/ML Engineer with strong experience in Python, Django, backend engineering, AI workflows, full-stack development, and practical business solution delivery. She is strongest in backend and AI-focused work, prefers Python and Django, and can build chatbots, RAG systems, APIs, dashboards, document-processing solutions, and intelligent automation platforms."
+          },
+          {
+            "chunk_index": 6,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: Is Samah stronger in backend, frontend, or AI?\nFAQ Answer: Samah is strongest in backend development and AI-focused work. She also works on frontend development, especially when building full-stack products, but her main strength is in backend systems, AI workflows, APIs, and solution architecture."
+          },
+          {
+            "chunk_index": 18,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: What kind of work does Samah enjoy most?\nFAQ Answer: Samah enjoys building AI-powered web applications, backend systems, chatbots, automation workflows, dashboards, and practical business solutions with clear impact."
+          },
+          {
+            "chunk_index": 16,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: Does Samah have leadership experience?\nFAQ Answer: Yes. Samah has leadership experience as an AI Team Lead and has worked on technical solution delivery, project ownership, stakeholder communication, and guiding implementation efforts."
+          }
+        ]
+      }
+    },
+    {
+      "question": "What is Samah’s favorite programming language?",
+      "retrieval_query": "What is Samah’s favorite programming language?",
+      "rewrite_notes": "The query is clear and specific. No changes are needed.",
+      "timestamp": "2026-04-16T11:45:05.326934Z",
+      "result": {
+        "verdict": "supported",
+        "answer": "Samah’s favorite programming language is Python.",
+        "bullets": [],
+        "used_chunk_indices": [
+          0,
+          1
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 1,
+            "chunk_id": "df655cdb-9b3b-4a33-9be3-996495d8029b",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          },
+          {
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "chunk_index": 14,
+            "chunk_id": "d42fb664-9f25-47a5-8373-f318c4b51e52",
+            "document_id": "50466a4f-9afc-47e4-baed-34234e22e2bf"
+          }
+        ],
+        "meta": {
+          "model_used": null,
+          "tried_models": [],
+          "provider_used": "deterministic_extractor",
+          "fallback_used": false,
+          "generation_ok": true,
+          "safe_fallback": false,
+          "error": null,
+          "answer_source": "deterministic_extractor",
+          "extractor_used": "try_extract_preferences",
+          "confidence_boost": 0.15
+        },
+        "retrieval_query": "What is Samah’s favorite programming language?",
+        "rewrite_notes": "local_fast_path",
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "df655cdb-9b3b-4a33-9be3-996495d8029b",
+            "chunk_index": 1,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.48396114766018783,
+            "rerank_score": 0.46101677,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "d42fb664-9f25-47a5-8373-f318c4b51e52",
+            "chunk_index": 14,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "vector_distance": 0.42616472918285475,
+            "rerank_score": 0.42966866,
+            "source": "reranked",
+            "matched_filter_document_type": "preferences",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "preferences",
+          "only_active_docs": true
+        },
+        "debug_chunks_before_llm": [
+          {
+            "chunk_index": 1,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "content_preview": "Section: Favorite Programming Language\nMy favorite programming language is Python.\nPython is the language I feel most comfortable using for backend development, AI workflows, automation, APIs, NLP tasks, and data-related solutions. It is also the language I use most often in my professional work."
+          },
+          {
+            "chunk_index": 14,
+            "doc_title": "Preferences And Work Style",
+            "document_type": "preferences",
+            "content_preview": "Section: Summary\nMy favorite programming language is Python. My preferred backend framework is Django, and my preferred frontend stack is Next.js with React and Tailwind CSS. I am strongest in backend and AI-focused work, and I enjoy building practical, production-ready systems that combine software engineering, AI, automation, and user-friendly interfaces."
+          }
+        ]
+      }
+    },
+    {
+      "question": "Has Samah worked with databases?",
+      "retrieval_query": "Samah's experience with databases",
+      "rewrite_notes": "Reworded to focus on experience with databases.",
+      "timestamp": "2026-04-16T11:45:10.430840Z",
+      "result": {
+        "verdict": "yes",
+        "answer": "Yes, Samah has experience working with PostgreSQL, MongoDB, MySQL, SQL Server, and Oracle.",
+        "bullets": [],
+        "used_chunk_indices": [
+          0
+        ],
+        "used_sources": [
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 14,
+            "chunk_id": "f3b5d297-f201-40ef-9101-58af02dd5ead",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          }
+        ],
+        "meta": {
+          "provider": "gemini",
+          "model_used": "gemini-2.5-flash-lite",
+          "error": null,
+          "tried_models": [
+            "gemini-2.5-flash-lite"
+          ],
+          "task": "grounded_answer",
+          "provider_used": "gemini",
+          "generation_ok": true,
+          "fallback_used": false,
+          "debug_prompt_chunks": [
+            {
+              "prompt_index": 0,
+              "chunk_index": 14,
+              "doc_title": "faq",
+              "document_type": "faq",
+              "full_content_preview": "FAQ Question: Has Samah worked with databases?\nFAQ Answer: Yes. Samah has experience working with PostgreSQL, MongoDB, MySQL, SQL Server, and Oracle.",
+              "snippet_sent_to_llm": "FAQ Question: Has Samah worked with databases? FAQ Answer: Yes. Samah has experience working with PostgreSQL, MongoDB, MySQL, SQL Server, and Oracle."
+            },
+            {
+              "prompt_index": 1,
+              "chunk_index": 0,
+              "doc_title": "faq",
+              "document_type": "faq",
+              "full_content_preview": "FAQ Question: What does Samah do?\nFAQ Answer: Samah is an AI Team Lead and AI/ML Engineer with strong full-stack development experience. She builds AI-powered applications, backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms.",
+              "snippet_sent_to_llm": "FAQ Question: What does Samah do? FAQ Answer: Samah is an AI Team Lead and AI/ML Engineer with strong full-stack development experience. She builds AI-powered applications, backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms."
+            }
+          ],
+          "prompt_mode": "small",
+          "chunk_budget": 2
+        },
+        "retrieval_query": "Samah's experience with databases",
+        "rewrite_notes": "local_fast_path",
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "f3b5d297-f201-40ef-9101-58af02dd5ead",
+            "chunk_index": 14,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.20066599841916433,
+            "rerank_score": 0.66627967,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "3312aa78-7343-4677-bd31-ad06da788bbf",
+            "chunk_index": 0,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.46951240664572635,
+            "rerank_score": 0.608594,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "e19aa35b-b252-4041-9d60-080b86570e64",
+            "chunk_index": 4,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.4211943494561692,
+            "rerank_score": 0.60393178,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "1ccc8879-5d01-47cb-a1b2-9ffc133e9f3d",
+            "chunk_index": 13,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5016572475433314,
+            "rerank_score": 0.59219497,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "45654774-f128-4880-92c5-b30a3663c1bd",
+            "chunk_index": 17,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.4659779986156216,
+            "rerank_score": 0.5798763,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "c41e94f5-78a1-48a4-8b8e-a1326bd6fa51",
+            "chunk_index": 16,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5444115943418033,
+            "rerank_score": 0.55036569,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "569bf3f9-4e8f-41d1-bfe6-a3c2193e57e1",
+            "chunk_index": 10,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5102706837331434,
+            "rerank_score": 0.55012405,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "0812a263-4464-4d2a-846d-897fcd698e85",
+            "chunk_index": 15,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5009325145007635,
+            "rerank_score": 0.54504359,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "applied_filters": {
+          "only_active_docs": true
+        },
+        "debug_chunks_before_llm": [
+          {
+            "chunk_index": 14,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: Has Samah worked with databases?\nFAQ Answer: Yes. Samah has experience working with PostgreSQL, MongoDB, MySQL, SQL Server, and Oracle."
+          },
+          {
+            "chunk_index": 0,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: What does Samah do?\nFAQ Answer: Samah is an AI Team Lead and AI/ML Engineer with strong full-stack development experience. She builds AI-powered applications, backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms."
+          },
+          {
+            "chunk_index": 4,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: Does Samah also know FastAPI and Flask?\nFAQ Answer: Yes. Samah has experience with FastAPI and Flask, but Django is her strongest and most preferred backend framework for production systems."
+          },
+          {
+            "chunk_index": 13,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: Has Samah worked with AI and LLM technologies?\nFAQ Answer: Yes. Samah has experience with AI and LLM technologies including Hugging Face Transformers, BERT, RoBERTa, T5, Gemini, Ollama, LangChain, embeddings, vector search, prompt engineering, and RAG workflows."
+          },
+          {
+            "chunk_index": 17,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: Does Samah work directly with clients or stakeholders?\nFAQ Answer: Yes. Samah has experience working directly with customers, stakeholders, and business users to gather requirements, present solutions, and translate needs into technical systems."
+          }
+        ]
+      }
+    },
+    {
+      "question": "Can Samah build RAG-based systems?",
+      "retrieval_query": "Can Samah build RAG-based systems?",
+      "rewrite_notes": "local_fast_path",
+      "timestamp": "2026-04-16T11:45:15.346533Z",
+      "result": {
+        "verdict": "yes",
+        "answer": "Yes, Samah can build retrieval-augmented generation systems that utilize documents, embeddings, vector search, reranking, and grounded answering logic.",
+        "bullets": [],
+        "used_chunk_indices": [
+          0
+        ],
+        "used_sources": [
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 9,
+            "chunk_id": "f63809ab-5c1c-4fe8-9dc6-ecb4d2ca79ae",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          }
+        ],
+        "meta": {
+          "provider": "gemini",
+          "model_used": "gemini-2.5-flash-lite",
+          "error": null,
+          "tried_models": [
+            "gemini-2.5-flash-lite"
+          ],
+          "task": "grounded_answer",
+          "provider_used": "gemini",
+          "generation_ok": true,
+          "fallback_used": false,
+          "debug_prompt_chunks": [
+            {
+              "prompt_index": 0,
+              "chunk_index": 9,
+              "doc_title": "faq",
+              "document_type": "faq",
+              "full_content_preview": "FAQ Question: Can Samah build RAG-based systems?\nFAQ Answer: Yes. Samah can build retrieval-augmented generation systems that use documents, embeddings, vector search, reranking, and grounded answering logic.",
+              "snippet_sent_to_llm": "FAQ Question: Can Samah build RAG-based systems? FAQ Answer: Yes. Samah can build retrieval-augmented generation systems that use documents, embeddings, vector search, reranking, and grounded answering logic."
+            },
+            {
+              "prompt_index": 1,
+              "chunk_index": 25,
+              "doc_title": "faq",
+              "document_type": "faq",
+              "full_content_preview": "FAQ Question: What kinds of business problems is Samah best at solving?\nFAQ Answer: Samah is strongest at solving problems that involve automating manual workflows, turning unstructured data into useful structured outputs, connecting AI with business operations, and building practical systems that improve efficiency and decision-making. Summary Samah is an AI Team Lead and AI/ML Engineer with strong experience in Python, Django, backend engineering, AI workflows, full-stack development, and practical business solution delivery. She is strongest in backend and AI-focused work, prefers Python and Django, and can build chatbots, RAG systems, APIs, dashboards, document-processing solutions, and intelligent automation platforms.",
+              "snippet_sent_to_llm": "FAQ Question: What kinds of business problems is Samah best at solving? FAQ Answer: Samah is strongest at solving problems that involve automating manual workflows, turning unstructured data into useful structured outputs, connecting AI with business operations, and building practical systems that improve efficiency an..."
+            }
+          ],
+          "prompt_mode": "small",
+          "chunk_budget": 2
+        },
+        "retrieval_query": "Can Samah build RAG-based systems?",
+        "rewrite_notes": "local_fast_path",
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "f63809ab-5c1c-4fe8-9dc6-ecb4d2ca79ae",
+            "chunk_index": 9,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.1249983385204263,
+            "rerank_score": 0.83973396,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "01607679-5d8a-49bf-beb1-ac7c98c3898a",
+            "chunk_index": 25,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5617648567347082,
+            "rerank_score": 0.66888028,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "1ccc8879-5d01-47cb-a1b2-9ffc133e9f3d",
+            "chunk_index": 13,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.43031933488364926,
+            "rerank_score": 0.62200022,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "1a64062c-60fc-4d84-843b-d0acea51d3b2",
+            "chunk_index": 7,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.7440198812472887,
+            "rerank_score": 0.45374593,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "37fb2be2-1cbe-472f-8870-22063e1eac4e",
+            "chunk_index": 11,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.40863800048828125,
+            "rerank_score": 0.43734282,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "3312aa78-7343-4677-bd31-ad06da788bbf",
+            "chunk_index": 0,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.4680160601129486,
+            "rerank_score": 0.41253012,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "e71fbd37-6732-48b7-9929-651d11020316",
+            "chunk_index": 18,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5271404542666807,
+            "rerank_score": 0.407805,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "65fcd36a-8229-435e-ba92-5cef1e5a046a",
+            "chunk_index": 1,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.773022846759727,
+            "rerank_score": 0.38121954,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "applied_filters": {
+          "only_active_docs": true
+        },
+        "debug_chunks_before_llm": [
+          {
+            "chunk_index": 9,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: Can Samah build RAG-based systems?\nFAQ Answer: Yes. Samah can build retrieval-augmented generation systems that use documents, embeddings, vector search, reranking, and grounded answering logic."
+          },
+          {
+            "chunk_index": 25,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: What kinds of business problems is Samah best at solving?\nFAQ Answer: Samah is strongest at solving problems that involve automating manual workflows, turning unstructured data into useful structured outputs, connecting AI with business operations, and building practical systems that improve efficiency and decision-making. Summary Samah is an AI Team Lead and AI/ML Engineer with strong experience in Python, Django, backend engineering, AI workflows, full-stack development, and practical business solution delivery. She is strongest in backend and AI-focused work, prefers Python and Django, and can build chatbots, RAG systems, APIs, dashboards, document-processing solutions, and intelligent automation platforms."
+          },
+          {
+            "chunk_index": 13,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: Has Samah worked with AI and LLM technologies?\nFAQ Answer: Yes. Samah has experience with AI and LLM technologies including Hugging Face Transformers, BERT, RoBERTa, T5, Gemini, Ollama, LangChain, embeddings, vector search, prompt engineering, and RAG workflows."
+          },
+          {
+            "chunk_index": 7,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "content_preview": "Section: Types of Projects I Can Build\nI can help build projects such as: - AI-powered chatbots - Portfolio chatbots grounded on personal or business documents - RAG-based question-answering systems - Internal assistant tools for teams or departments - Dashboard and analytics platforms - Document analysis and OCR systems - Classification and recommendation engines - Workflow automation systems - Property filtering and intelligent search solutions - Business portals with authentication and role-based permissions - API-first platforms integrated with modern web frontends"
+          },
+          {
+            "chunk_index": 11,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: Can Samah build business dashboards?\nFAQ Answer: Yes. Samah can build interactive dashboards and data-driven business systems for monitoring, analytics, reporting, and decision support."
+          }
+        ]
+      }
+    },
+    {
+      "question": "What impact does Samah create through AI and automation?",
+      "retrieval_query": "What impact does Samah create through AI and automation?",
+      "rewrite_notes": "local_fast_path",
+      "timestamp": "2026-04-16T11:45:17.903938Z",
+      "result": {
+        "verdict": "supported",
+        "answer": "Samah creates impact by applying AI and automation to real-world business problems, which often involves reducing manual work and converting complex information into usable structured outputs.",
+        "bullets": [
+          "Reduces manual work through intelligent automation.",
+          "Converts complex or unstructured information into usable structured outputs."
+        ],
+        "used_chunk_indices": [
+          0
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Achievements And Impact",
+            "document_type": "achievements",
+            "chunk_index": 2,
+            "chunk_id": "8f661121-ad7a-4624-b73a-0e7b67cdd0b9",
+            "document_id": "548f63b1-defe-483e-8914-58467aea30c8"
+          }
+        ],
+        "meta": {
+          "provider": "gemini",
+          "model_used": "gemini-2.5-flash-lite",
+          "error": null,
+          "tried_models": [
+            "gemini-2.5-flash-lite"
+          ],
+          "task": "grounded_answer",
+          "provider_used": "gemini",
+          "generation_ok": true,
+          "fallback_used": false,
+          "debug_prompt_chunks": [
+            {
+              "prompt_index": 0,
+              "chunk_index": 2,
+              "doc_title": "Achievements And Impact",
+              "document_type": "achievements",
+              "full_content_preview": "Section: Impact Through AI and Automation\nOne of my main strengths is applying AI and automation to real-world business problems.\nThe impact I create often includes: - reducing manual work through intelligent automation - converting complex or unstructured information into usable structured outputs - improving the speed of business processes - making technical systems more helpful and accessible to users - enabling organizations to work more efficiently through smarter tools",
+              "snippet_sent_to_llm": "Section: Impact Through AI and Automation One of my main strengths is applying AI and automation to real-world business problems. The impact I create often includes: - reducing manual work through intelligent automation - converting complex or unstructured information into usable structured outputs - improving the spee..."
+            },
+            {
+              "prompt_index": 1,
+              "chunk_index": 10,
+              "doc_title": "Achievements And Impact",
+              "document_type": "achievements",
+              "full_content_preview": "Section: Summary\nMy impact comes from building practical AI-powered and backend-driven systems that solve real business problems. I add value through structured implementation, intelligent automation, full-stack solution delivery, stakeholder-aware design, and technical leadership in projects that require both engineering strength and business usefulness.",
+              "snippet_sent_to_llm": "Section: Summary My impact comes from building practical AI-powered and backend-driven systems that solve real business problems. I add value through structured implementation, intelligent automation, full-stack solution delivery, stakeholder-aware design, and technical leadership in projects that require both engineer..."
+            }
+          ],
+          "prompt_mode": "standard",
+          "chunk_budget": 2
+        },
+        "retrieval_query": "What impact does Samah create through AI and automation?",
+        "rewrite_notes": "local_fast_path",
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "8f661121-ad7a-4624-b73a-0e7b67cdd0b9",
+            "chunk_index": 2,
+            "doc_title": "Achievements And Impact",
+            "document_type": "achievements",
+            "vector_distance": 0.4461788269174788,
+            "rerank_score": 0.53558427,
+            "source": "reranked",
+            "matched_filter_document_type": "achievements",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "11cbc819-3469-4005-9ca5-c7c831eaebed",
+            "chunk_index": 10,
+            "doc_title": "Achievements And Impact",
+            "document_type": "achievements",
+            "vector_distance": 0.4972401857376063,
+            "rerank_score": 0.4989624,
+            "source": "reranked",
+            "matched_filter_document_type": "achievements",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "933c6a4f-8097-44d5-a7a1-c190a23c6edd",
+            "chunk_index": 4,
+            "doc_title": "Achievements And Impact",
+            "document_type": "achievements",
+            "vector_distance": 0.4604771780398872,
+            "rerank_score": 0.49365264,
+            "source": "reranked",
+            "matched_filter_document_type": "achievements",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "5613afbd-ed94-4abe-aed6-d034adc57ec5",
+            "chunk_index": 0,
+            "doc_title": "Achievements And Impact",
+            "document_type": "achievements",
+            "vector_distance": 0.6049860119819612,
+            "rerank_score": 0.33372033,
+            "source": "reranked",
+            "matched_filter_document_type": "achievements",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "a206bb7f-2fb9-4b70-95e0-b9c07505253e",
+            "chunk_index": 5,
+            "doc_title": "Achievements And Impact",
+            "document_type": "achievements",
+            "vector_distance": 0.6263219825529447,
+            "rerank_score": 0.2782568,
+            "source": "reranked",
+            "matched_filter_document_type": "achievements",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "3ff72c68-81a2-40cf-8e31-d521e4bfeaca",
+            "chunk_index": 3,
+            "doc_title": "Achievements And Impact",
+            "document_type": "achievements",
+            "vector_distance": 0.6758818416736314,
+            "rerank_score": 0.24220563,
+            "source": "reranked",
+            "matched_filter_document_type": "achievements",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "414733f5-88af-4693-a5cb-f8d08464760a",
+            "chunk_index": 9,
+            "doc_title": "Achievements And Impact",
+            "document_type": "achievements",
+            "vector_distance": 0.6761744811430876,
+            "rerank_score": 0.20055769,
+            "source": "reranked",
+            "matched_filter_document_type": "achievements",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "achievements",
+          "only_active_docs": true
+        },
+        "debug_chunks_before_llm": [
+          {
+            "chunk_index": 2,
+            "doc_title": "Achievements And Impact",
+            "document_type": "achievements",
+            "content_preview": "Section: Impact Through AI and Automation\nOne of my main strengths is applying AI and automation to real-world business problems.\nThe impact I create often includes: - reducing manual work through intelligent automation - converting complex or unstructured information into usable structured outputs - improving the speed of business processes - making technical systems more helpful and accessible to users - enabling organizations to work more efficiently through smarter tools"
+          },
+          {
+            "chunk_index": 10,
+            "doc_title": "Achievements And Impact",
+            "document_type": "achievements",
+            "content_preview": "Section: Summary\nMy impact comes from building practical AI-powered and backend-driven systems that solve real business problems. I add value through structured implementation, intelligent automation, full-stack solution delivery, stakeholder-aware design, and technical leadership in projects that require both engineering strength and business usefulness."
+          },
+          {
+            "chunk_index": 4,
+            "doc_title": "Achievements And Impact",
+            "document_type": "achievements",
+            "content_preview": "Section: Impact Through Business-Focused AI Solutions\nI have worked on AI-driven and data-driven solutions that support monitoring, auditing, classification, search, automation, and decision support.\nExamples of the value created through this kind of work include: - improving visibility into operational data - supporting more informed business decisions through dashboards and analytics - reducing effort in classification or review tasks - building smarter search and retrieval experiences - improving access to information through intelligent interfaces"
+          },
+          {
+            "chunk_index": 0,
+            "doc_title": "Achievements And Impact",
+            "document_type": "achievements",
+            "content_preview": "Section: Overview\nThis document summarizes the kinds of impact I have created through my technical work, leadership contribution, solution delivery, and AI-driven system development. It is intended to help answer questions about achievements, strengths, value, and the practical outcomes of my work."
+          },
+          {
+            "chunk_index": 5,
+            "doc_title": "Achievements And Impact",
+            "document_type": "achievements",
+            "content_preview": "Section: Leadership and Ownership Impact\nAs an AI Team Lead, I bring value not only through implementation, but also through ownership and direction.\nMy leadership-related impact includes: - helping translate business needs into technical solutions - contributing to technical direction and implementation planning - supporting delivery across multiple solution components - communicating effectively with stakeholders and customers - helping guide practical solution design in AI and software projects"
+          }
+        ]
+      }
+    },
+    {
+      "question": "What is Samah’s current professional profile?",
+      "retrieval_query": "What is Samah’s current professional profile?",
+      "rewrite_notes": "local_fast_path",
+      "timestamp": "2026-04-16T11:45:26.113349Z",
+      "result": {
+        "verdict": "supported",
+        "answer": "Samah is an AI Team Lead and AI/ML Engineer with experience in full-stack development. She specializes in building AI-powered applications, backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms.",
+        "bullets": [],
+        "used_chunk_indices": [
+          0
+        ],
+        "used_sources": [
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 0,
+            "chunk_id": "3312aa78-7343-4677-bd31-ad06da788bbf",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          }
+        ],
+        "meta": {
+          "provider": "gemini",
+          "model_used": "gemini-2.5-flash-lite",
+          "error": null,
+          "tried_models": [
+            "gemini-2.5-flash-lite"
+          ],
+          "task": "grounded_answer",
+          "provider_used": "gemini",
+          "generation_ok": true,
+          "fallback_used": false,
+          "debug_prompt_chunks": [
+            {
+              "prompt_index": 0,
+              "chunk_index": 0,
+              "doc_title": "faq",
+              "document_type": "faq",
+              "full_content_preview": "FAQ Question: What does Samah do?\nFAQ Answer: Samah is an AI Team Lead and AI/ML Engineer with strong full-stack development experience. She builds AI-powered applications, backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms.",
+              "snippet_sent_to_llm": "FAQ Question: What does Samah do? FAQ Answer: Samah is an AI Team Lead and AI/ML Engineer with strong full-stack development experience. She builds AI-powered applications, backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms."
+            },
+            {
+              "prompt_index": 1,
+              "chunk_index": 25,
+              "doc_title": "faq",
+              "document_type": "faq",
+              "full_content_preview": "FAQ Question: What kinds of business problems is Samah best at solving?\nFAQ Answer: Samah is strongest at solving problems that involve automating manual workflows, turning unstructured data into useful structured outputs, connecting AI with business operations, and building practical systems that improve efficiency and decision-making. Summary Samah is an AI Team Lead and AI/ML Engineer with strong experience in Python, Django, backend engineering, AI workflows, full-stack development, and practical business solution delivery. She is strongest in backend and AI-focused work, prefers Python and Django, and can build chatbots, RAG systems, APIs, dashboards, document-processing solutions, and intelligent automation platforms.",
+              "snippet_sent_to_llm": "FAQ Question: What kinds of business problems is Samah best at solving? FAQ Answer: Samah is strongest at solving problems that involve automating manual workflows, turning unstructured data into useful structured outputs, connecting AI with business operations, and building practical systems that improve efficiency an..."
+            }
+          ],
+          "prompt_mode": "small",
+          "chunk_budget": 2
+        },
+        "retrieval_query": "What is Samah’s current professional profile?",
+        "rewrite_notes": "local_fast_path",
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "3312aa78-7343-4677-bd31-ad06da788bbf",
+            "chunk_index": 0,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.23859307305895416,
+            "rerank_score": 0.62429351,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "01607679-5d8a-49bf-beb1-ac7c98c3898a",
+            "chunk_index": 25,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.3696743062041423,
+            "rerank_score": 0.57320064,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "e71fbd37-6732-48b7-9929-651d11020316",
+            "chunk_index": 18,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.341334362586306,
+            "rerank_score": 0.50004745,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "c41e94f5-78a1-48a4-8b8e-a1326bd6fa51",
+            "chunk_index": 16,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.36900110614286585,
+            "rerank_score": 0.45786387,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "7f65d495-c110-4cab-973b-ba9c61fec442",
+            "chunk_index": 6,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.38356818156621675,
+            "rerank_score": 0.4330222,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "45654774-f128-4880-92c5-b30a3663c1bd",
+            "chunk_index": 17,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.37243358061113363,
+            "rerank_score": 0.40591964,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "dc01c0f7-c1d4-49ef-977b-a3e6671eea24",
+            "chunk_index": 1,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.40889767355336604,
+            "rerank_score": 0.40544873,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "f3b5d297-f201-40ef-9101-58af02dd5ead",
+            "chunk_index": 14,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.4089904183751085,
+            "rerank_score": 0.39466748,
+            "source": "reranked",
+            "matched_filter_document_type": "faq",
+            "reason": "passed_threshold(min=0.10)"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "faq",
+          "only_active_docs": true
+        },
+        "debug_chunks_before_llm": [
+          {
+            "chunk_index": 0,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: What does Samah do?\nFAQ Answer: Samah is an AI Team Lead and AI/ML Engineer with strong full-stack development experience. She builds AI-powered applications, backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms."
+          },
+          {
+            "chunk_index": 25,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: What kinds of business problems is Samah best at solving?\nFAQ Answer: Samah is strongest at solving problems that involve automating manual workflows, turning unstructured data into useful structured outputs, connecting AI with business operations, and building practical systems that improve efficiency and decision-making. Summary Samah is an AI Team Lead and AI/ML Engineer with strong experience in Python, Django, backend engineering, AI workflows, full-stack development, and practical business solution delivery. She is strongest in backend and AI-focused work, prefers Python and Django, and can build chatbots, RAG systems, APIs, dashboards, document-processing solutions, and intelligent automation platforms."
+          },
+          {
+            "chunk_index": 18,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: What kind of work does Samah enjoy most?\nFAQ Answer: Samah enjoys building AI-powered web applications, backend systems, chatbots, automation workflows, dashboards, and practical business solutions with clear impact."
+          },
+          {
+            "chunk_index": 16,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: Does Samah have leadership experience?\nFAQ Answer: Yes. Samah has leadership experience as an AI Team Lead and has worked on technical solution delivery, project ownership, stakeholder communication, and guiding implementation efforts."
+          },
+          {
+            "chunk_index": 6,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: Is Samah stronger in backend, frontend, or AI?\nFAQ Answer: Samah is strongest in backend development and AI-focused work. She also works on frontend development, especially when building full-stack products, but her main strength is in backend systems, AI workflows, APIs, and solution architecture."
+          }
+        ]
+      }
+    },
+    {
+      "question": "What can Samah help with confidently?",
+      "retrieval_query": "What are Samah's areas of expertise?",
+      "rewrite_notes": "The user is asking about Samah's capabilities and areas where she has confidence.",
+      "timestamp": "2026-04-16T11:45:34.818031Z",
+      "result": {
+        "verdict": "supported",
+        "answer": "Samah can help with building production-ready AI solutions, backend systems, and modern web applications. Their strongest areas include Python backend engineering, Django-based API development, and AI/LLM integration.",
+        "bullets": [],
+        "used_chunk_indices": [
+          1
+        ],
+        "used_sources": [
+          {
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "chunk_index": 0,
+            "chunk_id": "5bf36f7a-db40-47e9-a671-0ea8e0b9227e",
+            "document_id": "099c9bc3-6181-40eb-8b14-59ed2180a8a9"
+          }
+        ],
+        "meta": {
+          "provider": "gemini",
+          "model_used": "gemini-2.5-flash-lite",
+          "error": null,
+          "tried_models": [
+            "gemini-2.5-flash-lite"
+          ],
+          "task": "grounded_answer",
+          "provider_used": "gemini",
+          "generation_ok": true,
+          "fallback_used": false,
+          "debug_prompt_chunks": [
+            {
+              "prompt_index": 0,
+              "chunk_index": 9,
+              "doc_title": "where i can help",
+              "document_type": "capabilities",
+              "full_content_preview": "Section: Areas I Do Not Primarily Specialize In\nThe following are not my main specialization areas: - Native iOS development - Native Android development - Heavy game development - Deep low-level systems programming - Highly specialized hardware engineering\nI focus primarily on AI-driven software systems, backend engineering, web applications, automation, and data/LLM-enabled business solutions.\nThe Kind of Problems I Am Best At Solving\nI am strongest when the project involves one or more of the following: - Turning manual business workflows into intelligent digital systems - Building AI-powered tools that are useful in real operational environments - Converting unstructured user input or documents into structured business actions - Connecting AI capabilities with practical web applications - Designing secure backend logic for enterprise or internal systems - Delivering modern, user-fr",
+              "snippet_sent_to_llm": "Section: Areas I Do Not Primarily Specialize In The following are not my main specialization areas: - Native iOS development - Native Android development - Heavy game development - Deep low-level systems programming - Highly specialized hardware engineering I focus primarily on AI-driven software systems, backend engin..."
+            },
+            {
+              "prompt_index": 1,
+              "chunk_index": 0,
+              "doc_title": "where i can help",
+              "document_type": "capabilities",
+              "full_content_preview": "Section: Overview\nI am an AI Team Lead and AI/ML Engineer with strong full-stack development experience, specializing in building production-ready AI solutions, backend systems, and modern web applications. My strongest areas combine Python backend engineering, Django-based API development, AI/LLM integration, workflow automation, and interactive frontend delivery using Next.js and React.\nThis document summarizes the types of work I can confidently support, the kinds of systems I have built, and the technologies I use most often.",
+              "snippet_sent_to_llm": "Section: Overview I am an AI Team Lead and AI/ML Engineer with strong full-stack development experience, specializing in building production-ready AI solutions, backend systems, and modern web applications. My strongest areas combine Python backend engineering, Django-based API development, AI/LLM integration, workflow..."
+            }
+          ],
+          "prompt_mode": "small",
+          "chunk_budget": 2
+        },
+        "retrieval_query": "What are Samah's areas of expertise?",
+        "rewrite_notes": "local_fast_path",
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "df13adfb-1c64-4844-9c11-5240bdbd4cce",
+            "chunk_index": 9,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.5930887394924823,
+            "rerank_score": 0.17667159,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "5bf36f7a-db40-47e9-a671-0ea8e0b9227e",
+            "chunk_index": 0,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.6125992305635941,
+            "rerank_score": 0.13028541,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "b601a32c-d9bd-4468-8530-d91b0a0e3761",
+            "chunk_index": 10,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "vector_distance": 0.6192836832573219,
+            "rerank_score": 0.10970578,
+            "source": "reranked",
+            "matched_filter_document_type": "capabilities",
+            "reason": "passed_threshold(min=0.10)"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "capabilities",
+          "only_active_docs": true
+        },
+        "debug_chunks_before_llm": [
+          {
+            "chunk_index": 9,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "content_preview": "Section: Areas I Do Not Primarily Specialize In\nThe following are not my main specialization areas: - Native iOS development - Native Android development - Heavy game development - Deep low-level systems programming - Highly specialized hardware engineering\nI focus primarily on AI-driven software systems, backend engineering, web applications, automation, and data/LLM-enabled business solutions.\nThe Kind of Problems I Am Best At Solving\nI am strongest when the project involves one or more of the following: - Turning manual business workflows into intelligent digital systems - Building AI-powered tools that are useful in real operational environments - Converting unstructured user input or documents into structured business actions - Connecting AI capabilities with practical web applications - Designing secure backend logic for enterprise or internal systems - Delivering modern, user-fr"
+          },
+          {
+            "chunk_index": 0,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "content_preview": "Section: Overview\nI am an AI Team Lead and AI/ML Engineer with strong full-stack development experience, specializing in building production-ready AI solutions, backend systems, and modern web applications. My strongest areas combine Python backend engineering, Django-based API development, AI/LLM integration, workflow automation, and interactive frontend delivery using Next.js and React.\nThis document summarizes the types of work I can confidently support, the kinds of systems I have built, and the technologies I use most often."
+          },
+          {
+            "chunk_index": 10,
+            "doc_title": "where i can help",
+            "document_type": "capabilities",
+            "content_preview": "Section: Areas I Do Not Primarily Specialize In\nons - Designing secure backend logic for enterprise or internal systems - Delivering modern, user-friendly interfaces for complex technical systems"
+          }
+        ]
+      }
+    },
+    {
+      "question": "Which documents support that Samah is open to freelance work?",
+      "retrieval_query": "Samah freelance work",
+      "rewrite_notes": "The user is asking for documents that indicate Samah's openness to freelance work. The rewritten query focuses on the key entities and the core intent.",
+      "timestamp": "2026-04-16T11:45:39.507964Z",
+      "result": {
+        "verdict": "supported",
+        "answer": "Samah is open to freelance and project-based work.",
+        "bullets": [],
+        "used_chunk_indices": [
+          0,
+          1,
+          2
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 6,
+            "chunk_id": "f09b8031-3a42-46d3-aeed-de90188040e2",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 9,
+            "chunk_id": "dd8afe16-12c7-4425-a480-af4dcd35e6c6",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 7,
+            "chunk_id": "440c50a5-73e0-4487-bfa1-75e1be3a9e9c",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          }
+        ],
+        "meta": {
+          "model_used": null,
+          "tried_models": [],
+          "provider_used": "deterministic_extractor",
+          "fallback_used": false,
+          "generation_ok": true,
+          "safe_fallback": false,
+          "error": null,
+          "answer_source": "deterministic_extractor",
+          "extractor_used": "try_extract_availability",
+          "confidence_boost": 0.1
+        },
+        "retrieval_query": "Samah freelance work",
+        "rewrite_notes": "local_fast_path",
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "f09b8031-3a42-46d3-aeed-de90188040e2",
+            "chunk_index": 6,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.5642661284128968,
+            "rerank_score": 0.47402242,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "dd8afe16-12c7-4425-a480-af4dcd35e6c6",
+            "chunk_index": 9,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.6264306418171319,
+            "rerank_score": 0.30569732,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "440c50a5-73e0-4487-bfa1-75e1be3a9e9c",
+            "chunk_index": 7,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.7539934669725255,
+            "rerank_score": 0.23934932,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "5dd5009d-f445-4415-9f8f-3001a6801532",
+            "chunk_index": 5,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.7276037687901051,
+            "rerank_score": 0.22815649,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "dc580889-2fe1-4a92-95cc-7affe6b7b30e",
+            "chunk_index": 4,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.7920321462163968,
+            "rerank_score": 0.20817892,
+            "source": "reranked",
+            "matched_filter_document_type": "compensation",
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "applied_filters": {
+          "document_type": "compensation",
+          "only_active_docs": true
+        },
+        "debug_chunks_before_llm": [
+          {
+            "chunk_index": 6,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "content_preview": "Section: Freelance and Project-Based Work\nI am open to freelance or project-based work when the project is well-defined, practical, and aligned with my technical strengths.\nI am especially suited for freelance or consulting work involving: - backend APIs - AI chatbot systems - RAG-based assistants - document processing and OCR workflows - dashboard and portal development - business process automation - Django and Next.js-based solutions"
+          },
+          {
+            "chunk_index": 9,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "content_preview": "Section: Summary\nI am open to full-time, contract, freelance, and consulting opportunities. I am especially open to roles in Dubai, Abu Dhabi, the UAE, or remote when the fit is strong. My compensation expectations should be discussed based on role scope, technical depth, leadership responsibility, and work arrangement."
+          },
+          {
+            "chunk_index": 7,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "content_preview": "Section: Role Fit Consideration\nThe most suitable opportunities for me are those where I can contribute through: - hands-on technical implementation - backend and AI system design - practical problem-solving - direct business impact - structured and production-oriented delivery"
+          },
+          {
+            "chunk_index": 5,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "content_preview": "Section: Availability for Opportunities\nI am open to hearing about suitable professional opportunities that match my background in AI, backend engineering, full-stack development, and intelligent automation systems.\nI am especially interested in roles involving: - AI or LLM-enabled systems - backend engineering - Django or Python-based development - intelligent workflow automation - full-stack solution delivery - technical leadership or strong technical ownership"
+          },
+          {
+            "chunk_index": 4,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "content_preview": "Section: Geographic Preference\nI am especially open to opportunities in: - Dubai - Abu Dhabi - other suitable opportunities in the UAE - remote opportunities when the role is a strong fit"
+          }
+        ]
+      }
+    },
+    {
+      "question": "Which documents support that Samah has experience with Oracle?",
+      "retrieval_query": "Does Samah have experience with Oracle?",
+      "rewrite_notes": "rule_based_followup",
+      "timestamp": "2026-04-16T11:45:43.626592Z",
+      "result": {
+        "verdict": "supported",
+        "answer": "Yes, Samah has experience working with Oracle databases.",
+        "bullets": [],
+        "used_chunk_indices": [
+          0
+        ],
+        "used_sources": [
+          {
+            "doc_title": "faq",
+            "document_type": "faq",
+            "chunk_index": 14,
+            "chunk_id": "f3b5d297-f201-40ef-9101-58af02dd5ead",
+            "document_id": "5b1e7966-c00d-4b87-a47c-212c99f2f7d9"
+          }
+        ],
+        "meta": {
+          "provider": "gemini",
+          "model_used": "gemini-2.5-flash-lite",
+          "error": null,
+          "tried_models": [
+            "gemini-2.5-flash-lite"
+          ],
+          "task": "grounded_answer",
+          "provider_used": "gemini",
+          "generation_ok": true,
+          "fallback_used": false,
+          "debug_prompt_chunks": [
+            {
+              "prompt_index": 0,
+              "chunk_index": 14,
+              "doc_title": "faq",
+              "document_type": "faq",
+              "full_content_preview": "FAQ Question: Has Samah worked with databases?\nFAQ Answer: Yes. Samah has experience working with PostgreSQL, MongoDB, MySQL, SQL Server, and Oracle.",
+              "snippet_sent_to_llm": "FAQ Question: Has Samah worked with databases? FAQ Answer: Yes. Samah has experience working with PostgreSQL, MongoDB, MySQL, SQL Server, and Oracle."
+            },
+            {
+              "prompt_index": 1,
+              "chunk_index": 0,
+              "doc_title": "faq",
+              "document_type": "faq",
+              "full_content_preview": "FAQ Question: What does Samah do?\nFAQ Answer: Samah is an AI Team Lead and AI/ML Engineer with strong full-stack development experience. She builds AI-powered applications, backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms.",
+              "snippet_sent_to_llm": "FAQ Question: What does Samah do? FAQ Answer: Samah is an AI Team Lead and AI/ML Engineer with strong full-stack development experience. She builds AI-powered applications, backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms."
+            },
+            {
+              "prompt_index": 2,
+              "chunk_index": 17,
+              "doc_title": "faq",
+              "document_type": "faq",
+              "full_content_preview": "FAQ Question: Does Samah work directly with clients or stakeholders?\nFAQ Answer: Yes. Samah has experience working directly with customers, stakeholders, and business users to gather requirements, present solutions, and translate needs into technical systems.",
+              "snippet_sent_to_llm": "FAQ Question: Does Samah work directly with clients or stakeholders? FAQ Answer: Yes. Samah has experience working directly with customers, stakeholders, and business users to gather requirements, present solutions, and translate needs into technical systems."
+            },
+            {
+              "prompt_index": 3,
+              "chunk_index": 16,
+              "doc_title": "faq",
+              "document_type": "faq",
+              "full_content_preview": "FAQ Question: Does Samah have leadership experience?\nFAQ Answer: Yes. Samah has leadership experience as an AI Team Lead and has worked on technical solution delivery, project ownership, stakeholder communication, and guiding implementation efforts.",
+              "snippet_sent_to_llm": "FAQ Question: Does Samah have leadership experience? FAQ Answer: Yes. Samah has leadership experience as an AI Team Lead and has worked on technical solution delivery, project ownership, stakeholder communication, and guiding implementation efforts."
+            }
+          ],
+          "prompt_mode": "standard",
+          "chunk_budget": 4
+        },
+        "retrieval_query": "Does Samah have experience with Oracle?",
+        "rewrite_notes": "local_fast_path",
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "f3b5d297-f201-40ef-9101-58af02dd5ead",
+            "chunk_index": 14,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.2552615099833543,
+            "rerank_score": 0.6261242,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "3312aa78-7343-4677-bd31-ad06da788bbf",
+            "chunk_index": 0,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.43321917655124986,
+            "rerank_score": 0.51189959,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "45654774-f128-4880-92c5-b30a3663c1bd",
+            "chunk_index": 17,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.45206207608436244,
+            "rerank_score": 0.48389232,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "c41e94f5-78a1-48a4-8b8e-a1326bd6fa51",
+            "chunk_index": 16,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5145574782089919,
+            "rerank_score": 0.43590149,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "e71fbd37-6732-48b7-9929-651d11020316",
+            "chunk_index": 18,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.4997001737624196,
+            "rerank_score": 0.40356684,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "7f65d495-c110-4cab-973b-ba9c61fec442",
+            "chunk_index": 6,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.4805231427210901,
+            "rerank_score": 0.40356684,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "569bf3f9-4e8f-41d1-bfe6-a3c2193e57e1",
+            "chunk_index": 10,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.42115496018738163,
+            "rerank_score": 0.40309682,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "03e8db33-af38-410a-895e-e4487c5f6b0f",
+            "chunk_index": 21,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "vector_distance": 0.5153666129489693,
+            "rerank_score": 0.38861805,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "applied_filters": {
+          "only_active_docs": true
+        },
+        "debug_chunks_before_llm": [
+          {
+            "chunk_index": 14,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: Has Samah worked with databases?\nFAQ Answer: Yes. Samah has experience working with PostgreSQL, MongoDB, MySQL, SQL Server, and Oracle."
+          },
+          {
+            "chunk_index": 0,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: What does Samah do?\nFAQ Answer: Samah is an AI Team Lead and AI/ML Engineer with strong full-stack development experience. She builds AI-powered applications, backend APIs, intelligent automation workflows, dashboards, chatbots, document-processing solutions, and modern web platforms."
+          },
+          {
+            "chunk_index": 17,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: Does Samah work directly with clients or stakeholders?\nFAQ Answer: Yes. Samah has experience working directly with customers, stakeholders, and business users to gather requirements, present solutions, and translate needs into technical systems."
+          },
+          {
+            "chunk_index": 16,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: Does Samah have leadership experience?\nFAQ Answer: Yes. Samah has leadership experience as an AI Team Lead and has worked on technical solution delivery, project ownership, stakeholder communication, and guiding implementation efforts."
+          },
+          {
+            "chunk_index": 18,
+            "doc_title": "faq",
+            "document_type": "faq",
+            "content_preview": "FAQ Question: What kind of work does Samah enjoy most?\nFAQ Answer: Samah enjoys building AI-powered web applications, backend systems, chatbots, automation workflows, dashboards, and practical business solutions with clear impact."
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -78,8 +78,18 @@ class ProfileQAService:
         q = (question or "").lower()
 
         if updated.get("document_type") == "cv":
-            # Help retrieval prefer actual CV/resume docs
-            if any(k in q for k in ["contact", "email", "phone", "linkedin", "reach", "get in touch"]):
+            if any(k in q for k in [
+                "contact",
+                "email",
+                "phone",
+                "linkedin",
+                "reach",
+                "get in touch",
+                "communicate",
+                "connect",
+                "talk to her",
+                "speak with her",
+            ]):
                 updated["document_title_contains"] = "cv"
 
         return updated
@@ -195,6 +205,59 @@ class ProfileQAService:
             return "Samah frameworks Django Django REST Framework FastAPI Flask React Next.js Tailwind CSS LangChain"
 
         return q
+    
+    @staticmethod
+    def _is_contact_question(question: str) -> bool:
+        q = (question or "").strip().lower()
+
+        contact_markers = [
+            "contact",
+            "email",
+            "phone",
+            "mobile",
+            "call",
+            "whatsapp",
+            "linkedin",
+            "reach",
+            "get in touch",
+            "connect",
+            "contact details",
+            "how can i contact",
+            "how do i contact",
+            "how to contact",
+            "how can we communicate",
+            "can we communicate",
+            "communicate with her",
+            "reach her",
+            "reach out",
+            "message her",
+            "talk to her",
+            "speak with her",
+            "know more about samah",
+        ]
+
+        return any(marker in q for marker in contact_markers)
+    
+    
+    @classmethod
+    def _get_all_chunks_for_filters(
+        cls,
+        filters: Optional[Dict[str, Any]],
+    ) -> List[DocumentChunk]:
+        if not filters:
+            return []
+
+        qs = DocumentChunk.objects.select_related("document").filter(
+            document__is_active=True
+        )
+
+        if filters.get("document_type"):
+            qs = qs.filter(document__document_type=filters["document_type"])
+
+        if filters.get("document_title_contains"):
+            qs = qs.filter(document__title__icontains=filters["document_title_contains"])
+
+        return list(qs.order_by("document__title", "chunk_index"))
 
     @classmethod
     def answer_question(
@@ -207,6 +270,41 @@ class ProfileQAService:
         retrieval_query = cls._normalize_retrieval_query(
             question, retrieval_query
         )
+
+        # Direct strict-path for structured contact fields.
+        # Do not rely on semantic retrieval first for email/phone/contact questions.
+        filters = ScopeResolver.resolve_filters(question)
+        filters = cls._augment_filters_for_precision(question, filters)
+
+        if cls._is_contact_question(question) and cls._is_strict_scope(filters):
+            direct_chunks = cls._get_all_chunks_for_filters(filters)
+
+            debug_chunks = []
+            for c in direct_chunks[:5]:
+                debug_chunks.append({
+                    "chunk_index": c.chunk_index,
+                    "doc_title": c.document.title,
+                    "document_type": getattr(c.document, "document_type", None),
+                    "content_preview": (c.content or "")[:1200],
+                })
+                
+            print("\n[CONTACT DEBUG] filters =", filters)
+            print("[CONTACT DEBUG] direct chunk count =", len(direct_chunks))
+
+            for c in direct_chunks[:10]:
+                print("\n" + "=" * 80)
+                print("chunk_index:", c.chunk_index)
+                print("doc_title:", c.document.title)
+                print((c.content or "")[:1500])
+
+            deterministic_result = cls._try_deterministic_answer(question, direct_chunks)
+            if deterministic_result:
+                deterministic_result["retrieval_query"] = retrieval_query
+                deterministic_result["rewrite_notes"] = "local_fast_path"
+                deterministic_result["retrieval_debug"] = []
+                deterministic_result["applied_filters"] = filters
+                deterministic_result["debug_chunks_before_llm"] = debug_chunks
+                return deterministic_result
 
         chunks, retrieval_debug, filters = cls._retrieve_chunks(
             question=question,
@@ -241,4 +339,6 @@ class ProfileQAService:
         result["retrieval_debug"] = retrieval_debug
         result["applied_filters"] = filters
         result["debug_chunks_before_llm"] = debug_chunks
+        
+
         return result

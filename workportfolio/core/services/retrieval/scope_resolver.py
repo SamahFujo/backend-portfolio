@@ -3,7 +3,7 @@ import re
 
 class ScopeResolver:
     CERT = re.compile(
-        r"\b(cert|certificate|certification|credential|badge)\b",
+        r"\b(cert|certificate|certificates|certification|certifications|credential|credentials|badge|badges)\b",
         re.I,
     )
 

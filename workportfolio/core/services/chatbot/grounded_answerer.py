@@ -44,6 +44,17 @@ class GroundedAnswerer:
         Keep this conservative to reduce token usage without hurting quality.
         """
         q = (question or "").strip().lower()
+        
+        # Certification questions often need the exact "Certifications" chunk plus contribution/context chunks.
+        if any(marker in q for marker in [
+            "what certificates",
+            "which certificates",
+            "what certifications",
+            "which certifications",
+            "certificates does she have",
+            "certifications does she have",
+        ]):
+            return 4
 
         # Project/tool/framework/technology questions often need the exact
         # "Technology Stack" chunk plus contribution/context chunks.
@@ -95,11 +106,32 @@ class GroundedAnswerer:
     @staticmethod
     def _is_yes_no_question(question: str) -> bool:
         q = (question or "").strip().lower()
-        return q.startswith((
+
+        starts_like_yes_no = q.startswith((
             "is ", "are ", "do ", "does ", "did ",
             "can ", "could ", "should ", "has ", "have ",
             "was ", "were ", "am ", "will ", "would ", "shall "
         ))
+
+        if not starts_like_yes_no:
+            return False
+
+        # Exclude choice / comparison style questions that are not really yes-no
+        choice_markers = [
+            " or ",
+            "which ",
+            "what kind ",
+            "what type ",
+            "what role ",
+            "what framework ",
+            "what technologies ",
+            "what tools ",
+        ]
+
+        if any(marker in q for marker in choice_markers):
+            return False
+
+        return True
 
     @staticmethod
     def _build_used_sources(
@@ -168,6 +200,8 @@ class GroundedAnswerer:
         ]
 
         return any(marker in error_text for marker in transient_markers)
+    
+    
 
     @staticmethod
     def _is_answer_acceptable(answer: str) -> bool:
@@ -378,6 +412,80 @@ class GroundedAnswerer:
 
         return system_instruction, prompt, is_yes_no
     
+    @staticmethod
+    def _looks_uncertain_answer(answer: str) -> bool:
+        """
+        Detect fallback / uncertainty phrasing that should keep not_enough_evidence.
+        """
+        if not answer:
+            return True
+
+        lower = answer.strip().lower()
+
+        uncertainty_markers = [
+            "not enough evidence",
+            "i don’t have enough evidence",
+            "i don't have enough evidence",
+            "cannot determine",
+            "can't determine",
+            "cannot answer",
+            "can't answer",
+            "does not contain enough information",
+            "does not specify",
+            "insufficient evidence",
+            "not stated",
+            "not explicitly stated",
+        ]
+
+        return any(marker in lower for marker in uncertainty_markers)
+
+
+    @staticmethod
+    def _normalize_verdict_from_answer(
+        *,
+        question: str,
+        answer: str,
+        verdict: str,
+        used_chunk_indices: list[int],
+    ) -> str:
+        """
+        Correct inconsistent verdicts returned by the model.
+        """
+        answer = (answer or "").strip()
+        lower = answer.lower()
+
+        if not answer:
+            return "not_enough_evidence"
+
+        # Keep explicit uncertainty answers as not_enough_evidence
+        if GroundedAnswerer._looks_uncertain_answer(answer):
+            return "not_enough_evidence"
+
+        is_yes_no = GroundedAnswerer._is_yes_no_question(question)
+
+        # If we have grounded evidence and a real answer, do not keep
+        # not_enough_evidence unless the text is actually uncertain.
+        if used_chunk_indices:
+            if is_yes_no:
+                if lower.startswith("yes"):
+                    return "yes"
+                if lower.startswith("no"):
+                    return "no"
+
+                # If the model forgot the yes/no verdict but gave a direct answer,
+                # keep the original unless it was not_enough_evidence.
+                if verdict == "not_enough_evidence":
+                    if any(lower.startswith(prefix) for prefix in ["yes", "yes,", "yes."]):
+                        return "yes"
+                    if any(lower.startswith(prefix) for prefix in ["no", "no,", "no."]):
+                        return "no"
+                    return "not_enough_evidence"
+
+            # Non-yes/no question with grounded answer
+            return "supported"
+
+        return verdict
+    
     @classmethod
     def _provider_strategy(cls, question: str) -> str:
         """
@@ -551,6 +659,13 @@ class GroundedAnswerer:
 
         answer = (data.get("answer") or "").strip()
 
+        verdict = cls._normalize_verdict_from_answer(
+            question=question,
+            answer=answer,
+            verdict=verdict,
+            used_chunk_indices=used,
+        )
+                
         bullets = data.get("bullets", []) or []
         clean_bullets = []
         seen_bullets = set()
@@ -573,14 +688,6 @@ class GroundedAnswerer:
         if not cls._is_answer_acceptable(answer):
             meta["error"] = meta.get("error") or "unacceptable_answer"
             return False, {}, meta
-        
-        
-        ## this is a sanity check to catch any cases where the model returns valid JSON but the content is clearly a fallback or broken answer. We want to avoid returning bad answers to users.
-        ## if the answer is not acceptable, we treat it as a failure and trigger the fallbacks, while still logging the original model output and error for debugging.
-        ## this is important because sometimes the model might return something like "I couldn't generate the usual final answer based on the retrieved documents" which would be a technically valid JSON response but is not a useful answer for the user. We want to catch those cases and avoid showing them to users.
-        chunk_budget = cls._chunk_budget(question)
-        selected_chunks = evidence_chunks[:chunk_budget]
-        mode = cls._prompt_mode(question)
 
         debug_prompt_chunks = []
         for i, c in enumerate(selected_chunks):

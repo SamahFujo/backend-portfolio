@@ -516,24 +516,84 @@ class ChunkService:
     # ---------------------------------------------------------------------
     # Resume / CV
     # ---------------------------------------------------------------------
-
     @classmethod
     def chunk_resume(cls, text: str) -> List[str]:
         """
-        Chunk resume/CV by major sections.
+        Chunk resume/CV by:
+        1. Preserving the header/preamble before the first real resume section
+        (name, title, phone, email, location, etc.)
+        2. Chunking the remaining major sections normally
         """
-        sections = cls._extract_heading_sections(text)
+        full_text = (text or "").strip()
+        if not full_text:
+            return []
+
+        sections = cls._extract_heading_sections(full_text)
         if not sections:
-            return cls.chunk_generic(text)
+            return cls.chunk_generic(full_text)
 
         chunks: List[str] = []
-        for section in sections:
-            heading = section["heading"].strip()
-            body = section["body"].strip()
 
-            prefix = f"Resume Section: {heading}"
+        real_resume_headings = {
+            "skills",
+            "about me",
+            "work experience",
+            "professional experience",
+            "education",
+            "projects",
+            "certifications",
+            "languages",
+            "publications",
+            "research",
+            "summary",
+            "contact",
+        }
+
+
+        # 1) Preserve everything before the first REAL resume section
+        preamble = ""
+        first_real_heading = None
+
+        for section in sections:
+            heading = (section.get("heading") or "").strip()
+            if heading.lower() in real_resume_headings:
+                first_real_heading = heading
+                break
+
+        if first_real_heading:
+            lower_text = full_text.lower()
+            lower_heading = first_real_heading.lower()
+            first_pos = lower_text.find(lower_heading)
+            if first_pos > 0:
+                preamble = full_text[:first_pos].strip()
+
+        if preamble:
+            header_chunks = cls._chunk_long_text(
+                preamble,
+                max_chars=850,
+                overlap=100,
+                prefix="Resume Header",
+            )
+            chunks.extend(header_chunks)
+
+        # 2) Chunk only meaningful sections
+        #    Skip fake headings like the person's name
+        for section in sections:
+            heading = (section.get("heading") or "").strip()
+            body = (section.get("body") or "").strip()
+
+            if not heading and not body:
+                continue
+
+            # Skip fake/preamble headings such as the person's name
+            if heading and heading.lower() not in real_resume_headings:
+                continue
+
+            section_text = body if body else heading
+            prefix = f"Resume Section: {heading}" if heading else "Resume Section"
+
             section_chunks = cls._chunk_long_text(
-                body,
+                section_text,
                 max_chars=850,
                 overlap=100,
                 prefix=prefix,
