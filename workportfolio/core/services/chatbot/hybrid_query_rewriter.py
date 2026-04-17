@@ -1,4 +1,5 @@
 from __future__ import annotations
+from spellchecker import SpellChecker
 
 import json
 import re
@@ -12,6 +13,10 @@ class GeminiQueryRewriter:
     TYPO_MAP = {
         "certficate": "certificate",
         "certifcate": "certificate",
+        "certfication": "certification",
+        "certifcation": "certification",
+        "certfications": "certifications",
+        "cirtifications": "certifications",
         "experiance": "experience",
         "machien": "machine",
         "backgroud": "background",
@@ -47,7 +52,6 @@ class GeminiQueryRewriter:
         "oracle database": "Oracle Database",
         "chatgpt": "ChatGPT",
         "claude": "Claude",
-        "i ": "I "
     }
 
     YES_NO_STARTS = (
@@ -56,6 +60,219 @@ class GeminiQueryRewriter:
         "what ", "which ", "who ", "where ", "when ", "why ", "how ",
         "ما ", "هل ", "من ", "متى ", "أين ", "لماذا ", "كيف "
     )
+
+    SPELLCHECK_ENABLED = True
+
+    SPELL_PROTECTED_TERMS = {
+        # AI / ML / NLP
+        "ai", "ml", "nlp", "llm", "llms", "rag", "ocr",
+        "bert", "roberta", "t5", "huggingface", "transformers",
+        "langchain", "langfuse", "ollama", "gemini", "openwebui",
+
+        # backend / frontend / infra
+        "django", "drf", "fastapi", "flask", "react", "next", "nextjs", "next.js",
+        "typescript", "javascript", "tailwind", "bootstrap",
+        "docker", "nginx", "gunicorn", "postman",
+
+        # databases / platforms
+        "postgres", "postgresql", "mongodb", "mysql", "oracle", "sql", "api", "apis",
+        "azure", "aws", "jwt", "rbac",
+
+        # project / profile-specific
+        "samah", "jina", "unspsc", "coursiv", "claude", "chatgpt",
+        
+        # common tech terms that might be misspelled but are important to preserve
+        "roberta", "pytorch", "tensorflow", "scikit", "sklearn", "pandas", "numpy", "redis",
+        "qdrant", "chroma", "pgvector", "jinja", "jinja2", "jupyter", "cuda", "vue", "node", "nodejs", "rest", "restful",
+
+    }
+
+    SPELL_FORCE_MAP = {
+        "cirtifications": "certifications",
+        "certfications": "certifications",
+        "certfication": "certification",
+        "certifcation": "certification",
+        "certficate": "certificate",
+        "certifcate": "certificate",
+        "experiance": "experience",
+        "backgroud": "background",
+        "projcts": "projects",
+        "skilss": "skills",
+        "dashbords": "dashboards",
+        "postgress": "postgresql",
+    }
+
+    _spellchecker = None
+    
+    ENGLISH_ONLY_MESSAGE = (
+        "Thank you for your message. The chatbot currently supports English only. "
+        "Please type your query in English so I can assist you.\n\n"
+        "شكراً لرسالتك. حالياً يدعم الشات بوت اللغة الإنجليزية فقط. "
+        "يرجى كتابة استفسارك باللغة الإنجليزية حتى أتمكن من مساعدتك."
+    )
+
+    @staticmethod
+    def _arabic_char_count(text: str) -> int:
+        return len(re.findall(r"[\u0600-\u06FF]", text or ""))
+
+    @staticmethod
+    def _english_char_count(text: str) -> int:
+        return len(re.findall(r"[A-Za-z]", text or ""))
+
+    @classmethod
+    def is_fully_arabic_query(cls, text: str, min_arabic_chars: int = 3) -> bool:
+        if not text or not text.strip():
+            return False
+
+        arabic_count = cls._arabic_char_count(text)
+        english_count = cls._english_char_count(text)
+
+        if arabic_count < min_arabic_chars:
+            return False
+
+        if english_count > 0:
+            return False
+
+        return True
+
+    @classmethod
+    def _get_spellchecker(cls) -> SpellChecker | None:
+        """
+        Lazy-load spellchecker once.
+        """
+        if not cls.SPELLCHECK_ENABLED:
+            return None
+
+        if cls._spellchecker is None:
+            cls._spellchecker = SpellChecker(language="en")
+
+            # Protect known technical/domain words by teaching them to the dictionary
+            cls._spellchecker.word_frequency.load_words(
+                cls.SPELL_PROTECTED_TERMS)
+            cls._spellchecker.word_frequency.load_words(
+                {term.lower() for term in cls.TERM_MAP.values()}
+            )
+
+        return cls._spellchecker
+    
+    @staticmethod
+    def _is_arabic_token(token: str) -> bool:
+        return bool(re.search(r"[\u0600-\u06FF]", token or ""))
+
+
+    @staticmethod
+    def _is_english_token(token: str) -> bool:
+        return bool(re.fullmatch(r"[A-Za-z]+", token or ""))
+
+    @staticmethod
+    def _tokenize_with_punctuation(text: str) -> list[str]:
+        """
+        Tokenize while preserving Arabic, English, technical terms, and punctuation.
+        """
+        pattern = r"""
+            [\u0600-\u06FF]+              |   # Arabic words
+            [A-Za-z]+(?:[.+#_-][A-Za-z0-9]+)* |   # English / technical terms
+            \d+                          |   # numbers
+            [^\w\s]                          # punctuation
+        """
+        return re.findall(pattern, text, re.UNICODE | re.VERBOSE)
+
+    @classmethod
+    def _is_spellcheck_candidate(cls, token: str) -> bool:
+        """
+        Decide whether a token is safe to spell-correct.
+        Spell-correct only plain English words.
+        """
+        if not token:
+            return False
+
+        # Never touch Arabic or mixed-script tokens
+        if cls._is_arabic_token(token):
+            return False
+
+        # Only plain English-like words
+        if not cls._is_english_token(token):
+            return False
+
+        # Skip short words
+        if len(token) <= 3:
+            return False
+
+        # Skip ALL CAPS / likely acronyms
+        if token.isupper():
+            return False
+
+        return True
+
+    @classmethod
+    def _safe_spell_correct_query(cls, text: str) -> str:
+        """
+        Conservative spell-correction for natural-language retrieval queries.
+        Supports mixed Arabic-English input by correcting only eligible English tokens.
+        """
+        if not text:
+            return text
+
+        spell = cls._get_spellchecker()
+        if not spell:
+            return text
+
+        tokens = cls._tokenize_with_punctuation(text)
+        corrected_tokens: list[str] = []
+
+        for token in tokens:
+            low = token.lower()
+
+            # Keep punctuation and symbols
+            if not re.search(r"\w", token):
+                corrected_tokens.append(token)
+                continue
+
+            # Never touch Arabic tokens
+            if cls._is_arabic_token(token):
+                corrected_tokens.append(token)
+                continue
+
+            # Only spell-correct safe English words
+            if not cls._is_spellcheck_candidate(token):
+                corrected_tokens.append(token)
+                continue
+
+            # Force-map known recurring mistakes first
+            if low in cls.SPELL_FORCE_MAP:
+                replacement = cls.SPELL_FORCE_MAP[low]
+                corrected_tokens.append(
+                    replacement.capitalize() if token[:1].isupper() else replacement
+                )
+                continue
+
+            # Protect technical/domain words
+            if low in cls.SPELL_PROTECTED_TERMS:
+                corrected_tokens.append(token)
+                continue
+
+            # If known word, keep it
+            if low not in spell.unknown([low]):
+                corrected_tokens.append(token)
+                continue
+
+            suggestion = spell.correction(low)
+
+            # Conservative replacement
+            if suggestion and suggestion != low:
+                corrected_tokens.append(
+                    suggestion.capitalize() if token[:1].isupper() else suggestion
+                )
+            else:
+                corrected_tokens.append(token)
+
+        rebuilt = " ".join(corrected_tokens)
+        rebuilt = re.sub(r"\s+([?.!,;:؟،])", r"\1", rebuilt)
+        rebuilt = re.sub(r"\(\s+", "(", rebuilt)
+        rebuilt = re.sub(r"\s+\)", ")", rebuilt)
+        rebuilt = re.sub(r"\s+", " ", rebuilt).strip()
+    
+        return rebuilt
 
     @classmethod
     def rewrite_cached(
@@ -294,19 +511,38 @@ class GeminiQueryRewriter:
 
         original = text
 
+        # Existing deterministic typo fixes first
+        text = re.sub(r"\bdo you no\b", "do you know",
+        text, flags=re.IGNORECASE)
+
         for wrong, correct in cls.TYPO_MAP.items():
-            text = re.sub(r"\bdo you no\b", "do you know",
-                          text, flags=re.IGNORECASE)
-            text = re.sub(rf"\b{re.escape(wrong)}\b",
-                          correct, text, flags=re.IGNORECASE)
+            text = re.sub(
+                rf"\b{re.escape(wrong)}\b",
+                correct,
+                text,
+                flags=re.IGNORECASE,
+            )
 
         for wrong, correct in cls.TERM_MAP.items():
-            text = re.sub(rf"\b{re.escape(wrong)}\b",
-                          correct, text, flags=re.IGNORECASE)
+            text = re.sub(
+                rf"\b{re.escape(wrong)}\b",
+                correct,
+                text,
+                flags=re.IGNORECASE,
+            )
 
+        # Project/domain-specific cleanup
         text = re.sub(r"\bBERT\s+RoBERTa\b", "BERT and RoBERTa", text)
         text = re.sub(r"\bbert\s+roberta\b", "BERT and RoBERTa",
-                      text, flags=re.IGNORECASE)
+        text, flags=re.IGNORECASE)
+
+        # New guarded spellchecking layer
+        text = cls._safe_spell_correct_query(text)
+        
+        # Final cleanup of spacing and punctuation
+        text = re.sub(r"\bsamah\b", "Samah", text, flags=re.IGNORECASE)
+
+        # Final normalization
         text = re.sub(r"\s+", " ", text).strip()
 
         if text and cls._looks_mostly_english(text) and len(text.split()) > 1:

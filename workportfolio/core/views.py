@@ -215,15 +215,60 @@ class AskAboutMeAPIView(APIView):
                 }, retrieval_debug=[], debug_history_count=len(recent_history), debug_recent_history=recent_history[-4:]),
                 status=status.HTTP_200_OK
             )
+            
+        # 6) Block Arabic-only queries
+        if GeminiQueryRewriter.is_fully_arabic_query(message):
+            blocked_reply = GeminiQueryRewriter.ENGLISH_ONLY_MESSAGE
 
-        # 6) Rewrite query using recent history
+            assistant_message = ChatMessage.objects.create(
+                session=session,
+                role="assistant",
+                content=blocked_reply,
+                citations=[],
+                confidence_score=1.0,
+            )
+
+            return Response(
+                self._with_optional_debug({
+                    "session_id": str(session.id),
+                    "message_id": str(assistant_message.id),
+                    "retrieval_query": None,
+                    "rewrite_notes": "arabic_only_blocked",
+                    "verdict": "unsupported_language",
+                    "answer": blocked_reply,
+                    "citations": [],
+                    "applied_filters": None,
+                    "answer_source": "language_guard",
+                    "extractor_used": None,
+                    "model_used": None,
+                    "tried_models": [],
+                    "provider_used": "local_guard",
+                    "fallback_used": False,
+                    "generation_ok": True,
+                    "safe_fallback": False,
+                    "primary_meta": None,
+                    "secondary_meta": None,
+                },
+                    retrieval_debug=[],
+                    used_sources=[],
+                    debug_history_count=len(recent_history),
+                    debug_recent_history=recent_history[-4:],
+                    debug_chunks_before_llm=[],
+                    debug_prompt_chunks=[],
+                    prompt_mode=None,
+                    chunk_budget=None,
+                ),
+                status=status.HTTP_200_OK
+            )
+
+        # 7) Rewrite query using recent history
         rewrite = GeminiQueryRewriter.rewrite_cached(
             user_query=message,
             history=recent_history,
         )
         retrieval_query = rewrite.get("rewritten_query") or message
 
-        # 7) Main QA orchestration
+        # 8) Main QA orchestration
         qa_result = ProfileQAService.answer_question(
             question=message,
             retrieval_query=retrieval_query,
@@ -239,7 +284,7 @@ class AskAboutMeAPIView(APIView):
         if bullets and not meta.get("safe_fallback"):
             answer_text += "\n\nKey points:\n- " + "\n- ".join(bullets)
 
-        # 8) Convert used_sources into response citations
+        # 9) Convert used_sources into response citations
         citations = []
         for src in used_sources:
             citations.append({
@@ -252,7 +297,7 @@ class AskAboutMeAPIView(APIView):
                 "distance": None,
             })
 
-        # 9) Save assistant message
+        # 10) Save assistant message
         confidence = 0.9 if verdict in {"yes", "no"} else 0.6
 
         if meta.get("safe_fallback"):

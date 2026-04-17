@@ -6,10 +6,13 @@ from core.models import DocumentChunk
 from core.services.retrieval.scope_resolver import ScopeResolver
 from core.services.retrieval.reranked_vector_retrieval import RerankedVectorRetrievalService
 from core.services.chatbot.extractors import (
+
     try_extract_contact,
     try_extract_preferences,
     try_extract_strengths,
+    try_extract_capability_with_tool,
     try_extract_project_fit,
+    try_extract_project_list,
     try_extract_skills,
     try_extract_availability,
 
@@ -94,6 +97,24 @@ class ProfileQAService:
 
         return updated
 
+
+    @staticmethod
+    def _is_project_list_question(question: str) -> bool:
+        q = (question or "").strip().lower()
+
+        markers = [
+            "what projects",
+            "which projects",
+            "list projects",
+            "projects samah worked",
+            "what project samah worked",
+            "what projects did she work on",
+            "worked on",
+            "projects has she worked on",
+        ]
+
+        return any(marker in q for marker in markers)
+
     @classmethod
     def _try_deterministic_answer(
         cls,
@@ -104,7 +125,9 @@ class ProfileQAService:
             try_extract_contact,
             try_extract_preferences,
             try_extract_strengths,
+            try_extract_capability_with_tool,
             try_extract_project_fit,
+            try_extract_project_list,
             try_extract_skills,
             try_extract_availability
         ]
@@ -275,6 +298,35 @@ class ProfileQAService:
         # Do not rely on semantic retrieval first for email/phone/contact questions.
         filters = ScopeResolver.resolve_filters(question)
         filters = cls._augment_filters_for_precision(question, filters)
+        
+        # Direct path for broad project list questions.
+        # Do not rely on semantic retrieval first for "what projects..." queries,
+        # because retrieval often returns chunks from only one project cluster.
+        if cls._is_project_list_question(question):
+            project_filters = {
+                "document_type": "projects",
+                "only_active_docs": True,
+            }
+
+            direct_chunks = cls._get_all_chunks_for_filters(project_filters)
+
+            debug_chunks = []
+            for c in direct_chunks[:10]:
+                debug_chunks.append({
+                    "chunk_index": c.chunk_index,
+                    "doc_title": c.document.title,
+                    "document_type": getattr(c.document, "document_type", None),
+                    "content_preview": (c.content or "")[:1200],
+                })
+
+            deterministic_result = cls._try_deterministic_answer(question, direct_chunks)
+            if deterministic_result:
+                deterministic_result["retrieval_query"] = retrieval_query
+                deterministic_result["rewrite_notes"] = "local_fast_path"
+                deterministic_result["retrieval_debug"] = []
+                deterministic_result["applied_filters"] = project_filters
+                deterministic_result["debug_chunks_before_llm"] = debug_chunks
+                return deterministic_result
 
         if cls._is_contact_question(question) and cls._is_strict_scope(filters):
             direct_chunks = cls._get_all_chunks_for_filters(filters)

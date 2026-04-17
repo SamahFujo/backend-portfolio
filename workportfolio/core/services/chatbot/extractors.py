@@ -357,6 +357,135 @@ def _looks_like_noise_line(line: str) -> bool:
     return False
 
 
+def try_extract_capability_with_tool(question: str, chunks: List[DocumentChunk]) -> Tuple[bool, str, float]:
+    """
+    Handle capability questions that mention a specific tool.
+    Example:
+    - Can Samah help in a dashboard with Power BI tool?
+    - Can she work with Tableau?
+    """
+    q = (question or "").strip().lower()
+
+    capability_markers = [
+        "can samah help",
+        "can she help",
+        "can samah build",
+        "can she build",
+        "can samah work",
+        "can she work",
+        "help with",
+    ]
+
+    if not any(marker in q for marker in capability_markers):
+        return False, "", 0.0
+
+    known_tools = [
+        "power bi",
+        "tableau",
+        "qlik",
+        "looker",
+        "metabase",
+        "superset",
+    ]
+
+    requested_tool = None
+    for tool in known_tools:
+        if tool in q:
+            requested_tool = tool
+            break
+
+    if not requested_tool:
+        return False, "", 0.0
+
+    text = "\n".join((c.content or "") for c in chunks).lower()
+
+    dashboard_signals = [
+        "dashboard",
+        "dashboards",
+        "analytics",
+        "visualization",
+        "interactive dashboards",
+        "decision support",
+        "monitoring",
+        "reporting",
+    ]
+
+    has_dashboard_capability = any(
+        signal in text for signal in dashboard_signals)
+    has_tool_evidence = requested_tool in text
+
+    if has_dashboard_capability and has_tool_evidence:
+        answer = (
+            f"Yes, Samah can help with dashboard-related work, and the uploaded documents "
+            f"also contain evidence related to {requested_tool.title()}."
+        )
+        return True, answer, 0.80
+
+    if has_dashboard_capability and not has_tool_evidence:
+        answer = (
+            f"Samah can help with dashboard and analytics solutions, but I do not see "
+            f"explicit evidence in the uploaded documents that she specifically works with {requested_tool.title()}."
+        )
+        return True, answer, 0.75
+
+    if not has_dashboard_capability and has_tool_evidence:
+        answer = (
+            f"I found mention of {requested_tool.title()}, but I do not have enough evidence "
+            f"to confirm dashboard-related capability from the uploaded documents."
+        )
+        return True, answer, 0.40
+
+    return True, (
+        f"I do not have enough evidence in the uploaded documents to confirm that Samah "
+        f"works with {requested_tool.title()} specifically."
+    ), 0.0
+
+
+def try_extract_project_list(question: str, chunks: List[DocumentChunk]) -> Tuple[bool, str, float]:
+    """
+    Extract a distinct list of project names when the user asks broadly
+    about which projects Samah worked on.
+    """
+    q = (question or "").strip().lower()
+
+    list_markers = [
+        "what projects",
+        "which projects",
+        "list projects",
+        "projects samah worked",
+        "what project samah worked",
+        "what projects did she work on",
+        "worked on",
+        "projects has she worked on",
+    ]
+
+    if not any(marker in q for marker in list_markers):
+        return False, "", 0.0
+
+    project_names = []
+    seen = set()
+
+    for chunk in chunks:
+        text = (chunk.content or "").strip()
+        for line in text.splitlines():
+            line = line.strip()
+            if line.lower().startswith("project:"):
+                name = line.split(":", 1)[1].strip()
+                key = name.lower()
+                if name and key not in seen:
+                    seen.add(key)
+                    project_names.append(name)
+
+    if not project_names:
+        return True, "I couldn’t extract a clean list of projects from the uploaded documents.", 0.0
+
+    answer = "Samah has worked on the following projects:\n" + "\n".join(
+        f"- {name}" for name in project_names
+    )
+
+    return True, answer, 0.85
+
+
 def _extract_structured_skill_lines(text: str) -> List[str]:
     """
     Try to extract clean skill-like lines from structured sections only.
@@ -508,31 +637,31 @@ def try_extract_project_fit(question: str, chunks: List[DocumentChunk]) -> Tuple
         if direct_topic_match:
             answer = (
                 f"Yes — Samah appears to have relevant experience related to {requested_topic}. "
-                f"Based on the available information, she is likely a good fit for this type of project."
+                f"Based on what I found, she seems to be a good fit for this type of project."
             )
         else:
             if capability_signals:
                 answer = (
-                    f"The available information does not explicitly confirm direct experience with {requested_topic}. "
-                    f"However, Samah does have strong adjacent experience in "
+                    f"I could not confirm direct experience specifically with {requested_topic}. "
+                    f"However, Samah does have strong related experience in "
                     f"{', '.join(capability_signals[:4])}. "
-                    f"She may still be a good fit if the project involves similar dashboard, backend, data, or solution-delivery work."
+                    f"So she may still be a good fit if the project involves similar dashboard, backend, data, or solution-delivery work."
                 )
             else:
                 answer = (
-                    f"The available information does not explicitly confirm direct experience with {requested_topic}. "
-                    f"I also do not have enough strong adjacent evidence yet to assess project fit confidently."
+                    f"I could not confirm direct experience specifically with {requested_topic}, "
+                    f"and I also do not see enough closely related background yet to assess the fit with confidence."
                 )
     else:
         if capability_signals:
             answer = (
-                "Samah appears to be a reasonable fit for this kind of project based on her background in "
+                "Samah seems like a reasonable fit for this kind of project based on her experience in "
                 f"{', '.join(capability_signals[:4])}. "
-                "The exact fit would depend on the required tools, implementation scope, and whether the project needs a highly specialized technology."
+                "The final fit would depend on the required tools, project scope, and whether it needs a highly specialized technology."
             )
         else:
             answer = (
-                "I do not have enough direct evidence yet to assess whether Samah is a strong fit for this project."
+                "I’m not able to judge the fit confidently yet based on what I found."
             )
 
     return True, answer, 0.18
@@ -640,8 +769,6 @@ def try_extract_skills(question: str, chunks: List[DocumentChunk]) -> Tuple[bool
             "\n- ".join(combined[:20])
 
     return True, answer, 0.45
-
-
 
 
 def try_extract_strengths(question: str, chunks: List[DocumentChunk]) -> Tuple[bool, str, float]:

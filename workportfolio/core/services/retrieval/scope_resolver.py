@@ -26,12 +26,11 @@ class ScopeResolver:
         r"\b(cv|resume)\b",
         re.I,
     )
-
     CONTACT = re.compile(
-        r"\b(contact|email|phone|whatsapp|linkedin|get in touch|reach|connect|contact details)\b",
+        r"\b(contact|email|phone|whatsapp|linkedin|get in touch|reach|connect|"
+        r"communicate|talk to|speak with|contact details)\b",
         re.I,
     )
-
     PREFERENCES = re.compile(
         r"\b("
         r"favorite|favourite|prefer|preferred|preference|preferences|"
@@ -125,6 +124,12 @@ class ScopeResolver:
                 "only_active_docs": True,
             }
 
+        if cls.CAPABILITIES.search(msg):
+            return {
+                "document_type": "capabilities",
+                "only_active_docs": True,
+            }
+
         if cls._is_project_tech_question(msg):
             return {
                 "document_type": "projects",
@@ -133,12 +138,6 @@ class ScopeResolver:
 
         if cls.TECH_EXPERIENCE.search(msg):
             return {
-                "only_active_docs": True,
-            }
-
-        if cls.CAPABILITIES.search(msg):
-            return {
-                "document_type": "capabilities",
                 "only_active_docs": True,
             }
 
