@@ -1,4 +1,4 @@
-import logging
+import re
 
 from django.conf import settings
 from .services.resend_contact_email import send_get_in_touch_email
@@ -19,8 +19,7 @@ from .services.chatbot.smart_chat_intents import SmartChatIntentService
 from .services.chatbot.profile_qa_service import ProfileQAService
 from .permissions import HasInternalAPIKey
 from .throttles import ChatRateThrottle, ContactRateThrottle, UploadRateThrottle
-
-
+import logging
 logger = logging.getLogger(__name__)
 
 
@@ -136,36 +135,31 @@ class ProfileDocumentStatsAPIView(APIView):
 
 
 class AskAboutMeAPIView(APIView):
-    """
-    Enterprise RAG endpoint:
-    - Create / reuse session
-    - Save user message
-    - Quick replies for greetings/thanks/help
-    - Rewrite query for retrieval
-    - Profile QA orchestration:
-        * scope filters
-        * retrieval
-        * deterministic extractors
-        * Gemini grounded fallback
-    - Save assistant message
-    """
 
     throttle_classes = [ChatRateThrottle]
 
+    @staticmethod
+    def _clean_answer_text(answer: str) -> str:
+        answer = (answer or "").strip()
+        answer = re.sub(r"\n{3,}", "\n\n", answer)
+        return answer
+
+    @staticmethod
+    def _with_optional_debug(payload, **debug_fields):
+        if settings.DEBUG:
+            payload.update(debug_fields)
+        return payload
+
     def post(self, request, *args, **kwargs):
-        # 1) Validate input
         serializer = AskQuestionSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         session_id = serializer.validated_data.get("session_id")
         message = serializer.validated_data["message"].strip()
 
-        # 2) Get or create session
         if session_id:
             session = ChatSession.objects.filter(
-                id=session_id,
-                is_active=True
-            ).first()
+                id=session_id, is_active=True).first()
             if session is None:
                 return Response(
                     {"detail": "Session not found."},
@@ -174,52 +168,23 @@ class AskAboutMeAPIView(APIView):
         else:
             session = ChatSession.objects.create()
 
-        # 3) Save user message
         ChatMessage.objects.create(
             session=session,
             role="user",
             content=message
         )
 
-        # 4) Load recent history from the same session
-        recent_history = list(
-            reversed(
-                list(
-                    ChatMessage.objects
-                    .filter(session=session)
-                    .order_by("-created_at")
-                    .values("role", "content")[:6]
-                )
-            )
+        full_history = list(
+            ChatMessage.objects
+            .filter(session=session)
+            .order_by("created_at")
+            .values("role", "content")
         )
+        recent_history = full_history[-6:]
 
-        # 5) Quick intents
-        quick = SmartChatIntentService.detect(message)
-        if quick.handled:
-            assistant_message = ChatMessage.objects.create(
-                session=session,
-                role="assistant",
-                content=quick.reply,
-                citations=[],
-                confidence_score=quick.confidence,
-            )
-            return Response(
-                self._with_optional_debug({
-                    "session_id": str(session.id),
-                    "message_id": str(assistant_message.id),
-                    "answer": quick.reply,
-                    "citations": [],
-                    "confidence": quick.confidence,
-                    "mode": quick.intent,
-                    "intent_source": quick.source,
-                }, retrieval_debug=[], debug_history_count=len(recent_history), debug_recent_history=recent_history[-4:]),
-                status=status.HTTP_200_OK
-            )
-            
-        # 6) Block Arabic-only queries
+        # 1) Block Arabic-only queries
         if GeminiQueryRewriter.is_fully_arabic_query(message):
             blocked_reply = GeminiQueryRewriter.ENGLISH_ONLY_MESSAGE
-
             assistant_message = ChatMessage.objects.create(
                 session=session,
                 role="assistant",
@@ -251,8 +216,8 @@ class AskAboutMeAPIView(APIView):
                 },
                     retrieval_debug=[],
                     used_sources=[],
-                    debug_history_count=len(recent_history),
-                    debug_recent_history=recent_history[-4:],
+                    debug_history_count=len(full_history),
+                    debug_recent_history=full_history[-4:],
                     debug_chunks_before_llm=[],
                     debug_prompt_chunks=[],
                     prompt_mode=None,
@@ -261,21 +226,77 @@ class AskAboutMeAPIView(APIView):
                 status=status.HTTP_200_OK
             )
 
-        # 7) Rewrite query using recent history
+        # 2) Rewrite first
         rewrite = GeminiQueryRewriter.rewrite_cached(
             user_query=message,
             history=recent_history,
         )
-        retrieval_query = rewrite.get("rewritten_query") or message
+        rewritten_query = (rewrite.get("rewritten_query") or message).strip() or message
+        retrieval_query = rewritten_query
+        rewrite_notes = rewrite.get("notes")
 
-        # 8) Main QA orchestration
+
+        # 3) Route using rewritten query, not raw message
+        route_result = SmartChatIntentService.classify_question_route(
+            message=rewritten_query,
+            history=recent_history,
+        )
+
+        print("ROUTE DEBUG:", {
+            "raw_message": message,
+            "rewritten_query": rewritten_query,
+            "route": route_result.route,
+            "confidence": route_result.confidence,
+            "source": route_result.source,
+            "raw_label": route_result.raw_label,
+            "answer": answer_text if 'answer_text' in locals() else None,
+        })
+
+        # 4) Quick social intents only if this is not a stronger conversational route
+        if route_result.route in {"general_question", "identity_question"}:
+            quick = SmartChatIntentService.detect(rewritten_query)
+            if quick.handled:
+                assistant_message = ChatMessage.objects.create(
+                    session=session,
+                    role="assistant",
+                    content=quick.reply,
+                    citations=[],
+                    confidence_score=quick.confidence,
+                )
+                return Response(
+                    self._with_optional_debug({
+                        "session_id": str(session.id),
+                        "message_id": str(assistant_message.id),
+                        "answer": quick.reply,
+                        "citations": [],
+                        "confidence": quick.confidence,
+                        "mode": quick.intent,
+                        "intent_source": quick.source,
+                        "retrieval_query": retrieval_query,
+                        "rewrite_notes": rewrite_notes,
+                    },
+                        retrieval_debug=[],
+                        debug_history_count=len(full_history),
+                        debug_recent_history=full_history[-4:],
+                        debug_raw_message=message,
+                        debug_rewritten_query=rewritten_query,
+                        debug_rewrite_meta=rewrite.get("meta"),
+                        debug_rewrite_debug=rewrite.get("debug"),
+                    ),
+                    status=status.HTTP_200_OK
+                )
+
+        # 7) Main QA orchestration
         qa_result = ProfileQAService.answer_question(
-            question=message,
+            question=rewritten_query,
             retrieval_query=retrieval_query,
+            question_route=route_result.route,
+            history=full_history,
         )
 
         verdict = qa_result.get("verdict", "not_enough_evidence")
-        answer_text = qa_result.get("answer") or "I don’t have enough evidence to answer that."
+        answer_text = qa_result.get(
+            "answer") or "I don’t have enough evidence to answer that."
         bullets = qa_result.get("bullets") or []
         meta = qa_result.get("meta") or {}
         used_sources = qa_result.get("used_sources") or []
@@ -284,7 +305,6 @@ class AskAboutMeAPIView(APIView):
         if bullets and not meta.get("safe_fallback"):
             answer_text += "\n\nKey points:\n- " + "\n- ".join(bullets)
 
-        # 9) Convert used_sources into response citations
         citations = []
         for src in used_sources:
             citations.append({
@@ -297,8 +317,7 @@ class AskAboutMeAPIView(APIView):
                 "distance": None,
             })
 
-        # 10) Save assistant message
-        confidence = 0.9 if verdict in {"yes", "no"} else 0.6
+        confidence = 0.9 if verdict in {"yes", "no", "supported"} else 0.6
 
         if meta.get("safe_fallback"):
             confidence = 0.2
@@ -306,15 +325,15 @@ class AskAboutMeAPIView(APIView):
             confidence = min(confidence, 0.5)
 
         if meta.get("answer_source") == "deterministic_extractor":
-            confidence = min(
-                0.95,
-                confidence + float(meta.get("confidence_boost", 0.0))
-            )
-        if meta.get("answer_source") == "deterministic_extractor":
-            confidence = min(
-                0.95,
-                confidence + float(meta.get("confidence_boost", 0.0))
-            )
+            confidence = min(0.95, confidence +
+                             float(meta.get("confidence_boost", 0.0)))
+
+        if meta.get("answer_source") == "chatbot_profile":
+            confidence = 0.85
+        elif meta.get("answer_source") == "assisted_inference_llm":
+            confidence = 0.70
+        elif meta.get("answer_source") == "session_memory":
+            confidence = max(confidence, route_result.confidence)
 
         assistant_message = ChatMessage.objects.create(
             session=session,
@@ -324,14 +343,30 @@ class AskAboutMeAPIView(APIView):
             confidence_score=confidence,
         )
 
+        
+        print("REWRITE DEBUG:", {
+            "raw_message": message,
+            "rewritten_query": rewritten_query,
+            "rewrite_notes": rewrite_notes,
+            "rewrite_meta": rewrite.get("meta"),
+            "answer": answer_text,
+        })
+
         return Response(
             self._with_optional_debug({
                 "session_id": str(session.id),
                 "message_id": str(assistant_message.id),
                 "retrieval_query": retrieval_query,
-                "rewrite_notes": rewrite.get("notes"),
+                "rewrite_notes": rewrite_notes,
+                "debug_raw_message": message,
+                "debug_rewritten_query": rewritten_query,
+                "debug_rewrite_meta": rewrite.get("meta"),
+                "debug_rewrite_debug": rewrite.get("debug"),
                 "verdict": verdict,
                 "answer": answer_text,
+                "question_route": route_result.route,
+                "question_route_confidence": route_result.confidence,
+                "question_route_reason": route_result.raw_label,
                 "citations": citations,
                 "applied_filters": qa_result.get("applied_filters"),
                 "answer_source": meta.get("answer_source"),
@@ -347,20 +382,16 @@ class AskAboutMeAPIView(APIView):
             },
                 retrieval_debug=retrieval_debug,
                 used_sources=used_sources,
-                debug_history_count=len(recent_history),
-                debug_recent_history=recent_history[-4:],
-                debug_chunks_before_llm=qa_result.get("debug_chunks_before_llm"),
+                debug_history_count=len(full_history),
+                debug_recent_history=full_history[-4:],
+                debug_chunks_before_llm=qa_result.get(
+                    "debug_chunks_before_llm"),
                 debug_prompt_chunks=meta.get("debug_prompt_chunks"),
                 prompt_mode=meta.get("prompt_mode"),
                 chunk_budget=meta.get("chunk_budget"),
             ),
             status=status.HTTP_200_OK
         )
-    @staticmethod
-    def _with_optional_debug(payload, **debug_fields):
-        if settings.DEBUG:
-            payload.update(debug_fields)
-        return payload
 
 
 class ProfileDocumentUploadAPIView(APIView):

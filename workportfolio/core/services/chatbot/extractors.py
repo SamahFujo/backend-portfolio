@@ -1,6 +1,7 @@
 import re
 from typing import List, Tuple, Optional
 from core.models import DocumentChunk
+from datetime import datetime
 
 EMAIL_RE = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
 
@@ -51,6 +52,315 @@ KNOWN_SKILLS = [
     "Vector Search",
     "LangChain",
 ]
+
+MONTH_MAP = {
+    "jan": 1, "january": 1,
+    "feb": 2, "february": 2,
+    "mar": 3, "march": 3,
+    "apr": 4, "april": 4,
+    "may": 5,
+    "jun": 6, "june": 6,
+    "jul": 7, "july": 7,
+    "aug": 8, "august": 8,
+    "sep": 9, "sept": 9, "september": 9,
+    "oct": 10, "october": 10,
+    "nov": 11, "november": 11,
+    "dec": 12, "december": 12,
+}
+
+
+def _parse_text_date(text: str):
+    """Try to parse dates in common formats like '03-Oct-2021', '03/Oct/2021', '03 Oct 2021'."""
+    if not text:
+        return None
+
+    text = text.strip().lower()
+
+    # Match: 03-Oct-2021 or 03/Oct/2021 or 03 Oct 2021
+    m = re.match(r"(\d{1,2})[-/\s]+([a-zA-Z]+)[-/\s]+(\d{4})", text)
+    if not m:
+        return None
+
+    day = int(m.group(1))
+    month_name = m.group(2).lower()
+    year = int(m.group(3))
+
+    month = MONTH_MAP.get(month_name)
+    if not month:
+        return None
+
+    try:
+        return datetime(year, month, day)
+    except ValueError:
+        return None
+
+
+def _format_duration(start_dt: datetime, end_dt: datetime) -> str:
+    """Format the duration between two datetime objects.
+
+    Args:
+        start_dt (datetime): The start datetime.
+        end_dt (datetime): The end datetime.
+
+    Returns:
+        str: The formatted duration string.
+    """
+    if end_dt < start_dt:
+        start_dt, end_dt = end_dt, start_dt
+
+    months = (end_dt.year - start_dt.year) * \
+        12 + (end_dt.month - start_dt.month)
+
+    if end_dt.day < start_dt.day:
+        months -= 1
+
+    years = months // 12
+    rem_months = months % 12
+
+    if years > 0 and rem_months > 0:
+        return f"{years} years and {rem_months} months"
+    if years > 0:
+        return f"{years} years"
+    return f"{rem_months} months"
+
+def try_extract_experience_duration(question: str, chunks):
+    """
+    Extract experience duration for:
+    1) general total experience questions
+    2) employer-specific duration questions
+
+    General questions should use all documented roles from the CV when possible.
+    Specific employer questions should only use matching roles/docs.
+    """
+    q = (question or "").strip().lower()
+
+    direct_markers = [
+        "how many years of experience",
+        "how much experience",
+        "how long has she worked",
+        "what is her total experience",
+        "how many years has she worked",
+        "years of experience",
+        "total experience",
+        "how long did she work",
+        "how long did samah work",
+    ]
+
+    has_direct_marker = any(marker in q for marker in direct_markers)
+
+    has_years = "year" in q or "years" in q
+    has_experience_like = any(
+        word in q for word in ["experience", "expirience", "experiance", "exp"]
+    )
+    has_work_like = any(
+        phrase in q for phrase in ["she have", "she has", "she worked", "she work", "worked"]
+    )
+
+    if not (has_direct_marker or (has_years and has_experience_like) or (has_experience_like and has_work_like)):
+        return False, "", 0.0
+
+    target_employer = _extract_target_employer(question)
+
+    # ------------------------------------------------------------
+    # 1) Try CV-based role ranges first
+    # ------------------------------------------------------------
+    cv_ranges = _extract_cv_experience_ranges(chunks)
+
+    if cv_ranges:
+        if target_employer:
+            filtered = []
+            for item in cv_ranges:
+                org_low = item["organization"].lower()
+
+                if target_employer == "nasser" and any(x in org_low for x in ["nasser", "nairdc"]):
+                    filtered.append(item)
+                elif target_employer == "asu" and "applied science university" in org_low:
+                    filtered.append(item)
+                elif target_employer == "mohammed bin khalifa cardiac centre" and (
+                    "mohammed bin khalifa" in org_low or "cardiac centre" in org_low or "cardiac center" in org_low
+                ):
+                    filtered.append(item)
+
+            cv_ranges = filtered
+
+        if cv_ranges:
+            starts = [item["start"] for item in cv_ranges]
+            ends = [item["end"] for item in cv_ranges]
+
+            start_dt = min(starts)
+            end_dt = max(ends)
+            duration = _format_duration(start_dt, end_dt)
+
+            organizations = []
+            for item in cv_ranges:
+                org = item["organization"].strip()
+                if org not in organizations:
+                    organizations.append(org)
+
+            ORG_DISPLAY_MAP = {
+                "department of nasser centre for science and technology": "Nasser Artificial Intelligence Research & Development Centre (NAIRDC)",
+                "nasser artificial intelligence research & development centre (nairdc)": "Nasser Artificial Intelligence Research & Development Centre (NAIRDC)",
+                "applied science university (asu)": "Applied Science University",
+                "applied science university": "Applied Science University",
+                "mohammed bin khalifa cardiac centre": "Mohammed Bin Khalifa Cardiac Centre",
+            }
+
+            clean_orgs = []
+            seen = set()
+
+            for org in organizations:
+                norm = " ".join(org.lower().split())
+                display = ORG_DISPLAY_MAP.get(norm, org.strip())
+
+                if display not in seen:
+                    seen.add(display)
+                    clean_orgs.append(display)
+
+            if target_employer:
+                display_org = clean_orgs[0] if clean_orgs else organizations[0]
+                answer = (
+                    f"Based on the available documents, Samah appears to have about {duration} "
+                    f"of documented experience with {display_org}, spanning from "
+                    f"{start_dt.strftime('%b %Y')} to {end_dt.strftime('%b %Y')}."
+                )
+            else:
+                answer = (
+                    f"Based on the available CV, Samah appears to have about {duration} of documented professional experience, "
+                    f"spanning from {start_dt.strftime('%b %Y')} to {end_dt.strftime('%b %Y')}."
+                )
+
+                if clean_orgs:
+                    answer += " This includes roles across: " + "; ".join(clean_orgs[:5]) + "."
+
+                # Add current status note
+                answer += (
+                    " Although she is not currently in a full-time role, she continues to improve her skills "
+                    "through self-initiated learning and by building projects."
+                )
+
+            return True, answer, 0.38
+
+    # ------------------------------------------------------------
+    # 2) Fallback to explicit date ranges from other docs
+    # ------------------------------------------------------------
+    joined = "\n".join((c.content or "") for c in chunks)
+
+    explicit_duration = re.search(
+        r"(\d+)\s+years?(?:\s+and\s+(\d+)\s+months?)?",
+        joined,
+        flags=re.IGNORECASE,
+    )
+    if explicit_duration:
+        years = explicit_duration.group(1)
+        months = explicit_duration.group(2)
+
+        if months:
+            answer = f"Based on the available documents, Samah has about {years} years and {months} months of experience."
+        else:
+            answer = f"Based on the available documents, Samah has about {years} years of experience."
+
+        return True, answer, 0.35
+
+    date_matches = re.findall(
+        r"\b\d{1,2}[-/\s]+[A-Za-z]+[-/\s]+\d{4}\b",
+        joined,
+        flags=re.IGNORECASE,
+    )
+
+    parsed_dates = []
+    for raw in date_matches:
+        dt = _parse_text_date(raw)
+        if dt:
+            parsed_dates.append(dt)
+
+    if len(parsed_dates) >= 2:
+        parsed_dates.sort()
+        start_dt = parsed_dates[0]
+        end_dt = parsed_dates[-1]
+        duration = _format_duration(start_dt, end_dt)
+
+        answer = (
+            f"Based on the available documents, Samah appears to have about {duration} of experience. "
+            f"The clearest documented range found is from {start_dt.strftime('%d-%b-%Y')} "
+            f"to {end_dt.strftime('%d-%b-%Y')}."
+        )
+        return True, answer, 0.30
+
+    return False, "", 0.0
+
+
+def _extract_cv_experience_ranges(chunks):
+    text = "\n".join((c.content or "") for c in chunks if getattr(
+        c.document, "document_type", None) == "cv")
+
+    patterns = [
+        # Examples:
+        # Applied Science University / Bahrain/Jan 2020 - Dec 2021
+        # Nasser Centre ... / Bahrain/Jan 2022 - Aug 2025
+        r"([A-Za-z][A-Za-z &()/\-]+?)\s*/\s*Bahrain\s*/\s*([A-Za-z]{3,9})\s+(\d{4})\s*-\s*([A-Za-z]{3,9})\s+(\d{4})",
+    ]
+
+    results = []
+    for pattern in patterns:
+        for m in re.finditer(pattern, text, flags=re.IGNORECASE):
+            org = m.group(1).strip()
+            start_month = m.group(2).strip()
+            start_year = int(m.group(3))
+            end_month = m.group(4).strip()
+            end_year = int(m.group(5))
+
+            start_dt = _parse_month_year(start_month, start_year)
+            end_dt = _parse_month_year(end_month, end_year, end_of_month=True)
+
+            if start_dt and end_dt:
+                results.append({
+                    "organization": org,
+                    "start": start_dt,
+                    "end": end_dt,
+                })
+
+    return results
+
+
+def _parse_month_year(month_name: str, year: int, end_of_month: bool = False):
+    month = MONTH_MAP.get((month_name or "").strip().lower())
+    if not month:
+        return None
+
+    if end_of_month:
+        # simple safe end-of-month handling
+        if month == 12:
+            return datetime(year, 12, 31)
+        next_month = datetime(year, month, 1).replace(day=28)
+        while True:
+            try:
+                next_month = next_month.replace(day=next_month.day + 1)
+            except ValueError:
+                break
+        return next_month
+
+    return datetime(year, month, 1)
+
+
+def _extract_target_employer(question: str) -> str | None:
+    q = (question or "").lower()
+
+    employer_aliases = {
+        "nasser": ["nasser", "nairdc", "nasser centre", "nasser center"],
+        "asu": ["applied science university", "asu"],
+        "mohammed bin khalifa cardiac centre": [
+            "mohammed bin khalifa cardiac centre",
+            "mohammed bin khalifa cardiac center",
+            "cardiac centre",
+            "cardiac center",
+        ],
+    }
+
+    for canonical, aliases in employer_aliases.items():
+        if any(alias in q for alias in aliases):
+            return canonical
+
+    return None
 
 
 def _joined_text(chunks: List[DocumentChunk]) -> str:
@@ -439,6 +749,103 @@ def try_extract_capability_with_tool(question: str, chunks: List[DocumentChunk])
         f"I do not have enough evidence in the uploaded documents to confirm that Samah "
         f"works with {requested_tool.title()} specifically."
     ), 0.0
+
+
+def _extract_requested_technology(question: str) -> str | None:
+    """
+    Extract the requested technology from the question.
+
+    Args:
+        question (str): The user's question.
+
+    Returns:
+        str | None: _description_
+    """
+    q = (question or "").lower()
+
+    tech_aliases = {
+        "django": ["django", "django rest framework", "drf"],
+        "react": ["react", "react.js", "reactjs"],
+        "next.js": ["next.js", "nextjs", "next js"],
+        "python": ["python"],
+        "oracle": ["oracle", "oracle db", "oracle database"],
+        "bert": ["bert"],
+        "roberta": ["roberta"],
+        "langchain": ["langchain"],
+        "gemini": ["gemini"],
+        "ollama": ["ollama"],
+    }
+
+    for canonical, aliases in tech_aliases.items():
+        if any(alias in q for alias in aliases):
+            return canonical
+
+    return None
+
+
+def try_extract_projects_by_technology(question: str, chunks):
+    q = (question or "").strip().lower()
+
+    project_markers = [
+        "which projects used",
+        "what projects used",
+        "which project used",
+        "what project used",
+        "projects with",
+        "projects using",
+        "project using",
+    ]
+
+    TECH_DISPLAY_NAMES = {
+        "django": "Django",
+        "react": "React",
+        "next.js": "Next.js",
+        "python": "Python",
+        "oracle": "Oracle",
+        "bert": "BERT",
+        "roberta": "RoBERTa",
+        "langchain": "LangChain",
+        "gemini": "Gemini",
+        "ollama": "Ollama",
+    }
+
+    if not any(marker in q for marker in project_markers):
+        return False, "", 0.0
+
+    requested_tech = _extract_requested_technology(question)
+    if not requested_tech:
+        return False, "", 0.0
+
+    matched_projects = []
+    seen = set()
+
+    for c in chunks:
+        text = (c.content or "")
+        low = text.lower()
+
+        if requested_tech not in low:
+            continue
+
+        project_match = re.search(
+            r"Project:\s*(.+)", text, flags=re.IGNORECASE)
+        if not project_match:
+            continue
+
+        project_name = project_match.group(1).strip()
+        if project_name and project_name not in seen:
+            seen.add(project_name)
+            matched_projects.append(project_name)
+
+    if not matched_projects:
+        return True, (
+            f"I could not find any project in the current documents that explicitly mentions {requested_tech.title()}."
+        ), 0.20
+
+    answer = "The projects that explicitly mention " + TECH_DISPLAY_NAMES.get(requested_tech, requested_tech) + \
+        " are:\n- "
+    answer += "\n- ".join(matched_projects)
+
+    return True, answer, 0.35
 
 
 def try_extract_project_list(question: str, chunks: List[DocumentChunk]) -> Tuple[bool, str, float]:

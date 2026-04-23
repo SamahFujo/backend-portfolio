@@ -553,6 +553,33 @@ class ChunkService:
         # 1) Preserve everything before the first REAL resume section
         preamble = ""
         first_real_heading = None
+        
+        # Look for the first real resume section heading to determine where the preamble ends
+        lower_text = full_text.lower()
+
+        work_start = lower_text.find("work experience")
+        work_end_candidates = []
+
+        for marker in ["education", "personal details", "extra-curricular activities"]:
+            pos = lower_text.find(marker)
+            if pos != -1 and (work_start == -1 or pos > work_start):
+                work_end_candidates.append(pos)
+
+        work_end = min(work_end_candidates) if work_end_candidates else -1
+
+        if work_start != -1:
+            if work_end != -1:
+                work_block = full_text[work_start:work_end].strip()
+            else:
+                work_block = full_text[work_start:].strip()
+
+            work_chunks = cls._chunk_long_text(
+                work_block,
+                max_chars=1000,
+                overlap=120,
+                prefix="Resume Section: WORK EXPERIENCE",
+            )
+            chunks.extend(work_chunks)
 
         for section in sections:
             heading = (section.get("heading") or "").strip()

@@ -1,0 +1,457 @@
+{
+  "meta": {
+    "started_at": "2026-04-22 17:49:23",
+    "django_debug": true,
+    "endpoint": "/api/chat/ask/",
+    "question_count": 4,
+    "success_count": 4,
+    "failure_count": 0,
+    "final_session_id": "93aa7582-08ba-4395-b7a6-9b06fa0fff81",
+    "http_status_counts": {
+      "200": 4
+    },
+    "route_counts": {
+      "document_fact_question": 1,
+      "help": 2,
+      "capability_inference_question": 1
+    },
+    "answer_source_counts": {
+      "assisted_inference_fallback": 1
+    }
+  },
+  "results": [
+    {
+      "index": 1,
+      "question": "does she have any project that she engaged in the frontend diractly?",
+      "request_payload": {
+        "message": "does she have any project that she engaged in the frontend diractly?"
+      },
+      "http_status": 200,
+      "ok": true,
+      "response_json": {
+        "session_id": "93aa7582-08ba-4395-b7a6-9b06fa0fff81",
+        "message_id": "d478b8ab-98fe-440f-9c66-07ca0d8a8745",
+        "retrieval_query": "Does she have any project that she engaged in the fronted directly?",
+        "rewrite_notes": "Corrected typo 'diractly' to 'directly'.",
+        "verdict": "yes",
+        "answer": "Yes, Samah supported the React/Next.js frontend workflow for the Spend Analysis Dashboard with AI-based UNSPSC Classification project.",
+        "question_route": "document_fact_question",
+        "question_route_confidence": 0.72,
+        "question_route_reason": "doc_fact_marker",
+        "citations": [
+          {
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf",
+            "document_title": "Projects",
+            "chunk_id": "1d0fd422-7013-46f0-8933-4e8a91ab924d",
+            "chunk_index": 10,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "projects",
+          "only_active_docs": true
+        },
+        "answer_source": null,
+        "extractor_used": null,
+        "model_used": "gemini-2.5-flash-lite",
+        "tried_models": [
+          "gemini-2.5-flash-lite"
+        ],
+        "provider_used": "gemini",
+        "fallback_used": false,
+        "generation_ok": true,
+        "safe_fallback": null,
+        "primary_meta": null,
+        "secondary_meta": null,
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "1d0fd422-7013-46f0-8933-4e8a91ab924d",
+            "chunk_index": 10,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "vector_distance": 0.748986534744097,
+            "rerank_score": 0.22135067,
+            "source": "reranked",
+            "matched_filter_document_type": null,
+            "reason": "passed_threshold(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "chunk_index": 10,
+            "chunk_id": "1d0fd422-7013-46f0-8933-4e8a91ab924d",
+            "document_id": "10e756d1-e573-49ba-9f4c-c593e33a1fdf"
+          }
+        ],
+        "debug_history_count": 1,
+        "debug_recent_history": [
+          {
+            "role": "user",
+            "content": "does she have any project that she engaged in the frontend diractly?"
+          }
+        ],
+        "debug_chunks_before_llm": [
+          {
+            "chunk_index": 10,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "content_preview": "Project: Spend Analysis Dashboard with AI-based UNSPSC Classification\nSection: Your Contribution\n• Led and developed the backend using Django and Django REST Framework and supported the React/Next.js frontend workflow.\n• Worked on authentication and authorization using Azure AD and RBAC logic.\n• Built or integrated AI/NLP components for PO description categorization using models such as BERT and RoBERTa.\n• Designed data models, filters, logs, and analytics layers for procurement reporting."
+          }
+        ],
+        "debug_prompt_chunks": [
+          {
+            "prompt_index": 0,
+            "chunk_index": 10,
+            "doc_title": "Projects",
+            "document_type": "projects",
+            "full_content_preview": "Project: Spend Analysis Dashboard with AI-based UNSPSC Classification\nSection: Your Contribution\n• Led and developed the backend using Django and Django REST Framework and supported the React/Next.js frontend workflow.\n• Worked on authentication and authorization using Azure AD and RBAC logic.\n• Built or integrated AI/NLP components for PO description categorization using models such as BERT and RoBERTa.\n• Designed data models, filters, logs, and analytics layers for procurement reporting.",
+            "snippet_sent_to_llm": "Project: Spend Analysis Dashboard with AI-based UNSPSC Classification Section: Your Contribution • Led and developed the backend using Django and Django REST Framework and supported the React/Next.js frontend workflow. • Worked on authentication and authorization using Azure AD and RBAC logic. • Built or integrated AI/..."
+          }
+        ],
+        "prompt_mode": "small",
+        "chunk_budget": 3
+      }
+    },
+    {
+      "index": 2,
+      "question": "what else?",
+      "request_payload": {
+        "message": "what else?",
+        "session_id": "93aa7582-08ba-4395-b7a6-9b06fa0fff81"
+      },
+      "http_status": 200,
+      "ok": true,
+      "response_json": {
+        "session_id": "93aa7582-08ba-4395-b7a6-9b06fa0fff81",
+        "message_id": "2ba2aa4c-993c-4252-87c8-33899a394e11",
+        "answer": "I can answer questions about Samah using her uploaded CV and documents. Try: “What are her strongest technical skills?”, “Which projects used Django?”, or “How can I contact her?”",
+        "citations": [],
+        "confidence": 0.95,
+        "mode": "help",
+        "intent_source": "heuristic",
+        "retrieval_debug": [],
+        "debug_history_count": 3,
+        "debug_recent_history": [
+          {
+            "role": "user",
+            "content": "does she have any project that she engaged in the frontend diractly?"
+          },
+          {
+            "role": "assistant",
+            "content": "Yes, Samah supported the React/Next.js frontend workflow for the Spend Analysis Dashboard with AI-based UNSPSC Classification project."
+          },
+          {
+            "role": "user",
+            "content": "what else?"
+          }
+        ]
+      }
+    },
+    {
+      "index": 3,
+      "question": "if samah will work with me as a ai developer how much will her salary will be?",
+      "request_payload": {
+        "message": "if samah will work with me as a ai developer how much will her salary will be?",
+        "session_id": "93aa7582-08ba-4395-b7a6-9b06fa0fff81"
+      },
+      "http_status": 200,
+      "ok": true,
+      "response_json": {
+        "session_id": "93aa7582-08ba-4395-b7a6-9b06fa0fff81",
+        "message_id": "e4a1a433-5854-42ff-85e4-467b4b202dc5",
+        "retrieval_query": "if samah will work with me as a ai developer how much will her salary will be?",
+        "rewrite_notes": "rule_based_followup",
+        "verdict": "supported",
+        "answer": "According to my knowledge, noting explicitly state this directly, but the retrieved evidence suggests the capability is likely possible based on the relevant experience and solution types that I know about her.",
+        "question_route": "capability_inference_question",
+        "question_route_confidence": 0.75,
+        "question_route_reason": "capability_marker",
+        "citations": [
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "b0d6f903-3417-4f2d-a945-e9439aa75220",
+            "chunk_index": 1,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "5dd5009d-f445-4415-9f8f-3001a6801532",
+            "chunk_index": 5,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          },
+          {
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2",
+            "document_title": "Compensation And Availability",
+            "chunk_id": "f09b8031-3a42-46d3-aeed-de90188040e2",
+            "chunk_index": 6,
+            "section_title": null,
+            "page_number": null,
+            "distance": null
+          }
+        ],
+        "applied_filters": {
+          "document_type": "compensation",
+          "only_active_docs": true
+        },
+        "answer_source": "assisted_inference_fallback",
+        "extractor_used": null,
+        "model_used": "gemini-2.5-flash-lite",
+        "tried_models": [
+          "deepseek-chat",
+          "gemini-2.5-flash-lite"
+        ],
+        "provider_used": "gemini",
+        "fallback_used": true,
+        "generation_ok": false,
+        "safe_fallback": false,
+        "primary_meta": {
+          "provider": "gemini",
+          "model_used": "gemini-2.5-flash-lite",
+          "error": null,
+          "tried_models": [
+            "deepseek-chat",
+            "gemini-2.5-flash-lite"
+          ],
+          "task": "grounded_answer"
+        },
+        "secondary_meta": {
+          "source_titles": [
+            "Compensation And Availability",
+            "Compensation And Availability",
+            "Compensation And Availability"
+          ],
+          "source_types": [
+            "compensation",
+            "compensation",
+            "compensation"
+          ]
+        },
+        "retrieval_debug": [
+          {
+            "rank": 1,
+            "chunk_id": "b0d6f903-3417-4f2d-a945-e9439aa75220",
+            "chunk_index": 1,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.5440072281362778,
+            "rerank_score": 0.1666754,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 2,
+            "chunk_id": "5dd5009d-f445-4415-9f8f-3001a6801532",
+            "chunk_index": 5,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.6676897109469511,
+            "rerank_score": 0.09947021,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 3,
+            "chunk_id": "f09b8031-3a42-46d3-aeed-de90188040e2",
+            "chunk_index": 6,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.7312854012463856,
+            "rerank_score": 0.07477004,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 4,
+            "chunk_id": "440c50a5-73e0-4487-bfa1-75e1be3a9e9c",
+            "chunk_index": 7,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.7118582978079668,
+            "rerank_score": 0.0675467,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 5,
+            "chunk_id": "dd8afe16-12c7-4425-a480-af4dcd35e6c6",
+            "chunk_index": 9,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.5933927418770553,
+            "rerank_score": 0.05033063,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 6,
+            "chunk_id": "926e9401-aa5d-418d-baa1-16dda0da26e0",
+            "chunk_index": 0,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.8081888727972898,
+            "rerank_score": 0.04958903,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 7,
+            "chunk_id": "ab6257f5-2218-4306-a284-94a4b955cb39",
+            "chunk_index": 2,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.8575793185924669,
+            "rerank_score": 0.03846619,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          },
+          {
+            "rank": 8,
+            "chunk_id": "d8fbd0bc-5e25-4464-a3ab-0e591382ac86",
+            "chunk_index": 3,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "vector_distance": 0.8677486808075321,
+            "rerank_score": 0.03676947,
+            "source": "reranked_no_threshold_fallback",
+            "matched_filter_document_type": "compensation",
+            "reason": "threshold_removed_all(min=0.20)"
+          }
+        ],
+        "used_sources": [
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 1,
+            "chunk_id": "b0d6f903-3417-4f2d-a945-e9439aa75220",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 5,
+            "chunk_id": "5dd5009d-f445-4415-9f8f-3001a6801532",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          },
+          {
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "chunk_index": 6,
+            "chunk_id": "f09b8031-3a42-46d3-aeed-de90188040e2",
+            "document_id": "99d94be4-7451-4300-893e-b95315240db2"
+          }
+        ],
+        "debug_history_count": 5,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "Yes, Samah supported the React/Next.js frontend workflow for the Spend Analysis Dashboard with AI-based UNSPSC Classification project."
+          },
+          {
+            "role": "user",
+            "content": "what else?"
+          },
+          {
+            "role": "assistant",
+            "content": "I can answer questions about Samah using her uploaded CV and documents. Try: “What are her strongest technical skills?”, “Which projects used Django?”, or “How can I contact her?”"
+          },
+          {
+            "role": "user",
+            "content": "if samah will work with me as a ai developer how much will her salary will be?"
+          }
+        ],
+        "debug_chunks_before_llm": [
+          {
+            "chunk_index": 1,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "content_preview": "Section: Expected Salary Range\nMy expected salary range depends on the role scope, seniority level, responsibilities, and whether the position is focused more on backend engineering, full-stack development, AI/ML engineering, or technical leadership.\nMy target compensation range should be discussed based on: - the technical depth of the role - whether the role includes leadership responsibilities - whether the role is full-time, contract, or freelance - the location and work arrangement - the expected level of ownership and delivery\nI am open to discussing a fair and competitive compensation package that matches the role, business expectations, and my experience level."
+          },
+          {
+            "chunk_index": 5,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "content_preview": "Section: Availability for Opportunities\nI am open to hearing about suitable professional opportunities that match my background in AI, backend engineering, full-stack development, and intelligent automation systems.\nI am especially interested in roles involving: - AI or LLM-enabled systems - backend engineering - Django or Python-based development - intelligent workflow automation - full-stack solution delivery - technical leadership or strong technical ownership"
+          },
+          {
+            "chunk_index": 6,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "content_preview": "Section: Freelance and Project-Based Work\nI am open to freelance or project-based work when the project is well-defined, practical, and aligned with my technical strengths.\nI am especially suited for freelance or consulting work involving: - backend APIs - AI chatbot systems - RAG-based assistants - document processing and OCR workflows - dashboard and portal development - business process automation - Django and Next.js-based solutions"
+          },
+          {
+            "chunk_index": 7,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "content_preview": "Section: Role Fit Consideration\nThe most suitable opportunities for me are those where I can contribute through: - hands-on technical implementation - backend and AI system design - practical problem-solving - direct business impact - structured and production-oriented delivery"
+          },
+          {
+            "chunk_index": 9,
+            "doc_title": "Compensation And Availability",
+            "document_type": "compensation",
+            "content_preview": "Section: Summary\nI am open to full-time, contract, freelance, and consulting opportunities. I am especially open to roles in Dubai, Abu Dhabi, the UAE, or remote when the fit is strong. My compensation expectations should be discussed based on role scope, technical depth, leadership responsibility, and work arrangement."
+          }
+        ],
+        "debug_prompt_chunks": null,
+        "prompt_mode": null,
+        "chunk_budget": null
+      }
+    },
+    {
+      "index": 4,
+      "question": "what was my second question?",
+      "request_payload": {
+        "message": "what was my second question?",
+        "session_id": "93aa7582-08ba-4395-b7a6-9b06fa0fff81"
+      },
+      "http_status": 200,
+      "ok": true,
+      "response_json": {
+        "session_id": "93aa7582-08ba-4395-b7a6-9b06fa0fff81",
+        "message_id": "755d7c68-8fe4-4592-91d7-438169d92500",
+        "answer": "I can answer questions about Samah using her uploaded CV and documents. Try: “What are her strongest technical skills?”, “Which projects used Django?”, or “How can I contact her?”",
+        "citations": [],
+        "confidence": 0.95,
+        "mode": "help",
+        "intent_source": "heuristic",
+        "retrieval_debug": [],
+        "debug_history_count": 7,
+        "debug_recent_history": [
+          {
+            "role": "assistant",
+            "content": "I can answer questions about Samah using her uploaded CV and documents. Try: “What are her strongest technical skills?”, “Which projects used Django?”, or “How can I contact her?”"
+          },
+          {
+            "role": "user",
+            "content": "if samah will work with me as a ai developer how much will her salary will be?"
+          },
+          {
+            "role": "assistant",
+            "content": "According to my knowledge, noting explicitly state this directly, but the retrieved evidence suggests the capability is likely possible based on the relevant experience and solution types that I know about her."
+          },
+          {
+            "role": "user",
+            "content": "what was my second question?"
+          }
+        ]
+      }
+    }
+  ]
+}

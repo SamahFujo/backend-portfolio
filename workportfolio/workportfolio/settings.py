@@ -44,7 +44,7 @@ MAX_DOCUMENT_UPLOAD_SIZE = int(
     os.getenv("MAX_DOCUMENT_UPLOAD_SIZE", str(5 * 1024 * 1024)))
 ALLOWED_DOCUMENT_EXTENSIONS = {".pdf", ".docx", ".txt"}
 
-ALLOWED_HOSTS = env_list("ALLOWED_HOSTS", "127.0.0.1,localhost")
+ALLOWED_HOSTS = env_list("ALLOWED_HOSTS", "127.0.0.1,localhost,testserver")
 CSRF_TRUSTED_ORIGINS = env_list("CSRF_TRUSTED_ORIGINS", "")
 
 
@@ -222,6 +222,7 @@ GROUNDED_GEMINI_MAX_RETRIES = env.int(
 )
 
 
+ASSISTED_ANSWER_MODEL_CHAIN = ["deepseek-chat", "gemini-2.5-flash-lite"]
 # ============================================================
 # Reranker settings
 # ============================================================

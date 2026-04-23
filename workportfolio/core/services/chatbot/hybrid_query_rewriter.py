@@ -80,10 +80,15 @@ class GeminiQueryRewriter:
 
         # project / profile-specific
         "samah", "jina", "unspsc", "coursiv", "claude", "chatgpt",
-        
+
         # common tech terms that might be misspelled but are important to preserve
         "roberta", "pytorch", "tensorflow", "scikit", "sklearn", "pandas", "numpy", "redis",
         "qdrant", "chroma", "pgvector", "jinja", "jinja2", "jupyter", "cuda", "vue", "node", "nodejs", "rest", "restful",
+    
+        "chatbot", "chatbots",
+        "deepseek",
+        "samah.ai",
+        "next.js",
 
     }
 
@@ -102,8 +107,27 @@ class GeminiQueryRewriter:
         "postgress": "postgresql",
     }
 
+    LOW_RISK_PRESERVE_PATTERNS = [
+        "can this chatbot",
+        "can the chatbot",
+        "can this project",
+        "can the project",
+        "can this system",
+        "can the system",
+        "can she build",
+        "can samah build",
+        "can she develop",
+        "can samah develop",
+        "is she fit",
+        "is samah fit",
+        "is this suitable",
+        "can it support",
+        "could it support",
+        "would it support",
+    ]
+
     _spellchecker = None
-    
+
     ENGLISH_ONLY_MESSAGE = (
         "Thank you for your message. The chatbot currently supports English only. "
         "Please type your query in English so I can assist you.\n\n"
@@ -154,11 +178,10 @@ class GeminiQueryRewriter:
             )
 
         return cls._spellchecker
-    
+
     @staticmethod
     def _is_arabic_token(token: str) -> bool:
         return bool(re.search(r"[\u0600-\u06FF]", token or ""))
-
 
     @staticmethod
     def _is_english_token(token: str) -> bool:
@@ -203,6 +226,10 @@ class GeminiQueryRewriter:
             return False
 
         return True
+    
+    @staticmethod
+    def _normalize_token_for_protection(token: str) -> str:
+        return re.sub(r"[^a-zA-Z0-9\.\+#]", "", (token or "").lower())
 
     @classmethod
     def _safe_spell_correct_query(cls, text: str) -> str:
@@ -222,6 +249,7 @@ class GeminiQueryRewriter:
 
         for token in tokens:
             low = token.lower()
+            protected_low = cls._normalize_token_for_protection(token)
 
             # Keep punctuation and symbols
             if not re.search(r"\w", token):
@@ -242,12 +270,13 @@ class GeminiQueryRewriter:
             if low in cls.SPELL_FORCE_MAP:
                 replacement = cls.SPELL_FORCE_MAP[low]
                 corrected_tokens.append(
-                    replacement.capitalize() if token[:1].isupper() else replacement
+                    replacement.capitalize(
+                    ) if token[:1].isupper() else replacement
                 )
                 continue
 
             # Protect technical/domain words
-            if low in cls.SPELL_PROTECTED_TERMS:
+            if low in cls.SPELL_PROTECTED_TERMS or protected_low in cls.SPELL_PROTECTED_TERMS:
                 corrected_tokens.append(token)
                 continue
 
@@ -261,7 +290,8 @@ class GeminiQueryRewriter:
             # Conservative replacement
             if suggestion and suggestion != low:
                 corrected_tokens.append(
-                    suggestion.capitalize() if token[:1].isupper() else suggestion
+                    suggestion.capitalize(
+                    ) if token[:1].isupper() else suggestion
                 )
             else:
                 corrected_tokens.append(token)
@@ -271,7 +301,7 @@ class GeminiQueryRewriter:
         rebuilt = re.sub(r"\(\s+", "(", rebuilt)
         rebuilt = re.sub(r"\s+\)", ")", rebuilt)
         rebuilt = re.sub(r"\s+", " ", rebuilt).strip()
-    
+
         return rebuilt
 
     @classmethod
@@ -283,6 +313,19 @@ class GeminiQueryRewriter:
         q = (user_query or "").strip()
         if not q:
             return {"rewritten_query": "", "notes": "empty"}
+        
+        low_q = q.lower()
+        if any(pattern in low_q for pattern in cls.LOW_RISK_PRESERVE_PATTERNS):
+            return {
+                "rewritten_query": q,
+                "notes": "preserved_capability_pattern",
+                "meta": {
+                    "provider": "local_guard",
+                    "model_used": None,
+                    "tried_models": [],
+                    "error": None,
+                },
+            }
 
         local = cls._local_rewrite(q)
 
@@ -299,12 +342,13 @@ class GeminiQueryRewriter:
                 },
             }
 
-        if cls._should_skip_llm(q, local) and not cls._looks_context_dependent(q):
+        # Keep only truly safe bypasses
+        if cls.is_fully_arabic_query(q):
             return {
-                "rewritten_query": local,
-                "notes": "local_fast_path",
+                "rewritten_query": q,
+                "notes": "arabic_only_no_rewrite",
                 "meta": {
-                    "provider": "local",
+                    "provider": "local_guard",
                     "model_used": None,
                     "tried_models": [],
                     "error": None,
@@ -361,8 +405,8 @@ class GeminiQueryRewriter:
             "additionalProperties": False,
         }
 
-        chain = [getattr(settings, "REWRITE_PRIMARY_MODEL", "gemini-2.5-flash-lite")] + \
-            getattr(settings, "REWRITE_FALLBACK_MODELS", ["gemini-2.5-flash"])
+        chain = [getattr(settings, "REWRITE_PRIMARY_MODEL", "deepseek-chat")] + \
+            getattr(settings, "REWRITE_FALLBACK_MODELS", ["deepseek-chat"])
 
         ok, text, meta = LLMRouter.generate_json(
             prompt=prompt,
@@ -513,7 +557,7 @@ class GeminiQueryRewriter:
 
         # Existing deterministic typo fixes first
         text = re.sub(r"\bdo you no\b", "do you know",
-        text, flags=re.IGNORECASE)
+                      text, flags=re.IGNORECASE)
 
         for wrong, correct in cls.TYPO_MAP.items():
             text = re.sub(
@@ -534,11 +578,11 @@ class GeminiQueryRewriter:
         # Project/domain-specific cleanup
         text = re.sub(r"\bBERT\s+RoBERTa\b", "BERT and RoBERTa", text)
         text = re.sub(r"\bbert\s+roberta\b", "BERT and RoBERTa",
-        text, flags=re.IGNORECASE)
+                      text, flags=re.IGNORECASE)
 
         # New guarded spellchecking layer
         text = cls._safe_spell_correct_query(text)
-        
+
         # Final cleanup of spacing and punctuation
         text = re.sub(r"\bsamah\b", "Samah", text, flags=re.IGNORECASE)
 

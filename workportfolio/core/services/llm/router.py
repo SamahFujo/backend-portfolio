@@ -24,6 +24,7 @@ class LLMRouter:
 
     TASK_REWRITE = "rewrite"
     TASK_GROUNDED_ANSWER = "grounded_answer"
+    TASK_INTENT = "intent"
 
     @classmethod
     def generate_json(
@@ -425,6 +426,13 @@ class LLMRouter:
 
         if task == cls.TASK_GROUNDED_ANSWER:
             return getattr(settings, "GEMINI_GROUNDED_API_KEY", "")
+
+        if task == cls.TASK_INTENT:
+            return getattr(
+                settings,
+                "GEMINI_INTENT_API_KEY",
+                getattr(settings, "GEMINI_GROUNDED_API_KEY", ""),
+            )
 
         return getattr(settings, "GEMINI_GROUNDED_API_KEY", "")
 

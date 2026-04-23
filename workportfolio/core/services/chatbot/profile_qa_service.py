@@ -5,19 +5,23 @@ from typing import Dict, Any, List, Optional
 from core.models import DocumentChunk
 from core.services.retrieval.scope_resolver import ScopeResolver
 from core.services.retrieval.reranked_vector_retrieval import RerankedVectorRetrievalService
+from core.services.llm.router import LLMRouter
 from core.services.chatbot.extractors import (
 
     try_extract_contact,
     try_extract_preferences,
+    try_extract_experience_duration,
     try_extract_strengths,
     try_extract_capability_with_tool,
     try_extract_project_fit,
+    try_extract_projects_by_technology,
     try_extract_project_list,
     try_extract_skills,
     try_extract_availability,
 
 )
 from core.services.chatbot.grounded_answerer import GroundedAnswerer
+from django.conf import settings
 
 
 class ProfileQAService:
@@ -40,6 +44,261 @@ class ProfileQAService:
         "achievements",
         "career_timeline",
     }
+
+    CHATBOT_PROFILE = {
+        "name": "Samah.ai Assistant",
+        "purpose": (
+            "An AI portfolio assistant that helps visitors learn about "
+            "Samah’s experience, projects, skills, and profile."
+        ),
+        "developer_hint": (
+            "Built as part of the Samah.ai portfolio experience."
+        ),
+        "language_support": "English",
+    }
+
+    @staticmethod
+    def _is_experience_duration_question(question: str) -> bool:
+        q = (question or "").strip().lower()
+
+        direct_markers = [
+            "how many years of experience",
+            "how much experience",
+            "how long has she worked",
+            "how long did she work",
+            "what is her total experience",
+            "how many years has she worked",
+            "years of experience",
+            "total experience",
+            "overall experience",
+            "experience in total",
+            "total years",
+            "how many years she have",
+            "how many years of experience she have",
+        ]
+        if any(marker in q for marker in direct_markers):
+            return True
+
+        # tolerate common misspellings / rough phrasing
+        has_years = "year" in q or "years" in q
+        has_experience_like = any(
+            word in q for word in ["experience", "expirience", "experiance", "exp"]
+        )
+        has_work_like = any(
+            phrase in q for phrase in ["she have", "she has", "she worked", "she work", "worked"]
+        )
+
+        return (has_years and has_experience_like) or (has_experience_like and has_work_like)
+
+    @classmethod
+    def _answer_identity_question(cls, question: str) -> Dict[str, Any]:
+        """Answer identity-related questions about the chatbot.
+
+        Args:
+            question (str): The user's question.
+
+        Returns:
+            Dict[str, Any]: The chatbot's response.
+        """
+        q = (question or "").strip().lower()
+
+        if "who developed you" in q or "who built you" in q or "who made you" in q or "who develop you" in q:
+            answer = (
+                "I am part of the Samah.ai portfolio experience and appear to be "
+                "built as an interactive assistant for presenting Samah’s profile, "
+                "projects, skills, and experience."
+            )
+        elif "what are you" in q or "who are you" in q:
+            answer = (
+                "I’m an AI portfolio assistant for Samah.ai. "
+                "I help answer questions about Samah’s experience, projects, skills, "
+                "and professional profile."
+            )
+        elif "what can you do" in q or "what do you do" in q:
+            answer = (
+                "I can answer questions about Samah’s background, technical skills, "
+                "projects, experience, preferences, and contact-related details based "
+                "on the available portfolio documents and assistant logic."
+            )
+        else:
+            answer = (
+                f"{cls.CHATBOT_PROFILE['name']} is {cls.CHATBOT_PROFILE['purpose']} "
+                f"It appears to be {cls.CHATBOT_PROFILE['developer_hint']}"
+            )
+
+        return {
+            "verdict": "supported",
+            "answer": answer,
+            "bullets": [],
+            "used_sources": [],
+            "meta": {
+                "model_used": None,
+                "tried_models": [],
+                "provider_used": "chatbot_profile",
+                "fallback_used": False,
+                "generation_ok": True,
+                "safe_fallback": False,
+                "error": None,
+                "answer_source": "chatbot_profile",
+                "extractor_used": None,
+                "confidence_boost": 0.0,
+            },
+            "retrieval_debug": [],
+            "applied_filters": None,
+            "debug_chunks_before_llm": [],
+        }
+
+    @classmethod
+    def _answer_capability_inference_question(
+        cls,
+        question: str,
+        chunks: List[DocumentChunk],
+    ) -> Dict[str, Any]:
+        used_sources = cls._build_used_sources(chunks, max_items=3)
+
+        # Keep evidence concise for better LLM reliability
+        compact_chunks = chunks[:3]
+        evidence_text = "\n\n".join(
+            [
+                f"[Source {idx + 1}] {c.document.title} ({getattr(c.document, 'document_type', 'unknown')})\n"
+                f"{(c.content or '')[:900]}"
+                for idx, c in enumerate(compact_chunks)
+            ]
+        )
+
+        system_instruction = (
+            "You are a portfolio assistant.\n"
+            "Answer using the provided evidence.\n"
+            "If the answer is not stated directly, give the closest safe inference and clearly avoid overstating certainty.\n"
+            "Do not invent exact facts.\n"
+            "Be concise, natural, and helpful."
+        )
+
+        prompt = (
+            f"Question: {question}\n\n"
+            f"Evidence:\n{evidence_text}\n\n"
+            "Write one short helpful answer."
+        )
+
+        chain = getattr(
+            settings,
+            "ASSISTED_ANSWER_MODEL_CHAIN",
+            ["deepseek-chat", "gemini-2.5-flash-lite"],
+        )
+
+        ok, text, meta = LLMRouter.generate_text(
+            prompt=prompt,
+            system_instruction=system_instruction,
+            temperature=0.1,
+            model_chain=chain,
+            task=LLMRouter.TASK_GROUNDED_ANSWER,
+        )
+
+        if ok and text and text.strip():
+            answer_text = text.strip()
+        q_low = (question or "").strip().lower()
+
+        multilingual_markers = [
+            "other languages",
+            "other language",
+            "support arabic",
+            "arabic",
+            "multilingual",
+            "languages than english",
+        ]
+
+        if any(marker in q_low for marker in multilingual_markers):
+            lower_answer = answer_text.lower()
+
+            overly_strong_patterns = [
+                "yes, this supports",
+                "this supports other languages",
+                "specifically arabic",
+                "it supports arabic",
+                "supports arabic",
+            ]
+
+            if any(p in lower_answer for p in overly_strong_patterns):
+                answer_text = (
+                    "According to my knowledge, noting explicitly confirm full multilingual support for this chatbot. "
+                    "However, the available evidence suggests that support for other languages, including Arabic, "
+                    "would likely be feasible depending on the implementation and model configuration."
+                )
+
+            return {
+                "verdict": "supported",
+                "answer": text.strip(),
+                "bullets": [],
+                "used_sources": used_sources,
+                "meta": {
+                    "model_used": meta.get("model_used"),
+                    "tried_models": meta.get("tried_models", []),
+                    "provider_used": meta.get("provider"),
+                    "fallback_used": False,
+                    "generation_ok": True,
+                    "safe_fallback": False,
+                    "error": meta.get("error"),
+                    "answer_source": "assisted_inference_llm",
+                    "extractor_used": None,
+                    "confidence_boost": 0.0,
+                    "primary_meta": meta,
+                    "secondary_meta": None,
+                },
+            }
+
+        # Smarter fallback based on question pattern + retrieved evidence
+        q_low = (question or "").strip().lower()
+        source_titles = [src.get("doc_title", "") for src in used_sources]
+        source_types = [src.get("document_type", "") for src in used_sources]
+
+        if "support arabic" in q_low or "support other languages" in q_low or "multilingual" in q_low:
+            fallback_answer = (
+                "The available evidence does not explicitly confirm Arabic or full multilingual support. "
+                "However, the retrieved material suggests that adding support for other languages would likely be feasible "
+                "depending on the implementation and model configuration."
+            )
+        elif "can she build" in q_low or "can samah build" in q_low or "something similar" in q_low:
+            fallback_answer = (
+                "Based on the retrieved evidence, Samah appears capable of building similar solutions. "
+                "The available material shows experience with AI-powered applications, chatbots, backend APIs, "
+                "automation workflows, and full-stack solution delivery."
+            )
+        elif "fit for this" in q_low or "suitable" in q_low:
+            fallback_answer = (
+                "Based on the retrieved evidence, she appears to be a strong fit for this type of AI-focused project. "
+                "The available material points to experience in AI workflows, backend systems, automation, "
+                "chatbots, and practical solution delivery."
+            )
+        else:
+            fallback_answer = (
+                "Based on the available documents, Samah appears able to contribute well in a project management–related role,"
+                " especially where technical coordination is important. The retrieved evidence shows experience translating business requirements into technical"
+                "solutions, supporting project delivery, communicating with stakeholders, and guiding implementation direction."
+            )
+
+        return {
+            "verdict": "supported",
+            "answer": fallback_answer,
+            "bullets": [],
+            "used_sources": used_sources,
+            "meta": {
+                "model_used": meta.get("model_used") if isinstance(meta, dict) else None,
+                "tried_models": meta.get("tried_models", []) if isinstance(meta, dict) else [],
+                "provider_used": meta.get("provider") if isinstance(meta, dict) else None,
+                "fallback_used": True,
+                "generation_ok": False,
+                "safe_fallback": False,
+                "error": meta.get("error") if isinstance(meta, dict) else "assisted_answer_failed",
+                "answer_source": "assisted_inference_fallback",
+                "extractor_used": None,
+                "confidence_boost": 0.0,
+                "primary_meta": meta,
+                "secondary_meta": {
+                    "source_titles": source_titles,
+                    "source_types": source_types,
+                },
+            },
+        }
 
     @staticmethod
     def _build_used_sources(
@@ -97,7 +356,6 @@ class ProfileQAService:
 
         return updated
 
-
     @staticmethod
     def _is_project_list_question(question: str) -> bool:
         q = (question or "").strip().lower()
@@ -124,9 +382,12 @@ class ProfileQAService:
         extractors = [
             try_extract_contact,
             try_extract_preferences,
+            try_extract_experience_duration,
             try_extract_strengths,
+            try_extract_availability,
             try_extract_capability_with_tool,
             try_extract_project_fit,
+            try_extract_projects_by_technology,
             try_extract_project_list,
             try_extract_skills,
             try_extract_availability
@@ -162,15 +423,17 @@ class ProfileQAService:
         cls,
         question: str,
         retrieval_query: str,
+        question_route: Optional[str] = None,
     ) -> tuple[list[DocumentChunk], list[dict], Optional[Dict[str, Any]]]:
         """
-        Retrieve evidence with scope-aware filtering first.
+        Retrieve evidence with route-aware scope filtering first.
 
         Important rule:
         - For strict scopes like CV/contact, keep narrow retrieval if it returns anything.
+        - For route-specific scopes like compensation, keep them narrow first.
         - Only broaden to all docs for broad/weak scopes.
         """
-        filters = ScopeResolver.resolve_filters(question)
+        filters = ScopeResolver.resolve_filters(question, route=question_route)
         filters = cls._augment_filters_for_precision(question, filters)
 
         chunks, retrieval_debug = RerankedVectorRetrievalService.retrieve_relevant_chunks(
@@ -178,11 +441,13 @@ class ProfileQAService:
             filters=filters,
         )
 
-        # If strict scope is already applied and we got any chunks, DO NOT broaden.
         if cls._is_strict_scope(filters) and chunks:
             return chunks, retrieval_debug, filters
 
-        # For broad scope or weak/no scope, fallback to all docs if retrieval is too weak
+        # Compensation should also stay narrow if it already found evidence.
+        if filters and filters.get("document_type") == "compensation" and chunks:
+            return chunks, retrieval_debug, filters
+
         if not chunks or len(chunks) < 3:
             fallback_chunks, fallback_debug = RerankedVectorRetrievalService.retrieve_relevant_chunks(
                 query=retrieval_query,
@@ -194,6 +459,147 @@ class ProfileQAService:
                 retrieval_debug = fallback_debug
 
         return chunks, retrieval_debug, filters
+
+    @classmethod
+    def _answer_compensation_question(
+        cls,
+        question: str,
+        chunks: List[DocumentChunk],
+    ) -> Dict[str, Any]:
+        """
+        Compensation questions should not be answered as capability inference.
+        Prefer a grounded, direct, and cautious response.
+        """
+        used_sources = cls._build_used_sources(chunks, max_items=3)
+
+        joined_text = "\n\n".join((c.content or "")
+                                  for c in chunks[:5]).strip()
+        low = (question or "").strip().lower()
+
+        # Try to detect whether a fixed number is explicitly stated
+        salary_markers = [
+            "aed", "usd", "salary range", "expected salary", "monthly rate",
+            "hourly rate", "daily rate", "package"
+        ]
+        has_explicit_comp = any(marker in joined_text.lower()
+                                for marker in salary_markers)
+
+        if has_explicit_comp:
+            answer = (
+                "Based on the compensation-related documents, there is salary or rate-related information available, "
+                "but it should be presented in the exact wording supported by the retrieved evidence."
+            )
+        else:
+            answer = (
+                "Samah’s documents do not state a fixed salary number. "
+                "They indicate that compensation depends on the role scope, seniority level, technical depth, "
+                "leadership responsibility, and work arrangement."
+            )
+
+        if any(k in low for k in ["freelance", "contract", "project-based"]):
+            answer += (
+                " The documents also indicate openness to freelance or project-based work when the project is well-defined "
+                "and aligned with her technical strengths."
+            )
+
+        return {
+            "verdict": "supported",
+            "answer": answer,
+            "bullets": [],
+            "used_sources": used_sources,
+            "meta": {
+                "model_used": None,
+                "tried_models": [],
+                "provider_used": "compensation_handler",
+                "fallback_used": False,
+                "generation_ok": True,
+                "safe_fallback": False,
+                "error": None,
+                "answer_source": "compensation_handler",
+                "extractor_used": None,
+                "confidence_boost": 0.10,
+                "primary_meta": None,
+                "secondary_meta": None,
+            },
+        }
+
+    @classmethod
+    def _answer_conversation_followup_question(
+        cls,
+        question: str,
+        chunks: List[DocumentChunk],
+        history: Optional[List[Dict[str, Any]]] = None,
+        retrieval_query: Optional[str] = None,
+        retrieval_confidence: Optional[float] = None,
+    ) -> Dict[str, Any]:
+        """
+        Route follow-up questions into the unified grounded answerer.
+        """
+        history = history or []
+        resolved_question = cls._resolve_question_from_history(
+            question=question,
+            retrieval_query=retrieval_query,
+            history=history,
+            question_route="conversation_followup_question",
+        )
+
+        return GroundedAnswerer.answer(
+            current_message=question,
+            resolved_question=resolved_question,
+            conversation_history=history,
+            evidence_chunks=chunks,
+            retrieval_confidence=retrieval_confidence,
+            preferred_source="hybrid",
+        )
+
+    @classmethod
+    def _answer_clarification_question(
+        cls,
+        question: str,
+        chunks: List[DocumentChunk],
+        history: Optional[List[Dict[str, Any]]] = None,
+        retrieval_query: Optional[str] = None,
+        retrieval_confidence: Optional[float] = None,
+    ) -> Dict[str, Any]:
+        """
+        Route clarification questions into the unified grounded answerer.
+        """
+        history = history or []
+        resolved_question = cls._resolve_question_from_history(
+            question=question,
+            retrieval_query=retrieval_query,
+            history=history,
+            question_route="clarification_question",
+        )
+
+        return GroundedAnswerer.answer(
+            current_message=question,
+            resolved_question=resolved_question,
+            conversation_history=history,
+            evidence_chunks=chunks,
+            retrieval_confidence=retrieval_confidence,
+            preferred_source="hybrid",
+        )
+
+    @classmethod
+    def _answer_session_memory_question(
+        cls,
+        question: str,
+        history: Optional[List[Dict[str, Any]]] = None,
+    ) -> Dict[str, Any]:
+        """
+        Route session-memory questions into the grounded answerer in history mode.
+        """
+        history = history or []
+
+        return GroundedAnswerer.answer(
+            current_message=question,
+            resolved_question=question,
+            conversation_history=history,
+            evidence_chunks=[],
+            retrieval_confidence=1.0 if history else 0.0,
+            preferred_source="history",
+        )
 
     @classmethod
     def _normalize_retrieval_query(
@@ -228,7 +634,7 @@ class ProfileQAService:
             return "Samah frameworks Django Django REST Framework FastAPI Flask React Next.js Tailwind CSS LangChain"
 
         return q
-    
+
     @staticmethod
     def _is_contact_question(question: str) -> bool:
         q = (question or "").strip().lower()
@@ -260,8 +666,140 @@ class ProfileQAService:
         ]
 
         return any(marker in q for marker in contact_markers)
-    
-    
+
+    @staticmethod
+    def _resolve_question_from_history(
+        question: str,
+        retrieval_query: Optional[str] = None,
+        history: Optional[List[Dict[str, Any]]] = None,
+        question_route: Optional[str] = None,
+    ) -> str:
+        """
+        Build a more explicit question for retrieval / final answering.
+        For normal fact questions, use retrieval_query or question as-is.
+        For follow-up / clarification questions, enrich using recent history.
+        """
+        question = (question or "").strip()
+        retrieval_query = (retrieval_query or question).strip()
+        history = history or []
+
+        if question_route not in {"conversation_followup_question", "clarification_question"}:
+            return retrieval_query or question
+
+        recent_user_turns = [
+            item.get("content", "").strip()
+            for item in history
+            if item.get("role") == "user" and item.get("content")
+        ]
+        recent_assistant_turns = [
+            item.get("content", "").strip()
+            for item in history
+            if item.get("role") == "assistant" and item.get("content")
+        ]
+
+        previous_user = recent_user_turns[-2] if len(recent_user_turns) >= 2 else (
+            recent_user_turns[-1] if recent_user_turns else ""
+        )
+        previous_answer = recent_assistant_turns[-1] if recent_assistant_turns else ""
+
+        if not previous_user and not previous_answer:
+            return retrieval_query or question
+
+        q_low = question.lower()
+
+        if question_route == "clarification_question":
+            return (
+                f"Clarify this question using earlier conversation context. "
+                f"Current question: {question}. "
+                f"Previous user question: {previous_user}. "
+                f"Previous assistant answer: {previous_answer}."
+            ).strip()
+
+        if any(x in q_low for x in ["cost", "price", "salary", "payment", "rate", "budget"]):
+            return (
+                f"Answer this follow-up compensation-related question in context. "
+                f"Current question: {question}. "
+                f"Previous user question: {previous_user}. "
+                f"Previous assistant answer: {previous_answer}."
+            ).strip()
+
+        return (
+            f"Answer this follow-up question in context. "
+            f"Current question: {question}. "
+            f"Previous user question: {previous_user}. "
+            f"Previous assistant answer: {previous_answer}."
+        ).strip()
+
+    @staticmethod
+    def _estimate_retrieval_confidence(
+        chunks: List[DocumentChunk],
+        retrieval_debug: Optional[List[Dict[str, Any]]] = None,
+    ) -> float:
+        """
+        Lightweight confidence estimate for downstream answering/debugging.
+        """
+        retrieval_debug = retrieval_debug or []
+
+        if not chunks:
+            return 0.0
+
+        if len(chunks) >= 5:
+            return 0.9
+        if len(chunks) >= 3:
+            return 0.75
+        if len(chunks) == 2:
+            return 0.6
+        return 0.45
+
+    @staticmethod
+    def _is_project_technology_question(question: str) -> bool:
+        q = (question or "").strip().lower()
+        markers = [
+            "which projects used",
+            "what projects used",
+            "which project used",
+            "what project used",
+            "projects using",
+            "projects with",
+        ]
+        return any(marker in q for marker in markers)
+
+    @staticmethod
+    def _preferred_source_for_route(question_route: Optional[str]) -> str:
+        """
+        Decide which source should be preferred by the final answerer.
+        """
+        if question_route == "session_memory_question":
+            return "history"
+
+        if question_route in {"profile_docs_question", "capability_inference_question"}:
+            return "documents"
+
+        if question_route == "general_question":
+            return "documents"
+
+        return "documents"
+
+    @classmethod
+    def _get_experience_duration_chunks(cls) -> List[DocumentChunk]:
+        """
+        Fetch richer evidence for total-experience questions.
+
+        We do not want to rely only on semantic retrieval here because
+        summary chunks may omit the explicit date ranges needed for
+        deterministic experience calculation.
+        """
+        qs = (
+            DocumentChunk.objects
+            .select_related("document")
+            .filter(
+                document__is_active=True,
+                document__document_type__in=["cv", "career_timeline"],
+            )
+            .order_by("document__document_type", "document__title", "chunk_index")
+        )
+        return list(qs)
+
     @classmethod
     def _get_all_chunks_for_filters(
         cls,
@@ -278,7 +816,8 @@ class ProfileQAService:
             qs = qs.filter(document__document_type=filters["document_type"])
 
         if filters.get("document_title_contains"):
-            qs = qs.filter(document__title__icontains=filters["document_title_contains"])
+            qs = qs.filter(
+                document__title__icontains=filters["document_title_contains"])
 
         return list(qs.order_by("document__title", "chunk_index"))
 
@@ -287,83 +826,94 @@ class ProfileQAService:
         cls,
         question: str,
         retrieval_query: Optional[str] = None,
+        question_route: Optional[str] = None,
+        history: Optional[List[Dict[str, Any]]] = None,
     ) -> Dict[str, Any]:
+
         question = (question or "").strip()
         retrieval_query = (retrieval_query or question).strip()
-        retrieval_query = cls._normalize_retrieval_query(
-            question, retrieval_query
+        history = history or []
+
+        resolved_question = cls._resolve_question_from_history(
+            question=question,
+            retrieval_query=retrieval_query,
+            history=history,
+            question_route=question_route,
         )
 
-        # Direct strict-path for structured contact fields.
-        # Do not rely on semantic retrieval first for email/phone/contact questions.
-        filters = ScopeResolver.resolve_filters(question)
-        filters = cls._augment_filters_for_precision(question, filters)
-        
-        # Direct path for broad project list questions.
-        # Do not rely on semantic retrieval first for "what projects..." queries,
-        # because retrieval often returns chunks from only one project cluster.
-        if cls._is_project_list_question(question):
-            project_filters = {
-                "document_type": "projects",
-                "only_active_docs": True,
-            }
+        retrieval_query = cls._normalize_retrieval_query(
+            question, resolved_question)
+        preferred_source = cls._preferred_source_for_route(question_route)
 
-            direct_chunks = cls._get_all_chunks_for_filters(project_filters)
+        # Step 1: Special direct handlers before general retrieval
+        if question_route == "identity_question":
+            result = cls._answer_identity_question(question)
+            result["retrieval_query"] = None
+            result["rewrite_notes"] = "route_identity_fast_path"
+            result["retrieval_debug"] = []
+            result["applied_filters"] = None
+            result["debug_chunks_before_llm"] = []
+            return result
 
-            debug_chunks = []
-            for c in direct_chunks[:10]:
-                debug_chunks.append({
-                    "chunk_index": c.chunk_index,
-                    "doc_title": c.document.title,
-                    "document_type": getattr(c.document, "document_type", None),
-                    "content_preview": (c.content or "")[:1200],
-                })
+        if question_route == "session_memory_question":
+            result = cls._answer_session_memory_question(
+                question=question,
+                history=history,
+            )
+            result["retrieval_query"] = None
+            result["rewrite_notes"] = "route_session_memory_history_only"
+            result["retrieval_debug"] = []
+            result["applied_filters"] = None
+            result["debug_chunks_before_llm"] = []
+            return result
 
-            deterministic_result = cls._try_deterministic_answer(question, direct_chunks)
+        # Step 1.5: Special deterministic path for total-experience questions
+        if (
+            question_route == "profile_docs_question"
+            and cls._is_experience_duration_question(question)
+        ):
+            duration_chunks = cls._get_experience_duration_chunks()
+
+            deterministic_result = cls._try_deterministic_answer(
+                question,
+                duration_chunks,
+            )
             if deterministic_result:
                 deterministic_result["retrieval_query"] = retrieval_query
-                deterministic_result["rewrite_notes"] = "local_fast_path"
-                deterministic_result["retrieval_debug"] = []
-                deterministic_result["applied_filters"] = project_filters
-                deterministic_result["debug_chunks_before_llm"] = debug_chunks
+                deterministic_result["rewrite_notes"] = "route_profile_docs_experience_duration_direct"
+                deterministic_result["retrieval_debug"] = [
+                    {
+                        "source": "deterministic_duration_chunk_pool",
+                        "document_type": getattr(c.document, "document_type", None),
+                        "doc_title": c.document.title,
+                        "chunk_index": c.chunk_index,
+                        "chunk_id": str(c.id),
+                    }
+                    for c in duration_chunks[:12]
+                ]
+                deterministic_result["applied_filters"] = {
+                    "document_type__in": ["cv", "career_timeline"],
+                    "only_active_docs": True,
+                    "special_case": "experience_duration_question",
+                }
+                deterministic_result["debug_chunks_before_llm"] = [
+                    {
+                        "chunk_index": c.chunk_index,
+                        "doc_title": c.document.title,
+                        "document_type": getattr(c.document, "document_type", None),
+                        "content_preview": (c.content or "")[:1200],
+                    }
+                    for c in duration_chunks[:8]
+                ]
                 return deterministic_result
 
-        if cls._is_contact_question(question) and cls._is_strict_scope(filters):
-            direct_chunks = cls._get_all_chunks_for_filters(filters)
-
-            debug_chunks = []
-            for c in direct_chunks[:5]:
-                debug_chunks.append({
-                    "chunk_index": c.chunk_index,
-                    "doc_title": c.document.title,
-                    "document_type": getattr(c.document, "document_type", None),
-                    "content_preview": (c.content or "")[:1200],
-                })
-                
-            print("\n[CONTACT DEBUG] filters =", filters)
-            print("[CONTACT DEBUG] direct chunk count =", len(direct_chunks))
-
-            for c in direct_chunks[:10]:
-                print("\n" + "=" * 80)
-                print("chunk_index:", c.chunk_index)
-                print("doc_title:", c.document.title)
-                print((c.content or "")[:1500])
-
-            deterministic_result = cls._try_deterministic_answer(question, direct_chunks)
-            if deterministic_result:
-                deterministic_result["retrieval_query"] = retrieval_query
-                deterministic_result["rewrite_notes"] = "local_fast_path"
-                deterministic_result["retrieval_debug"] = []
-                deterministic_result["applied_filters"] = filters
-                deterministic_result["debug_chunks_before_llm"] = debug_chunks
-                return deterministic_result
-
+        # Step 2: Route-aware retrieval
         chunks, retrieval_debug, filters = cls._retrieve_chunks(
             question=question,
             retrieval_query=retrieval_query,
+            question_route=question_route,
         )
 
-        # TEMP DEBUG: inspect retrieved chunk contents before any extractor or LLM
         debug_chunks = []
         for c in chunks[:5]:
             debug_chunks.append({
@@ -373,24 +923,62 @@ class ProfileQAService:
                 "content_preview": (c.content or "")[:1200],
             })
 
-        deterministic_result = cls._try_deterministic_answer(question, chunks)
-        if deterministic_result:
-            deterministic_result["retrieval_query"] = retrieval_query
-            deterministic_result["rewrite_notes"] = "local_fast_path"
-            deterministic_result["retrieval_debug"] = retrieval_debug
-            deterministic_result["applied_filters"] = filters
-            deterministic_result["debug_chunks_before_llm"] = debug_chunks
-            return deterministic_result
+        retrieval_confidence = cls._estimate_retrieval_confidence(
+            chunks=chunks,
+            retrieval_debug=retrieval_debug,
+        )
 
+        # Step 3: Dedicated route handlers
+        if question_route == "capability_inference_question":
+            result = cls._answer_capability_inference_question(
+                question=question,
+                chunks=chunks,
+            )
+            result["retrieval_query"] = retrieval_query
+            result["rewrite_notes"] = "route_capability_inference"
+            result["retrieval_debug"] = retrieval_debug
+            result["applied_filters"] = filters
+            result["debug_chunks_before_llm"] = debug_chunks
+            return result
+
+        if question_route == "profile_docs_question":
+            deterministic_result = cls._try_deterministic_answer(
+                question, chunks)
+            if deterministic_result:
+                deterministic_result["retrieval_query"] = retrieval_query
+                deterministic_result["rewrite_notes"] = "route_profile_docs_direct"
+                deterministic_result["retrieval_debug"] = retrieval_debug
+                deterministic_result["applied_filters"] = filters
+                deterministic_result["debug_chunks_before_llm"] = debug_chunks
+                return deterministic_result
+
+            result = GroundedAnswerer.answer(
+                current_message=question,
+                resolved_question=resolved_question,
+                conversation_history=history,
+                evidence_chunks=chunks,
+                retrieval_confidence=retrieval_confidence,
+                preferred_source=preferred_source,
+            )
+            result["retrieval_query"] = retrieval_query
+            result["rewrite_notes"] = "route_profile_docs_grounded"
+            result["retrieval_debug"] = retrieval_debug
+            result["applied_filters"] = filters
+            result["debug_chunks_before_llm"] = debug_chunks
+            return result
+
+        # Step 4: General question path
         result = GroundedAnswerer.answer(
-            question=question,
+            current_message=question,
+            resolved_question=resolved_question,
+            conversation_history=history,
             evidence_chunks=chunks,
+            retrieval_confidence=retrieval_confidence,
+            preferred_source=preferred_source,
         )
         result["retrieval_query"] = retrieval_query
-        result["rewrite_notes"] = "local_fast_path"
+        result["rewrite_notes"] = "grounded_answer_unified"
         result["retrieval_debug"] = retrieval_debug
         result["applied_filters"] = filters
         result["debug_chunks_before_llm"] = debug_chunks
-        
-
         return result
