@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import AskAboutMeAPIView, GetInTouchView, ProfileDocumentListAPIView, ProfileDocumentStatsAPIView, ProfileDocumentUploadAPIView, StartProjectRequestView
+from .views import AskAboutMeAPIView, GetInTouchView, ProfileDocumentListAPIView, ProfileDocumentStatsAPIView, ProfileDocumentUploadAPIView, SendChatHistoryEmailAPIView, StartProjectRequestView
 
 urlpatterns = [
     path("contact/start-project/", StartProjectRequestView.as_view(),
@@ -10,4 +10,5 @@ urlpatterns = [
     path("documents/", ProfileDocumentListAPIView.as_view(), name="documents-list"),
     path("documents/<uuid:doc_id>/stats/", ProfileDocumentStatsAPIView.as_view(), name="documents-stats"),
     path("contact/send/", GetInTouchView.as_view(), name="contact-send"),
+    path("chat/send-history/", SendChatHistoryEmailAPIView.as_view(), name="chat-send-history"),
 ]

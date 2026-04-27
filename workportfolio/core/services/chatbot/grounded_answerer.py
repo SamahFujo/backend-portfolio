@@ -602,9 +602,38 @@ Current message:
     def _chunk_budget(question: str) -> int:
         """
         Decide how many chunks to include based on question complexity.
-        Keep this conservative to reduce token usage without hurting quality.
+
+        Recommended:
+        - 4 chunks by default to reduce missed evidence.
+        - 5 chunks for broad/profile/status questions.
+        - 6 chunks maximum for complex overview/comparison questions.
         """
         q = (question or "").strip().lower()
+
+        high_value_markers = [
+            "current",
+            "currently",
+            "working now",
+            "not working now",
+            "available",
+            "availability",
+            "open to work",
+            "contact",
+            "call",
+            "email",
+            "phone",
+            "linkedin",
+            "salary",
+            "compensation",
+            "notice period",
+            "experience",
+            "background",
+            "career",
+            "timeline",
+        ]
+
+        if any(marker in q for marker in high_value_markers):
+            return 5
 
         if any(marker in q for marker in [
             "what certificates",
@@ -614,7 +643,7 @@ Current message:
             "certificates does she have",
             "certifications does she have",
         ]):
-            return 4
+            return 5
 
         if any(marker in q for marker in [
             "what tools",
@@ -628,7 +657,7 @@ Current message:
             "technology stack",
             "tech stack",
         ]):
-            return 4
+            return 5
 
         complex_markers = [
             "compare",
@@ -654,12 +683,12 @@ Current message:
         ]
 
         if any(marker in q for marker in complex_markers):
-            return 4
+            return 6
 
         if any(marker in q for marker in medium_markers):
-            return 3
+            return 5
 
-        return 2
+        return 4
 
     @staticmethod
     def _is_yes_no_question(question: str) -> bool:
@@ -897,6 +926,7 @@ Current message:
         conversation_history: Optional[List[Dict[str, Any]]],
         evidence_chunks: List[DocumentChunk],
         mode: str,
+        instruction_mode: str = "default",
     ) -> Tuple[str, str, bool]:
         """
         Build a prompt that uses both recent conversation history
@@ -920,9 +950,23 @@ Current message:
             "Do not invent facts. "
             "If evidence is incomplete, state only what is supported and avoid guessing. "
             "If evidence is insufficient, return not_enough_evidence. "
+            "For current employment or work-status questions, if evidence includes an ended employment period, mention that ended role separately from current employment status. "
+            "Do not conclude unemployment unless the evidence explicitly says so. "
             "Return raw JSON only. "
             "Do not mention retrieval, chunks, or internal processing."
         )
+
+        if instruction_mode == "capability_inference":
+            system_instruction += (
+                " You are answering a capability or suitability question about Samah. "
+                "Answer the exact capability asked by the user. "
+                "Do not switch to another role, skill, or topic. "
+                "Use only the provided evidence. "
+                "If the evidence is partial, say 'based on the available evidence'. "
+                "If evidence shows related skills but not direct proof, explain the relation carefully. "
+                "Do not invent certifications, years, employers, or exact experience. "
+                "Keep the answer helpful, natural, and concise."
+            )
 
         if mode == "small":
             prompt = (
@@ -1073,6 +1117,7 @@ Current message:
         conversation_history: Optional[List[Dict[str, Any]]],
         evidence_chunks: List[DocumentChunk],
         answer_mode: str,
+        instruction_mode: str = "default",
     ) -> Tuple[bool, Dict[str, Any], Dict[str, Any], Dict[str, Any]]:
         deepseek_success, deepseek_result, deepseek_meta = cls._call_deepseek(
             current_message=current_message,
@@ -1080,6 +1125,7 @@ Current message:
             conversation_history=conversation_history,
             evidence_chunks=evidence_chunks,
             answer_mode=answer_mode,
+            instruction_mode=instruction_mode,
         )
         if deepseek_success:
             return True, deepseek_result, deepseek_meta, {}
@@ -1090,6 +1136,7 @@ Current message:
             conversation_history=conversation_history,
             evidence_chunks=evidence_chunks,
             answer_mode=answer_mode,
+            instruction_mode=instruction_mode,
         )
         if gemini_success:
             return True, gemini_result, deepseek_meta, gemini_meta
@@ -1105,6 +1152,7 @@ Current message:
         conversation_history: Optional[List[Dict[str, Any]]],
         evidence_chunks: List[DocumentChunk],
         answer_mode: str,
+        instruction_mode: str = "default",
     ) -> Tuple[bool, Dict[str, Any], Dict[str, Any], Dict[str, Any]]:
         gemini_success, gemini_result, gemini_meta = cls._call_gemini_with_retry(
             current_message=current_message,
@@ -1112,6 +1160,7 @@ Current message:
             conversation_history=conversation_history,
             evidence_chunks=evidence_chunks,
             answer_mode=answer_mode,
+            instruction_mode=instruction_mode,
         )
         if gemini_success:
             return True, gemini_result, gemini_meta, {}
@@ -1122,6 +1171,7 @@ Current message:
             conversation_history=conversation_history,
             evidence_chunks=evidence_chunks,
             answer_mode=answer_mode,
+            instruction_mode=instruction_mode,
         )
         if deepseek_success:
             return True, deepseek_result, gemini_meta, deepseek_meta
@@ -1134,6 +1184,7 @@ Current message:
         question: str,
         evidence_chunks: List[DocumentChunk],
         mode: str,
+        instruction_mode: str = "default",
     ) -> Tuple[str, str, bool]:
         """
         Build a prompt for document-grounded answering only.
@@ -1152,9 +1203,23 @@ Current message:
             "Do not invent facts. "
             "If evidence is incomplete, state only what is supported and avoid guessing. "
             "If evidence is insufficient, return not_enough_evidence. "
+            "For current employment or work-status questions, if evidence includes an ended employment period, mention that ended role separately from current employment status. "
+            "Do not conclude unemployment unless the evidence explicitly says so. "
             "Return raw JSON only. "
             "Do not mention retrieval, chunks, or internal processing."
         )
+
+        if instruction_mode == "capability_inference":
+            system_instruction += (
+                " You are answering a capability or suitability question about Samah. "
+                "Answer the exact capability asked by the user. "
+                "Do not switch to another role, skill, or topic. "
+                "Use only the provided evidence. "
+                "If the evidence is partial, say 'based on the available evidence'. "
+                "If evidence shows related skills but not direct proof, explain the relation carefully. "
+                "Do not invent certifications, years, employers, or exact experience. "
+                "Keep the answer helpful, natural, and concise."
+            )
 
         if mode == "small":
             prompt = (
@@ -1217,6 +1282,7 @@ Current message:
         conversation_history: Optional[List[Dict[str, Any]]],
         evidence_chunks: List[DocumentChunk],
         answer_mode: str,
+        instruction_mode: str = "default",
         model_chain: List[str],
         provider_name: str,
     ) -> Tuple[bool, Dict[str, Any], Dict[str, Any]]:
@@ -1263,7 +1329,6 @@ Current message:
                 },
                 "required": ["verdict", "answer", "bullets", "used_chunk_indices"]
             }
-
         if answer_mode == "hybrid":
             system_instruction, prompt, is_yes_no = cls._build_hybrid_prompt(
                 current_message=current_message,
@@ -1271,10 +1336,14 @@ Current message:
                 conversation_history=conversation_history,
                 evidence_chunks=selected_chunks,
                 mode=mode,
+                instruction_mode=instruction_mode,
             )
         else:
             system_instruction, prompt, is_yes_no = cls._build_prompt(
-                question_for_reasoning, selected_chunks, mode
+                question_for_reasoning,
+                selected_chunks,
+                mode,
+                instruction_mode=instruction_mode,
             )
 
         ok, text, meta = LLMRouter.generate_json(
@@ -1288,6 +1357,7 @@ Current message:
 
         meta = meta or {}
         meta["provider_used"] = provider_name
+        meta["instruction_mode"] = instruction_mode
         meta["answer_mode"] = answer_mode
 
         if not ok:
@@ -1394,6 +1464,7 @@ Current message:
         conversation_history: Optional[List[Dict[str, Any]]],
         evidence_chunks: List[DocumentChunk],
         answer_mode: str,
+        instruction_mode: str = "default",
     ) -> Tuple[bool, Dict[str, Any], Dict[str, Any]]:
         """
         Primary provider: Gemini
@@ -1414,6 +1485,7 @@ Current message:
                 conversation_history=conversation_history,
                 evidence_chunks=evidence_chunks,
                 answer_mode=answer_mode,
+                instruction_mode=instruction_mode,
                 model_chain=gemini_chain,
                 provider_name="gemini",
             )
@@ -1438,6 +1510,7 @@ Current message:
         conversation_history: Optional[List[Dict[str, Any]]],
         evidence_chunks: List[DocumentChunk],
         answer_mode: str,
+        instruction_mode: str = "default",
     ) -> Tuple[bool, Dict[str, Any], Dict[str, Any]]:
         """
         Secondary provider: DeepSeek
@@ -1452,6 +1525,7 @@ Current message:
             conversation_history=conversation_history,
             evidence_chunks=evidence_chunks,
             answer_mode=answer_mode,
+            instruction_mode=instruction_mode,
             model_chain=deepseek_chain,
             provider_name="deepseek",
         )
@@ -1466,19 +1540,14 @@ Current message:
         evidence_chunks: Optional[List[DocumentChunk]] = None,
         retrieval_confidence: Optional[float] = None,
         preferred_source: Optional[str] = None,
+        answer_mode: str = "default",
     ) -> Dict[str, Any]:
-        """
-        Main answer entry point.
 
-        Supports:
-        - history_only
-        - documents_only
-        - hybrid
-        """
         evidence_chunks = evidence_chunks or []
         conversation_history = conversation_history or []
-        resolved_question = (
-            resolved_question or current_message or "").strip()
+        resolved_question = (resolved_question or current_message or "").strip()
+
+        instruction_mode = answer_mode or "default"
 
         answer_mode = cls._resolve_answer_mode(
             preferred_source=preferred_source,
@@ -1556,6 +1625,7 @@ Current message:
                 conversation_history=conversation_history,
                 evidence_chunks=evidence_chunks,
                 answer_mode=answer_mode,
+                instruction_mode=instruction_mode,
             )
             if success:
                 result["meta"]["retrieval_confidence"] = retrieval_confidence
@@ -1567,6 +1637,7 @@ Current message:
                 conversation_history=conversation_history,
                 evidence_chunks=evidence_chunks,
                 answer_mode=answer_mode,
+                instruction_mode=instruction_mode,
             )
             if success:
                 result["meta"]["retrieval_confidence"] = retrieval_confidence
@@ -1587,6 +1658,7 @@ Current message:
                 "error": "all_grounded_providers_failed",
                 "routing_strategy": strategy,
                 "answer_mode": answer_mode,
+                "instruction_mode": instruction_mode,
                 "retrieval_confidence": retrieval_confidence,
             },
         )

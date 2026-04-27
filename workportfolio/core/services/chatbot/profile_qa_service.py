@@ -148,157 +148,29 @@ class ProfileQAService:
             "debug_chunks_before_llm": [],
         }
 
-    @classmethod
-    def _answer_capability_inference_question(
-        cls,
-        question: str,
-        chunks: List[DocumentChunk],
-    ) -> Dict[str, Any]:
-        used_sources = cls._build_used_sources(chunks, max_items=3)
+    @staticmethod
+    def _is_current_work_status_question(question: str) -> bool:
+        q = (question or "").strip().lower()
 
-        # Keep evidence concise for better LLM reliability
-        compact_chunks = chunks[:3]
-        evidence_text = "\n\n".join(
-            [
-                f"[Source {idx + 1}] {c.document.title} ({getattr(c.document, 'document_type', 'unknown')})\n"
-                f"{(c.content or '')[:900]}"
-                for idx, c in enumerate(compact_chunks)
-            ]
-        )
-
-        system_instruction = (
-            "You are a portfolio assistant.\n"
-            "Answer using the provided evidence.\n"
-            "If the answer is not stated directly, give the closest safe inference and clearly avoid overstating certainty.\n"
-            "Do not invent exact facts.\n"
-            "Be concise, natural, and helpful."
-        )
-
-        prompt = (
-            f"Question: {question}\n\n"
-            f"Evidence:\n{evidence_text}\n\n"
-            "Write one short helpful answer."
-        )
-
-        chain = getattr(
-            settings,
-            "ASSISTED_ANSWER_MODEL_CHAIN",
-            ["deepseek-chat", "gemini-2.5-flash-lite"],
-        )
-
-        ok, text, meta = LLMRouter.generate_text(
-            prompt=prompt,
-            system_instruction=system_instruction,
-            temperature=0.1,
-            model_chain=chain,
-            task=LLMRouter.TASK_GROUNDED_ANSWER,
-        )
-
-        if ok and text and text.strip():
-            answer_text = text.strip()
-        q_low = (question or "").strip().lower()
-
-        multilingual_markers = [
-            "other languages",
-            "other language",
-            "support arabic",
-            "arabic",
-            "multilingual",
-            "languages than english",
+        markers = [
+            "working now",
+            "not working now",
+            "currently working",
+            "currently employed",
+            "current job",
+            "current role",
+            "still working",
+            "is she working",
+            "she is not working",
+            "she is unemployed",
+            "employment status",
+            "work status",
+            "available now",
+            "open to work",
+            "open to opportunities",
         ]
 
-        if any(marker in q_low for marker in multilingual_markers):
-            lower_answer = answer_text.lower()
-
-            overly_strong_patterns = [
-                "yes, this supports",
-                "this supports other languages",
-                "specifically arabic",
-                "it supports arabic",
-                "supports arabic",
-            ]
-
-            if any(p in lower_answer for p in overly_strong_patterns):
-                answer_text = (
-                    "According to my knowledge, noting explicitly confirm full multilingual support for this chatbot. "
-                    "However, the available evidence suggests that support for other languages, including Arabic, "
-                    "would likely be feasible depending on the implementation and model configuration."
-                )
-
-            return {
-                "verdict": "supported",
-                "answer": text.strip(),
-                "bullets": [],
-                "used_sources": used_sources,
-                "meta": {
-                    "model_used": meta.get("model_used"),
-                    "tried_models": meta.get("tried_models", []),
-                    "provider_used": meta.get("provider"),
-                    "fallback_used": False,
-                    "generation_ok": True,
-                    "safe_fallback": False,
-                    "error": meta.get("error"),
-                    "answer_source": "assisted_inference_llm",
-                    "extractor_used": None,
-                    "confidence_boost": 0.0,
-                    "primary_meta": meta,
-                    "secondary_meta": None,
-                },
-            }
-
-        # Smarter fallback based on question pattern + retrieved evidence
-        q_low = (question or "").strip().lower()
-        source_titles = [src.get("doc_title", "") for src in used_sources]
-        source_types = [src.get("document_type", "") for src in used_sources]
-
-        if "support arabic" in q_low or "support other languages" in q_low or "multilingual" in q_low:
-            fallback_answer = (
-                "The available evidence does not explicitly confirm Arabic or full multilingual support. "
-                "However, the retrieved material suggests that adding support for other languages would likely be feasible "
-                "depending on the implementation and model configuration."
-            )
-        elif "can she build" in q_low or "can samah build" in q_low or "something similar" in q_low:
-            fallback_answer = (
-                "Based on the retrieved evidence, Samah appears capable of building similar solutions. "
-                "The available material shows experience with AI-powered applications, chatbots, backend APIs, "
-                "automation workflows, and full-stack solution delivery."
-            )
-        elif "fit for this" in q_low or "suitable" in q_low:
-            fallback_answer = (
-                "Based on the retrieved evidence, she appears to be a strong fit for this type of AI-focused project. "
-                "The available material points to experience in AI workflows, backend systems, automation, "
-                "chatbots, and practical solution delivery."
-            )
-        else:
-            fallback_answer = (
-                "Based on the available documents, Samah appears able to contribute well in a project management–related role,"
-                " especially where technical coordination is important. The retrieved evidence shows experience translating business requirements into technical"
-                "solutions, supporting project delivery, communicating with stakeholders, and guiding implementation direction."
-            )
-
-        return {
-            "verdict": "supported",
-            "answer": fallback_answer,
-            "bullets": [],
-            "used_sources": used_sources,
-            "meta": {
-                "model_used": meta.get("model_used") if isinstance(meta, dict) else None,
-                "tried_models": meta.get("tried_models", []) if isinstance(meta, dict) else [],
-                "provider_used": meta.get("provider") if isinstance(meta, dict) else None,
-                "fallback_used": True,
-                "generation_ok": False,
-                "safe_fallback": False,
-                "error": meta.get("error") if isinstance(meta, dict) else "assisted_answer_failed",
-                "answer_source": "assisted_inference_fallback",
-                "extractor_used": None,
-                "confidence_boost": 0.0,
-                "primary_meta": meta,
-                "secondary_meta": {
-                    "source_titles": source_titles,
-                    "source_types": source_types,
-                },
-            },
-        }
+        return any(marker in q for marker in markers)
 
     @staticmethod
     def _build_used_sources(
@@ -607,10 +479,19 @@ class ProfileQAService:
         question: str,
         retrieval_query: str,
     ) -> str:
-        q = (retrieval_query or question).strip()
+        """
+        Convert a natural user question into a retrieval-friendly query.
+
+        Important:
+        - This does NOT answer the user directly.
+        - This only improves vector search quality.
+        - The final answer still comes from retrieved evidence.
+        """
+        q = (retrieval_query or question or "").strip()
         lower_q = q.lower()
 
-        # Keep project/tool-specific questions as-is
+        # Keep project/tool-specific questions as-is.
+        # These questions usually need exact project/tool wording.
         if any(k in lower_q for k in [
             "used to build",
             "built with",
@@ -620,6 +501,25 @@ class ProfileQAService:
             "frameworks used in",
         ]):
             return q
+        
+        if cls._is_current_work_status_question(question) or cls._is_current_work_status_question(q):
+            return (
+                "Samah current employment status current role current job "
+                "currently working currently employed not working now availability "
+                "open to work open to opportunities employment ended last working date "
+                "experience letter career timeline compensation availability"
+            )
+
+        # Contact / call / reach questions.
+        # Example:
+        # "if i want to call her to discuss further what should i do"
+        # becomes a better retrieval query for contact-related chunks.
+        if cls._is_contact_question(question) or cls._is_contact_question(q):
+            return (
+                "Samah contact details email phone mobile LinkedIn portfolio website "
+                "how to contact Samah reach Samah call Samah discuss further "
+                "schedule a call communicate with Samah"
+            )
 
         if "tech stack" in lower_q:
             return (
@@ -631,7 +531,10 @@ class ProfileQAService:
             return "Samah technical skills technologies frameworks tools"
 
         if "frameworks" in lower_q:
-            return "Samah frameworks Django Django REST Framework FastAPI Flask React Next.js Tailwind CSS LangChain"
+            return (
+                "Samah frameworks Django Django REST Framework FastAPI Flask "
+                "React Next.js Tailwind CSS LangChain"
+            )
 
         return q
 
@@ -906,6 +809,11 @@ class ProfileQAService:
                     for c in duration_chunks[:8]
                 ]
                 return deterministic_result
+            
+        retrieval_query = cls._normalize_retrieval_query(
+            question=question,
+            retrieval_query=retrieval_query,
+        )
 
         # Step 2: Route-aware retrieval
         chunks, retrieval_debug, filters = cls._retrieve_chunks(
@@ -930,12 +838,17 @@ class ProfileQAService:
 
         # Step 3: Dedicated route handlers
         if question_route == "capability_inference_question":
-            result = cls._answer_capability_inference_question(
-                question=question,
-                chunks=chunks,
+            result = GroundedAnswerer.answer(
+                current_message=question,
+                resolved_question=resolved_question,
+                conversation_history=history,
+                evidence_chunks=chunks,
+                retrieval_confidence=retrieval_confidence,
+                preferred_source="documents",
             )
+
             result["retrieval_query"] = retrieval_query
-            result["rewrite_notes"] = "route_capability_inference"
+            result["rewrite_notes"] = "route_capability_inference_grounded"
             result["retrieval_debug"] = retrieval_debug
             result["applied_filters"] = filters
             result["debug_chunks_before_llm"] = debug_chunks

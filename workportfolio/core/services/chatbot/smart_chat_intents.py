@@ -175,11 +175,50 @@ class SmartChatIntentService:
         re.I,
     )
 
+    _ack_hint = re.compile(
+        r"^\s*("
+        r"ok|okay|okk|k|kk|"
+        r"got it|got you|understood|noted|alright|all right|"
+        r"sure|fine|cool|perfect|great|sounds good|makes sense|"
+        r"تمام|اوكي|أوكي|ماشي|زين|حسنا|حسنًا"
+        r")\s*[.!؟?]*\s*$",
+        re.I,
+    )
+
+    _pause_hint = re.compile(
+        r"^\s*("
+        r"wait|wait wait|hold on|one sec|one second|give me a second|"
+        r"give me a moment|moment|pause|stop|let me check|"
+        r"انتظر|لحظة|ثواني|وقف|توقف"
+        r")\s*[.!؟?]*\s*$",
+        re.I,
+    )
+
+    _positive_reaction_hint = re.compile(
+        r"^\s*("
+        r"that'?s good|that is good|this is good|"
+        r"that'?s great|that is great|this is great|"
+        r"nice|very nice|good|great|cool|awesome|amazing|excellent|perfect|"
+        r"i like it|love it|looks good|sounds good|"
+        r"جميل|ممتاز|حلو|وايد زين|زين|تمام"
+        r")\s*[.!؟?]*\s*$",
+        re.I,
+    )
+
     _arabic_greet_hint = re.compile(r"\b(السلام عليكم|مرحبا|هلا)\b", re.I)
     _arabic_bye_hint = re.compile(r"\b(مع السلامه|سلام)\b", re.I)
     _arabic_thanks_hint = re.compile(r"\b(شكرا|مشكور)\b", re.I)
 
-    ALLOWED_INTENTS = {"greeting", "goodbye", "thanks", "help", "other"}
+    ALLOWED_INTENTS = {
+        "greeting",
+        "goodbye",
+        "thanks",
+        "help",
+        "acknowledgement",
+        "positive_reaction",
+        "pause",
+        "other",
+    }
 
     ALLOWED_ROUTES = {
         "identity_question",
@@ -207,7 +246,24 @@ class SmartChatIntentService:
             "show my last", "summarize what we discussed",
             "what did we discuss", "in this session", "in this chat",
         ]
+
         if any(marker in low for marker in direct_markers):
+            return True
+
+        topic_memory_patterns = [
+            r"\bwhat was my question about\b",
+            r"\bwhat did i ask about\b",
+            r"\bwhat was i asking about\b",
+            r"\bwhat did we discuss about\b",
+            r"\bwhat did you say about\b",
+            r"\bwhat was your answer about\b",
+            r"\bremind me what i asked about\b",
+            r"\bremind me what we discussed about\b",
+            r"\bsummarize what we discussed about\b",
+            r"\brecap what we discussed about\b",
+        ]
+
+        if any(re.search(pattern, low) for pattern in topic_memory_patterns):
             return True
 
         ordinal_words = [
@@ -357,13 +413,20 @@ class SmartChatIntentService:
             "goodbye": 0.0,
             "thanks": 0.0,
             "help": 0.0,
+            "acknowledgement": 0.0,
+            "pause": 0.0,
+            "positive_reaction": 0.0,
             "other": 0.0,
+
         }
 
         if token_count <= 3 or char_count <= 15:
             scores["greeting"] += 0.15
             scores["thanks"] += 0.10
             scores["goodbye"] += 0.10
+            scores["acknowledgement"] += 0.10
+            scores["positive_reaction"] += 0.10
+            scores["pause"] += 0.10
 
         if has_emoji:
             scores["greeting"] += 0.10
@@ -378,8 +441,17 @@ class SmartChatIntentService:
         if cls._thanks_hint.search(text) or cls._arabic_thanks_hint.search(text):
             scores["thanks"] += 0.50
 
+        if cls._positive_reaction_hint.search(text):
+            scores["positive_reaction"] += 0.70
+
         if cls._help_hint.search(text):
             scores["help"] += 0.55
+
+        if cls._ack_hint.search(text):
+            scores["acknowledgement"] += 0.60
+
+        if cls._pause_hint.search(text):
+            scores["pause"] += 0.65
 
         if cls._profile_question_hint.search(text):
             scores["help"] -= 0.35
@@ -406,20 +478,26 @@ class SmartChatIntentService:
     @classmethod
     def _should_use_llm_for_quick_intent(cls, msg: str, heuristic: Dict[str, Any]) -> bool:
         tokens = re.findall(r"\b\w+\b", msg.lower().strip())
+        token_count = len(tokens)
 
-        # Avoid wasting LLM calls on long real-content questions.
-        if len(tokens) > 10:
+        # Do not waste LLM calls on long real-content questions.
+        if token_count > 10:
             return False
 
-        # If heuristic already thinks it is normal content, do not call LLM.
-        if heuristic["intent"] == "other" and heuristic["confidence"] >= 0.6:
+        # If heuristic is already confident, no need for LLM.
+        if heuristic["confidence"] >= 0.75 and heuristic["intent"] != "other":
             return False
 
-        # Only call LLM when heuristic is uncertain.
-        if heuristic["confidence"] >= 0.75:
-            return False
+        # Short ambiguous messages are exactly where LLM helps:
+        # "ok", "got it", "wait", "sure", "continue", "what?", etc.
+        if token_count <= 5:
+            return True
 
-        return True
+        # Medium short messages can also be classified if heuristic is uncertain.
+        if heuristic["confidence"] < 0.70:
+            return True
+
+        return False
 
     @classmethod
     def _llm_classify_quick_intent(cls, msg: str) -> Dict[str, Any]:
@@ -428,15 +506,28 @@ class SmartChatIntentService:
         This still uses your router, but does not assume a specific provider.
         """
         system_instruction = (
-            "Classify the user's message into exactly one quick chat intent.\n"
-            "Allowed intents: greeting, goodbye, thanks, help, other.\n"
-            "Return JSON only."
+            "Classify the user's message into exactly one quick chat intent for a portfolio chatbot.\n"
+            "Allowed intents: greeting, goodbye, thanks, help, acknowledgement, pause, other.\n\n"
+            "Definitions:\n"
+            "- greeting: the user is opening the conversation or saying hello. This includes multilingual greetings like 'ciao', 'chao', 'hola', 'bonjour', 'salam', and 'marhaba'.\n"
+            "- goodbye: the user is ending the conversation.\n"
+            "- thanks: the user is expressing gratitude.\n"
+            "- help: the user asks what the chatbot can do, how it works, or asks for example questions.\n"
+            "- acknowledgement: the user only confirms, accepts, or acknowledges, such as 'ok', 'got it', 'sounds good', 'understood'.\n"
+            "- pause: the user asks to wait, pause, stop briefly, or give them a moment.\n"
+            "- other: real questions, profile questions, technical questions, or anything that needs normal routing.\n\n"
+            "Important rules:\n"
+            "- Do not classify profile questions as help.\n"
+            "- Do not classify acknowledgements like 'ok' or 'got it' as help.\n"
+            "- Do not classify pause messages like 'wait wait' as help.\n"
+            "- If the user sends only 'ciao', 'chao', 'hola', 'salam', or 'marhaba' at the start of a conversation, classify it as greeting.\n"
+            "- Return JSON only."
         )
 
         prompt = (
             "Return JSON exactly like this:\n"
             "{"
-            "\"intent\":\"greeting|goodbye|thanks|help|other\","
+            "\"intent\":\"greeting|goodbye|thanks|help|acknowledgement|pause|other\","
             "\"confidence\":0.0"
             "}\n\n"
             f"Message: {msg}"
@@ -447,7 +538,15 @@ class SmartChatIntentService:
             "properties": {
                 "intent": {
                     "type": "string",
-                    "enum": ["greeting", "goodbye", "thanks", "help", "other"],
+                    "enum": [
+                        "greeting",
+                        "goodbye",
+                        "thanks",
+                        "help",
+                        "acknowledgement",
+                        "pause",
+                        "other",
+                    ],
                 },
                 "confidence": {"type": "number"},
             },
@@ -642,13 +741,17 @@ class SmartChatIntentService:
             "- general_question\n\n"
             "Definitions:\n"
             "1) identity_question: asks explicitly about the chatbot/assistant itself, such as'who built you', 'what are you', 'what can you do', or 'how do you work'.\n"
-            "2) session_memory_question: asks about earlier messages in the current conversation or session.\n"
+            "2) session_memory_question: asks about earlier messages in the current conversation or session. "
+            "This includes questions like 'what was my second question', 'what did I ask before', "
+            "'what was my question about project management', 'what did we discuss about Django', "
+            "'what did you say about cost', or 'summarize our discussion about freelance'.\n"
             "3) profile_docs_question: asks about Samah's profile, background, projects, skills, experience, certifications, contact details, availability, compensation, work style, strengths, impact, or any document-grounded professional information.\n"
             "This includes both broad requests like 'tell me more about samah' and specific requests like 'what is her email' or 'which projects used Django'.\n"
             "4) capability_inference_question: asks whether Samah, the chatbot, or a system/project can support, handle, build, extend, scale, fit, or help with something.\n"
             "5) general_question: anything else.\n\n"
             "Important rules:\n"
             "- Broad profile questions about Samah should be profile_docs_question, not general_question.\n"
+            "- If the user asks what they previously asked, what you previously answered, or what was discussed about a topic in this chat, classify as session_memory_question.\n"
             "- Specific profile facts should also be profile_docs_question.\n"
             "- Questions asking if something CAN be done, supported, built, extended, or handled should usually be capability_inference_question.\n"
             "- If the user asks about contact details, experience, projects, availability, skills or background using words like 'you' or 'your', interpret that as Samah/profile_docs_question unless the user clearly means the chatbot itself.\n"
@@ -908,8 +1011,6 @@ class SmartChatIntentService:
             raw_label="default_general",
         )
 
-
-
     _INTENT_REPLIES: Dict[str, List[str]] = {
         "greeting": [
             "Hi! 👋 You can ask me about Samah’s experience, projects, technical skills, or contact details.",
@@ -934,6 +1035,37 @@ class SmartChatIntentService:
             "You can ask me about Samah’s profile using her uploaded CV and documents. For example: “What AI technologies has she worked with?”, “What projects has she built?”, or “How can I reach her?”",
             "I’m here to answer questions about Samah’s background, experience, skills, and projects based on her uploaded documents. Try asking: “What is her experience with AI?”, “Which projects involved Django?”, or “What are her contact details?”",
             "Feel free to ask about Samah’s professional experience, technical stack, projects, or achievements. For example: “What are her key strengths?”, “What technologies does she use?”, or “How can I contact her?”",
+        ],
+        "acknowledgement": [
+            "Got it 😊",
+            "Sure 😊",
+            "Okay, I’m here when you’re ready.",
+            "No problem.",
+            "Understood.",
+            "Sounds good.",
+            "any other questions about Samah’s profile or experience I can help with?",
+            "Let me know if you want to explore more about Samah’s projects, skills, or background.",
+            "Feel free to ask more about Samah’s experience, technical skills, or contact details whenever you like.",
+            "I’m here to help you learn more about Samah’s professional profile, so just ask if you have any questions!",
+            "If you want to know more about Samah’s experience, projects, or skills, just let me know!",
+            "Great 😊 Let me know if you’d like to explore more about Samah’s skills, projects, experience, or contact details.",
+            "Perfect! You can ask me anything about Samah’s projects, technical skills, work experience, or availability.",
+            "Sounds good 😊 I’m here if you’d like to know more about Samah’s background, projects, or how to contact her.",
+            "Got it! Feel free to ask more about Samah’s experience, AI projects, skills, or professional profile.",
+            "Okay 😊 What would you like to know more about Samah?",
+            ""
+
+        ],
+        "pause": [
+            "Sure, take your time.",
+            "No worries, I’ll wait.",
+            "Of course — take a moment.",
+            "No problem, I’m here when you’re ready.",
+        ],
+        "positive_reaction": [
+            "Glad you think so 😊",
+            "Happy you liked it 😊",
+            "That’s great to hear 😊",
         ],
     }
 
