@@ -46,7 +46,7 @@ class ScopeResolver:
     COMPENSATION = re.compile(
         r"\b("
         r"salary|payment|compensation|compansation|expected salary|salary range|pay range|"
-        r"rate|hourly rate|daily rate|monthly rate|package|"
+        r"hourly rate|daily rate|monthly rate|freelance rate|consulting rate|project rate|package|"
         r"cost|price|pricing|budget|quote|quotation|"
         r"availability|available|remote|hybrid|on-site|onsite|"
         r"freelance|contract|full-time|open to work|notice period|"
@@ -63,6 +63,17 @@ class ScopeResolver:
         r"tool|tools|technology|technologies|framework|frameworks|stack|tech stack|"
         r"worked with|experience with|used|use|built with|used to build|frontend|backend"
         r")\b",
+        re.I,
+    )
+
+    SKILL_RATING = re.compile(
+        r"("
+        r"\brate\s+(samah|her|she)\s+(in|on|for)\s+"
+        r"|"
+        r"\b(score|evaluate)\s+(samah|her|she)\b"
+        r"|"
+        r"\b(1\s*-\s*10|1\s+to\s+10|out of 10|/10)\b"
+        r")",
         re.I,
     )
 
@@ -111,6 +122,16 @@ class ScopeResolver:
         return bool(cls.PROJECT.search(msg)) and bool(cls.TECH_EXPERIENCE.search(msg))
 
     @classmethod
+    def _is_skill_rating_question(cls, msg: str) -> bool:
+        """
+        Detect skill evaluation questions such as:
+        - rate Samah in Python from 1-10
+        - score her Django skill out of 10
+        - evaluate Samah in React
+        """
+        return bool(cls.SKILL_RATING.search(msg)) and bool(cls.TECH_EXPERIENCE.search(msg))
+
+    @classmethod
     def resolve_filters(cls, message: str, route: str | None = None):
         msg = (message or "").strip()
         if not msg:
@@ -142,11 +163,11 @@ class ScopeResolver:
                 "only_active_docs": True,
             }
 
-        if cls.COMPENSATION.search(msg):
+        if cls._is_skill_rating_question(msg):
             return {
-                "document_type": "compensation",
                 "only_active_docs": True,
             }
+
 
         if cls.CAPABILITIES.search(msg):
             return {

@@ -35,6 +35,24 @@ class SmartIntentResult:
     source: str  # heuristic | llm
 
 
+@dataclass(frozen=True)
+class ConversationalResponseResult:
+    handled: bool
+    category: str
+    reply: str
+    confidence: float
+    source: str
+
+
+@dataclass(frozen=True)
+class UiActionIntentResult:
+    intent: str  # contact_capture | send_history_email | none
+    confidence: float
+    source: str  # local_gate | local_confident | llm | local_fallback
+    reason: str = ""
+    email: Optional[str] = None
+
+
 class SmartChatIntentService:
     """
     Smart chat intent + question route service.
@@ -228,6 +246,815 @@ class SmartChatIntentService:
         "general_question",
     }
 
+    ALLOWED_UI_ACTION_INTENTS = {
+        "contact_capture",
+        "send_history_email",
+        "none",
+    }
+
+    ALLOWED_CONVERSATIONAL_CATEGORIES = {
+        "none",
+        "help",
+        "bot_behavior_concern",
+        "off_topic_request",
+        "small_talk",
+        "scope_question",
+    }
+
+    @staticmethod
+    def _extract_email_from_text(message: str) -> Optional[str]:
+        """
+        Extract an email address if the user already typed it.
+        Example:
+        - "send this chat to me at test@example.com"
+        """
+        text = (message or "").strip()
+
+        match = re.search(
+            r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}",
+            text,
+        )
+
+        return match.group(0) if match else None
+
+    @staticmethod
+    def _may_need_ui_action_classifier(message: str) -> bool:
+        """
+        Cheap pre-check only.
+
+        This does not make the final decision.
+        It only decides whether the message is close enough to:
+        - contact capture
+        - send conversation history by email
+        """
+        q = (message or "").strip().lower()
+
+        if not q:
+            return False
+
+        if SmartChatIntentService._looks_like_session_memory_question(q):
+            if not any(term in q for term in ["send", "email", "mail", "forward", "export"]):
+                return False
+
+        # These are normal profile/contact-info questions.
+        # They should continue to the normal QA/contact extractor.
+        normal_contact_info_patterns = [
+            "how can i contact samah",
+            "how can i contact her",
+            "how do i contact samah",
+            "how do i contact her",
+            "what is samah's email",
+            "what is her email",
+            "samah email",
+            "samah's email",
+            "her email",
+            "her phone",
+            "her linkedin",
+            "her github",
+            "contact details of samah",
+            "samah contact details",
+            "send me samah's email",
+            "send samah email",
+        ]
+
+        if any(pattern in q for pattern in normal_contact_info_patterns):
+            return False
+
+        ui_trigger_terms = [
+            # visitor wants Samah to contact them
+            "contact me",
+            "call me",
+            "reach me",
+            "get back to me",
+            "follow up with me",
+            "samah contact me",
+            "samah can contact me",
+            "samah to contact me",
+            "samah call me",
+            "samah to call me",
+            "samah reach me",
+            "leave my",
+            "my details",
+            "my contact",
+            "my phone",
+            "my mobile",
+            "my number",
+            "my email",
+            "share my",
+            "provide my",
+            "submit my",
+            "fill my",
+
+            "send me the conversation",
+            "send the conversation",
+            "email the conversation",
+            "email me the conversation",
+            "send this conversation",
+
+            # visitor wants chat history sent/exported
+            "send this chat",
+            "send me this chat",
+            "send chat",
+            "send the chat",
+            "chat history",
+            "conversation history",
+            "this conversation",
+            "our conversation",
+            "chat transcript",
+            "conversation transcript",
+            "transcript",
+            "email this chat",
+            "email me this",
+            "forward this",
+            "export this",
+        ]
+
+        return any(term in q for term in ui_trigger_terms)
+
+    @classmethod
+    def _classify_ui_action_intent_local(cls, message: str) -> UiActionIntentResult:
+        """
+        Local fallback + confident local classifier.
+
+        This is cheap and prevents unnecessary LLM calls.
+        """
+        q = (message or "").strip().lower()
+        extracted_email = cls._extract_email_from_text(message)
+
+        if not q:
+            return UiActionIntentResult(
+                intent="none",
+                confidence=0.0,
+                source="local_fallback",
+                reason="Empty message.",
+                email=extracted_email,
+            )
+
+        # Strong negative cases: user asks for Samah's contact information.
+        normal_contact_questions = [
+            "how can i contact samah",
+            "how can i contact her",
+            "how do i contact samah",
+            "how do i contact her",
+            "what is samah's email",
+            "what is her email",
+            "samah email",
+            "samah's email",
+            "her email",
+            "her phone",
+            "her linkedin",
+            "her github",
+            "contact details of samah",
+            "samah contact details",
+            "send me samah's email",
+        ]
+
+        if any(term in q for term in normal_contact_questions):
+            return UiActionIntentResult(
+                intent="none",
+                confidence=0.95,
+                source="local_confident",
+                reason="User is asking for Samah's contact information, not asking to share their own details.",
+                email=extracted_email,
+            )
+
+        history_terms = [
+            "chat history",
+            "conversation history",
+            "this conversation",
+            "our conversation",
+            "current conversation",
+            "the conversation",
+            "conversation",
+            "this chat",
+            "the chat",
+            "chat",
+            "chat transcript",
+            "conversation transcript",
+            "transcript",
+        ]
+
+        send_terms = [
+            "send",
+            "email",
+            "mail",
+            "forward",
+            "share",
+            "export",
+        ]
+
+        contact_capture_terms = [
+            "my details",
+            "my contact",
+            "my phone",
+            "my mobile",
+            "my number",
+            "my email",
+            "leave my details",
+            "leave my contact",
+            "share my details",
+            "share my contact",
+            "provide my details",
+            "provide my contact",
+            "submit my details",
+            "fill my details",
+            "samah contact me",
+            "samah can contact me",
+            "samah to contact me",
+            "samah call me",
+            "samah to call me",
+            "call me",
+            "contact me",
+            "get back to me",
+            "follow up with me",
+        ]
+
+        has_history = any(term in q for term in history_terms)
+        has_send = any(term in q for term in send_terms)
+
+        # Give send-history priority if transcript/history/chat is clearly mentioned.
+        if has_history and has_send:
+            return UiActionIntentResult(
+                intent="send_history_email",
+                confidence=0.88,
+                source="local_confident",
+                reason="User clearly wants the chat/conversation transcript sent.",
+                email=extracted_email,
+            )
+
+        if any(term in q for term in contact_capture_terms):
+            return UiActionIntentResult(
+                intent="contact_capture",
+                confidence=0.84,
+                source="local_confident",
+                reason="User wants to share their own details or wants Samah to contact them.",
+                email=extracted_email,
+            )
+
+        return UiActionIntentResult(
+            intent="none",
+            confidence=0.45,
+            source="local_fallback",
+            reason="No clear UI action detected locally.",
+            email=extracted_email,
+        )
+
+    @classmethod
+    def classify_ui_action_intent(
+        cls,
+        message: str,
+        history: Optional[List[Dict[str, Any]]] = None,
+    ) -> UiActionIntentResult:
+        """
+        Cost-controlled UI-action classifier.
+
+        It returns one of:
+        - contact_capture
+        - send_history_email
+        - none
+
+        LLM is only called for ambiguous UI-action-like messages.
+        """
+        msg = (message or "").strip()
+        history = history or []
+
+        if not msg:
+            return UiActionIntentResult(
+                intent="none",
+                confidence=0.0,
+                source="local_gate",
+                reason="Empty message.",
+                email=None,
+            )
+
+        local_result = cls._classify_ui_action_intent_local(msg)
+
+        # If local result is already confident, do not call LLM.
+        if local_result.intent in {"contact_capture", "send_history_email"} and local_result.confidence >= 0.82:
+            return local_result
+
+        # If this message does not look like a UI action, skip LLM completely.
+        if not cls._may_need_ui_action_classifier(msg):
+            return UiActionIntentResult(
+                intent="none",
+                confidence=0.99,
+                source="local_gate",
+                reason="Message does not look like a UI-action request.",
+                email=local_result.email,
+            )
+
+        # Only ambiguous UI-action-like cases reach the LLM.
+        llm_result = cls._llm_classify_ui_action_intent(
+            msg=msg,
+            history=history,
+        )
+
+        if llm_result:
+            return llm_result
+
+        # Last fallback.
+        return UiActionIntentResult(
+            intent=local_result.intent,
+            confidence=local_result.confidence,
+            source="local_fallback",
+            reason=local_result.reason,
+            email=local_result.email,
+        )
+
+    @classmethod
+    def _llm_classify_ui_action_intent(
+        cls,
+        msg: str,
+        history: Optional[List[Dict[str, Any]]] = None,
+    ) -> Optional[UiActionIntentResult]:
+        """
+        Short LLM classifier for ambiguous UI-action requests only.
+        """
+        history = history or []
+
+        compact_history = []
+        for item in history[-4:]:
+            role = (item.get("role") or "").strip()
+            content = (item.get("content") or "").strip()
+            if role and content:
+                compact_history.append({
+                    "role": role,
+                    "content": content[:300],
+                })
+
+        system_instruction = (
+            "Classify whether a portfolio chatbot should trigger a frontend UI action.\n"
+            "Allowed intents: contact_capture, send_history_email, none.\n\n"
+            "contact_capture: visitor wants to share their own details or wants Samah to contact/call/email them.\n"
+            "send_history_email: visitor wants this chat/conversation/history/transcript emailed, sent, exported, or forwarded.\n"
+            "none: normal questions, greetings, thanks, asking for Samah's contact info, or conversation-memory questions.\n\n"
+            "Rules:\n"
+            "- 'How can I contact Samah?' or 'What is Samah email?' = none.\n"
+            "- 'Can Samah contact/call/email me?' = contact_capture.\n"
+            "- 'Send/email/export this chat/conversation/transcript' = send_history_email.\n"
+            "- 'What did I ask before?' = none.\n"
+            "- Extract email only if the user typed one.\n"
+            "- Return JSON only."
+        )
+
+        prompt = (
+            "Return JSON exactly like this:\n"
+            "{"
+            "\"intent\":\"contact_capture|send_history_email|none\","
+            "\"confidence\":0.0,"
+            "\"reason\":\"short explanation\","
+            "\"email\":null"
+            "}\n\n"
+            f"Recent history: {json.dumps(compact_history, ensure_ascii=False)}\n"
+            f"User message: {msg}"
+        )
+
+        schema = {
+            "type": "object",
+            "properties": {
+                "intent": {
+                    "type": "string",
+                    "enum": [
+                        "contact_capture",
+                        "send_history_email",
+                        "none",
+                    ],
+                },
+                "confidence": {"type": "number"},
+                "reason": {"type": "string"},
+                "email": {"type": ["string", "null"]},
+            },
+            "required": ["intent", "confidence", "reason", "email"],
+            "additionalProperties": False,
+        }
+
+        chain = getattr(
+            settings,
+            "UI_ACTION_INTENT_MODEL_CHAIN",
+            getattr(
+                settings,
+                "QUICK_INTENT_MODEL_CHAIN",
+                [
+                    getattr(settings, "INTENT_PRIMARY_MODEL", "deepseek-chat"),
+                ],
+            ),
+        )
+
+        try:
+            ok, text, meta = LLMRouter.generate_json(
+                prompt=prompt,
+                system_instruction=system_instruction,
+                temperature=0.0,
+                model_chain=chain,
+                json_schema=schema,
+                task=LLMRouter.TASK_INTENT,
+            )
+        except Exception:
+            return None
+
+        if not ok:
+            return None
+
+        try:
+            data = json.loads(text)
+
+            intent = data.get("intent", "none")
+            confidence = float(data.get("confidence", 0.60))
+            reason = data.get("reason", "")
+            email = data.get("email")
+
+            if intent not in cls.ALLOWED_UI_ACTION_INTENTS:
+                intent = "none"
+
+            confidence = max(0.0, min(1.0, confidence))
+
+            # Safety threshold: do not trigger UI action if uncertain.
+            if confidence < 0.72:
+                return UiActionIntentResult(
+                    intent="none",
+                    confidence=confidence,
+                    source="llm",
+                    reason=reason or "LLM confidence below threshold.",
+                    email=email,
+                )
+
+            return UiActionIntentResult(
+                intent=intent,
+                confidence=confidence,
+                source="llm",
+                reason=reason,
+                email=email,
+            )
+
+        except Exception:
+            return None
+        
+        
+    @classmethod
+    def detect_conversational_response(
+        cls,
+        message: str,
+        history: Optional[List[Dict[str, Any]]] = None,
+    ) -> ConversationalResponseResult:
+        """
+        Detect messages that should receive a conversational LLM answer
+        instead of going to document retrieval.
+
+        Examples:
+        - are you dumping answers?
+        - tell me a joke
+        - why is your answer wrong?
+        - what can you do?
+        """
+        msg = (message or "").strip()
+        history = history or []
+
+        if not msg:
+            return ConversationalResponseResult(
+                handled=True,
+                category="help",
+                reply="",
+                confidence=0.95,
+                source="local_classifier",
+            )
+
+        local_result = cls._detect_conversational_response_local(msg)
+
+        if local_result.handled and local_result.confidence >= 0.82:
+            return local_result
+
+        llm_result = cls._llm_detect_conversational_response(
+            message=msg,
+            history=history,
+        )
+
+        if llm_result and llm_result.handled and llm_result.confidence >= 0.75:
+            return llm_result
+
+        return ConversationalResponseResult(
+            handled=False,
+            category="none",
+            reply="",
+            confidence=0.0,
+            source="fallback",
+        )
+        
+        
+    @classmethod
+    def _llm_detect_conversational_response(
+        cls,
+        message: str,
+        history: Optional[List[Dict[str, Any]]] = None,
+    ) -> Optional[ConversationalResponseResult]:
+        """
+        LLM classifier for flexible conversational/meta/off-topic messages.
+        This decides whether the message should skip retrieval.
+        """
+        history = history or []
+
+        compact_history = []
+        for item in history[-4:]:
+            role = (item.get("role") or "").strip()
+            content = (item.get("content") or "").strip()
+            if role and content:
+                compact_history.append({
+                    "role": role,
+                    "content": content[:300],
+                })
+
+        system_instruction = (
+            "You are a classifier for Samah.ai's portfolio chatbot.\n"
+            "Decide if the user's message should be answered conversationally instead of using document retrieval.\n\n"
+            "Handle conversationally when the message is about:\n"
+            "- what the chatbot can do\n"
+            "- how the chatbot works\n"
+            "- complaints or concerns about answer quality\n"
+            "- whether answers are random, dumped, copied, or hallucinated\n"
+            "- off-topic requests like jokes, games, poems, singing, or entertainment\n"
+            "- small talk that is not asking about Samah's professional documents\n\n"
+            "Do NOT handle conversationally if the user asks about Samah's experience, skills, projects, contact details, availability, salary, certifications, or suitability.\n"
+            "Those must continue to retrieval.\n\n"
+            "Return JSON only."
+        )
+
+        prompt = (
+            "Return JSON exactly like this:\n"
+            "{"
+            "\"handled\":true,"
+            "\"category\":\"help|bot_behavior_concern|off_topic_request|small_talk|scope_question|none\","
+            "\"confidence\":0.0"
+            "}\n\n"
+            f"Recent history: {json.dumps(compact_history, ensure_ascii=False)}\n"
+            f"User message: {message}"
+        )
+
+        schema = {
+            "type": "object",
+            "properties": {
+                "handled": {"type": "boolean"},
+                "category": {
+                    "type": "string",
+                    "enum": [
+                        "help",
+                        "bot_behavior_concern",
+                        "off_topic_request",
+                        "small_talk",
+                        "scope_question",
+                        "none",
+                    ],
+                },
+                "confidence": {"type": "number"},
+            },
+            "required": ["handled", "category", "confidence"],
+            "additionalProperties": False,
+        }
+
+        chain = getattr(
+            settings,
+            "CONVERSATIONAL_RESPONSE_MODEL_CHAIN",
+            getattr(
+                settings,
+                "QUICK_INTENT_MODEL_CHAIN",
+                [
+                    getattr(settings, "INTENT_PRIMARY_MODEL", "deepseek-chat"),
+                ],
+            ),
+        )
+
+        try:
+            ok, text, meta = LLMRouter.generate_json(
+                prompt=prompt,
+                system_instruction=system_instruction,
+                temperature=0.0,
+                model_chain=chain,
+                json_schema=schema,
+                task=LLMRouter.TASK_INTENT,
+            )
+
+            if not ok:
+                return None
+
+            data = json.loads(text)
+
+            handled = bool(data.get("handled", False))
+            category = data.get("category", "none")
+            confidence = float(data.get("confidence", 0.0))
+
+            if category not in cls.ALLOWED_CONVERSATIONAL_CATEGORIES:
+                category = "none"
+
+            confidence = max(0.0, min(1.0, confidence))
+
+            return ConversationalResponseResult(
+                handled=handled and category != "none",
+                category=category,
+                reply="",
+                confidence=confidence,
+                source="llm_classifier",
+            )
+
+        except Exception:
+            return None
+        
+    @classmethod
+    def generate_conversational_reply(
+        cls,
+        message: str,
+        category: str,
+        history: Optional[List[Dict[str, Any]]] = None,
+    ) -> str:
+        """
+        Generate the final natural answer using the LLM.
+        Fallback is used only if the LLM/API fails.
+        """
+        history = history or []
+
+        compact_history = []
+        for item in history[-4:]:
+            role = (item.get("role") or "").strip()
+            content = (item.get("content") or "").strip()
+            if role and content:
+                compact_history.append({
+                    "role": role,
+                    "content": content[:300],
+                })
+
+        system_instruction = (
+            "You are Samah.ai's professional portfolio chatbot.\n"
+            "Generate a warm, intelligent, concise answer to the user.\n\n"
+            "The chatbot is designed to answer questions about:\n"
+            "- Samah's professional experience\n"
+            "- AI/ML, LLM, RAG, Django, Next.js, React, backend/frontend projects\n"
+            "- portfolio projects, certifications, availability, hiring, and contact questions\n\n"
+            "Rules:\n"
+            "- Do not sound like a hardcoded fallback.\n"
+            "- Do not mention document retrieval.\n"
+            "- Do not say 'based on the evidence' for chatbot behavior questions.\n"
+            "- If the user is concerned about answer quality, reassure them politely.\n"
+            "- If the user asks for unrelated content, politely redirect to Samah's professional profile.\n"
+            "- If the user asks what the chatbot can do, explain naturally with examples.\n"
+            "- Keep the answer 2 to 4 sentences.\n"
+            "- End with one helpful suggestion related to Samah.\n"
+            "- Return JSON only."
+        )
+
+        prompt = (
+            "Generate the final user-facing chatbot reply.\n\n"
+            "Return JSON exactly like this:\n"
+            "{"
+            "\"reply\":\"final answer\""
+            "}\n\n"
+            f"Category: {category}\n"
+            f"Recent history: {json.dumps(compact_history, ensure_ascii=False)}\n"
+            f"User message: {message}"
+        )
+
+        schema = {
+            "type": "object",
+            "properties": {
+                "reply": {"type": "string"},
+            },
+            "required": ["reply"],
+            "additionalProperties": False,
+        }
+
+        chain = getattr(
+            settings,
+            "CONVERSATIONAL_REPLY_MODEL_CHAIN",
+            getattr(
+                settings,
+                "QUICK_INTENT_MODEL_CHAIN",
+                [
+                    getattr(settings, "INTENT_PRIMARY_MODEL", "deepseek-chat"),
+                ],
+            ),
+        )
+
+        try:
+            ok, text, meta = LLMRouter.generate_json(
+                prompt=prompt,
+                system_instruction=system_instruction,
+                temperature=0.45,
+                model_chain=chain,
+                json_schema=schema,
+                task=LLMRouter.TASK_INTENT,
+            )
+
+            if not ok:
+                return cls._emergency_conversational_reply(category)
+
+            data = json.loads(text)
+            reply = (data.get("reply") or "").strip()
+
+            if not reply:
+                return cls._emergency_conversational_reply(category)
+
+            return reply
+
+        except Exception:
+            return cls._emergency_conversational_reply(category)
+        
+        
+    @staticmethod
+    def _emergency_conversational_reply(category: str) -> str:
+        """
+        Used only when the LLM/API fails.
+        """
+        if category == "bot_behavior_concern":
+            return (
+                "I understand your concern. I’m designed to answer in a focused way about Samah’s professional profile, not to provide random responses. "
+                "You can ask me about her projects, skills, experience, or contact details."
+            )
+
+        if category == "off_topic_request":
+            return (
+                "I’m mainly focused on Samah’s professional profile, so I may not be the best place for unrelated requests. "
+                "You can ask me about her AI projects, Django/Next.js experience, or portfolio work."
+            )
+
+        return (
+            "I can help you explore Samah’s professional background, projects, skills, certifications, availability, and contact details."
+        )
+        
+    @classmethod
+    def _detect_conversational_response_local(
+        cls,
+        message: str,
+    ) -> ConversationalResponseResult:
+        """
+        Local classifier only. It should NOT generate the final user answer.
+        Final answer will be generated by the LLM.
+        """
+        q = (message or "").strip().lower()
+
+        bot_behavior_terms = [
+            "dumping answers",
+            "dump answers",
+            "random answers",
+            "are you random",
+            "wrong answer",
+            "bad answer",
+            "why your answer",
+            "why is your answer",
+            "are you hallucinating",
+            "do you hallucinate",
+            "copy paste",
+            "copying answers",
+        ]
+
+        off_topic_terms = [
+            "tell me a joke",
+            "joke",
+            "make me laugh",
+            "play a game",
+            "sing",
+            "write a poem",
+        ]
+
+        help_terms = [
+            "what can you do",
+            "how can you help",
+            "how do you work",
+            "what should i ask",
+            "give me examples",
+            "what can i ask",
+        ]
+
+        if any(term in q for term in bot_behavior_terms):
+            return ConversationalResponseResult(
+                handled=True,
+                category="bot_behavior_concern",
+                reply="",
+                confidence=0.90,
+                source="local_classifier",
+            )
+
+        if any(term in q for term in off_topic_terms):
+            return ConversationalResponseResult(
+                handled=True,
+                category="off_topic_request",
+                reply="",
+                confidence=0.88,
+                source="local_classifier",
+            )
+
+        if any(term in q for term in help_terms):
+            return ConversationalResponseResult(
+                handled=True,
+                category="help",
+                reply="",
+                confidence=0.86,
+                source="local_classifier",
+            )
+
+        return ConversationalResponseResult(
+            handled=False,
+            category="none",
+            reply="",
+            confidence=0.0,
+            source="local_classifier",
+        )
+
     @staticmethod
     def _looks_like_session_memory_question(msg: str) -> bool:
         """
@@ -347,6 +1174,14 @@ class SmartChatIntentService:
             confidence=max(h["confidence"], 0.2),
             source="heuristic",
         )
+
+    @dataclass(frozen=True)
+    class UiActionIntentResult:
+        intent: str  # contact_capture | send_history_email | none
+        confidence: float
+        source: str  # local_gate | local_confident | llm | local_fallback
+        reason: str = ""
+        email: Optional[str] = None
 
     @classmethod
     def classify_question_route(
@@ -683,6 +1518,8 @@ class SmartChatIntentService:
     @staticmethod
     def _looks_like_cost_question(msg: str) -> bool:
         low = (msg or "").strip().lower()
+        if SmartChatIntentService._looks_like_skill_rating_question(msg):
+            return False
         markers = [
             "how much will it cost",
             "how much this will cost",
@@ -693,7 +1530,6 @@ class SmartChatIntentService:
             "hourly rate",
             "daily rate",
             "monthly rate",
-            "rate",
             "pricing",
             "price",
             "budget",
@@ -705,6 +1541,25 @@ class SmartChatIntentService:
             "payment",
         ]
         return any(marker in low for marker in markers)
+    
+    
+    @staticmethod
+    def _looks_like_skill_rating_question(msg: str) -> bool:
+        """
+        Detect when the user is asking to rate/evaluate Samah's skill level,
+        not asking about salary, hourly rate, or compensation.
+        """
+        low = (msg or "").strip().lower()
+
+        rating_patterns = [
+            r"\brate\s+(samah|her)\s+in\s+",
+            r"\brate\s+(samah|her)\s+on\s+",
+            r"\b(rate|score|evaluate)\s+(samah|her)\b.*\b(1\s*-\s*10|1\s+to\s+10|out of 10|/10)\b",
+            r"\bhow good\s+(is\s+)?(samah|she)\b.*\bpython|django|react|next\.?js|javascript|typescript|ai|ml|llm\b",
+            r"\bwhat level\s+(is\s+)?(samah|she)\b.*\bpython|django|react|next\.?js|javascript|typescript|ai|ml|llm\b",
+        ]
+
+        return any(re.search(pattern, low) for pattern in rating_patterns)
 
     @classmethod
     def _llm_classify_route(
@@ -1039,8 +1894,6 @@ class SmartChatIntentService:
         "acknowledgement": [
             "Got it 😊",
             "Sure 😊",
-            "Okay, I’m here when you’re ready.",
-            "No problem.",
             "Understood.",
             "Sounds good.",
             "any other questions about Samah’s profile or experience I can help with?",
@@ -1053,7 +1906,6 @@ class SmartChatIntentService:
             "Sounds good 😊 I’m here if you’d like to know more about Samah’s background, projects, or how to contact her.",
             "Got it! Feel free to ask more about Samah’s experience, AI projects, skills, or professional profile.",
             "Okay 😊 What would you like to know more about Samah?",
-            ""
 
         ],
         "pause": [

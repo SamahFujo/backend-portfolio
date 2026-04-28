@@ -1,7 +1,8 @@
+from .services.resend_contact_email import send_get_in_touch_email
+from .services.resend_email import send_start_project_email, send_chat_history_email
 import re
 
 from django.conf import settings
-from .services.resend_contact_email import send_get_in_touch_email
 from .serializers import GetInTouchSerializer
 from .serializers import AskQuestionSerializer
 from .models import ChatSession, ChatMessage, ProfileDocument, DocumentChunk
@@ -24,7 +25,7 @@ import logging
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 logger = logging.getLogger(__name__)
-from .services.resend_email import send_start_project_email, send_chat_history_email
+
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
     """
@@ -72,9 +73,6 @@ class StartProjectRequestView(APIView):
     def options(self, request, *args, **kwargs):
         # Usually not needed explicitly, but safe if debugging preflight behavior
         return Response(status=status.HTTP_200_OK)
-    
-    
-
 
 
 class GetInTouchView(APIView):
@@ -138,6 +136,8 @@ class ProfileDocumentStatsAPIView(APIView):
 
 
 """API views for the portfolio chatbot backend."""
+
+
 class AskAboutMeAPIView(APIView):
 
     throttle_classes = [ChatRateThrottle]
@@ -154,86 +154,6 @@ class AskAboutMeAPIView(APIView):
             payload.update(debug_fields)
         return payload
 
-    @staticmethod
-    def _is_contact_capture_request(message: str) -> bool:
-        """
-        Detect when the visitor wants to share their own details
-        so Samah can contact them.
-
-        This is different from:
-        - "How can I contact Samah?"
-        - "What is Samah's email?"
-        Those are profile/contact-information questions.
-
-        This handles:
-        - "I want to provide my details so Samah can contact me"
-        - "Can I leave my phone number?"
-        - "I want Samah to call me"
-        - "How can I send my contact details?"
-        """
-        q = (message or "").strip().lower()
-
-        if not q:
-            return False
-
-        visitor_detail_markers = [
-            "my details",
-            "my contact",
-            "my information",
-            "my info",
-            "my phone",
-            "my mobile",
-            "my number",
-            "my email",
-            "leave my details",
-            "leave my contact",
-            "send my details",
-            "send my contact",
-            "share my details",
-            "share my contact",
-            "provide my details",
-            "provide my contact",
-            "fill my details",
-            "submit my details",
-        ]
-
-        samah_followup_markers = [
-            "contact me",
-            "call me",
-            "email me",
-            "reach me",
-            "get back to me",
-            "follow up with me",
-            "samah can contact me",
-            "samah to contact me",
-            "samah call me",
-            "samah to call me",
-            "samah reach me",
-        ]
-
-        form_markers = [
-            "contact form",
-            "open form",
-            "fill form",
-            "send message",
-            "submit message",
-        ]
-
-        # Strong intent: user explicitly wants to provide their own details.
-        if any(marker in q for marker in visitor_detail_markers):
-            return True
-
-        # Strong intent: user asks Samah to contact them.
-        if any(marker in q for marker in samah_followup_markers):
-            return True
-
-        # Form-based intent.
-        if any(marker in q for marker in form_markers) and any(
-            word in q for word in ["contact", "details", "message", "samah"]
-        ):
-            return True
-
-        return False
 
     @staticmethod
     def _build_contact_capture_payload(session, message: str, user_message_id=None):
@@ -270,96 +190,9 @@ class AskAboutMeAPIView(APIView):
             },
         }
 
-    @staticmethod
-    def _extract_email_from_text(message: str) -> str | None:
-        """
-        Extract an email address if the user already typed it in the chat.
-        Example:
-        - "send the chat to me at test@example.com"
-        """
-        text = (message or "").strip()
-
-        match = re.search(
-            r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}",
-            text,
-        )
-
-        return match.group(0) if match else None
 
     @staticmethod
-    def _is_send_history_request(message: str) -> bool:
-        """
-        Detect when the visitor wants the chatbot conversation history
-        sent to their email.
-
-        Examples:
-        - send this conversation to my email
-        - email me this chat
-        - send chat history
-        - can you send me our conversation
-        - send transcript to me
-        """
-        q = (message or "").strip().lower()
-
-        if not q:
-            return False
-
-        history_markers = [
-            "conversation history",
-            "chat history",
-            "this conversation",
-            "our conversation",
-            "this chat",
-            "chat transcript",
-            "conversation transcript",
-            "transcript",
-            "history",
-        ]
-
-        send_markers = [
-            "send",
-            "email",
-            "mail",
-            "forward",
-            "share",
-        ]
-
-        user_markers = [
-            "to me",
-            "my email",
-            "me through email",
-            "through email",
-            "by email",
-            "via email",
-            "to my mail",
-        ]
-
-        has_history = any(marker in q for marker in history_markers)
-        has_send = any(marker in q for marker in send_markers)
-        has_user_target = any(marker in q for marker in user_markers)
-
-        # Strong direct phrases
-        direct_phrases = [
-            "email me this chat",
-            "email me the chat",
-            "send me this chat",
-            "send me the chat",
-            "send me the conversation",
-            "send conversation to my email",
-            "send the conversation to my email",
-            "send chat history",
-            "send the chat history",
-        ]
-
-        if any(phrase in q for phrase in direct_phrases):
-            return True
-
-        return has_history and has_send and has_user_target
-
-    @staticmethod
-    def _build_send_history_prompt_payload(session, message: str):
-        initial_email = AskAboutMeAPIView._extract_email_from_text(message)
-
+    def _build_send_history_prompt_payload(session, message: str, initial_email: str | None = None):
         answer = (
             "Sure 😊 Please enter your email address below, "
             "and I’ll send you this conversation history."
@@ -380,7 +213,7 @@ class AskAboutMeAPIView(APIView):
             "citations": [],
             "confidence": 0.95,
             "mode": "send_history_email",
-            "intent_source": "history_email_rule",
+            "intent_source": "ui_action_classifier",
             "ui_action": {
                 "type": "collect_email_for_history",
                 "label": "Send",
@@ -420,19 +253,34 @@ class AskAboutMeAPIView(APIView):
         )
         recent_history = full_history[-6:]
 
-        # 0) Contact capture UI action
-        # This does not replace your profile QA workflow.
-        # It only catches cases where the visitor wants to share their own details.
-        if self._is_contact_capture_request(message):
+        # 0) Frontend UI actions
+        # This is handled by SmartChatIntentService to avoid duplicate intent logic in the view.
+        ui_intent = SmartChatIntentService.classify_ui_action_intent(
+            message=message,
+            history=recent_history,
+        )
+
+        if ui_intent.intent == "contact_capture":
             payload = self._build_contact_capture_payload(
                 session=session,
                 message=message,
                 user_message_id=user_message.id,
             )
 
+            payload["intent_source"] = ui_intent.source
+            payload["ui_intent_reason"] = ui_intent.reason
+            payload["confidence"] = ui_intent.confidence
+
             return Response(
                 self._with_optional_debug(
                     payload,
+                    ui_intent={
+                        "intent": ui_intent.intent,
+                        "confidence": ui_intent.confidence,
+                        "source": ui_intent.source,
+                        "reason": ui_intent.reason,
+                        "email": ui_intent.email,
+                    },
                     retrieval_debug=[],
                     used_sources=[],
                     debug_history_count=len(full_history),
@@ -442,16 +290,28 @@ class AskAboutMeAPIView(APIView):
                 status=status.HTTP_200_OK,
             )
 
-        # 0.5) Send conversation history by email UI action
-        if self._is_send_history_request(message):
+
+        if ui_intent.intent == "send_history_email":
             payload = self._build_send_history_prompt_payload(
                 session=session,
                 message=message,
+                initial_email=ui_intent.email,
             )
+
+            payload["intent_source"] = ui_intent.source
+            payload["ui_intent_reason"] = ui_intent.reason
+            payload["confidence"] = ui_intent.confidence
 
             return Response(
                 self._with_optional_debug(
                     payload,
+                    ui_intent={
+                        "intent": ui_intent.intent,
+                        "confidence": ui_intent.confidence,
+                        "source": ui_intent.source,
+                        "reason": ui_intent.reason,
+                        "email": ui_intent.email,
+                    },
                     retrieval_debug=[],
                     used_sources=[],
                     debug_history_count=len(full_history),
@@ -460,6 +320,9 @@ class AskAboutMeAPIView(APIView):
                 ),
                 status=status.HTTP_200_OK,
             )
+        
+        
+
 
         # 1) Block Arabic-only queries
         if GeminiQueryRewriter.is_fully_arabic_query(message):
@@ -511,11 +374,83 @@ class AskAboutMeAPIView(APIView):
             history=recent_history,
         )
         rewritten_query = (rewrite.get("rewritten_query")
-                           or message).strip() or message
+                        or message).strip() or message
         retrieval_query = rewritten_query
         rewrite_notes = rewrite.get("notes")
 
-        # 3) Route using rewritten query, not raw message
+
+        # 3) Conversational/meta/off-topic handling before route classification and retrieval
+        # This prevents chatbot-behavior or off-topic questions from going into RAG.
+        # Examples:
+        # - "are you dumping the answers?"
+        # - "tell me a joke"
+        # - "why is your answer wrong?"
+        # - "what can you do?"
+        conversational_result = SmartChatIntentService.detect_conversational_response(
+            message=rewritten_query,
+            history=recent_history,
+        )
+
+        if conversational_result.handled:
+            answer = SmartChatIntentService.generate_conversational_reply(
+                message=rewritten_query,
+                category=conversational_result.category,
+                history=recent_history,
+            )
+
+            assistant_message = ChatMessage.objects.create(
+                session=session,
+                role="assistant",
+                content=answer,
+                citations=[],
+                confidence_score=conversational_result.confidence,
+            )
+
+            return Response(
+                self._with_optional_debug({
+                    "session_id": str(session.id),
+                    "message_id": str(assistant_message.id),
+                    "retrieval_query": retrieval_query,
+                    "rewrite_notes": rewrite_notes,
+                    "verdict": "conversational_response",
+                    "answer": answer,
+                    "question_route": None,
+                    "question_route_confidence": None,
+                    "question_route_reason": None,
+                    "citations": [],
+                    "applied_filters": None,
+                    "answer_source": "conversational_llm",
+                    "extractor_used": None,
+                    "model_used": None,
+                    "tried_models": [],
+                    "provider_used": None,
+                    "fallback_used": False,
+                    "generation_ok": True,
+                    "safe_fallback": False,
+                    "primary_meta": None,
+                    "secondary_meta": None,
+                    "confidence": conversational_result.confidence,
+                    "mode": conversational_result.category,
+                    "intent_source": conversational_result.source,
+                },
+                    retrieval_debug=[],
+                    used_sources=[],
+                    debug_history_count=len(full_history),
+                    debug_recent_history=full_history[-4:],
+                    debug_raw_message=message,
+                    debug_rewritten_query=rewritten_query,
+                    debug_rewrite_meta=rewrite.get("meta"),
+                    debug_rewrite_debug=rewrite.get("debug"),
+                    debug_chunks_before_llm=[],
+                    debug_prompt_chunks=[],
+                    prompt_mode=None,
+                    chunk_budget=None,
+                ),
+                status=status.HTTP_200_OK,
+            )
+
+
+        # 4) Route using rewritten query, not raw message
         route_result = SmartChatIntentService.classify_question_route(
             message=rewritten_query,
             history=recent_history,
@@ -699,20 +634,21 @@ class AskAboutMeAPIView(APIView):
         )
 
 
-
 class SendChatHistoryEmailAPIView(APIView):
     """
-    Sends the current chatbot session history to the visitor's email.
-
-    Expected payload:
-    {
-        "session_id": "...",
-        "email": "visitor@example.com"
-    }
+    Sends the current chatbot session history to the visitor's email using Resend.
     """
 
+    permission_classes = [AllowAny]
+    authentication_classes = [CsrfExemptSessionAuthentication]
+    throttle_classes = [ContactRateThrottle]
+
     @staticmethod
-    def _format_chat_history(session: ChatSession) -> str:
+    def _format_chat_history(session):
+        """
+        Convert all messages in the chat session into a readable email transcript.
+        """
+
         messages = (
             ChatMessage.objects
             .filter(session=session)
@@ -727,13 +663,12 @@ class SendChatHistoryEmailAPIView(APIView):
 
         for msg in messages:
             role = "Visitor" if msg.role == "user" else "Samah.ai Assistant"
-            created_at = ""
 
+            created_at = ""
             if getattr(msg, "created_at", None):
                 created_at = msg.created_at.strftime("%Y-%m-%d %H:%M")
 
             content = (msg.content or "").strip()
-
             if not content:
                 continue
 
@@ -757,13 +692,19 @@ class SendChatHistoryEmailAPIView(APIView):
 
         if not session_id:
             return Response(
-                {"detail": "Session ID is required."},
+                {
+                    "success": False,
+                    "message": "Session ID is required.",
+                },
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         if not email:
             return Response(
-                {"detail": "Email is required."},
+                {
+                    "success": False,
+                    "message": "Email is required.",
+                },
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -771,7 +712,10 @@ class SendChatHistoryEmailAPIView(APIView):
             validate_email(email)
         except ValidationError:
             return Response(
-                {"detail": "Please enter a valid email address."},
+                {
+                    "success": False,
+                    "message": "Please enter a valid email address.",
+                },
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -782,7 +726,10 @@ class SendChatHistoryEmailAPIView(APIView):
 
         if session is None:
             return Response(
-                {"detail": "Chat session not found."},
+                {
+                    "success": False,
+                    "message": "Chat session not found.",
+                },
                 status=status.HTTP_404_NOT_FOUND,
             )
 
@@ -790,44 +737,43 @@ class SendChatHistoryEmailAPIView(APIView):
 
         if not history_text:
             return Response(
-                {"detail": "No conversation history found for this session."},
+                {
+                    "success": False,
+                    "message": "No conversation history found for this session.",
+                },
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        subject = "Your Samah.ai Chat Conversation History"
-
         try:
-            send_mail(
-                subject=subject,
-                message=history_text,
-                from_email=getattr(settings, "DEFAULT_FROM_EMAIL", None),
-                recipient_list=[email],
-                fail_silently=False,
+            resend_result = send_chat_history_email(
+                recipient_email=email,
+                history_text=history_text,
             )
-        except Exception as exc:
-            if settings.DEBUG:
-                return Response(
-                    {
-                        "detail": "Could not send the conversation history email.",
-                        "error": str(exc),
-                    },
-                    status=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                )
 
             return Response(
-                {"detail": "Could not send the conversation history email."},
+                {
+                    "success": True,
+                    "message": "Conversation history sent successfully.",
+                    "provider": "resend",
+                    "email_id": resend_result.get("id"),
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        except Exception:
+            logger.exception(
+                "Failed to send chatbot conversation history email")
+
+            return Response(
+                {
+                    "success": False,
+                    "message": "Could not send the conversation history email right now. Please try again later.",
+                },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
 
-        return Response(
-            {
-                "detail": "Conversation history sent successfully.",
-                "email": email,
-            },
-            status=status.HTTP_200_OK,
-        )
-
-
+    def options(self, request, *args, **kwargs):
+        return Response(status=status.HTTP_200_OK)
 
 
 class ProfileDocumentUploadAPIView(APIView):
