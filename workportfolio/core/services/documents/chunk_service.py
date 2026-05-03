@@ -21,6 +21,172 @@ class ChunkService:
     DEFAULT_MAX_CHARS = 900
     DEFAULT_OVERLAP = 120
 
+    RESUME_SECTION_HEADINGS = {
+        "skills",
+        "about me",
+        "professional summary",
+        "summary",
+        "work experience",
+        "professional experience",
+        "experience",
+        "projects",
+        "selected ai projects",
+        "selected ai projects & independent initiatives",
+        "education",
+        "personal details",
+        "extra-curricular activities",
+        "extracurricular activities",
+        "certifications",
+        "certificates",
+        "publications",
+        "research",
+        "additional information",
+        "contact",
+    }
+    
+    @classmethod
+    def chunk_capabilities(cls, text: str) -> List[str]:
+        """
+        Chunk the 'What I Can Help With' document.
+
+        This document has two heading levels:
+        1. Main capability sections
+        2. Technology sub-sections under 'Technologies I Use Professionally'
+
+        This custom chunker keeps the technology block intact so tools like
+        Hugging Face Transformers and embeddings/vector search are not lost.
+        """
+
+        full_text = (text or "").strip()
+        if not full_text:
+            return []
+
+        # Main headings only. Do not include technology subheadings here.
+        main_headings = {
+            "overview",
+            "what i can do confidently",
+            "ai and llm solutions",
+            "backend development",
+            "full-stack web applications",
+            "data and ai-powered business systems",
+            "frontend and user experience",
+            "technical leadership and delivery",
+            "types of projects i can build",
+            "technologies i use professionally",
+            "work i can do with some ramp-up",
+            "areas i do not primarily specialize in",
+            "the kind of problems i am best at solving",
+            "summary",
+        }
+
+        lines = full_text.replace("\r\n", "\n").replace("\r", "\n").split("\n")
+
+        sections = []
+        current_heading = None
+        current_body = []
+
+        for line in lines:
+            clean_line = line.strip()
+            if not clean_line:
+                continue
+
+            normalized = " ".join(clean_line.lower().split())
+
+            if normalized in main_headings:
+                if current_heading:
+                    sections.append({
+                        "heading": current_heading,
+                        "body": "\n".join(current_body).strip(),
+                    })
+
+                current_heading = clean_line
+                current_body = []
+            else:
+                if current_heading:
+                    current_body.append(clean_line)
+
+        if current_heading:
+            sections.append({
+                "heading": current_heading,
+                "body": "\n".join(current_body).strip(),
+            })
+
+        chunks = []
+
+        for section in sections:
+            heading = section["heading"].strip()
+            body = section["body"].strip()
+
+            if not body:
+                continue
+
+            max_chars = 1300 if heading.lower() == "technologies i use professionally" else 850
+
+            chunks.extend(
+                cls._chunk_long_text(
+                    body,
+                    max_chars=max_chars,
+                    overlap=100,
+                    prefix=f"Section: {heading}",
+                )
+            )
+
+        return cls._dedupe_chunks(chunks)
+
+    @classmethod
+    def _clean_resume_section_body(cls, heading: str, body: str) -> str:
+        """
+        Clean section-specific extraction noise caused by two-column CV layouts.
+        For example, sidebar skills/languages may appear inside Work Experience.
+        """
+
+        heading_key = (heading or "").strip().lower()
+        body = body or ""
+
+        if heading_key == "work experience":
+            sidebar_markers = [
+                "Python",
+                "Next.js",
+                "RBAC, JWT",
+                "SQL Server",
+                "MySQL",
+                "LangChain",
+                "FastAPI",
+                "JavaScript",
+                "Postman",
+                "Node.js",
+                "MongoDB",
+                "Docker",
+                "Streamlit",
+                "Langfuse",
+                "Gunicorn",
+                "NGINX",
+                "Ollama",
+                "Flask",
+                ".NET",
+                "Java",
+                "C++",
+                "PHP",
+                "LANGUAGES",
+                "Arabic",
+                "English",
+            ]
+
+            lines = body.splitlines()
+            cleaned_lines = []
+
+            for line in lines:
+                clean = line.strip()
+
+                if clean in sidebar_markers:
+                    continue
+
+                cleaned_lines.append(line)
+
+            return "\n".join(cleaned_lines).strip()
+
+        return body.strip()
+
     @classmethod
     def chunk_document(
         cls,
@@ -47,12 +213,14 @@ class ChunkService:
         if doc_type == "certificates":
             return cls.chunk_certificates(text)
 
+        if doc_type == "capabilities":
+            return cls.chunk_capabilities(text)
+
         if doc_type in {
             "preferences",
             "compensation",
             "achievements",
             "career_timeline",
-            "capabilities",
         }:
             return cls.chunk_by_headings(text)
 
@@ -175,7 +343,8 @@ class ChunkService:
 
             piece = text[start:end].strip()
             if piece:
-                chunks.append(f"{prefix}\n{piece}".strip() if prefix else piece)
+                chunks.append(f"{prefix}\n{piece}".strip()
+                              if prefix else piece)
 
             if end >= text_len:
                 break
@@ -189,48 +358,60 @@ class ChunkService:
         return [line.strip() for line in text.split("\n")]
 
     @classmethod
-    def _extract_heading_sections(cls, text: str) -> List[Dict[str, str]]:
+    def _extract_heading_sections(cls, text: str) -> List[dict]:
         """
-        Split a text into sections based on heading-like lines.
-        Returns:
-            [
-                {"heading": "Overview", "body": "..."},
-                {"heading": "Preferred Backend Framework", "body": "..."},
-            ]
-        """
-        lines = cls._split_lines(text)
-        sections: List[Dict[str, str]] = []
+        Extract resume/CV sections using known resume headings only.
 
-        current_heading = "Introduction"
+        This avoids treating dates, company names, languages, universities,
+        or job titles as top-level CV sections.
+        """
+
+        full_text = (text or "").strip()
+        if not full_text:
+            return []
+
+        def normalize_line(value: str) -> str:
+            value = (value or "").strip()
+            value = value.replace("&amp;", "&")
+            value = " ".join(value.split())
+            return value.lower()
+
+        lines = full_text.replace("\r\n", "\n").replace("\r", "\n").split("\n")
+
+        sections: List[dict] = []
+        current_heading = None
         current_body: List[str] = []
 
         for line in lines:
-            if not line:
-                current_body.append("")
+            clean_line = line.strip()
+
+            if not clean_line:
                 continue
 
-            if cls._is_heading(line):
-                if current_body:
+            normalized = normalize_line(clean_line)
+
+            is_resume_heading = normalized in cls.RESUME_SECTION_HEADINGS
+
+            if is_resume_heading:
+                if current_heading:
                     sections.append({
                         "heading": current_heading,
                         "body": "\n".join(current_body).strip(),
                     })
-                current_heading = line
+
+                current_heading = normalized.upper()
                 current_body = []
             else:
-                current_body.append(line)
+                if current_heading:
+                    current_body.append(clean_line)
 
-        if current_body:
+        if current_heading:
             sections.append({
                 "heading": current_heading,
                 "body": "\n".join(current_body).strip(),
             })
 
-        # Remove empty sections
-        return [
-            s for s in sections
-            if s["body"].strip()
-        ]
+        return sections
 
     # ---------------------------------------------------------------------
     # Generic fallback
@@ -242,6 +423,60 @@ class ChunkService:
         Generic fallback chunking.
         """
         return cls._chunk_long_text(text)
+    
+    
+    @classmethod
+    def _extract_generic_heading_sections(cls, text: str) -> List[dict]:
+        """
+        Extract sections for normal heading-based profile documents.
+
+        Used for:
+        - achievements
+        - preferences
+        - compensation
+        - career_timeline
+        - capabilities
+
+        This is different from _extract_heading_sections(),
+        which is CV-specific.
+        """
+
+        full_text = (text or "").strip()
+        if not full_text:
+            return []
+
+        lines = full_text.replace("\r\n", "\n").replace("\r", "\n").split("\n")
+
+        sections: List[dict] = []
+        current_heading = None
+        current_body: List[str] = []
+
+        for line in lines:
+            clean_line = line.strip()
+
+            if not clean_line:
+                continue
+
+            if cls._is_heading(clean_line):
+                if current_heading:
+                    sections.append({
+                        "heading": current_heading,
+                        "body": "\n".join(current_body).strip(),
+                    })
+
+                current_heading = clean_line
+                current_body = []
+            else:
+                if current_heading:
+                    current_body.append(clean_line)
+
+        if current_heading:
+            sections.append({
+                "heading": current_heading,
+                "body": "\n".join(current_body).strip(),
+            })
+
+        return sections
 
     # ---------------------------------------------------------------------
     # Projects
@@ -310,7 +545,6 @@ class ChunkService:
     # ---------------------------------------------------------------------
     # FAQ
     # ---------------------------------------------------------------------
-
     @classmethod
     def chunk_faq(cls, text: str) -> List[str]:
         """
@@ -492,23 +726,33 @@ class ChunkService:
         - achievements
         - career timeline
         - capabilities
+
+        Uses generic heading detection, not CV-specific heading detection.
         """
-        sections = cls._extract_heading_sections(text)
+
+        sections = cls._extract_generic_heading_sections(text)
+
         if not sections:
             return cls.chunk_generic(text)
 
         chunks: List[str] = []
+
         for section in sections:
             heading = section["heading"].strip()
             body = section["body"].strip()
 
+            if not heading and not body:
+                continue
+
             prefix = f"Section: {heading}"
+
             section_chunks = cls._chunk_long_text(
                 body,
                 max_chars=850,
                 overlap=100,
                 prefix=prefix,
             )
+
             chunks.extend(section_chunks)
 
         return cls._dedupe_chunks(chunks)
@@ -519,112 +763,76 @@ class ChunkService:
     @classmethod
     def chunk_resume(cls, text: str) -> List[str]:
         """
-        Chunk resume/CV by:
-        1. Preserving the header/preamble before the first real resume section
-        (name, title, phone, email, location, etc.)
-        2. Chunking the remaining major sections normally
+        Chunk resume/CV by real resume sections.
+
+        This version:
+        1. Preserves the CV header/preamble for contact questions.
+        2. Splits the CV by trusted section headings only.
+        3. Prevents Education from being swallowed into Work Experience.
+        4. Keeps each section independently retrievable.
+        5. Splits long sections only inside that same section.
         """
+
         full_text = (text or "").strip()
         if not full_text:
             return []
 
         sections = cls._extract_heading_sections(full_text)
+
         if not sections:
             return cls.chunk_generic(full_text)
 
         chunks: List[str] = []
 
-        real_resume_headings = {
-            "skills",
-            "about me",
-            "work experience",
-            "professional experience",
-            "education",
-            "projects",
-            "certifications",
-            "languages",
-            "publications",
-            "research",
-            "summary",
-            "contact",
-        }
+        # ------------------------------------------------------------
+        # 1. Preserve header / preamble before the first detected section
+        # Example:
+        # Samah Fujo
+        # +971...
+        # s.fujo@hotmail.com
+        # Dubai, United Arab Emirates
+        # ------------------------------------------------------------
+        first_heading = sections[0].get("heading") if sections else None
 
-
-        # 1) Preserve everything before the first REAL resume section
-        preamble = ""
-        first_real_heading = None
-        
-        # Look for the first real resume section heading to determine where the preamble ends
-        lower_text = full_text.lower()
-
-        work_start = lower_text.find("work experience")
-        work_end_candidates = []
-
-        for marker in ["education", "personal details", "extra-curricular activities"]:
-            pos = lower_text.find(marker)
-            if pos != -1 and (work_start == -1 or pos > work_start):
-                work_end_candidates.append(pos)
-
-        work_end = min(work_end_candidates) if work_end_candidates else -1
-
-        if work_start != -1:
-            if work_end != -1:
-                work_block = full_text[work_start:work_end].strip()
-            else:
-                work_block = full_text[work_start:].strip()
-
-            work_chunks = cls._chunk_long_text(
-                work_block,
-                max_chars=1000,
-                overlap=120,
-                prefix="Resume Section: WORK EXPERIENCE",
-            )
-            chunks.extend(work_chunks)
-
-        for section in sections:
-            heading = (section.get("heading") or "").strip()
-            if heading.lower() in real_resume_headings:
-                first_real_heading = heading
-                break
-
-        if first_real_heading:
+        if first_heading:
             lower_text = full_text.lower()
-            lower_heading = first_real_heading.lower()
-            first_pos = lower_text.find(lower_heading)
+            first_pos = lower_text.find(first_heading.lower())
+
             if first_pos > 0:
                 preamble = full_text[:first_pos].strip()
 
-        if preamble:
-            header_chunks = cls._chunk_long_text(
-                preamble,
-                max_chars=850,
-                overlap=100,
-                prefix="Resume Header",
-            )
-            chunks.extend(header_chunks)
+                if preamble:
+                    chunks.extend(
+                        cls._chunk_long_text(
+                            preamble,
+                            max_chars=850,
+                            overlap=100,
+                            prefix="Resume Header",
+                        )
+                    )
 
-        # 2) Chunk only meaningful sections
-        #    Skip fake headings like the person's name
+        # ------------------------------------------------------------
+        # 2. Chunk each real resume section independently
+        # ------------------------------------------------------------
         for section in sections:
             heading = (section.get("heading") or "").strip()
-            body = (section.get("body") or "").strip()
+            body = cls._clean_resume_section_body(
+                heading=heading,
+                body=(section.get("body") or "").strip(),
+            )
 
             if not heading and not body:
                 continue
 
-            # Skip fake/preamble headings such as the person's name
-            if heading and heading.lower() not in real_resume_headings:
-                continue
-
             section_text = body if body else heading
-            prefix = f"Resume Section: {heading}" if heading else "Resume Section"
 
             section_chunks = cls._chunk_long_text(
                 section_text,
-                max_chars=850,
-                overlap=100,
-                prefix=prefix,
+                max_chars=1000,
+                overlap=120,
+                prefix=f"Resume Section: {heading}",
             )
+
             chunks.extend(section_chunks)
 
         return cls._dedupe_chunks(chunks)

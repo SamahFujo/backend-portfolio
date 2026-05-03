@@ -117,6 +117,31 @@ class ScopeResolver:
         re.I,
     )
 
+    WORK_HISTORY = re.compile(
+        r"\b("
+        r"company|companies|organization|organisation|employer|employers|"
+        r"worked with|worked at|work with|work at|"
+        r"which company|what company|"
+        r"where did she work|where she worked|"
+        r"employment history|work history|professional history|"
+        r"previous company|current company|previous employer|current employer|"
+        r"who did she work for|who has she worked for"
+        r")\b",
+        re.I,
+    )
+
+    @classmethod
+    def _soft_scope(cls, preferred_document_types: list[str]):
+        """
+        Preferred docs guide retrieval, but should not permanently trap it.
+        Retrieval can retry broadly if preferred docs are weak.
+        """
+        return {
+            "only_active_docs": True,
+            "preferred_document_types": preferred_document_types,
+            "allow_fallback_to_all_docs": True,
+        }
+
     @classmethod
     def _is_project_tech_question(cls, msg: str) -> bool:
         return bool(cls.PROJECT.search(msg)) and bool(cls.TECH_EXPERIENCE.search(msg))
@@ -133,101 +158,57 @@ class ScopeResolver:
 
     @classmethod
     def resolve_filters(cls, message: str, route: str | None = None):
+        """
+        Keep ScopeResolver conservative.
+
+        Most profile questions should search across all active documents.
+        Query planning + document-type boosting will guide ranking later.
+
+        Hard filters are kept only for direct document-specific questions
+        where the intent is very clear.
+        """
         msg = (message or "").strip()
         if not msg:
-            return None
+            return {"only_active_docs": True}
 
-        # Route-aware override for compensation
-        if route == "compensation_question":
-            return {
-                "document_type": "compensation",
-                "only_active_docs": True,
-            }
-
-        # Route-aware override for conversational follow-up with project/tech hints
-        if route == "conversation_followup_question" and cls.FOLLOWUP_PROJECT_HINT.search(msg):
-            return {
-                "document_type": "projects",
-                "only_active_docs": True,
-            }
-
+        # Direct contact/CV questions are safe to route to CV.
         if cls.CONTACT.search(msg) or cls.CV.search(msg):
             return {
                 "document_type": "cv",
                 "only_active_docs": True,
             }
 
-        if cls.PREFERENCES.search(msg):
-            return {
-                "document_type": "preferences",
-                "only_active_docs": True,
-            }
-
-        if cls._is_skill_rating_question(msg):
-            return {
-                "only_active_docs": True,
-            }
-
-
-        if cls.CAPABILITIES.search(msg):
-            return {
-                "document_type": "capabilities",
-                "only_active_docs": True,
-            }
-
-        if cls._is_project_tech_question(msg):
-            return {
-                "document_type": "projects",
-                "only_active_docs": True,
-            }
-
-        if cls.TECH_EXPERIENCE.search(msg):
-            return {
-                "only_active_docs": True,
-            }
-
-        if cls.FAQ.search(msg):
-            return {
-                "document_type": "faq",
-                "only_active_docs": True,
-            }
-
-        if cls.ACHIEVEMENTS.search(msg):
-            return {
-                "document_type": "achievements",
-                "only_active_docs": True,
-            }
-
-        if cls.CAREER_TIMELINE.search(msg):
-            return {
-                "document_type": "career_timeline",
-                "only_active_docs": True,
-            }
-
-        if cls.PROJECT.search(msg):
-            return {
-                "document_type": "projects",
-                "only_active_docs": True,
-            }
-
+        # Direct recommendation-letter questions.
         if cls.RECOMMEND.search(msg):
             return {
                 "document_type": "recommendation",
                 "only_active_docs": True,
             }
 
+        # Direct experience-letter questions.
         if cls.EXPERIENCE.search(msg):
             return {
                 "document_type": "experience_letter",
                 "only_active_docs": True,
             }
 
+        # Direct certificate questions.
         if cls.CERT.search(msg):
             return {
                 "document_type": "certificates",
                 "only_active_docs": True,
             }
 
+        # Direct compensation / availability questions.
+        # This remains safe because "rate Samah in Python" is handled by the query plan
+        # and should avoid compensation.
+        if cls.COMPENSATION.search(msg):
+            return {
+                "document_type": "compensation",
+                "only_active_docs": True,
+            }
+
+        # Default: broad retrieval.
         return {
             "only_active_docs": True,
         }

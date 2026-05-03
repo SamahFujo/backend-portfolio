@@ -154,7 +154,6 @@ class AskAboutMeAPIView(APIView):
             payload.update(debug_fields)
         return payload
 
-
     @staticmethod
     def _build_contact_capture_payload(session, message: str, user_message_id=None):
         answer = (
@@ -189,7 +188,6 @@ class AskAboutMeAPIView(APIView):
                 ),
             },
         }
-
 
     @staticmethod
     def _build_send_history_prompt_payload(session, message: str, initial_email: str | None = None):
@@ -290,7 +288,6 @@ class AskAboutMeAPIView(APIView):
                 status=status.HTTP_200_OK,
             )
 
-
         if ui_intent.intent == "send_history_email":
             payload = self._build_send_history_prompt_payload(
                 session=session,
@@ -320,9 +317,6 @@ class AskAboutMeAPIView(APIView):
                 ),
                 status=status.HTTP_200_OK,
             )
-        
-        
-
 
         # 1) Block Arabic-only queries
         if GeminiQueryRewriter.is_fully_arabic_query(message):
@@ -368,93 +362,22 @@ class AskAboutMeAPIView(APIView):
                 status=status.HTTP_200_OK
             )
 
-        # 2) Rewrite first
-        rewrite = GeminiQueryRewriter.rewrite_cached(
-            user_query=message,
+        # 2) Cheap local cleanup for routing only.
+        # This does NOT call the LLM.
+        # It fixes small typos/formatting so route classification has a cleaner message.
+        route_message = GeminiQueryRewriter._local_rewrite(message)
+
+        # 3) Route first before expensive rewrite/query planning.
+        route_result = SmartChatIntentService.classify_question_route(
+            message=route_message,
             history=recent_history,
         )
-        rewritten_query = (rewrite.get("rewritten_query")
-                        or message).strip() or message
-        retrieval_query = rewritten_query
-        rewrite_notes = rewrite.get("notes")
-
-
-        # 3) Conversational/meta/off-topic handling before route classification and retrieval
-        # This prevents chatbot-behavior or off-topic questions from going into RAG.
-        # Examples:
-        # - "are you dumping the answers?"
-        # - "tell me a joke"
-        # - "why is your answer wrong?"
-        # - "what can you do?"
-        conversational_result = SmartChatIntentService.detect_conversational_response(
-            message=rewritten_query,
-            history=recent_history,
-        )
-
-        if conversational_result.handled:
-            answer = SmartChatIntentService.generate_conversational_reply(
-                message=rewritten_query,
-                category=conversational_result.category,
-                history=recent_history,
-            )
-
-            assistant_message = ChatMessage.objects.create(
-                session=session,
-                role="assistant",
-                content=answer,
-                citations=[],
-                confidence_score=conversational_result.confidence,
-            )
-
-            return Response(
-                self._with_optional_debug({
-                    "session_id": str(session.id),
-                    "message_id": str(assistant_message.id),
-                    "retrieval_query": retrieval_query,
-                    "rewrite_notes": rewrite_notes,
-                    "verdict": "conversational_response",
-                    "answer": answer,
-                    "question_route": None,
-                    "question_route_confidence": None,
-                    "question_route_reason": None,
-                    "citations": [],
-                    "applied_filters": None,
-                    "answer_source": "conversational_llm",
-                    "extractor_used": None,
-                    "model_used": None,
-                    "tried_models": [],
-                    "provider_used": None,
-                    "fallback_used": False,
-                    "generation_ok": True,
-                    "safe_fallback": False,
-                    "primary_meta": None,
-                    "secondary_meta": None,
-                    "confidence": conversational_result.confidence,
-                    "mode": conversational_result.category,
-                    "intent_source": conversational_result.source,
-                },
-                    retrieval_debug=[],
-                    used_sources=[],
-                    debug_history_count=len(full_history),
-                    debug_recent_history=full_history[-4:],
-                    debug_raw_message=message,
-                    debug_rewritten_query=rewritten_query,
-                    debug_rewrite_meta=rewrite.get("meta"),
-                    debug_rewrite_debug=rewrite.get("debug"),
-                    debug_chunks_before_llm=[],
-                    debug_prompt_chunks=[],
-                    prompt_mode=None,
-                    chunk_budget=None,
-                ),
-                status=status.HTTP_200_OK,
-            )
-
 
         # 4) Route using rewritten query, not raw message
-        route_result = SmartChatIntentService.classify_question_route(
-            message=rewritten_query,
-            history=recent_history,
-        )
+        # route_result = SmartChatIntentService.classify_question_route(
+        #     message=rewritten_query,
+        #     history=recent_history,
+        # )
 
         # Conversation memory route has the highest priority after blocking and rewriting, because if the user is asking a question that
         # can be answered from recent conversation, we want to answer that first before trying more complex retrieval and reasoning.
@@ -490,12 +413,145 @@ class AskAboutMeAPIView(APIView):
                     route=route_result.route,
                     memory_source=memory_result["source"],
                     matched_messages=memory_result["matched_messages"],
+                    debug_route_message=route_message,
                 ),
                 status=status.HTTP_200_OK,
             )
-        # 4) Quick social intents only if this is not a stronger conversational route
-        if route_result.route in {"general_question", "identity_question"}:
-            quick = SmartChatIntentService.detect(rewritten_query)
+
+        # 4) Identity questions do not need rewrite/query planning or retrieval.
+        if route_result.route == "identity_question":
+            qa_result = ProfileQAService.answer_question(
+                question=route_message,
+                retrieval_query=route_message,
+                question_route=route_result.route,
+                history=full_history,
+                query_plan={},
+            )
+
+            answer_text = qa_result.get(
+                "answer") or "I’m Samah.ai’s portfolio assistant."
+
+            assistant_message = ChatMessage.objects.create(
+                session=session,
+                role="assistant",
+                content=answer_text,
+                citations=[],
+                confidence_score=0.9,
+            )
+
+            return Response(
+                self._with_optional_debug({
+                    "session_id": str(session.id),
+                    "message_id": str(assistant_message.id),
+                    "retrieval_query": None,
+                    "rewrite_notes": "rewrite_skipped_identity_question",
+                    "debug_raw_message": message,
+                    "debug_route_message": route_message,
+                    "verdict": qa_result.get("verdict"),
+                    "answer": answer_text,
+                    "question_route": route_result.route,
+                    "question_route_confidence": route_result.confidence,
+                    "question_route_reason": route_result.raw_label,
+                    "citations": [],
+                    "applied_filters": None,
+                    "answer_source": qa_result.get("meta", {}).get("answer_source"),
+                    "extractor_used": None,
+                    "model_used": qa_result.get("meta", {}).get("model_used"),
+                    "tried_models": qa_result.get("meta", {}).get("tried_models", []),
+                    "provider_used": qa_result.get("meta", {}).get("provider_used"),
+                    "fallback_used": qa_result.get("meta", {}).get("fallback_used"),
+                    "generation_ok": qa_result.get("meta", {}).get("generation_ok"),
+                    "safe_fallback": qa_result.get("meta", {}).get("safe_fallback"),
+                    "primary_meta": None,
+                    "secondary_meta": None,
+                },
+                    retrieval_debug=[],
+                    used_sources=[],
+                    debug_history_count=len(full_history),
+                    debug_recent_history=full_history[-4:],
+                    debug_chunks_before_llm=[],
+                    debug_prompt_chunks=[],
+                    prompt_mode=None,
+                    chunk_budget=None,
+                ),
+                status=status.HTTP_200_OK,
+            )
+
+        # 5) Conversational/meta/off-topic handling before expensive rewrite/query planning.
+        # This prevents chatbot-behavior or off-topic questions from going into RAG.
+        # Examples:
+        # - "are you dumping the answers?"
+        # - "tell me a joke"
+        # - "why is your answer wrong?"
+        conversational_result = SmartChatIntentService.detect_conversational_response(
+            message=route_message,
+            history=recent_history,
+        )
+
+        if conversational_result.handled:
+            answer = SmartChatIntentService.generate_conversational_reply(
+                message=route_message,
+                category=conversational_result.category,
+                history=recent_history,
+            )
+
+            assistant_message = ChatMessage.objects.create(
+                session=session,
+                role="assistant",
+                content=answer,
+                citations=[],
+                confidence_score=conversational_result.confidence,
+            )
+
+            return Response(
+                self._with_optional_debug({
+                    "session_id": str(session.id),
+                    "message_id": str(assistant_message.id),
+                    "retrieval_query": None,
+                    "rewrite_notes": "rewrite_skipped_conversational_response",
+                    "verdict": "conversational_response",
+                    "answer": answer,
+                    "question_route": route_result.route,
+                    "question_route_confidence": route_result.confidence,
+                    "question_route_reason": route_result.raw_label,
+                    "citations": [],
+                    "applied_filters": None,
+                    "answer_source": "conversational_llm",
+                    "extractor_used": None,
+                    "model_used": None,
+                    "tried_models": [],
+                    "provider_used": None,
+                    "fallback_used": False,
+                    "generation_ok": True,
+                    "safe_fallback": False,
+                    "primary_meta": None,
+                    "secondary_meta": None,
+                    "confidence": conversational_result.confidence,
+                    "mode": conversational_result.category,
+                    "intent_source": conversational_result.source,
+                },
+                    retrieval_debug=[],
+                    used_sources=[],
+                    debug_history_count=len(full_history),
+                    debug_recent_history=full_history[-4:],
+                    debug_raw_message=message,
+                    debug_route_message=route_message,
+                    debug_rewritten_query=None,
+                    debug_rewrite_meta=None,
+                    debug_rewrite_debug=None,
+                    debug_chunks_before_llm=[],
+                    debug_prompt_chunks=[],
+                    prompt_mode=None,
+                    chunk_budget=None,
+                ),
+                status=status.HTTP_200_OK,
+            )
+
+        # 6) Quick social intents can skip rewrite/query planning.
+        # Examples: hi, thanks, ok, wait, goodbye.
+        if route_result.route == "general_question":
+            quick = SmartChatIntentService.detect(route_message)
+
             if quick.handled:
                 assistant_message = ChatMessage.objects.create(
                     session=session,
@@ -504,6 +560,7 @@ class AskAboutMeAPIView(APIView):
                     citations=[],
                     confidence_score=quick.confidence,
                 )
+
                 return Response(
                     self._with_optional_debug({
                         "session_id": str(session.id),
@@ -513,26 +570,60 @@ class AskAboutMeAPIView(APIView):
                         "confidence": quick.confidence,
                         "mode": quick.intent,
                         "intent_source": quick.source,
-                        "retrieval_query": retrieval_query,
-                        "rewrite_notes": rewrite_notes,
+                        "retrieval_query": None,
+                        "rewrite_notes": "rewrite_skipped_quick_intent",
                     },
                         retrieval_debug=[],
                         debug_history_count=len(full_history),
                         debug_recent_history=full_history[-4:],
                         debug_raw_message=message,
-                        debug_rewritten_query=rewritten_query,
-                        debug_rewrite_meta=rewrite.get("meta"),
-                        debug_rewrite_debug=rewrite.get("debug"),
+                        debug_route_message=route_message,
                     ),
-                    status=status.HTTP_200_OK
+                    status=status.HTTP_200_OK,
                 )
 
-        # 7) Main QA orchestration
+        # 7) Expensive rewrite/query planning only for routes that need QA/retrieval.
+        REWRITE_REQUIRED_ROUTES = {
+            "profile_docs_question",
+            "capability_inference_question",
+            "general_question",
+        }
+
+        if route_result.route in REWRITE_REQUIRED_ROUTES:
+            rewrite = GeminiQueryRewriter.rewrite_cached(
+                user_query=message,
+                history=recent_history,
+            )
+
+            rewritten_query = (rewrite.get("rewritten_query")
+                               or route_message).strip() or route_message
+
+            retrieval_query = (rewrite.get("retrieval_query")
+                               or rewritten_query).strip() or rewritten_query
+
+            query_plan = {
+                "answer_type": rewrite.get("answer_type"),
+                "preferred_document_types": rewrite.get("preferred_document_types") or [],
+                "avoid_document_types": rewrite.get("avoid_document_types") or [],
+                "needs_document_retrieval": rewrite.get("needs_document_retrieval", True),
+                "source": rewrite.get("meta", {}).get("provider", "rewrite"),
+                "retrieval_query": retrieval_query,
+            }
+
+            rewrite_notes = rewrite.get("notes")
+        else:
+            rewritten_query = route_message
+            retrieval_query = route_message
+            query_plan = {}
+            rewrite_notes = "rewrite_skipped_for_route"
+
+        # 8) Main QA orchestration
         qa_result = ProfileQAService.answer_question(
             question=rewritten_query,
             retrieval_query=retrieval_query,
             question_route=route_result.route,
             history=full_history,
+            query_plan=query_plan,
         )
 
         verdict = qa_result.get("verdict", "not_enough_evidence")
@@ -588,7 +679,7 @@ class AskAboutMeAPIView(APIView):
             "raw_message": message,
             "rewritten_query": rewritten_query,
             "rewrite_notes": rewrite_notes,
-            "rewrite_meta": rewrite.get("meta"),
+            "rewrite_meta": rewrite.get("meta") if "rewrite" in locals() else None,
             "answer": answer_text,
         })
 
@@ -600,8 +691,8 @@ class AskAboutMeAPIView(APIView):
                 "rewrite_notes": rewrite_notes,
                 "debug_raw_message": message,
                 "debug_rewritten_query": rewritten_query,
-                "debug_rewrite_meta": rewrite.get("meta"),
-                "debug_rewrite_debug": rewrite.get("debug"),
+                "debug_rewrite_meta": rewrite.get("meta") if "rewrite" in locals() else None,
+                "debug_rewrite_debug": rewrite.get("debug") if "rewrite" in locals() else None,
                 "verdict": verdict,
                 "answer": answer_text,
                 "question_route": route_result.route,

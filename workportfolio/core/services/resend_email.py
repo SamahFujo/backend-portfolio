@@ -105,7 +105,7 @@ def send_chat_history_email(*, recipient_email: str, history_text: str) -> dict:
           <div style="max-width:720px; margin:0 auto; background:#ffffff; border-radius:20px; overflow:hidden; box-shadow:0 18px 45px rgba(15, 23, 42, 0.10); border:1px solid #e2e8f0;">
 
             <!-- Header -->
-            <div style="background:linear-gradient(135deg, #0891b2 0%, #2563eb 55%, #4f46e5 100%); padding:34px 32px; color:#ffffff;">
+            <div style="background:linear-gradient(135deg, #0891b2 0%, #2563eb 55%, #4f46e5 100%); padding:34px 32px; color:#000000; font-color:#000000;">
               <div style="font-size:13px; letter-spacing:0.18em; text-transform:uppercase; opacity:0.9; font-weight:700;">
                 Samah.ai Portfolio Assistant
               </div>

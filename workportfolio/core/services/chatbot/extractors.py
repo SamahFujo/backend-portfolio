@@ -123,6 +123,7 @@ def _format_duration(start_dt: datetime, end_dt: datetime) -> str:
         return f"{years} years"
     return f"{rem_months} months"
 
+
 def try_extract_experience_duration(question: str, chunks):
     """
     Extract experience duration for:
@@ -230,7 +231,8 @@ def try_extract_experience_duration(question: str, chunks):
                 )
 
                 if clean_orgs:
-                    answer += " This includes roles across: " + "; ".join(clean_orgs[:5]) + "."
+                    answer += " This includes roles across: " + \
+                        "; ".join(clean_orgs[:5]) + "."
 
                 # Add current status note
                 answer += (
@@ -852,6 +854,11 @@ def try_extract_project_list(question: str, chunks: List[DocumentChunk]) -> Tupl
     """
     Extract a distinct list of project names when the user asks broadly
     about which projects Samah worked on.
+
+    Important:
+    For broad project-list questions, do NOT rely only on retrieved chunks,
+    because vector retrieval may return only one project. Instead, fetch all
+    active project chunks from the projects document.
     """
     q = (question or "").strip().lower()
 
@@ -862,23 +869,46 @@ def try_extract_project_list(question: str, chunks: List[DocumentChunk]) -> Tupl
         "projects samah worked",
         "what project samah worked",
         "what projects did she work on",
-        "worked on",
         "projects has she worked on",
+        "what are the projects",
+        "projects that samah work",
+        "projects that samah worked",
+        "projects she worked",
+        "worked on",
     ]
 
     if not any(marker in q for marker in list_markers):
         return False, "", 0.0
 
+    # ------------------------------------------------------------
+    # For broad project-list questions, fetch all active project chunks.
+    # This prevents returning only the top retrieved project.
+    # ------------------------------------------------------------
+    project_chunks = (
+        DocumentChunk.objects
+        .filter(
+            document__document_type="projects",
+            document__is_active=True,
+        )
+        .order_by("chunk_index")
+    )
+
+    # Fallback to retrieved chunks if DB lookup returns nothing
+    source_chunks = list(project_chunks) or chunks
+
     project_names = []
     seen = set()
 
-    for chunk in chunks:
+    for chunk in source_chunks:
         text = (chunk.content or "").strip()
+
         for line in text.splitlines():
             line = line.strip()
+
             if line.lower().startswith("project:"):
                 name = line.split(":", 1)[1].strip()
                 key = name.lower()
+
                 if name and key not in seen:
                     seen.add(key)
                     project_names.append(name)

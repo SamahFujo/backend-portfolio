@@ -289,6 +289,76 @@ class ProfileQAService:
                 }
 
         return None
+    
+    
+    @staticmethod
+    def _boost_and_sort_chunks(
+        chunks: List[DocumentChunk],
+        retrieval_debug: List[Dict[str, Any]],
+        query_plan: Dict[str, Any],
+    ) -> tuple[List[DocumentChunk], List[Dict[str, Any]]]:
+        """
+        Re-rank retrieved chunks using lightweight document-type boosting.
+
+        This avoids repeated retrieval attempts while still guiding the system
+        toward the most relevant document groups.
+        """
+        if not chunks or not retrieval_debug:
+            return chunks, retrieval_debug
+
+        preferred = set(query_plan.get("preferred_document_types") or [])
+        avoid = set(query_plan.get("avoid_document_types") or [])
+
+        if not preferred and not avoid:
+            return chunks, retrieval_debug
+
+        chunk_by_id = {str(chunk.id): chunk for chunk in chunks}
+        scored_items = []
+
+        for row in retrieval_debug:
+            chunk_id = str(row.get("chunk_id"))
+            chunk = chunk_by_id.get(chunk_id)
+
+            if not chunk:
+                continue
+
+            doc_type = getattr(chunk.document, "document_type", None)
+            base_score = float(row.get("rerank_score") or 0.0)
+            final_score = base_score
+
+            boost = 0.0
+            penalty = 0.0
+
+            if doc_type in preferred:
+                boost = 0.12
+                final_score += boost
+
+            if doc_type in avoid:
+                penalty = 0.25
+                final_score -= penalty
+
+            updated_row = dict(row)
+            updated_row["query_plan_answer_type"] = query_plan.get("answer_type")
+            updated_row["base_rerank_score"] = base_score
+            updated_row["final_score"] = final_score
+            updated_row["doc_type_boost"] = boost
+            updated_row["doc_type_penalty"] = penalty
+            updated_row["preferred_document_types"] = list(preferred)
+            updated_row["avoid_document_types"] = list(avoid)
+
+            scored_items.append((final_score, chunk, updated_row))
+
+        if not scored_items:
+            return chunks, retrieval_debug
+
+        scored_items.sort(key=lambda item: item[0], reverse=True)
+
+        sorted_chunks = [item[1] for item in scored_items]
+        sorted_debug = [item[2] for item in scored_items]
+
+        return sorted_chunks, sorted_debug
+    
+
 
     @classmethod
     def _retrieve_chunks(
@@ -296,15 +366,18 @@ class ProfileQAService:
         question: str,
         retrieval_query: str,
         question_route: Optional[str] = None,
+        query_plan: Optional[Dict[str, Any]] = None,
     ) -> tuple[list[DocumentChunk], list[dict], Optional[Dict[str, Any]]]:
         """
-        Retrieve evidence with route-aware scope filtering first.
+        Single-pass retrieval.
 
-        Important rule:
-        - For strict scopes like CV/contact, keep narrow retrieval if it returns anything.
-        - For route-specific scopes like compensation, keep them narrow first.
-        - Only broaden to all docs for broad/weak scopes.
+        Strategy:
+        1. Use conservative ScopeResolver filters only for direct document-specific questions.
+        2. Retrieve once.
+        3. Apply query-plan document-type boosting/penalty.
         """
+        query_plan = query_plan or {}
+
         filters = ScopeResolver.resolve_filters(question, route=question_route)
         filters = cls._augment_filters_for_precision(question, filters)
 
@@ -313,24 +386,24 @@ class ProfileQAService:
             filters=filters,
         )
 
-        if cls._is_strict_scope(filters) and chunks:
-            return chunks, retrieval_debug, filters
+        chunks, retrieval_debug = cls._boost_and_sort_chunks(
+            chunks=chunks,
+            retrieval_debug=retrieval_debug,
+            query_plan=query_plan,
+        )
 
-        # Compensation should also stay narrow if it already found evidence.
-        if filters and filters.get("document_type") == "compensation" and chunks:
-            return chunks, retrieval_debug, filters
+        applied_filters = {
+            **(filters or {"only_active_docs": True}),
+            "query_plan": {
+                "answer_type": query_plan.get("answer_type"),
+                "preferred_document_types": query_plan.get("preferred_document_types") or [],
+                "avoid_document_types": query_plan.get("avoid_document_types") or [],
+                "needs_document_retrieval": query_plan.get("needs_document_retrieval", True),
+                "source": query_plan.get("source"),
+            },
+        }
 
-        if not chunks or len(chunks) < 3:
-            fallback_chunks, fallback_debug = RerankedVectorRetrievalService.retrieve_relevant_chunks(
-                query=retrieval_query,
-                filters=None,
-            )
-
-            if fallback_chunks:
-                chunks = fallback_chunks
-                retrieval_debug = fallback_debug
-
-        return chunks, retrieval_debug, filters
+        return chunks, retrieval_debug, applied_filters
 
     @classmethod
     def _answer_compensation_question(
@@ -731,12 +804,14 @@ class ProfileQAService:
         retrieval_query: Optional[str] = None,
         question_route: Optional[str] = None,
         history: Optional[List[Dict[str, Any]]] = None,
+        query_plan: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
 
         question = (question or "").strip()
         retrieval_query = (retrieval_query or question).strip()
         history = history or []
-
+        query_plan = query_plan or {}
+        
         resolved_question = cls._resolve_question_from_history(
             question=question,
             retrieval_query=retrieval_query,
@@ -744,8 +819,13 @@ class ProfileQAService:
             question_route=question_route,
         )
 
-        retrieval_query = cls._normalize_retrieval_query(
-            question, resolved_question)
+        if query_plan.get("retrieval_query"):
+            retrieval_query = query_plan["retrieval_query"]
+        else:
+            retrieval_query = cls._normalize_retrieval_query(
+                question,
+                resolved_question,
+            )
         preferred_source = cls._preferred_source_for_route(question_route)
 
         # Step 1: Special direct handlers before general retrieval
@@ -820,6 +900,7 @@ class ProfileQAService:
             question=question,
             retrieval_query=retrieval_query,
             question_route=question_route,
+            query_plan=query_plan,
         )
 
         debug_chunks = []

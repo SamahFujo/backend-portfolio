@@ -15,6 +15,28 @@ class ParserService:
     """
     Extract raw text from uploaded files.
     """
+    
+    @staticmethod
+    def _unique_preserve_order(values):
+        """
+        Remove duplicate cell values while preserving order.
+        Useful for DOCX tables with merged cells.
+        """
+        seen = set()
+        result = []
+
+        for value in values:
+            clean = (value or "").strip()
+            if not clean:
+                continue
+
+            key = clean.lower()
+
+            if key not in seen:
+                seen.add(key)
+                result.append(clean)
+
+        return result
 
     @staticmethod
     def _clean_text(text: str) -> str:
@@ -97,6 +119,8 @@ class ParserService:
                         cell_text = (cell.text or "").strip()
                         if cell_text:
                             cells.append(cell_text)
+
+                    cells = ParserService._unique_preserve_order(cells)
 
                     if cells:
                         parts.append(" | ".join(cells))

@@ -134,6 +134,68 @@ class GeminiQueryRewriter:
         "شكراً لرسالتك. حالياً يدعم الشات بوت اللغة الإنجليزية فقط. "
         "يرجى كتابة استفسارك باللغة الإنجليزية حتى أتمكن من مساعدتك."
     )
+    
+    ALLOWED_DOCUMENT_TYPES = {
+        "cv",
+        "career_timeline",
+        "experience_letter",
+        "recommendation",
+        "projects",
+        "certificates",
+        "achievements",
+        "compensation",
+        "preferences",
+        "faq",
+        "capabilities",
+    }
+
+    ALLOWED_ANSWER_TYPES = {
+        "profile_overview",
+        "company_history",
+        "work_history",
+        "experience_duration",
+        "technical_skills",
+        "skill_evaluation",
+        "projects",
+        "capabilities",
+        "achievements",
+        "leadership",
+        "stakeholder_client_work",
+        "certificates",
+        "education",
+        "contact",
+        "compensation",
+        "availability",
+        "work_style",
+        "preferences",
+        "recommendation",
+        "experience_letter",
+        "general_profile",
+    }
+
+    ANSWER_TYPE_TO_PREFERRED_DOCS = {
+        "profile_overview": ["faq", "cv", "career_timeline"],
+        "company_history": ["cv", "career_timeline", "experience_letter"],
+        "work_history": ["cv", "career_timeline", "experience_letter"],
+        "experience_duration": ["cv", "career_timeline", "experience_letter"],
+        "technical_skills": ["cv", "faq", "capabilities", "projects", "preferences"],
+        "skill_evaluation": ["cv", "faq", "capabilities", "projects", "preferences"],
+        "projects": ["projects", "faq", "capabilities"],
+        "capabilities": ["capabilities", "faq", "projects"],
+        "achievements": ["achievements", "recommendation", "projects", "cv"],
+        "leadership": ["cv", "career_timeline", "achievements", "recommendation"],
+        "stakeholder_client_work": ["cv", "career_timeline", "achievements", "recommendation"],
+        "certificates": ["certificates", "cv"],
+        "education": ["cv"],
+        "contact": ["cv"],
+        "compensation": ["compensation"],
+        "availability": ["compensation", "faq"],
+        "work_style": ["preferences", "recommendation", "achievements"],
+        "preferences": ["preferences", "faq"],
+        "recommendation": ["recommendation"],
+        "experience_letter": ["experience_letter"],
+        "general_profile": ["cv", "faq", "projects", "capabilities"],
+    }
 
     @staticmethod
     def _arabic_char_count(text: str) -> int:
@@ -303,6 +365,73 @@ class GeminiQueryRewriter:
         rebuilt = re.sub(r"\s+", " ", rebuilt).strip()
 
         return rebuilt
+    
+    
+    @classmethod
+    def _default_query_plan(cls, query: str, notes: str = "default") -> Dict[str, Any]:
+        """
+        Safe fallback query plan used for local rewrites or LLM failures.
+        Keeps backward compatibility and avoids breaking retrieval.
+        """
+        clean = (query or "").strip()
+
+        return {
+            "rewritten_query": clean,
+            "retrieval_query": f"{clean} Samah profile CV projects experience skills capabilities",
+            "answer_type": "general_profile",
+            "preferred_document_types": cls.ANSWER_TYPE_TO_PREFERRED_DOCS["general_profile"],
+            "avoid_document_types": [],
+            "needs_document_retrieval": True,
+            "notes": notes,
+        }
+
+    @classmethod
+    def _normalize_query_plan(cls, data: Dict[str, Any], fallback_query: str) -> Dict[str, Any]:
+        """
+        Validate and normalize LLM query-plan output.
+        This protects the rest of the chatbot from malformed LLM JSON.
+        """
+        fallback = cls._default_query_plan(fallback_query)
+
+        rewritten_query = (data.get("rewritten_query") or fallback_query or "").strip()
+        retrieval_query = (data.get("retrieval_query") or rewritten_query or fallback["retrieval_query"]).strip()
+
+        answer_type = (data.get("answer_type") or "general_profile").strip()
+        if answer_type not in cls.ALLOWED_ANSWER_TYPES:
+            answer_type = "general_profile"
+
+        preferred = data.get("preferred_document_types") or []
+        if not isinstance(preferred, list):
+            preferred = []
+
+        preferred = [
+            str(item).strip()
+            for item in preferred
+            if str(item).strip() in cls.ALLOWED_DOCUMENT_TYPES
+        ]
+
+        if not preferred:
+            preferred = cls.ANSWER_TYPE_TO_PREFERRED_DOCS.get(answer_type, [])
+
+        avoid = data.get("avoid_document_types") or []
+        if not isinstance(avoid, list):
+            avoid = []
+
+        avoid = [
+            str(item).strip()
+            for item in avoid
+            if str(item).strip() in cls.ALLOWED_DOCUMENT_TYPES
+        ]
+
+        return {
+            "rewritten_query": rewritten_query,
+            "retrieval_query": retrieval_query,
+            "answer_type": answer_type,
+            "preferred_document_types": preferred,
+            "avoid_document_types": avoid,
+            "needs_document_retrieval": bool(data.get("needs_document_retrieval", True)),
+            "notes": data.get("notes", fallback.get("notes", "ok")),
+        }
 
     @classmethod
     def rewrite_cached(
@@ -312,13 +441,25 @@ class GeminiQueryRewriter:
     ) -> Dict[str, Any]:
         q = (user_query or "").strip()
         if not q:
-            return {"rewritten_query": "", "notes": "empty"}
+            plan = cls._default_query_plan("", notes="empty")
+            return {
+                **plan,
+                "meta": {
+                    "provider": "local_guard",
+                    "model_used": None,
+                    "tried_models": [],
+                    "error": None,
+                },
+            }
         
         low_q = q.lower()
         if any(pattern in low_q for pattern in cls.LOW_RISK_PRESERVE_PATTERNS):
+            plan = cls._default_query_plan(q, notes="preserved_capability_pattern")
+            plan["answer_type"] = "capabilities"
+            plan["preferred_document_types"] = cls.ANSWER_TYPE_TO_PREFERRED_DOCS["capabilities"]
+
             return {
-                "rewritten_query": q,
-                "notes": "preserved_capability_pattern",
+                **plan,
                 "meta": {
                     "provider": "local_guard",
                     "model_used": None,
@@ -331,9 +472,10 @@ class GeminiQueryRewriter:
 
         rule_based = cls._rule_based_followup_rewrite(q, history)
         if rule_based:
+            plan = cls._default_query_plan(rule_based, notes="rule_based_followup")
+
             return {
-                "rewritten_query": rule_based,
-                "notes": "rule_based_followup",
+                **plan,
                 "meta": {
                     "provider": "local_rule",
                     "model_used": None,
@@ -344,9 +486,10 @@ class GeminiQueryRewriter:
 
         # Keep only truly safe bypasses
         if cls.is_fully_arabic_query(q):
+            plan = cls._default_query_plan(q, notes="arabic_only_no_rewrite")
+
             return {
-                "rewritten_query": q,
-                "notes": "arabic_only_no_rewrite",
+                **plan,
                 "meta": {
                     "provider": "local_guard",
                     "model_used": None,
@@ -358,39 +501,56 @@ class GeminiQueryRewriter:
         history_text = cls._format_history_for_prompt(history)
 
         system_instruction = (
-            "You rewrite user queries to improve document retrieval.\n"
+            "You rewrite user queries and create a retrieval plan for Samah.ai's portfolio chatbot.\n"
+            "The chatbot answers questions about Samah's professional profile using uploaded documents.\n\n"
+            "Available document types:\n"
+            "- cv: resume, contact, education, professional experience, company names, core skills\n"
+            "- career_timeline: career progression, role development, leadership journey, work history\n"
+            "- experience_letter: formal employment confirmation and employment dates\n"
+            "- recommendation: recommendation letter, professionalism, HR endorsement, interpersonal and organizational strengths\n"
+            "- projects: project portfolio, delivered systems, technical contributions, outcomes\n"
+            "- certificates: professional certificates and training\n"
+            "- achievements: impact, strengths, value, leadership, stakeholder contribution\n"
+            "- compensation: salary expectations, availability, freelance, contract, work arrangement, location preference\n"
+            "- preferences: favorite technologies, work style, preferred stack, collaboration style\n"
+            "- faq: common direct questions and concise answers\n"
+            "- capabilities: services, what Samah can build, AI/backend/full-stack capabilities\n\n"
+            "Allowed answer_type values:\n"
+            "profile_overview, company_history, work_history, experience_duration, technical_skills, skill_evaluation, "
+            "projects, capabilities, achievements, leadership, stakeholder_client_work, certificates, education, contact, "
+            "compensation, availability, work_style, preferences, recommendation, experience_letter, general_profile.\n\n"
             "Rules:\n"
-            "1) Keep the EXACT same meaning and intent.\n"
-            "2) The CURRENT user query is always the primary intent.\n"
-            "3) Use recent conversation only to resolve vague references like 'it', 'that', 'she', 'her', 'this project', or 'again'.\n"
-            "4) Never replace the main topic of the current query with a previous topic unless the current query clearly depends on it.\n"
-            "5) If the current query explicitly asks about experience, skills, contact, or compensation, preserve that exact intent.\n"
-            "6) Do NOT reinterpret an experience question into a compensation question.\n"
-            "7) Do NOT reinterpret a contact/discussion question into a compensation question unless the user explicitly asks about compensation.\n"
-            "8) Fix typos, spacing, capitalization, and minor grammar only when helpful.\n"
-            "9) Preserve person perspective exactly. Never change 'you' to 'I', 'your' to 'my', or names to pronouns.\n"
-            "10) Preserve the original language of the query. If the query is Arabic, keep it Arabic. If mixed, keep the same mixed style unless a tiny correction is needed.\n"
-            "11) Preserve proper nouns, acronyms, project names, and domain-specific terms exactly when possible.\n"
-            "12) Do NOT replace specific terms with broad synonyms if that could hurt retrieval.\n"
-            "13) If the current query is context-dependent, rewrite it into a standalone retrieval query using only the provided recent conversation.\n"
-            "14) Return JSON only.\n"
+            "1) Keep the exact user intent.\n"
+            "2) Fix grammar and spelling when helpful.\n"
+            "3) Do not confuse payment rate with skill rating.\n"
+            "4) 'rate Samah in Python from 1-10' = skill_evaluation, avoid compensation.\n"
+            "5) 'which company did she work with/for' = company_history, prefer cv, career_timeline, experience_letter.\n"
+            "6) Contact questions should prefer cv.\n"
+            "7) Salary, hourly rate, freelance, contract, availability, remote/hybrid/on-site questions should prefer compensation.\n"
+            "8) Favorite language/framework/work style questions should prefer preferences and faq.\n"
+            "9) Project questions should prefer projects, capabilities, and faq.\n"
+            "10) Achievement, strength, impact, leadership, stakeholder questions should prefer achievements, cv, recommendation, and career_timeline.\n"
+            "11) Return JSON only."
         )
 
         prompt = (
-            "Return JSON with keys:\n"
-            "- rewritten_query: string\n"
-            "- notes: short string\n\n"
+            "Return JSON exactly with these keys:\n"
+            "{"
+            "\"rewritten_query\":\"clean standalone user question\","
+            "\"retrieval_query\":\"optimized semantic retrieval query\","
+            "\"answer_type\":\"one allowed answer_type\","
+            "\"preferred_document_types\":[\"cv\"],"
+            "\"avoid_document_types\":[\"compensation\"],"
+            "\"needs_document_retrieval\":true,"
+            "\"notes\":\"short explanation\""
+            "}\n\n"
             "Important:\n"
-            "- Keep the same person perspective.\n"
-            "- Keep the same language as the original query.\n"
-            "- Preserve project names and technical terms.\n"
-            "- The current user query is the main source of intent.\n"
-            "- Use recent conversation only to resolve vague references.\n"
-            "- Do not let a previous compensation question override a current experience or contact question.\n"
-            "- Do not invent a new interpretation of a vague query.\n"
-            "- If the original query is already usable, make only minimal edits.\n"
-            "- If the current query is a follow-up that depends on recent conversation context,\n"
-            "  rewrite it into a standalone retrieval-friendly query using that context.\n\n"
+            "- retrieval_query should include useful keywords likely to appear in the right documents.\n"
+            "- preferred_document_types should use only available document types.\n"
+            "- avoid_document_types should be used only when a document type is likely misleading.\n"
+            "- Do not invent facts about Samah.\n"
+            "- The current user query is the main intent.\n"
+            "- Recent conversation is only for resolving vague references.\n\n"
             f"Recent conversation:\n{history_text or 'None'}\n\n"
             f"Current user query: {q}\n"
         )
@@ -399,9 +559,28 @@ class GeminiQueryRewriter:
             "type": "object",
             "properties": {
                 "rewritten_query": {"type": "string"},
+                "retrieval_query": {"type": "string"},
+                "answer_type": {"type": "string"},
+                "preferred_document_types": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                },
+                "avoid_document_types": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                },
+                "needs_document_retrieval": {"type": "boolean"},
                 "notes": {"type": "string"},
             },
-            "required": ["rewritten_query", "notes"],
+            "required": [
+                "rewritten_query",
+                "retrieval_query",
+                "answer_type",
+                "preferred_document_types",
+                "avoid_document_types",
+                "needs_document_retrieval",
+                "notes",
+            ],
             "additionalProperties": False,
         }
 
@@ -418,26 +597,39 @@ class GeminiQueryRewriter:
         )
 
         if not ok:
+            plan = cls._default_query_plan(
+                local,
+                notes="rewrite_json_parse_failed",
+            )
+
             return {
-                "rewritten_query": local,
-                "notes": f"rewrite_fallback:{meta.get('error')}",
+                **plan,
                 "meta": meta,
             }
 
         try:
             data = json.loads(text)
-            rewritten = (data.get("rewritten_query") or "").strip() or local
-            rewritten = cls._local_rewrite(rewritten)
+
+            plan = cls._normalize_query_plan(
+                data=data,
+                fallback_query=local,
+            )
+
+            plan["rewritten_query"] = cls._local_rewrite(plan["rewritten_query"])
+            plan["retrieval_query"] = cls._local_rewrite(plan["retrieval_query"])
 
             return {
-                "rewritten_query": rewritten,
-                "notes": data.get("notes", "ok"),
+                **plan,
                 "meta": meta,
             }
         except Exception:
+            plan = cls._default_query_plan(
+                local,
+                notes=f"rewrite_fallback:{meta.get('error')}",
+            )
+
             return {
-                "rewritten_query": local,
-                "notes": "rewrite_json_parse_failed",
+                **plan,
                 "meta": meta,
             }
 
