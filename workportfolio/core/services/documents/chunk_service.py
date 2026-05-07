@@ -43,7 +43,92 @@ class ChunkService:
         "additional information",
         "contact",
     }
-    
+
+    @classmethod
+    def chunk_security_deployment(cls, text: str) -> List[str]:
+        """
+        Chunk the Coding, Security, and Deployment Skills Profile.
+
+        Strategy:
+        - Preserve major sections such as SECURITY SKILLS and DEPLOYMENT & DEVOPS SKILLS.
+        - Keep representative project evidence readable.
+        - Add section prefixes to improve retrieval accuracy.
+        """
+
+        full_text = (text or "").strip()
+        if not full_text:
+            return []
+
+        main_headings = {
+            "coding skills",
+            "security skills",
+            "deployment & devops skills",
+            "deployment and devops skills",
+            "representative project evidence",
+            "professional positioning statement",
+            "coding • security • deployment skills profile",
+            "coding security deployment skills profile",
+        }
+
+        lines = full_text.replace("\r\n", "\n").replace("\r", "\n").split("\n")
+
+        sections = []
+        current_heading = None
+        current_body = []
+
+        for line in lines:
+            clean_line = line.strip()
+            if not clean_line:
+                continue
+
+            normalized = " ".join(clean_line.lower().split())
+
+            if normalized in main_headings:
+                if current_heading:
+                    sections.append({
+                        "heading": current_heading,
+                        "body": "\n".join(current_body).strip(),
+                    })
+
+                current_heading = clean_line
+                current_body = []
+            else:
+                if current_heading:
+                    current_body.append(clean_line)
+                else:
+                    # Keep intro/title text if it appears before first heading
+                    current_heading = "Coding Security Deployment Profile"
+                    current_body.append(clean_line)
+
+        if current_heading:
+            sections.append({
+                "heading": current_heading,
+                "body": "\n".join(current_body).strip(),
+            })
+
+        chunks: List[str] = []
+
+        for section in sections:
+            heading = section["heading"].strip()
+            body = section["body"].strip()
+
+            if not body:
+                continue
+
+            # Project evidence can be longer because table extraction may create dense text.
+            max_chars = 1300 if "project evidence" in heading.lower() else 900
+
+            chunks.extend(
+                cls._chunk_long_text(
+                    body,
+                    max_chars=max_chars,
+                    overlap=100,
+                    prefix=f"Security Deployment Section: {heading}",
+                )
+            )
+
+        return cls._dedupe_chunks(chunks)
+
     @classmethod
     def chunk_capabilities(cls, text: str) -> List[str]:
         """
@@ -215,6 +300,9 @@ class ChunkService:
 
         if doc_type == "capabilities":
             return cls.chunk_capabilities(text)
+        
+        if doc_type == "security_deployment":
+            return cls.chunk_security_deployment(text)
 
         if doc_type in {
             "preferences",
@@ -423,8 +511,7 @@ class ChunkService:
         Generic fallback chunking.
         """
         return cls._chunk_long_text(text)
-    
-    
+
     @classmethod
     def _extract_generic_heading_sections(cls, text: str) -> List[dict]:
         """

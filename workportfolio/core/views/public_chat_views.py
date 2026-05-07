@@ -1,138 +1,35 @@
-from .services.resend_contact_email import send_get_in_touch_email
-from .services.resend_email import send_start_project_email, send_chat_history_email
+"""
+Public chatbot API views.
+"""
+
 import re
+import logging
 
 from django.conf import settings
-from .serializers import GetInTouchSerializer
-from .serializers import AskQuestionSerializer
-from .models import ChatSession, ChatMessage, ProfileDocument, DocumentChunk
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import AllowAny
-from rest_framework.throttling import AnonRateThrottle
-from rest_framework.authentication import SessionAuthentication
-from .serializers import StartProjectRequestSerializer, ProfileDocumentUploadSerializer, ProfileDocumentSerializer
-from .services.resend_email import send_start_project_email
-from .services.documents.ingestion_service import IngestionService
-from .services.chatbot.hybrid_query_rewriter import GeminiQueryRewriter
-from .services.chatbot.smart_chat_intents import SmartChatIntentService
-from .services.chatbot.profile_qa_service import ProfileQAService
-from .permissions import HasInternalAPIKey
-from .throttles import ChatRateThrottle, ContactRateThrottle, UploadRateThrottle
-from .services.chatbot.conversation_memory_service import ConversationMemoryService
-import logging
-from django.core.validators import validate_email
-from django.core.exceptions import ValidationError
+
+from core.models import ChatSession, ChatMessage
+from core.serializers import AskQuestionSerializer
+from core.throttles import ChatRateThrottle, ContactRateThrottle
+from core.services.resend_email import send_chat_history_email
+from core.services.chatbot.hybrid_query_rewriter import GeminiQueryRewriter
+from core.services.chatbot.smart_chat_intents import SmartChatIntentService
+from core.services.chatbot.profile_qa_service import ProfileQAService
+from core.services.chatbot.conversation_memory_service import ConversationMemoryService
+
+from .contact_views import CsrfExemptSessionAuthentication
+
+
 logger = logging.getLogger(__name__)
 
 
-class CsrfExemptSessionAuthentication(SessionAuthentication):
-    """
-    Disable CSRF for this API endpoint (public portfolio form). this is safe because we are not using session authentication for any sensitive operations, and we have other protections in place (throttling, CORS, etc). It allows the public form to submit without needing a CSRF token.
-    """
 
-    def enforce_csrf(self, request):
-        # To disable CSRF checks for this view, we override this method to do nothing.
-        return
-
-
-"""API views for the public "Start Project" form."""
-
-
-class StartProjectRequestView(APIView):
-    permission_classes = [AllowAny]
-    authentication_classes = [CsrfExemptSessionAuthentication]
-    throttle_classes = [ContactRateThrottle]
-
-    def post(self, request, *args, **kwargs):
-        serializer = StartProjectRequestSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        try:
-            resend_result = send_start_project_email(serializer.validated_data)
-            return Response(
-                {
-                    "success": True,
-                    "message": "Project request sent successfully.",
-                    "provider": "resend",
-                    "email_id": resend_result.get("id"),
-                },
-                status=status.HTTP_200_OK,
-            )
-        except Exception as e:
-            logger.exception("Failed to send project request email")
-            return Response(
-                {
-                    "success": False,
-                    "message": "Could not send project request email right now. Please try again later.",
-                },
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            )
-
-    def options(self, request, *args, **kwargs):
-        # Usually not needed explicitly, but safe if debugging preflight behavior
-        return Response(status=status.HTTP_200_OK)
-
-
-class GetInTouchView(APIView):
-    permission_classes = [AllowAny]
-    authentication_classes = [CsrfExemptSessionAuthentication]
-    throttle_classes = [ContactRateThrottle]
-
-    def post(self, request, *args, **kwargs):
-        serializer = GetInTouchSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        try:
-            result = send_get_in_touch_email(serializer.validated_data)
-            return Response(
-                {
-                    "success": True,
-                    "message": "Message sent successfully.",
-                    "provider": "resend",
-                    "email_id": result.get("id"),
-                },
-                status=status.HTTP_200_OK,
-            )
-        except Exception:
-            logger.exception("Failed to send get-in-touch email")
-            return Response(
-                {
-                    "success": False,
-                    "message": "Could not send your message right now. Please try again later.",
-                },
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            )
-
-
-""" API views for the portfolio chatbot backend."""
-
-
-class ProfileDocumentStatsAPIView(APIView):
-    permission_classes = [HasInternalAPIKey]
-    admin_api_key = settings.ADMIN_API_KEY
-
-    def get(self, request, doc_id, *args, **kwargs):
-        doc = ProfileDocument.objects.filter(id=doc_id).first()
-        if not doc:
-            return Response({"detail": "Document not found."}, status=status.HTTP_404_NOT_FOUND)
-
-        chunks_qs = DocumentChunk.objects.filter(document=doc)
-        chunks_count = chunks_qs.count()
-        embedded_count = chunks_qs.exclude(embedding__isnull=True).count()
-        raw_len = len(doc.raw_text or "")
-
-        return Response({
-            "document_id": str(doc.id),
-            "title": doc.title,
-            "document_type": doc.document_type,
-            "status": doc.status,
-            "is_active": getattr(doc, "is_active", True),
-            "raw_text_length": raw_len,
-            "chunks_count": chunks_count,
-            "embedded_chunks_count": embedded_count,
-        }, status=status.HTTP_200_OK)
 
 
 """API views for the portfolio chatbot backend."""
@@ -141,6 +38,32 @@ class ProfileDocumentStatsAPIView(APIView):
 class AskAboutMeAPIView(APIView):
 
     throttle_classes = [ChatRateThrottle]
+
+    @staticmethod
+    def _get_client_ip(request):
+        """
+        Extract the real client IP address.
+
+        If the app is behind NGINX or a proxy, HTTP_X_FORWARDED_FOR may contain
+        the original client IP.
+        """
+        forwarded_for = request.META.get("HTTP_X_FORWARDED_FOR")
+
+        if forwarded_for:
+            return forwarded_for.split(",")[0].strip()
+
+        return request.META.get("REMOTE_ADDR")
+
+    @staticmethod
+    def _get_request_metadata(request):
+        """
+        Collect lightweight request metadata for analytics and security auditing.
+        """
+        return {
+            "ip_address": AskAboutMeAPIView._get_client_ip(request),
+            "user_agent": request.META.get("HTTP_USER_AGENT", ""),
+            "referrer": request.META.get("HTTP_REFERER", ""),
+        }
 
     @staticmethod
     def _clean_answer_text(answer: str) -> str:
@@ -224,23 +147,66 @@ class AskAboutMeAPIView(APIView):
         serializer.is_valid(raise_exception=True)
 
         session_id = serializer.validated_data.get("session_id")
+        visitor_id = serializer.validated_data.get("visitor_id")
+        visitor_email = serializer.validated_data.get("visitor_email")
         message = serializer.validated_data["message"].strip()
+
+        request_meta = self._get_request_metadata(request)
 
         if session_id:
             session = ChatSession.objects.filter(
-                id=session_id, is_active=True).first()
+                id=session_id,
+                is_active=True
+            ).first()
+
             if session is None:
                 return Response(
                     {"detail": "Session not found."},
                     status=status.HTTP_404_NOT_FOUND
                 )
+
+            # Update missing tracking fields only if they were not stored before.
+            update_fields = []
+
+            if visitor_email and not session.visitor_email:
+                session.visitor_email = visitor_email
+                update_fields.append("visitor_email")
+
+            if request_meta["ip_address"] and not session.ip_address:
+                session.ip_address = request_meta["ip_address"]
+                update_fields.append("ip_address")
+
+            if request_meta["user_agent"] and not session.user_agent:
+                session.user_agent = request_meta["user_agent"]
+                update_fields.append("user_agent")
+
+            if request_meta["referrer"] and not session.referrer:
+                session.referrer = request_meta["referrer"]
+                update_fields.append("referrer")
+
+            if update_fields:
+                session.save(update_fields=update_fields)
+
         else:
-            session = ChatSession.objects.create()
+            session = ChatSession.objects.create(
+                visitor_id=visitor_id,
+                visitor_email=visitor_email,
+                ip_address=request_meta["ip_address"],
+                user_agent=request_meta["user_agent"],
+                referrer=request_meta["referrer"],
+            )
 
         user_message = ChatMessage.objects.create(
             session=session,
             role="user",
-            content=message
+            content=message,
+            metadata={
+                "visitor_id": visitor_id,
+                "visitor_email": visitor_email,
+                "ip_address": request_meta["ip_address"],
+                "user_agent": request_meta["user_agent"],
+                "referrer": request_meta["referrer"],
+            }
         )
 
         full_history = list(
@@ -673,6 +639,17 @@ class AskAboutMeAPIView(APIView):
             content=answer_text,
             citations=citations,
             confidence_score=confidence,
+            metadata={
+                "mode": meta.get("prompt_mode"),
+                "question_route": route_result.route,
+                "answer_source": meta.get("answer_source"),
+                "model_used": meta.get("model_used"),
+                "provider_used": meta.get("provider_used"),
+                "fallback_used": meta.get("fallback_used"),
+                "safe_fallback": meta.get("safe_fallback"),
+                "retrieval_query": retrieval_query,
+                "rewrite_notes": rewrite_notes,
+            }
         )
 
         print("REWRITE DEBUG:", {
@@ -685,6 +662,8 @@ class AskAboutMeAPIView(APIView):
 
         return Response(
             self._with_optional_debug({
+                "visitor_email": session.visitor_email,
+                "visitor_id": session.visitor_id,
                 "session_id": str(session.id),
                 "message_id": str(assistant_message.id),
                 "retrieval_query": retrieval_query,
@@ -866,38 +845,3 @@ class SendChatHistoryEmailAPIView(APIView):
     def options(self, request, *args, **kwargs):
         return Response(status=status.HTTP_200_OK)
 
-
-class ProfileDocumentUploadAPIView(APIView):
-    """
-    Upload a profile-related document and process it immediately.
-    """
-
-    permission_classes = [HasInternalAPIKey]
-    throttle_classes = [UploadRateThrottle]
-    admin_api_key = settings.ADMIN_API_KEY
-
-    def post(self, request, *args, **kwargs):
-        serializer = ProfileDocumentUploadSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        document = serializer.save(status="uploaded")
-        IngestionService.process_document(document)
-
-        return Response(
-            ProfileDocumentSerializer(document).data,
-            status=status.HTTP_201_CREATED
-        )
-
-
-class ProfileDocumentListAPIView(APIView):
-    """
-    List all uploaded profile documents.
-    """
-
-    permission_classes = [HasInternalAPIKey]
-    admin_api_key = settings.ADMIN_API_KEY
-
-    def get(self, request, *args, **kwargs):
-        documents = ProfileDocument.objects.all().order_by("-created_at")
-        serializer = ProfileDocumentSerializer(documents, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)

@@ -86,20 +86,56 @@ class DocumentChunk(TimeStampedModel):
 
 class ChatSession(TimeStampedModel):
     """
-    Represents one chat session in the frontend.
+    Represents one chatbot conversation session.
+
+    Each visitor should keep the same session_id while chatting.
+    visitor_id helps track anonymous users across sessions without requiring login.
     """
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    session_name = models.CharField(max_length=255, blank=True, null=True)
+
+    visitor_email = models.EmailField(
+        blank=True,
+        null=True,
+        db_index=True,
+        help_text="Visitor email collected before starting chatbot conversation."
+    )
+
+    visitor_id = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True,
+        db_index=True,
+        help_text="Anonymous visitor identifier stored in frontend localStorage/cookie."
+    )
+
+    ip_address = models.GenericIPAddressField(
+        blank=True,
+        null=True,
+        help_text="Visitor IP address for analytics/security tracking."
+    )
+
+    user_agent = models.TextField(
+        blank=True,
+        null=True,
+        help_text="Browser/device information."
+    )
+
+    referrer = models.TextField(
+        blank=True,
+        null=True,
+        help_text="Page or source that referred the visitor."
+    )
+
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return str(self.id)
+        return f"ChatSession {self.id} - Visitor {self.visitor_id or 'anonymous'}"
 
 
 class ChatMessage(TimeStampedModel):
     """
-    Stores user and assistant messages for a given session.
+    Stores each message exchanged between visitor and assistant.
     """
 
     ROLE_CHOICES = [
@@ -109,18 +145,26 @@ class ChatMessage(TimeStampedModel):
     ]
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
     session = models.ForeignKey(
         ChatSession,
         on_delete=models.CASCADE,
         related_name="messages"
     )
+
     role = models.CharField(max_length=20, choices=ROLE_CHOICES)
+
     content = models.TextField()
-    citations = models.JSONField(blank=True, null=True)
+
+    citations = models.JSONField(default=list, blank=True)
+
     confidence_score = models.FloatField(blank=True, null=True)
 
-    class Meta:
-        ordering = ["created_at"]
+    metadata = models.JSONField(
+        default=dict,
+        blank=True,
+        help_text="Stores route, mode, model used, retrieval info, UI action, etc."
+    )
 
     def __str__(self):
-        return f"{self.role} - {self.session_id}"
+        return f"{self.role} message in {self.session_id}"

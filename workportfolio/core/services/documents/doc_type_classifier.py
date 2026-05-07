@@ -68,6 +68,39 @@ class DocumentTypeClassifier:
         r"\bhr department\b",
     ]
 
+    SECURITY_DEPLOYMENT_HINTS = [
+        r"\bcoding\s*skills\b",
+        r"\bsecurity\s*skills\b",
+        r"\bdeployment\s*&?\s*devops\s*skills\b",
+        r"\bdeployment\s+skills\b",
+        r"\bdevops\s+skills\b",
+        r"\bsecurity\s+deployment\b",
+        r"\bcoding\s+security\s+deployment\b",
+        r"\bauthentication\b",
+        r"\bauthorization\b",
+        r"\brbac\b",
+        r"\bjwt\b",
+        r"\bazure\s*ad\b",
+        r"\bmicrosoft\s*entra\b",
+        r"\bcors\b",
+        r"\bcsrf\b",
+        r"\brate\s*throttling\b",
+        r"\bsecrets?\s+management\b",
+        r"\baws\s+secrets\s+manager\b",
+        r"\bhttps\b",
+        r"\bssl\b",
+        r"\bnginx\b",
+        r"\bgunicorn\b",
+        r"\bsupervisor\b",
+        r"\bdocker\b",
+        r"\baws\s+ec2\b",
+        r"\bproduction\s+readiness\b",
+        r"\bsecure\s+cookies\b",
+        r"\bauditability\b",
+        r"\buser\s+activity\s+logs\b",
+        r"\baccess\s+logs\b",
+    ]
+
     CAPABILITIES_HINTS = [
         r"\bwhat i can help with\b",
         r"\bwhat i can do confidently\b",
@@ -141,6 +174,7 @@ class DocumentTypeClassifier:
         "recommendation",
         "experience_letter",
         "capabilities",
+        "security_deployment",
         "preferences",
         "compensation",
         "faq",
@@ -187,6 +221,22 @@ class DocumentTypeClassifier:
         if "compensation" in title_lower or "availability" in title_lower:
             return DocTypeResult("compensation", 0.72, ["compensation"], "rules")
 
+        if (
+            "security_deployment" in title_lower
+            or "security deployment" in title_lower
+            or "coding security deployment" in title_lower
+            or "deployment skills" in title_lower
+            or "security skills" in title_lower
+            or "devops skills" in title_lower
+        ):
+            return DocTypeResult(
+                "security_deployment",
+                0.78,
+                ["security_deployment", "coding",
+                    "security", "deployment", "devops"],
+                "rules",
+            )
+
         if "capabilities" in title_lower or "what i can help with" in title_lower:
             return DocTypeResult("capabilities", 0.72, ["capabilities"], "rules")
 
@@ -231,6 +281,7 @@ class DocumentTypeClassifier:
             "projects": cls._score(text_lower, cls.PROJECT_HINTS),
             "recommendation": cls._score(text_lower, cls.RECOMMENDATION_HINTS),
             "experience_letter": cls._score(text_lower, cls.EXPERIENCE_LETTER_HINTS),
+            "security_deployment": cls._score(text_lower, cls.SECURITY_DEPLOYMENT_HINTS),
             "capabilities": cls._score(text_lower, cls.CAPABILITIES_HINTS),
             "preferences": cls._score(text_lower, cls.PREFERENCES_HINTS),
             "compensation": cls._score(text_lower, cls.COMPENSATION_HINTS),
@@ -250,6 +301,15 @@ class DocumentTypeClassifier:
             scores["recommendation"] += 2
         if "experience" in title_lower or "employment" in title_lower:
             scores["experience_letter"] += 2
+        if (
+            "security_deployment" in title_lower
+            or "security deployment" in title_lower
+            or "coding security deployment" in title_lower
+            or "security skills" in title_lower
+            or "deployment skills" in title_lower
+            or "devops skills" in title_lower
+        ):
+            scores["security_deployment"] += 3
         if "capabilities" in title_lower or "what i can help with" in title_lower:
             scores["capabilities"] += 2
         if "preference" in title_lower or "work style" in title_lower:
@@ -276,6 +336,14 @@ class DocumentTypeClassifier:
             "recommendation": ["reference", "endorsement"],
             "certificates": ["credentials"],
             "experience_letter": ["employment", "verification", "hr"],
+            "security_deployment": [
+                "coding",
+                "security",
+                "deployment",
+                "devops",
+                "production",
+                "backend_security",
+            ],
             "capabilities": ["services", "skills", "delivery"],
             "preferences": ["work_style", "favorites", "preferences"],
             "compensation": ["availability", "salary", "work_type"],
