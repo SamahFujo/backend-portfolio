@@ -27,7 +27,7 @@ def env_list(name: str, default: str = "") -> list[str]:
     value = os.getenv(name, default)
     return [item.strip() for item in value.split(",") if item.strip()]
 
-
+ADMIN_API_KEY = config("ADMIN_API_KEY")
 SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = env_bool("DEBUG", False)
 

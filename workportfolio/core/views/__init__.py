@@ -6,6 +6,8 @@ from .contact_views import (
 from .public_chat_views import (
     AskAboutMeAPIView,
     SendChatHistoryEmailAPIView,
+    RequestEmailVerificationAPIView,
+    VerifyEmailCodeAPIView,
 )
 
 from .document_views import (

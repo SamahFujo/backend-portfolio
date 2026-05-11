@@ -24,12 +24,159 @@ from core.services.chatbot.profile_qa_service import ProfileQAService
 from core.services.chatbot.conversation_memory_service import ConversationMemoryService
 
 from .contact_views import CsrfExemptSessionAuthentication
+from django.utils import timezone
 
+import random
+from core.models import EmailVerificationCode
+from core.serializers import (
+    RequestEmailVerificationSerializer,
+    VerifyEmailCodeSerializer,
+)
+from core.services.resend_verification_email import send_email_verification_code
 
 logger = logging.getLogger(__name__)
 
 
+class RequestEmailVerificationAPIView(APIView):
+    """
+    Sends a verification code to the visitor email before starting chat.
+    """
 
+    permission_classes = [AllowAny]
+    authentication_classes = [CsrfExemptSessionAuthentication]
+    throttle_classes = [ContactRateThrottle]
+
+    def post(self, request, *args, **kwargs):
+        serializer = RequestEmailVerificationSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        email = serializer.validated_data["email"].lower().strip()
+
+        # Optional: invalidate previous unused codes for same email.
+        EmailVerificationCode.objects.filter(
+            email=email,
+            is_used=False,
+        ).update(is_used=True)
+
+        code = f"{random.randint(100000, 999999)}"
+
+        verification = EmailVerificationCode.create_code(
+            email=email,
+            code=code,
+            expiry_minutes=10,
+        )
+
+        try:
+            resend_result = send_email_verification_code(
+                recipient_email=email,
+                code=code,
+            )
+
+            return Response(
+                {
+                    "success": True,
+                    "message": "Verification code sent successfully.",
+                    "verification_id": str(verification.id),
+                    "provider": "resend",
+                    "email_id": resend_result.get("id"),
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        except Exception:
+            logger.exception("Failed to send email verification code")
+
+            verification.is_used = True
+            verification.save(update_fields=["is_used"])
+
+            return Response(
+                {
+                    "success": False,
+                    "message": "Could not send verification code right now. Please try again later.",
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+
+
+class VerifyEmailCodeAPIView(APIView):
+    """
+    Verifies the code entered by the visitor.
+    """
+
+    permission_classes = [AllowAny]
+    authentication_classes = [CsrfExemptSessionAuthentication]
+    throttle_classes = [ContactRateThrottle]
+
+    def post(self, request, *args, **kwargs):
+        serializer = VerifyEmailCodeSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        email = serializer.validated_data["email"].lower().strip()
+        code = serializer.validated_data["code"].strip()
+
+        verification = (
+            EmailVerificationCode.objects
+            .filter(email=email, is_used=False)
+            .order_by("-created_at")
+            .first()
+        )
+
+        if verification is None:
+            return Response(
+                {
+                    "success": False,
+                    "message": "No active verification code found. Please request a new code.",
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        if verification.is_expired():
+            verification.is_used = True
+            verification.save(update_fields=["is_used"])
+
+            return Response(
+                {
+                    "success": False,
+                    "message": "Verification code expired. Please request a new code.",
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        if verification.attempts >= 5:
+            verification.is_used = True
+            verification.save(update_fields=["is_used"])
+
+            return Response(
+                {
+                    "success": False,
+                    "message": "Too many incorrect attempts. Please request a new code.",
+                },
+                status=status.HTTP_429_TOO_MANY_REQUESTS,
+            )
+
+        if verification.code != code:
+            verification.attempts += 1
+            verification.save(update_fields=["attempts"])
+
+            return Response(
+                {
+                    "success": False,
+                    "message": "Invalid verification code.",
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        verification.is_used = True
+        verification.save(update_fields=["is_used"])
+
+        return Response(
+            {
+                "success": True,
+                "message": "Email verified successfully.",
+                "visitor_email": email,
+            },
+            status=status.HTTP_200_OK,
+        )
 
 
 """API views for the portfolio chatbot backend."""
@@ -38,6 +185,15 @@ logger = logging.getLogger(__name__)
 class AskAboutMeAPIView(APIView):
 
     throttle_classes = [ChatRateThrottle]
+
+    @staticmethod
+    def _touch_session(session):
+        """
+        Updates the session timestamp whenever a new message is added.
+        This helps the admin panel sort conversations by latest activity.
+        """
+        session.updated_at = timezone.now()
+        session.save(update_fields=["updated_at"])
 
     @staticmethod
     def _get_client_ip(request):
@@ -159,11 +315,15 @@ class AskAboutMeAPIView(APIView):
                 is_active=True
             ).first()
 
-            if session is None:
-                return Response(
-                    {"detail": "Session not found."},
-                    status=status.HTTP_404_NOT_FOUND
-                )
+
+        if session is None:
+            session = ChatSession.objects.create(
+                visitor_id=visitor_id,
+                visitor_email=visitor_email,
+                ip_address=request_meta["ip_address"],
+                user_agent=request_meta["user_agent"],
+                referrer=request_meta["referrer"],
+            )
 
             # Update missing tracking fields only if they were not stored before.
             update_fields = []
@@ -208,6 +368,8 @@ class AskAboutMeAPIView(APIView):
                 "referrer": request_meta["referrer"],
             }
         )
+
+        self._touch_session(session)
 
         full_history = list(
             ChatMessage.objects
@@ -844,4 +1006,3 @@ class SendChatHistoryEmailAPIView(APIView):
 
     def options(self, request, *args, **kwargs):
         return Response(status=status.HTTP_200_OK)
-

@@ -1,5 +1,11 @@
-from .models import ChatSession, ChatMessage
-from .models import ProfileDocument, DocumentChunk, ChatSession, ChatMessage
+from .models import (
+    ProfileDocument,
+    DocumentChunk,
+    ChatSession,
+    ChatMessage,
+    ContactMessage,
+    ProjectRequest,
+)
 from rest_framework import serializers
 from django.conf import settings
 from pathlib import Path
@@ -35,8 +41,8 @@ Serializers for the public "Get in Touch" form API endpoint.
 
 
 class GetInTouchSerializer(serializers.Serializer):
-    name = serializers.CharField(max_length=120)
-    email = serializers.EmailField(max_length=255)
+    name = serializers.CharField(min_length=2, max_length=120)
+    message = serializers.CharField(min_length=10, max_length=5000)
     subject = serializers.CharField(
         max_length=200, required=False, allow_blank=True)
     message = serializers.CharField(max_length=5000)
@@ -204,3 +210,59 @@ class AdminChatSessionDetailSerializer(serializers.ModelSerializer):
             "updated_at",
             "messages",
         ]
+
+
+class AdminContactMessageSerializer(serializers.ModelSerializer):
+    """
+    Serializer for displaying contact form messages in the admin dashboard.
+    """
+
+    class Meta:
+        model = ContactMessage
+        fields = [
+            "id",
+            "name",
+            "email",
+            "subject",
+            "message",
+            "status",
+            "ip_address",
+            "user_agent",
+            "referrer",
+            "created_at",
+            "updated_at",
+        ]
+
+
+class AdminProjectRequestSerializer(serializers.ModelSerializer):
+    """
+    Serializer for displaying start-project form requests in the admin dashboard.
+    """
+
+    class Meta:
+        model = ProjectRequest
+        fields = [
+            "id",
+            "project_name",
+            "project_type",
+            "budget_range",
+            "timeline",
+            "project_description",
+            "your_name",
+            "your_email",
+            "status",
+            "ip_address",
+            "user_agent",
+            "referrer",
+            "created_at",
+            "updated_at",
+        ]
+
+
+class RequestEmailVerificationSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+
+class VerifyEmailCodeSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    code = serializers.CharField(min_length=6, max_length=6)

@@ -11,6 +11,8 @@ This module defines:
 import uuid
 from django.db import models
 from pgvector.django import VectorField
+from django.utils import timezone
+from datetime import timedelta
 
 
 class TimeStampedModel(models.Model):
@@ -168,3 +170,114 @@ class ChatMessage(TimeStampedModel):
 
     def __str__(self):
         return f"{self.role} message in {self.session_id}"
+
+
+class EmailVerificationCode(models.Model):
+    """
+    Stores temporary email verification codes before allowing chatbot access.
+    """
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+    email = models.EmailField(db_index=True)
+
+    code = models.CharField(max_length=6)
+
+    is_used = models.BooleanField(default=False)
+
+    attempts = models.PositiveIntegerField(default=0)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    expires_at = models.DateTimeField()
+
+    def is_expired(self):
+        return timezone.now() > self.expires_at
+
+    @classmethod
+    def create_code(cls, email: str, code: str, expiry_minutes: int = 10):
+        return cls.objects.create(
+            email=email.lower().strip(),
+            code=code,
+            expires_at=timezone.now() + timedelta(minutes=expiry_minutes),
+        )
+
+
+class ContactMessage(TimeStampedModel):
+    """
+    Stores messages submitted from the Get in Touch form.
+    """
+
+    STATUS_CHOICES = [
+        ("new", "New"),
+        ("read", "Read"),
+        ("replied", "Replied"),
+        ("archived", "Archived"),
+    ]
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+    name = models.CharField(max_length=255)
+    email = models.EmailField(db_index=True)
+    subject = models.CharField(max_length=255, blank=True, null=True)
+    message = models.TextField()
+
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default="new",
+        db_index=True,
+    )
+
+    ip_address = models.GenericIPAddressField(blank=True, null=True)
+    user_agent = models.TextField(blank=True, null=True)
+    referrer = models.TextField(blank=True, null=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.name} - {self.email}"
+
+
+class ProjectRequest(TimeStampedModel):
+    """
+    Stores project requests submitted from the Start Project form.
+    """
+
+    STATUS_CHOICES = [
+        ("new", "New"),
+        ("reviewed", "Reviewed"),
+        ("contacted", "Contacted"),
+        ("accepted", "Accepted"),
+        ("rejected", "Rejected"),
+        ("archived", "Archived"),
+    ]
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+    project_name = models.CharField(max_length=255)
+    project_type = models.CharField(max_length=100, blank=True, null=True)
+    budget_range = models.CharField(max_length=100, blank=True, null=True)
+    timeline = models.CharField(max_length=100, blank=True, null=True)
+    project_description = models.TextField()
+
+    your_name = models.CharField(max_length=255)
+    your_email = models.EmailField(db_index=True)
+
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default="new",
+        db_index=True,
+    )
+
+    ip_address = models.GenericIPAddressField(blank=True, null=True)
+    user_agent = models.TextField(blank=True, null=True)
+    referrer = models.TextField(blank=True, null=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.project_name} - {self.your_email}"
