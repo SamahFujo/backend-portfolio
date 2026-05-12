@@ -44,7 +44,9 @@ class AdminChatAnalyticsAPIView(APIView):
     Protected by internal admin API key.
     """
 
+    authentication_classes = []
     permission_classes = [HasInternalAPIKey]
+    throttle_classes = []
 
     def get(self, request, *args, **kwargs):
         # Default: last 14 days
@@ -161,7 +163,9 @@ class AdminChatSessionListAPIView(ListAPIView):
     """
 
     serializer_class = AdminChatSessionListSerializer
+    authentication_classes = []
     permission_classes = [HasInternalAPIKey]
+    throttle_classes = []
 
     def get_queryset(self):
         queryset = (
@@ -202,7 +206,9 @@ class AdminChatSessionDetailAPIView(RetrieveAPIView):
     """
 
     serializer_class = AdminChatSessionDetailSerializer
+    authentication_classes = []
     permission_classes = [HasInternalAPIKey]
+    throttle_classes = []
     lookup_field = "id"
     lookup_url_kwarg = "session_id"
 
@@ -219,7 +225,9 @@ class AdminChatStatsAPIView(APIView):
     Show chatbot analytics summary for the admin dashboard.
     """
 
+    authentication_classes = []
     permission_classes = [HasInternalAPIKey]
+    throttle_classes = []
 
     def get(self, request, *args, **kwargs):
         total_sessions = ChatSession.objects.count()
@@ -291,8 +299,9 @@ class AdminLeadsAPIView(APIView):
     - latest session id
     """
 
+    authentication_classes = []
     permission_classes = [HasInternalAPIKey]
-
+    throttle_classes = []
     def get(self, request, *args, **kwargs):
         search = request.query_params.get("search", "").strip()
 
@@ -360,8 +369,9 @@ class AdminContactMessagesAPIView(APIView):
     - Searching by name, email, subject, or message
     """
 
+    authentication_classes = []
     permission_classes = [HasInternalAPIKey]
-
+    throttle_classes = []
     def get(self, request, *args, **kwargs):
         search = request.query_params.get("search", "").strip()
         status_filter = request.query_params.get("status", "").strip()
@@ -400,8 +410,10 @@ class AdminContactMessagesAPIView(APIView):
     - Searching by name, email, subject, or message
     """
 
-    permission_classes = [HasInternalAPIKey]
+    authentication_classes = []
 
+    permission_classes = [HasInternalAPIKey]
+    throttle_classes = []
     def get(self, request, *args, **kwargs):
         search = request.query_params.get("search", "").strip()
         status_filter = request.query_params.get("status", "").strip()
@@ -440,9 +452,10 @@ class AdminContactMessageDetailAPIView(APIView):
     - replied
     - archived
     """
-
+                
+    authentication_classes = []
     permission_classes = [HasInternalAPIKey]
-
+    throttle_classes = []
     def get(self, request, message_id, *args, **kwargs):
         contact_message = ContactMessage.objects.filter(id=message_id).first()
 
@@ -504,7 +517,9 @@ class AdminProjectRequestsAPIView(APIView):
     - Searching by client name, email, project name, or description
     """
 
+    authentication_classes = []
     permission_classes = [HasInternalAPIKey]
+    throttle_classes = []
 
     def get(self, request, *args, **kwargs):
         search = request.query_params.get("search", "").strip()
@@ -554,7 +569,9 @@ class AdminProjectRequestDetailAPIView(APIView):
     - archived
     """
 
+    authentication_classes = []
     permission_classes = [HasInternalAPIKey]
+    throttle_classes = []
 
     def get(self, request, request_id, *args, **kwargs):
         project_request = ProjectRequest.objects.filter(id=request_id).first()
@@ -635,7 +652,9 @@ class AdminChatQualityIssuesAPIView(APIView):
         weak_answer_phrase
     """
 
+    authentication_classes = []
     permission_classes = [HasInternalAPIKey]
+    throttle_classes = []
 
     WEAK_ANSWER_PHRASES = [
         "i don’t have enough evidence",
@@ -795,7 +814,9 @@ class AdminDashboardSummaryAPIView(APIView):
     - Chat quality issues summary
     """
 
+    authentication_classes = []
     permission_classes = [HasInternalAPIKey]
+    throttle_classes = []
 
     def get(self, request, *args, **kwargs):
         # Chat metrics
@@ -932,7 +953,9 @@ class AdminNotificationBadgesAPIView(APIView):
     - Quality issues
     """
 
+    authentication_classes = []
     permission_classes = [HasInternalAPIKey]
+    throttle_classes = []   
 
     def get(self, request, *args, **kwargs):
         assistant_qs = ChatMessage.objects.filter(role="assistant")
@@ -993,7 +1016,9 @@ class AdminChatSessionExportAPIView(APIView):
     - Message metadata
     """
 
+    authentication_classes = []
     permission_classes = [HasInternalAPIKey]
+    throttle_classes = []
 
     def get(self, request, session_id, *args, **kwargs):
         session = ChatSession.objects.filter(id=session_id).first()
@@ -1051,7 +1076,9 @@ class AdminSystemHealthAPIView(APIView):
     Useful for the admin dashboard system status widget.
     """
 
+    authentication_classes = []
     permission_classes = [HasInternalAPIKey]
+    throttle_classes = []
 
     def get(self, request, *args, **kwargs):
         database_status = "connected"
@@ -1095,8 +1122,9 @@ class AdminRecentActivityAPIView(APIView):
     Query params:
     - limit: max activities returned, default 20, max 100
     """
-
+    authentication_classes = []
     permission_classes = [HasInternalAPIKey]
+    throttle_classes = []
 
     def get(self, request, *args, **kwargs):
         try:
