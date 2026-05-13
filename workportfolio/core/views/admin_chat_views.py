@@ -5,6 +5,7 @@ These APIs are used by the admin panel to review chatbot sessions,
 messages, and chatbot statistics.
 """
 
+from core.models import ChatSession
 from django.db import models
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView, RetrieveAPIView
@@ -200,23 +201,192 @@ class AdminChatSessionListAPIView(ListAPIView):
         return queryset
 
 
-class AdminChatSessionDetailAPIView(RetrieveAPIView):
+class AdminChatSessionDetailAPIView(APIView):
     """
-    View one full chatbot conversation session.
+    Admin API endpoint for reading one full chat session.
+
+    Purpose:
+    - Show complete visitor conversation
+    - Review user questions and assistant responses
+    - Inspect citations, confidence, metadata, and lead context
+    - Support the admin conversation review page
     """
 
-    serializer_class = AdminChatSessionDetailSerializer
     authentication_classes = []
     permission_classes = [HasInternalAPIKey]
     throttle_classes = []
-    lookup_field = "id"
-    lookup_url_kwarg = "session_id"
 
-    def get_queryset(self):
-        return (
-            ChatSession.objects
-            .all()
-            .prefetch_related("messages")
+    def get(self, request, session_id, *args, **kwargs):
+        session = ChatSession.objects.filter(id=session_id).first()
+
+        if not session:
+            return Response(
+                {"detail": "Chat session was not found."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        messages_qs = (
+            ChatMessage.objects
+            .filter(session=session)
+            .order_by("created_at")
+        )
+
+        messages = []
+
+        for message in messages_qs:
+            messages.append({
+                "id": str(message.id),
+                "role": message.role,
+                "content": message.content,
+                "citations": message.citations or [],
+                "confidence_score": message.confidence_score,
+                "metadata": message.metadata or {},
+                "created_at": message.created_at,
+            })
+
+        user_messages_count = messages_qs.filter(role="user").count()
+        assistant_messages_count = messages_qs.filter(role="assistant").count()
+
+        low_confidence_count = messages_qs.filter(
+            role="assistant",
+            confidence_score__lt=0.7,
+        ).count()
+
+        fallback_count = 0
+        missing_citations_count = 0
+
+        for message in messages_qs.filter(role="assistant"):
+            metadata = message.metadata or {}
+            citations = message.citations or []
+
+            if metadata.get("fallback_used") is True:
+                fallback_count += 1
+
+            if not citations:
+                missing_citations_count += 1
+
+        return Response(
+            {
+                "id": str(session.id),
+                "visitor_id": session.visitor_id,
+                "visitor_email": session.visitor_email,
+                "ip_address": session.ip_address,
+                "user_agent": session.user_agent,
+                "referrer": session.referrer,
+                "is_active": session.is_active,
+
+
+                "admin_status": session.admin_status,
+                "admin_note": session.admin_note,
+                "reviewed_at": session.reviewed_at,
+                "closed_at": session.closed_at,
+
+
+                "created_at": session.created_at,
+                "updated_at": session.updated_at,
+
+                "messages_count": messages_qs.count(),
+                "user_messages_count": user_messages_count,
+                "assistant_messages_count": assistant_messages_count,
+
+                "quality_summary": {
+                    "low_confidence_count": low_confidence_count,
+                    "fallback_count": fallback_count,
+                    "missing_citations_count": missing_citations_count,
+                },
+
+                "messages": messages,
+
+
+            },
+            status=status.HTTP_200_OK,
+        )
+
+
+class AdminChatSessionStatusUpdateAPIView(APIView):
+    """
+    Admin API endpoint for updating chat session review status.
+
+    Used by the admin dashboard to mark sessions as:
+    - open
+    - reviewed
+    - closed
+    - archived
+
+    PATCH /api/admin/chat/sessions/<session_id>/status/
+    """
+
+    authentication_classes = []
+    permission_classes = [HasInternalAPIKey]
+    throttle_classes = []
+
+    allowed_statuses = ["open", "reviewed", "closed", "archived"]
+
+    def patch(self, request, session_id, *args, **kwargs):
+        session = ChatSession.objects.filter(id=session_id).first()
+
+        if not session:
+            return Response(
+                {"detail": "Chat session was not found."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        admin_status = request.data.get("admin_status")
+        admin_note = request.data.get("admin_note", None)
+
+        if admin_status not in self.allowed_statuses:
+            return Response(
+                {
+                    "detail": "Invalid admin_status.",
+                    "allowed_statuses": self.allowed_statuses,
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        session.admin_status = admin_status
+
+        if admin_note is not None:
+            session.admin_note = str(admin_note).strip()
+
+        now = timezone.now()
+
+        if admin_status == "reviewed":
+            session.reviewed_at = now
+
+        if admin_status in ["closed", "archived"]:
+            session.closed_at = now
+            session.is_active = False
+
+        if admin_status == "open":
+            session.closed_at = None
+            session.is_active = True
+
+        session.save(
+            update_fields=[
+                "admin_status",
+                "admin_note",
+                "reviewed_at",
+                "closed_at",
+                "is_active",
+                "updated_at",
+            ]
+        )
+
+        return Response(
+            {
+                "success": True,
+                "message": "Chat session status updated successfully.",
+                "session": {
+                    "id": str(session.id),
+                    "admin_status": session.admin_status,
+                    "admin_note": session.admin_note,
+                    "reviewed_at": session.reviewed_at,
+                    "closed_at": session.closed_at,
+                    "is_active": session.is_active,
+                    "updated_at": session.updated_at,
+                },
+            },
+            status=status.HTTP_200_OK,
         )
 
 
@@ -302,6 +472,7 @@ class AdminLeadsAPIView(APIView):
     authentication_classes = []
     permission_classes = [HasInternalAPIKey]
     throttle_classes = []
+
     def get(self, request, *args, **kwargs):
         search = request.query_params.get("search", "").strip()
 
@@ -372,6 +543,7 @@ class AdminContactMessagesAPIView(APIView):
     authentication_classes = []
     permission_classes = [HasInternalAPIKey]
     throttle_classes = []
+
     def get(self, request, *args, **kwargs):
         search = request.query_params.get("search", "").strip()
         status_filter = request.query_params.get("status", "").strip()
@@ -414,6 +586,7 @@ class AdminContactMessagesAPIView(APIView):
 
     permission_classes = [HasInternalAPIKey]
     throttle_classes = []
+
     def get(self, request, *args, **kwargs):
         search = request.query_params.get("search", "").strip()
         status_filter = request.query_params.get("status", "").strip()
@@ -452,10 +625,11 @@ class AdminContactMessageDetailAPIView(APIView):
     - replied
     - archived
     """
-                
+
     authentication_classes = []
     permission_classes = [HasInternalAPIKey]
     throttle_classes = []
+
     def get(self, request, message_id, *args, **kwargs):
         contact_message = ContactMessage.objects.filter(id=message_id).first()
 
@@ -955,7 +1129,7 @@ class AdminNotificationBadgesAPIView(APIView):
 
     authentication_classes = []
     permission_classes = [HasInternalAPIKey]
-    throttle_classes = []   
+    throttle_classes = []
 
     def get(self, request, *args, **kwargs):
         assistant_qs = ChatMessage.objects.filter(role="assistant")
@@ -1213,6 +1387,132 @@ class AdminRecentActivityAPIView(APIView):
             {
                 "total_returned": len(activities),
                 "activities": activities,
+            },
+            status=status.HTTP_200_OK,
+        )
+
+
+class AdminChatMessagesAPIView(APIView):
+    """
+    Admin API endpoint for listing chatbot messages directly.
+
+    This endpoint is useful for dashboard drill-down views, such as:
+    - Viewing all user messages
+    - Viewing all assistant messages
+    - Searching message content
+    - Checking which visitor/session a message belongs to
+
+    Query params:
+    - role: optional filter. Accepted values: user, assistant
+    - search: optional keyword search across message content, visitor email, and visitor id
+    - limit: optional maximum records returned. Default 100, max 500
+
+    Example:
+    GET /api/admin/chat/messages/?role=user
+    GET /api/admin/chat/messages/?role=assistant
+    GET /api/admin/chat/messages/?role=user&search=project
+    """
+
+    authentication_classes = []
+    permission_classes = [HasInternalAPIKey]
+    throttle_classes = []
+
+    def get(self, request, *args, **kwargs):
+        role = request.query_params.get("role", "").strip()
+        search = request.query_params.get("search", "").strip()
+
+        try:
+            limit = int(request.query_params.get("limit", 100))
+        except ValueError:
+            return Response(
+                {"detail": "Invalid limit. It must be a number."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        if limit < 1:
+            limit = 100
+
+        if limit > 500:
+            limit = 500
+
+        messages_qs = (
+            ChatMessage.objects
+            .select_related("session")
+            .all()
+            .order_by("-created_at")
+        )
+
+        if role:
+            if role not in ["user", "assistant"]:
+                return Response(
+                    {
+                        "detail": "Invalid role.",
+                        "allowed_roles": ["user", "assistant"],
+                    },
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+            messages_qs = messages_qs.filter(role=role)
+
+        if search:
+            messages_qs = messages_qs.filter(
+                models.Q(content__icontains=search)
+                | models.Q(session__visitor_email__icontains=search)
+                | models.Q(session__visitor_id__icontains=search)
+            )
+
+        total_messages = messages_qs.count()
+        messages_qs = messages_qs[:limit]
+
+        messages = []
+
+        for message in messages_qs:
+            related_user_message = None
+
+            # If this is an assistant answer, find the closest previous user message
+            # in the same chat session. This helps the admin understand which user
+            # question led to this assistant response.
+            if message.role == "assistant":
+                previous_user_message = (
+                    ChatMessage.objects
+                    .filter(
+                        session_id=message.session_id,
+                        role="user",
+                        created_at__lt=message.created_at,
+                    )
+                    .order_by("-created_at")
+                    .first()
+                )
+
+                if previous_user_message:
+                    related_user_message = {
+                        "id": str(previous_user_message.id),
+                        "content": previous_user_message.content,
+                        "created_at": previous_user_message.created_at,
+                    }
+
+            messages.append({
+                "id": str(message.id),
+                "session_id": str(message.session_id),
+                "role": message.role,
+                "content": message.content,
+                "citations": message.citations or [],
+                "confidence_score": message.confidence_score,
+                "metadata": message.metadata or {},
+                "visitor_email": message.session.visitor_email,
+                "visitor_id": message.session.visitor_id,
+                "created_at": message.created_at,
+                "related_user_message": related_user_message,
+            })
+
+        return Response(
+            {
+                "total_messages": total_messages,
+                "returned_messages": len(messages),
+                "role": role or "all",
+                "search": search,
+                "limit": limit,
+                "messages": messages,
             },
             status=status.HTTP_200_OK,
         )

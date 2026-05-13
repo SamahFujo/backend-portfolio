@@ -30,6 +30,8 @@ from core.views.admin_chat_views import (
 
     AdminSystemHealthAPIView,
     AdminRecentActivityAPIView,
+    AdminChatMessagesAPIView,
+    AdminChatSessionStatusUpdateAPIView,
 
 
 )
@@ -150,5 +152,18 @@ urlpatterns = [
         AdminRecentActivityAPIView.as_view(),
         name="admin-recent-activity",
     ),
+
+
+    path(
+        "admin/chat/messages/",
+        AdminChatMessagesAPIView.as_view(),
+        name="admin-chat-messages",
+    ),
+
+    path(
+        "admin/chat/sessions/<uuid:session_id>/status/",
+        AdminChatSessionStatusUpdateAPIView.as_view(),
+        name="admin-chat-session-status-update",
+    ), 
 
 ]

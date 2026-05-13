@@ -94,6 +94,13 @@ class ChatSession(TimeStampedModel):
     visitor_id helps track anonymous users across sessions without requiring login.
     """
 
+    ADMIN_STATUS_CHOICES = [
+        ("open", "Open"),
+        ("reviewed", "Reviewed"),
+        ("closed", "Closed"),
+        ("archived", "Archived"),
+    ]
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     visitor_email = models.EmailField(
@@ -130,6 +137,32 @@ class ChatSession(TimeStampedModel):
     )
 
     is_active = models.BooleanField(default=True)
+
+    admin_status = models.CharField(
+        max_length=20,
+        choices=ADMIN_STATUS_CHOICES,
+        default="open",
+        db_index=True,
+        help_text="Admin review workflow status for this chat session.",
+    )
+
+    admin_note = models.TextField(
+        blank=True,
+        default="",
+        help_text="Optional internal admin note about this session.",
+    )
+
+    reviewed_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="When the admin marked this session as reviewed.",
+    )
+
+    closed_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="When the admin closed or archived this session.",
+    )
 
     def __str__(self):
         return f"ChatSession {self.id} - Visitor {self.visitor_id or 'anonymous'}"
