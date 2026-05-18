@@ -572,49 +572,6 @@ class AdminContactMessagesAPIView(APIView):
         )
 
 
-class AdminContactMessagesAPIView(APIView):
-    """
-    Admin API endpoint for viewing saved Get in Touch form messages.
-
-    Supports:
-    - Listing all contact messages
-    - Filtering by status
-    - Searching by name, email, subject, or message
-    """
-
-    authentication_classes = []
-
-    permission_classes = [HasInternalAPIKey]
-    throttle_classes = []
-
-    def get(self, request, *args, **kwargs):
-        search = request.query_params.get("search", "").strip()
-        status_filter = request.query_params.get("status", "").strip()
-
-        messages_qs = ContactMessage.objects.all().order_by("-created_at")
-
-        if status_filter:
-            messages_qs = messages_qs.filter(status=status_filter)
-
-        if search:
-            messages_qs = messages_qs.filter(
-                models.Q(name__icontains=search)
-                | models.Q(email__icontains=search)
-                | models.Q(subject__icontains=search)
-                | models.Q(message__icontains=search)
-            )
-
-        serializer = AdminContactMessageSerializer(messages_qs, many=True)
-
-        return Response(
-            {
-                "total_messages": messages_qs.count(),
-                "messages": serializer.data,
-            },
-            status=status.HTTP_200_OK,
-        )
-
-
 class AdminContactMessageDetailAPIView(APIView):
     """
     Admin API endpoint for viewing or updating one contact message.
