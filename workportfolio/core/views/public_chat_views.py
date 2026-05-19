@@ -34,6 +34,10 @@ from core.serializers import (
 )
 from core.services.resend_verification_email import send_email_verification_code
 
+from core.models import HeroSection
+from core.serializers import HeroSectionSerializer
+
+
 logger = logging.getLogger(__name__)
 
 

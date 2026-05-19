@@ -10,6 +10,137 @@ from rest_framework import serializers
 from django.conf import settings
 from pathlib import Path
 
+
+from rest_framework import serializers
+from .models import HeroSection
+
+
+class HeroSectionSerializer(serializers.ModelSerializer):
+    """
+    Public serializer used by the website frontend.
+    """
+
+    hero_image_dark_url = serializers.SerializerMethodField()
+    hero_image_light_url = serializers.SerializerMethodField()
+    background_image_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = HeroSection
+        fields = [
+            "id",
+            "eyebrow_text",
+            "full_name",
+            "headline",
+            "description",
+            "primary_button_text",
+            "primary_button_url",
+            "secondary_button_text",
+            "secondary_button_url",
+            "hero_image_dark",
+            "hero_image_light",
+            "hero_image_dark_url",
+            "hero_image_light_url",
+            "background_image_url",
+            "is_active",
+            "updated_at",
+        ]
+
+    def get_hero_image_dark_url(self, obj):
+        request = self.context.get("request")
+
+        if obj.hero_image_dark:
+            url = obj.hero_image_dark.url
+            return request.build_absolute_uri(url) if request else url
+
+        return None
+
+
+    def get_hero_image_light_url(self, obj):
+        request = self.context.get("request")
+
+        if obj.hero_image_light:
+            url = obj.hero_image_light.url
+            return request.build_absolute_uri(url) if request else url
+
+        return None
+
+    def get_background_image_url(self, obj):
+        request = self.context.get("request")
+
+        if obj.background_image:
+            url = obj.background_image.url
+            return request.build_absolute_uri(url) if request else url
+
+        return None
+
+
+class HeroSectionAdminSerializer(serializers.ModelSerializer):
+    """
+    Admin serializer used for creating and updating Hero content.
+    Supports image uploads from the custom admin dashboard.
+    """
+
+    hero_image_dark_url = serializers.SerializerMethodField()
+    hero_image_light_url = serializers.SerializerMethodField()
+    background_image_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = HeroSection
+        fields = [
+            "id",
+            "eyebrow_text",
+            "full_name",
+            "headline",
+            "description",
+            "primary_button_text",
+            "primary_button_url",
+            "secondary_button_text",
+            "secondary_button_url",
+            "hero_image_dark",
+            "hero_image_light",
+            "hero_image_dark_url",
+            "hero_image_light_url",
+            "background_image_url",
+            "is_active",
+            "created_at",
+            "updated_at",
+        ]
+
+        read_only_fields = [
+            "id",
+            "created_at",
+            "updated_at",
+            "background_image_url",
+        ]
+
+    def get_hero_image_dark_url(self, obj):
+        request = self.context.get("request")
+
+        if obj.hero_image_dark:
+            url = obj.hero_image_dark.url
+            return request.build_absolute_uri(url) if request else url
+
+        return None
+
+    def get_hero_image_light_url(self, obj):
+        request = self.context.get("request")
+
+        if obj.hero_image_light:
+            url = obj.hero_image_light.url
+            return request.build_absolute_uri(url) if request else url
+
+        return None
+
+    def get_background_image_url(self, obj):
+        request = self.context.get("request")
+
+        if obj.background_image:
+            url = obj.background_image.url
+            return request.build_absolute_uri(url) if request else url
+
+        return None
+
+
 """
 Serializers for the public "Start Project" form API endpoint.
 """

@@ -36,7 +36,16 @@ from core.views.admin_chat_views import (
 
 )
 
+from core.views.public_site_views import ActiveHeroSectionAPIView
+from core.views.admin_site_views import AdminHeroSectionAPIView
+
+
 urlpatterns = [
+    # Public and admin APIs for the portfolio site (hero section)
+    path("site/hero/", ActiveHeroSectionAPIView.as_view(), name="site-hero"),
+    path("admin/site/hero/", AdminHeroSectionAPIView.as_view(),
+    name="admin-site-hero"),
+
     # Public contact APIs
     path("start-project/", StartProjectRequestView.as_view(), name="start-project"),
     path("get-in-touch/", GetInTouchView.as_view(), name="get-in-touch"),
@@ -164,9 +173,9 @@ urlpatterns = [
         "admin/chat/sessions/<uuid:session_id>/status/",
         AdminChatSessionStatusUpdateAPIView.as_view(),
         name="admin-chat-session-status-update",
-    ), 
-    
-    
-    
+    ),
+
+
+
 
 ]

@@ -15,6 +15,109 @@ from django.utils import timezone
 from datetime import timedelta
 
 
+class HeroSection(models.Model):
+    """
+    Stores editable content for the portfolio hero section.
+
+    This allows the admin panel to update the homepage hero content
+    without changing the frontend code.
+    """
+
+    title_prefix = models.CharField(
+        max_length=100,
+        default="Hi, I am",
+        help_text="Small text before the main name/title.",
+    )
+
+    main_title = models.CharField(
+        max_length=150,
+        default="Samah Fujo",
+        help_text="Main hero title, usually the portfolio owner's name.",
+    )
+
+    subtitle = models.CharField(
+        max_length=255,
+        blank=True,
+        default="Senior Python/Django Engineer with 5+ years of experience",
+        help_text="Short professional headline.",
+    )
+
+    description = models.TextField(
+        blank=True,
+        help_text="Main hero paragraph shown under the title.",
+    )
+
+    primary_button_text = models.CharField(
+        max_length=80,
+        default="Download CV",
+    )
+
+    primary_button_url = models.CharField(
+        max_length=255,
+        blank=True,
+        default="/cv.pdf",
+        help_text="URL or file path for the primary button.",
+    )
+
+    secondary_button_text = models.CharField(
+        max_length=80,
+        default="Start Project",
+    )
+
+    secondary_button_url = models.CharField(
+        max_length=255,
+        blank=True,
+        default="#contact",
+        help_text="URL or section anchor for the secondary button.",
+    )
+
+    hero_image_dark = models.ImageField(
+        upload_to="hero/images/dark/",
+        blank=True,
+        null=True,
+        help_text="Hero image used in dark mode."
+    )
+
+    hero_image_light = models.ImageField(
+        upload_to="hero/images/light/",
+        blank=True,
+        null=True,
+        help_text="Hero image used in light mode."
+    )
+
+    background_image = models.ImageField(
+        upload_to="hero/backgrounds/",
+        blank=True,
+        null=True,
+        help_text="Optional background image or brush effect.",
+    )
+
+    is_active = models.BooleanField(
+        default=True,
+        help_text="Only one active hero section should be used on the public website.",
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Hero Section"
+        verbose_name_plural = "Hero Sections"
+        ordering = ["-updated_at"]
+        
+    def save(self, *args, **kwargs):
+        """
+        Ensure only one HeroSection is active at a time.
+        """
+        if self.is_active:
+            HeroSection.objects.exclude(pk=self.pk).update(is_active=False)
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.main_title} Hero Section"
+
+
 class TimeStampedModel(models.Model):
     """
     Abstract base model to track creation and update timestamps.

@@ -21,3 +21,6 @@ from .admin_chat_views import (
     AdminChatSessionDetailAPIView,
     AdminChatStatsAPIView,
 )
+
+from .public_site_views import ActiveHeroSectionAPIView
+from .admin_site_views import AdminHeroSectionAPIView
