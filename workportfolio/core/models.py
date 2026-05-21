@@ -23,99 +23,447 @@ class HeroSection(models.Model):
     without changing the frontend code.
     """
 
-    title_prefix = models.CharField(
+    eyebrow_text = models.CharField(
         max_length=100,
         default="Hi, I am",
-        help_text="Small text before the main name/title.",
+        blank=True,
     )
 
-    main_title = models.CharField(
+    full_name = models.CharField(
         max_length=150,
         default="Samah Fujo",
-        help_text="Main hero title, usually the portfolio owner's name.",
+        blank=True,
     )
 
-    subtitle = models.CharField(
+    headline = models.CharField(
         max_length=255,
+        default="Senior Python/Django Engineer",
         blank=True,
-        default="Senior Python/Django Engineer with 5+ years of experience",
-        help_text="Short professional headline.",
     )
 
     description = models.TextField(
         blank=True,
-        help_text="Main hero paragraph shown under the title.",
+        default="",
     )
 
     primary_button_text = models.CharField(
         max_length=80,
         default="Download CV",
+        blank=True,
     )
 
     primary_button_url = models.CharField(
         max_length=255,
+        default="/assets/files/Samah-Fujo-CV.pdf",
         blank=True,
-        default="/cv.pdf",
-        help_text="URL or file path for the primary button.",
     )
 
     secondary_button_text = models.CharField(
         max_length=80,
         default="Start Project",
+        blank=True,
     )
 
     secondary_button_url = models.CharField(
         max_length=255,
+        default="modal:start-project",
         blank=True,
-        default="#contact",
-        help_text="URL or section anchor for the secondary button.",
     )
 
     hero_image_dark = models.ImageField(
         upload_to="hero/images/dark/",
         blank=True,
         null=True,
-        help_text="Hero image used in dark mode."
     )
 
     hero_image_light = models.ImageField(
         upload_to="hero/images/light/",
         blank=True,
         null=True,
-        help_text="Hero image used in light mode."
     )
 
     background_image = models.ImageField(
         upload_to="hero/backgrounds/",
         blank=True,
         null=True,
-        help_text="Optional background image or brush effect.",
     )
 
-    is_active = models.BooleanField(
-        default=True,
-        help_text="Only one active hero section should be used on the public website.",
-    )
+    is_active = models.BooleanField(default=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    class Meta:
-        verbose_name = "Hero Section"
-        verbose_name_plural = "Hero Sections"
-        ordering = ["-updated_at"]
-        
     def save(self, *args, **kwargs):
-        """
-        Ensure only one HeroSection is active at a time.
-        """
         if self.is_active:
             HeroSection.objects.exclude(pk=self.pk).update(is_active=False)
 
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.main_title} Hero Section"
+        return f"Hero Section - {self.full_name}"
+
+
+class AboutSection(models.Model):
+    """
+    Stores dynamic content for the public About Me section.
+
+    The website displays the active AboutSection record.
+    The custom admin dashboard can update this content without changing code.
+    """
+
+    section_title = models.CharField(
+        max_length=120,
+        default="About me",
+        blank=True,
+        help_text="Main section heading displayed on the left side.",
+    )
+
+    terminal_label = models.CharField(
+        max_length=120,
+        default="samah.dev",
+        blank=True,
+        help_text="Small label shown in the terminal/browser window header.",
+    )
+
+    welcome_title = models.CharField(
+        max_length=120,
+        default="✨ Welcome",
+        blank=True,
+        help_text="Welcome heading inside the terminal content.",
+    )
+
+    description = models.TextField(
+        blank=True,
+        default="",
+        help_text="Main About Me paragraph shown inside the terminal window.",
+    )
+
+    is_active = models.BooleanField(
+        default=True,
+        help_text="Only the active About section will be displayed on the website.",
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "About Section"
+        verbose_name_plural = "About Sections"
+        ordering = ["-updated_at"]
+
+    def save(self, *args, **kwargs):
+        """
+        Ensure only one AboutSection is active at a time.
+        """
+        if self.is_active:
+            AboutSection.objects.exclude(pk=self.pk).update(is_active=False)
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"About Section - {self.section_title}"
+
+
+class SkillSection(models.Model):
+    """
+    Stores dynamic header content for the Skills section.
+
+    The public website displays the active SkillSection record.
+    Skill cards are stored separately in SkillItem.
+    """
+
+    badge_text = models.CharField(
+        max_length=80,
+        default="Expertise",
+        blank=True,
+        help_text="Small badge text shown above the section title.",
+    )
+
+    title_line_1 = models.CharField(
+        max_length=120,
+        default="Skills &",
+        blank=True,
+        help_text="First line of the Skills section title.",
+    )
+
+    title_line_2 = models.CharField(
+        max_length=120,
+        default="Capabilities.",
+        blank=True,
+        help_text="Second line of the Skills section title.",
+    )
+
+    description = models.TextField(
+        blank=True,
+        default="A comprehensive toolkit built through years of hands-on experience and continuous learning.",
+        help_text="Short description shown on the right side of the section header.",
+    )
+
+    is_active = models.BooleanField(
+        default=True,
+        help_text="Only the active Skills section will be displayed on the website.",
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Skill Section"
+        verbose_name_plural = "Skill Sections"
+        ordering = ["-updated_at"]
+
+    def save(self, *args, **kwargs):
+        """
+        Ensure only one SkillSection is active at a time.
+        """
+        if self.is_active:
+            SkillSection.objects.exclude(pk=self.pk).update(is_active=False)
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"Skill Section - {self.title_line_1} {self.title_line_2}"
+
+
+class SkillItem(models.Model):
+    CATEGORY_CHOICES = [
+        ("Frontend", "Frontend"),
+        ("Backend", "Backend"),
+        ("AI / LLM", "AI / LLM"),
+        ("Database", "Database"),
+        ("DevOps", "DevOps"),
+        ("Languages", "Languages"),
+        ("UI", "UI"),
+    ]
+
+    section = models.ForeignKey(
+        SkillSection,
+        on_delete=models.CASCADE,
+        related_name="items",
+    )
+
+    category = models.CharField(
+        max_length=50,
+        choices=CATEGORY_CHOICES,
+        default="Frontend",
+    )
+
+    icon = models.CharField(
+        max_length=100,
+        default="react",
+        help_text="TechIcon name, for example react, nextjs, docker, python.",
+    )
+
+    label = models.CharField(
+        max_length=150,
+        help_text="Skill name shown on the website, for example React.",
+    )
+
+    level = models.PositiveIntegerField(
+        default=7,
+        help_text="Skill level from 1 to 10.",
+    )
+
+    summary_heading = models.CharField(
+        max_length=180,
+        blank=True,
+        default="Practical technical capability",
+    )
+
+    summary_text = models.TextField(
+        blank=True,
+        default="This skill supports my real project delivery and contributes to building complete, production-oriented solutions.",
+    )
+
+    summary_points = models.JSONField(
+        blank=True,
+        default=list,
+        help_text="List of points explaining why this skill matters.",
+    )
+
+    sort_order = models.PositiveIntegerField(default=0)
+
+    is_active = models.BooleanField(default=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Skill Item"
+        verbose_name_plural = "Skill Items"
+        ordering = ["category", "sort_order", "created_at"]
+
+    def __str__(self):
+        return self.label
+
+
+class ProjectSection(models.Model):
+    """
+    Stores dynamic header content for the Projects section.
+
+    The public website displays the active ProjectSection record.
+    Individual project cards are stored in ProjectItem.
+    """
+
+    title = models.CharField(
+        max_length=120,
+        default="Projects",
+        blank=True,
+        help_text="Main title shown above the Projects section.",
+    )
+
+    description = models.TextField(
+        blank=True,
+        default="Selected work across AI, automation, analytics, and full-stack product development",
+        help_text="Short description shown below the Projects section title.",
+    )
+
+    is_active = models.BooleanField(
+        default=True,
+        help_text="Only the active Projects section will be displayed on the website.",
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Project Section"
+        verbose_name_plural = "Project Sections"
+        ordering = ["-updated_at"]
+
+    def save(self, *args, **kwargs):
+        """
+        Ensure only one ProjectSection is active at a time.
+        """
+        if self.is_active:
+            ProjectSection.objects.exclude(pk=self.pk).update(is_active=False)
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title or "Project Section"
+
+
+class ProjectItem(models.Model):
+    """
+    Stores one project displayed inside the Projects section.
+
+    The Request Demo button is handled by the frontend modal,
+    so no demo link is required here.
+    """
+
+    section = models.ForeignKey(
+        ProjectSection,
+        on_delete=models.CASCADE,
+        related_name="items",
+        help_text="The Projects section this item belongs to.",
+    )
+
+    title = models.CharField(
+        max_length=180,
+        help_text="Project title shown on the website.",
+    )
+
+    slug = models.SlugField(
+        max_length=220,
+        unique=True,
+        blank=True,
+        help_text="Unique project slug used internally and later for project detail pages.",
+    )
+
+    short_description = models.TextField(
+        blank=True,
+        default="",
+        help_text="Short text shown on project cards.",
+    )
+
+    description = models.TextField(
+        blank=True,
+        default="",
+        help_text="Full project description shown in the selected project detail card.",
+    )
+
+    thumbnail_image = models.ImageField(
+        upload_to="projects/thumbnails/",
+        blank=True,
+        null=True,
+        help_text="Small image used in project cards.",
+    )
+
+    hero_image = models.ImageField(
+        upload_to="projects/hero/",
+        blank=True,
+        null=True,
+        help_text="Large image used in the selected project hero preview.",
+    )
+
+    alt_text = models.CharField(
+        max_length=180,
+        blank=True,
+        default="",
+        help_text="Image alt text for accessibility.",
+    )
+
+    category = models.CharField(
+        max_length=100,
+        blank=True,
+        default="AI Project",
+        help_text="Project category badge, for example AI Dashboard or LLM Application.",
+    )
+
+    tech_stack = models.JSONField(
+        blank=True,
+        default=list,
+        help_text="List of technologies, for example ['Django', 'React', 'PostgreSQL'].",
+    )
+
+    sort_order = models.PositiveIntegerField(
+        default=0,
+        help_text="Controls display order. Lower numbers appear first.",
+    )
+
+    is_featured = models.BooleanField(
+        default=True,
+        help_text="Featured projects are shown in the main Projects section.",
+    )
+
+    is_active = models.BooleanField(
+        default=True,
+        help_text="Only active projects are shown on the public website.",
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Project Item"
+        verbose_name_plural = "Project Items"
+        ordering = ["sort_order", "created_at"]
+
+    def save(self, *args, **kwargs):
+        """
+        Auto-generate slug and alt text when missing.
+        """
+        if not self.slug and self.title:
+            from django.utils.text import slugify
+
+            base_slug = slugify(self.title)
+            slug = base_slug
+            counter = 1
+
+            while ProjectItem.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                counter += 1
+                slug = f"{base_slug}-{counter}"
+
+            self.slug = slug
+
+        if not self.alt_text and self.title:
+            self.alt_text = self.title
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
 
 
 class TimeStampedModel(models.Model):

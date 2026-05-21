@@ -10,6 +10,20 @@ from core.views import (
     ProfileDocumentListAPIView,
     RequestEmailVerificationAPIView,
     VerifyEmailCodeAPIView,
+
+    ActiveHeroSectionAPIView,
+    AdminHeroSectionAPIView,
+    ActiveAboutSectionAPIView,
+    AdminAboutSectionAPIView,
+    ActiveSkillSectionAPIView,
+    AdminSkillSectionAPIView,
+    AdminSkillItemCreateAPIView,
+    AdminSkillItemDetailAPIView,
+
+    ActiveProjectSectionAPIView,
+    AdminProjectSectionAPIView,
+    AdminProjectItemCreateAPIView,
+    AdminProjectItemDetailAPIView,
 )
 
 from core.views.admin_chat_views import (
@@ -36,15 +50,41 @@ from core.views.admin_chat_views import (
 
 )
 
-from core.views.public_site_views import ActiveHeroSectionAPIView
-from core.views.admin_site_views import AdminHeroSectionAPIView
-
 
 urlpatterns = [
     # Public and admin APIs for the portfolio site (hero section)
     path("site/hero/", ActiveHeroSectionAPIView.as_view(), name="site-hero"),
     path("admin/site/hero/", AdminHeroSectionAPIView.as_view(),
-    name="admin-site-hero"),
+         name="admin-site-hero"),
+
+    # Public and admin APIs for the portfolio site (about section)
+    path("site/about/", ActiveAboutSectionAPIView.as_view(), name="site-about"),
+    path("admin/site/about/", AdminAboutSectionAPIView.as_view(),
+         name="admin-site-about"),
+
+
+    # Public website Skills API
+    path("site/skills/", ActiveSkillSectionAPIView.as_view(), name="site-skills"),
+
+    # Admin Skills APIs
+    path("admin/site/skills/", AdminSkillSectionAPIView.as_view(),
+         name="admin-site-skills"),
+    path("admin/site/skills/items/", AdminSkillItemCreateAPIView.as_view(),
+         name="admin-site-skills-item-create"),
+    path("admin/site/skills/items/<int:item_id>/",
+         AdminSkillItemDetailAPIView.as_view(), name="admin-site-skills-item-detail"),
+
+    # Public website Projects API
+    path("site/projects/", ActiveProjectSectionAPIView.as_view(),
+         name="site-projects"),
+
+    # Admin Projects APIs
+    path("admin/site/projects/", AdminProjectSectionAPIView.as_view(),
+         name="admin-site-projects"),
+    path("admin/site/projects/items/", AdminProjectItemCreateAPIView.as_view(),
+         name="admin-site-projects-item-create"),
+    path("admin/site/projects/items/<int:item_id>/",
+         AdminProjectItemDetailAPIView.as_view(), name="admin-site-projects-item-detail"),
 
     # Public contact APIs
     path("start-project/", StartProjectRequestView.as_view(), name="start-project"),

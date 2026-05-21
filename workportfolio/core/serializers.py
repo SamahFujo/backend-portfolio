@@ -1,3 +1,4 @@
+from .models import AboutSection
 from .models import (
     ProfileDocument,
     DocumentChunk,
@@ -12,7 +13,13 @@ from pathlib import Path
 
 
 from rest_framework import serializers
-from .models import HeroSection
+from .models import (
+    HeroSection,
+    AboutSection,
+    SkillSection,
+    SkillItem,
+    ProjectSection,
+    ProjectItem)
 
 
 class HeroSectionSerializer(serializers.ModelSerializer):
@@ -36,13 +43,22 @@ class HeroSectionSerializer(serializers.ModelSerializer):
             "primary_button_url",
             "secondary_button_text",
             "secondary_button_url",
-            "hero_image_dark",
-            "hero_image_light",
             "hero_image_dark_url",
             "hero_image_light_url",
             "background_image_url",
+
             "is_active",
+            "created_at",
             "updated_at",
+        ]
+
+        read_only_fields = [
+            "id",
+            "created_at",
+            "updated_at",
+            "hero_image_dark_url",
+            "hero_image_light_url",
+            "background_image_url",
         ]
 
     def get_hero_image_dark_url(self, obj):
@@ -53,7 +69,6 @@ class HeroSectionSerializer(serializers.ModelSerializer):
             return request.build_absolute_uri(url) if request else url
 
         return None
-
 
     def get_hero_image_light_url(self, obj):
         request = self.context.get("request")
@@ -106,12 +121,14 @@ class HeroSectionAdminSerializer(serializers.ModelSerializer):
             "updated_at",
         ]
 
-        read_only_fields = [
-            "id",
-            "created_at",
-            "updated_at",
-            "background_image_url",
-        ]
+    read_only_fields = [
+        "id",
+        "created_at",
+        "updated_at",
+        "hero_image_dark_url",
+        "hero_image_light_url",
+        "background_image_url",
+    ]
 
     def get_hero_image_dark_url(self, obj):
         request = self.context.get("request")
@@ -139,6 +156,382 @@ class HeroSectionAdminSerializer(serializers.ModelSerializer):
             return request.build_absolute_uri(url) if request else url
 
         return None
+
+
+class AboutSectionSerializer(serializers.ModelSerializer):
+    """
+    Public serializer used by the website frontend to display
+    the active About Me section.
+    """
+
+    class Meta:
+        model = AboutSection
+        fields = [
+            "id",
+            "section_title",
+            "terminal_label",
+            "welcome_title",
+            "description",
+            "is_active",
+            "updated_at",
+        ]
+
+
+class AboutSectionAdminSerializer(serializers.ModelSerializer):
+    """
+    Admin serializer used by the custom admin dashboard
+    to create and update the About Me section.
+    """
+
+    class Meta:
+        model = AboutSection
+        fields = [
+            "id",
+            "section_title",
+            "terminal_label",
+            "welcome_title",
+            "description",
+            "is_active",
+            "created_at",
+            "updated_at",
+        ]
+
+        read_only_fields = [
+            "id",
+            "created_at",
+            "updated_at",
+        ]
+
+
+class SkillItemSerializer(serializers.ModelSerializer):
+    """
+    Public serializer for one skill card.
+    """
+
+    class Meta:
+        model = SkillItem
+        fields = [
+            "id",
+            "section",
+            "category",
+            "icon",
+            "label",
+            "level",
+            "summary_heading",
+            "summary_text",
+            "summary_points",
+            "sort_order",
+            "is_active",
+            "created_at",
+            "updated_at",
+        ]
+
+
+class SkillSectionSerializer(serializers.ModelSerializer):
+    """
+    Public serializer used by the website frontend to display
+    the active Skills section with its active skill cards.
+    """
+
+    items = serializers.SerializerMethodField()
+
+    class Meta:
+        model = SkillSection
+        fields = [
+            "id",
+            "category",
+            "icon",
+            "label",
+            "level",
+            "summary_heading",
+            "summary_text",
+            "summary_points",
+            "sort_order",
+            "is_active",
+        ]
+
+    def get_items(self, obj):
+        items = obj.items.filter(is_active=True).order_by(
+            "sort_order", "created_at")
+        return SkillItemSerializer(items, many=True).data
+
+
+class SkillItemSerializer(serializers.ModelSerializer):
+    """
+    Public serializer for one skill item/card.
+    Used by the public portfolio Skills section.
+    """
+
+    class Meta:
+        model = SkillItem
+        fields = [
+            "id",
+            "category",
+            "icon",
+            "label",
+            "level",
+            "summary_heading",
+            "summary_text",
+            "summary_points",
+            "sort_order",
+            "is_active",
+        ]
+
+
+class SkillSectionSerializer(serializers.ModelSerializer):
+    """
+    Public serializer used by the website frontend to display
+    the active Skills section with active skill items.
+    """
+
+    items = serializers.SerializerMethodField()
+
+    class Meta:
+        model = SkillSection
+        fields = [
+            "id",
+            "badge_text",
+            "title_line_1",
+            "title_line_2",
+            "description",
+            "items",
+            "is_active",
+            "updated_at",
+        ]
+
+    def get_items(self, obj):
+        items = obj.items.filter(is_active=True).order_by(
+            "category",
+            "sort_order",
+            "created_at",
+        )
+        return SkillItemSerializer(items, many=True).data
+
+
+class SkillItemAdminSerializer(serializers.ModelSerializer):
+    """
+    Admin serializer for creating and updating skill items.
+    Used by the custom admin dashboard.
+    """
+
+    class Meta:
+        model = SkillItem
+        fields = [
+            "id",
+            "section",
+            "category",
+            "icon",
+            "label",
+            "level",
+            "summary_heading",
+            "summary_text",
+            "summary_points",
+            "sort_order",
+            "is_active",
+            "created_at",
+            "updated_at",
+        ]
+
+        read_only_fields = [
+            "id",
+            "created_at",
+            "updated_at",
+        ]
+
+
+class SkillSectionAdminSerializer(serializers.ModelSerializer):
+    """
+    Admin serializer for managing the Skills section header
+    and returning related skill items.
+    """
+
+    items = SkillItemAdminSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = SkillSection
+        fields = [
+            "id",
+            "badge_text",
+            "title_line_1",
+            "title_line_2",
+            "description",
+            "items",
+            "is_active",
+            "created_at",
+            "updated_at",
+        ]
+
+        read_only_fields = [
+            "id",
+            "items",
+            "created_at",
+            "updated_at",
+        ]
+
+
+class ProjectItemSerializer(serializers.ModelSerializer):
+    """
+    Public serializer for one project item.
+    Used by the public website Projects section.
+    """
+
+    thumbnail_image_url = serializers.SerializerMethodField()
+    hero_image_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ProjectItem
+        fields = [
+            "id",
+            "slug",
+            "title",
+            "short_description",
+            "description",
+            "thumbnail_image_url",
+            "hero_image_url",
+            "alt_text",
+            "category",
+            "tech_stack",
+            "sort_order",
+            "is_featured",
+            "is_active",
+        ]
+
+    def get_thumbnail_image_url(self, obj):
+        request = self.context.get("request")
+
+        if obj.thumbnail_image:
+            url = obj.thumbnail_image.url
+            return request.build_absolute_uri(url) if request else url
+
+        return None
+
+    def get_hero_image_url(self, obj):
+        request = self.context.get("request")
+
+        if obj.hero_image:
+            url = obj.hero_image.url
+            return request.build_absolute_uri(url) if request else url
+
+        return None
+
+
+class ProjectSectionSerializer(serializers.ModelSerializer):
+    """
+    Public serializer used by the website frontend to display
+    the active Projects section with active featured projects.
+    """
+
+    items = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ProjectSection
+        fields = [
+            "id",
+            "title",
+            "description",
+            "items",
+            "is_active",
+            "updated_at",
+        ]
+
+    def get_items(self, obj):
+        items = obj.items.filter(
+            is_active=True,
+            is_featured=True,
+        ).order_by("sort_order", "created_at")
+
+        return ProjectItemSerializer(
+            items,
+            many=True,
+            context=self.context,
+        ).data
+
+
+class ProjectItemAdminSerializer(serializers.ModelSerializer):
+    """
+    Admin serializer for creating and updating project items.
+    Supports image uploads from the custom admin dashboard.
+    """
+
+    thumbnail_image_url = serializers.SerializerMethodField()
+    hero_image_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ProjectItem
+        fields = [
+            "id",
+            "section",
+            "slug",
+            "title",
+            "short_description",
+            "description",
+            "thumbnail_image",
+            "hero_image",
+            "thumbnail_image_url",
+            "hero_image_url",
+            "alt_text",
+            "category",
+            "tech_stack",
+            "sort_order",
+            "is_featured",
+            "is_active",
+            "created_at",
+            "updated_at",
+        ]
+
+        read_only_fields = [
+            "id",
+            "created_at",
+            "updated_at",
+            "thumbnail_image_url",
+            "hero_image_url",
+        ]
+
+    def get_thumbnail_image_url(self, obj):
+        request = self.context.get("request")
+
+        if obj.thumbnail_image:
+            url = obj.thumbnail_image.url
+            return request.build_absolute_uri(url) if request else url
+
+        return None
+
+    def get_hero_image_url(self, obj):
+        request = self.context.get("request")
+
+        if obj.hero_image:
+            url = obj.hero_image.url
+            return request.build_absolute_uri(url) if request else url
+
+        return None
+
+
+class ProjectSectionAdminSerializer(serializers.ModelSerializer):
+    """
+    Admin serializer for managing the Projects section header
+    and returning related project items.
+    """
+
+    items = ProjectItemAdminSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = ProjectSection
+        fields = [
+            "id",
+            "title",
+            "description",
+            "items",
+            "is_active",
+            "created_at",
+            "updated_at",
+        ]
+
+        read_only_fields = [
+            "id",
+            "items",
+            "created_at",
+            "updated_at",
+        ]
 
 
 """
