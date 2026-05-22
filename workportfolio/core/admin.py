@@ -5,7 +5,10 @@ from django.contrib import admin
 from django.contrib import admin
 from .models import (
     HeroSection, AboutSection, SkillItem,
-    SkillSection, ProjectSection, ProjectItem
+    SkillSection, ProjectSection, ProjectItem, CertificateSection,
+    CertificateItem,
+    ResearchSection,
+    ResearchItem,
 )
 
 
@@ -432,3 +435,371 @@ fieldsets = (
         )
     }),
 )
+
+
+class CertificateItemInline(admin.TabularInline):
+    """
+    Allows simple certificate item management inside the Certificate Section admin page.
+
+    Keep this inline lightweight because certificate items include images,
+    PDF files, and skills JSON. Full editing should be done from CertificateItemAdmin.
+    """
+
+    model = CertificateItem
+    extra = 1
+
+    fields = (
+        "sort_order",
+        "title",
+        "mobile_title",
+        "issuer",
+        "issue_date",
+        "is_active",
+    )
+
+    ordering = (
+        "sort_order",
+        "created_at",
+    )
+
+
+@admin.register(CertificateSection)
+class CertificateSectionAdmin(admin.ModelAdmin):
+    """
+    Admin configuration for managing the Certificates section header.
+    """
+
+    list_display = (
+        "title",
+        "is_active",
+        "updated_at",
+    )
+
+    list_filter = (
+        "is_active",
+    )
+
+    search_fields = (
+        "title",
+        "description",
+    )
+
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+    )
+
+    fieldsets = (
+        (
+            "Certificates Section Header",
+            {
+                "fields": (
+                    "title",
+                    "description",
+                )
+            },
+        ),
+        (
+            "Status",
+            {
+                "fields": (
+                    "is_active",
+                )
+            },
+        ),
+        (
+            "Timestamps",
+            {
+                "fields": (
+                    "created_at",
+                    "updated_at",
+                )
+            },
+        ),
+    )
+
+    inlines = [CertificateItemInline]
+
+
+@admin.register(CertificateItem)
+class CertificateItemAdmin(admin.ModelAdmin):
+    """
+    Admin configuration for managing individual certificates.
+    """
+
+    list_display = (
+        "title",
+        "mobile_title",
+        "issuer",
+        "issue_date",
+        "sort_order",
+        "is_active",
+        "updated_at",
+    )
+
+    list_filter = (
+        "issuer",
+        "is_active",
+        "section",
+    )
+
+    search_fields = (
+        "title",
+        "mobile_title",
+        "issuer",
+        "issue_date",
+        "skills",
+    )
+
+    list_editable = (
+        "sort_order",
+        "is_active",
+    )
+
+    prepopulated_fields = {
+        "slug": ("title",),
+    }
+
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+    )
+
+    fieldsets = (
+        (
+            "Certificate Basic Info",
+            {
+                "fields": (
+                    "section",
+                    "title",
+                    "mobile_title",
+                    "slug",
+                    "issuer",
+                    "issue_date",
+                    "sort_order",
+                    "is_active",
+                )
+            },
+        ),
+        (
+            "Certificate Files",
+            {
+                "fields": (
+                    "certificate_image",
+                    "certificate_file",
+                    "alt_text",
+                )
+            },
+        ),
+        (
+            "Skills Obtained",
+            {
+                "fields": (
+                    "skills",
+                )
+            },
+        ),
+        (
+            "Timestamps",
+            {
+                "fields": (
+                    "created_at",
+                    "updated_at",
+                )
+            },
+        ),
+    )
+
+
+class ResearchItemInline(admin.TabularInline):
+    """
+    Lightweight inline editor for research items inside the Research Section page.
+    Full research item editing should be done from ResearchItemAdmin.
+    """
+
+    model = ResearchItem
+    extra = 1
+
+    fields = (
+        "sort_order",
+        "title",
+        "research_type",
+        "publish_date",
+        "reads",
+        "citations",
+        "is_active",
+    )
+
+    ordering = (
+        "sort_order",
+        "created_at",
+    )
+
+
+@admin.register(ResearchSection)
+class ResearchSectionAdmin(admin.ModelAdmin):
+    """
+    Admin configuration for managing the Research section header.
+    """
+
+    list_display = (
+        "title",
+        "is_active",
+        "updated_at",
+    )
+
+    list_filter = (
+        "is_active",
+    )
+
+    search_fields = (
+        "title",
+        "description",
+    )
+
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+    )
+
+    fieldsets = (
+        (
+            "Research Section Header",
+            {
+                "fields": (
+                    "title",
+                    "description",
+                )
+            },
+        ),
+        (
+            "Status",
+            {
+                "fields": (
+                    "is_active",
+                )
+            },
+        ),
+        (
+            "Timestamps",
+            {
+                "fields": (
+                    "created_at",
+                    "updated_at",
+                )
+            },
+        ),
+    )
+
+    inlines = [ResearchItemInline]
+
+
+@admin.register(ResearchItem)
+class ResearchItemAdmin(admin.ModelAdmin):
+    """
+    Admin configuration for managing individual research cards.
+    """
+
+    list_display = (
+        "title",
+        "research_type",
+        "publish_date",
+        "reads",
+        "citations",
+        "sort_order",
+        "is_active",
+        "updated_at",
+    )
+
+    list_filter = (
+        "research_type",
+        "is_active",
+        "section",
+    )
+
+    search_fields = (
+        "title",
+        "research_type",
+        "publish_date",
+        "reads",
+        "citations",
+        "authors",
+    )
+
+    list_editable = (
+        "sort_order",
+        "is_active",
+    )
+
+    prepopulated_fields = {
+        "slug": ("title",),
+    }
+
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+    )
+
+    fieldsets = (
+        (
+            "Research Basic Info",
+            {
+                "fields": (
+                    "section",
+                    "title",
+                    "slug",
+                    "research_type",
+                    "publish_date",
+                    "reads",
+                    "citations",
+                    "sort_order",
+                    "is_active",
+                )
+            },
+        ),
+        (
+            "Authors",
+            {
+                "fields": (
+                    "authors",
+                ),
+                "description": (
+                    "Enter authors as valid JSON, for example: "
+                    '["Moaiad Khder", "Samah Fujo"]'
+                ),
+            },
+        ),
+        (
+            "Actions and Links",
+            {
+                "fields": (
+                    "primary_action",
+                    "primary_action_href",
+                    "share_href",
+                )
+            },
+        ),
+        (
+            "Research Image",
+            {
+                "fields": (
+                    "image",
+                    "external_image_url",
+                    "alt_text",
+                ),
+                "description": (
+                    "Use either uploaded image or external image URL. "
+                    "Uploaded image will be preferred later in the serializer."
+                ),
+            },
+        ),
+        (
+            "Timestamps",
+            {
+                "fields": (
+                    "created_at",
+                    "updated_at",
+                )
+            },
+        ),
+    )

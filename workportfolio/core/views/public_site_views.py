@@ -4,7 +4,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from core.models import (HeroSection, AboutSection, SkillSection,ProjectSection)
+from core.models import (HeroSection, AboutSection,
+                         SkillSection, ProjectSection,  CertificateSection, ResearchSection)
 
 
 from core.serializers import (
@@ -12,6 +13,8 @@ from core.serializers import (
     AboutSectionSerializer,
     SkillSectionSerializer,
     ProjectSectionSerializer,
+    CertificateSectionSerializer,
+    ResearchSectionSerializer,
 )
 
 
@@ -47,7 +50,7 @@ class ActiveAboutSectionAPIView(APIView):
     authentication_classes = []
     permission_classes = []
     throttle_classes = []
-    
+
     def get(self, request, *args, **kwargs):
         about = AboutSection.objects.filter(
             is_active=True).order_by("-updated_at").first()
@@ -111,6 +114,64 @@ class ActiveProjectSectionAPIView(APIView):
 
         serializer = ProjectSectionSerializer(
             project_section,
+            context={"request": request},
+        )
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class ActiveCertificateSectionAPIView(APIView):
+    """
+    Public API used by the website frontend to display
+    the active Certificates section and active certificate items.
+    """
+
+    authentication_classes = []
+    permission_classes = []
+    throttle_classes = []
+
+    def get(self, request, *args, **kwargs):
+        certificate_section = CertificateSection.objects.filter(
+            is_active=True
+        ).order_by("-updated_at").first()
+
+        if not certificate_section:
+            return Response(
+                {"detail": "No active certificates section found."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        serializer = CertificateSectionSerializer(
+            certificate_section,
+            context={"request": request},
+        )
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class ActiveResearchSectionAPIView(APIView):
+    """
+    Public API used by the website frontend to display
+    the active Research section and active research items.
+    """
+
+    authentication_classes = []
+    permission_classes = []
+    throttle_classes = []
+
+    def get(self, request, *args, **kwargs):
+        research_section = ResearchSection.objects.filter(
+            is_active=True
+        ).order_by("-updated_at").first()
+
+        if not research_section:
+            return Response(
+                {"detail": "No active research section found."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        serializer = ResearchSectionSerializer(
+            research_section,
             context={"request": request},
         )
 

@@ -765,3 +765,377 @@ class ProjectRequest(TimeStampedModel):
 
     def __str__(self):
         return f"{self.project_name} - {self.your_email}"
+
+
+class CertificateSection(models.Model):
+    """
+    Stores dynamic header content for the Certificates section.
+
+    The public website displays the active CertificateSection record.
+    Individual certificates are stored in CertificateItem.
+    """
+
+    title = models.CharField(
+        max_length=120,
+        default="Certificates",
+        blank=True,
+        help_text="Main title shown above the Certificates section.",
+    )
+
+    description = models.TextField(
+        blank=True,
+        default="Professional certifications and achievements",
+        help_text="Short description shown below the Certificates section title.",
+    )
+
+    is_active = models.BooleanField(
+        default=True,
+        help_text="Only the active Certificates section will be displayed on the website.",
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Certificate Section"
+        verbose_name_plural = "Certificate Sections"
+        ordering = ["-updated_at"]
+
+    def save(self, *args, **kwargs):
+        """
+        Ensure only one CertificateSection is active at a time.
+        """
+        if self.is_active:
+            CertificateSection.objects.exclude(
+                pk=self.pk).update(is_active=False)
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title or "Certificate Section"
+
+
+class CertificateItem(models.Model):
+    """
+    Stores one certificate displayed inside the Certificates carousel.
+
+    The public UI uses this data for:
+    - main hero certificate preview
+    - previous/next certificate previews
+    - mobile thumbnails
+    - preview modal
+    - skills obtained badges
+    """
+
+    section = models.ForeignKey(
+        CertificateSection,
+        on_delete=models.CASCADE,
+        related_name="items",
+        help_text="The Certificates section this item belongs to.",
+    )
+
+    title = models.CharField(
+        max_length=220,
+        help_text="Full certificate title.",
+    )
+
+    mobile_title = models.CharField(
+        max_length=80,
+        blank=True,
+        default="",
+        help_text="Short title shown in mobile thumbnails and previous/next labels.",
+    )
+
+    slug = models.SlugField(
+        max_length=240,
+        unique=True,
+        blank=True,
+        help_text="Unique certificate slug used internally.",
+    )
+
+    issuer = models.CharField(
+        max_length=160,
+        blank=True,
+        default="",
+        help_text="Certificate issuer, for example Udemy, IBM via Coursera, Coursiv.",
+    )
+
+    issue_date = models.CharField(
+        max_length=80,
+        blank=True,
+        default="",
+        help_text="Display date, for example Jan 25, 2025 or 5 February 2026.",
+    )
+
+    certificate_image = models.ImageField(
+        upload_to="certificates/images/",
+        blank=True,
+        null=True,
+        help_text="Certificate image used in carousel and preview modal.",
+    )
+
+    certificate_file = models.FileField(
+        upload_to="certificates/files/",
+        blank=True,
+        null=True,
+        help_text="Optional PDF certificate file.",
+    )
+
+    alt_text = models.CharField(
+        max_length=220,
+        blank=True,
+        default="",
+        help_text="Image alt text for accessibility.",
+    )
+
+    skills = models.JSONField(
+        blank=True,
+        default=list,
+        help_text="List of skills, for example ['React', 'Django', 'REST API'].",
+    )
+
+    sort_order = models.PositiveIntegerField(
+        default=0,
+        help_text="Controls display order. Lower numbers appear first.",
+    )
+
+    is_active = models.BooleanField(
+        default=True,
+        help_text="Only active certificates are shown on the public website.",
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Certificate Item"
+        verbose_name_plural = "Certificate Items"
+        ordering = ["sort_order", "created_at"]
+
+    def save(self, *args, **kwargs):
+        """
+        Auto-generate slug, mobile title, and alt text when missing.
+        """
+        if not self.slug and self.title:
+            from django.utils.text import slugify
+
+            base_slug = slugify(self.title)
+            slug = base_slug
+            counter = 1
+
+            while CertificateItem.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                counter += 1
+                slug = f"{base_slug}-{counter}"
+
+            self.slug = slug
+
+        if not self.mobile_title and self.title:
+            self.mobile_title = self.title[:70]
+
+        if not self.alt_text and self.title:
+            self.alt_text = f"{self.title} certificate"
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
+
+
+class ResearchSection(models.Model):
+    """
+    Stores dynamic header content for the Research section.
+
+    The public website displays the active ResearchSection record.
+    Individual research cards are stored in ResearchItem.
+    """
+
+    title = models.CharField(
+        max_length=120,
+        default="Research",
+        blank=True,
+        help_text="Main title shown above the Research section.",
+    )
+
+    description = models.TextField(
+        blank=True,
+        default="Published papers, articles, and academic contributions",
+        help_text="Short description shown below the Research section title.",
+    )
+
+    is_active = models.BooleanField(
+        default=True,
+        help_text="Only the active Research section will be displayed on the website.",
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Research Section"
+        verbose_name_plural = "Research Sections"
+        ordering = ["-updated_at"]
+
+    def save(self, *args, **kwargs):
+        """
+        Ensure only one ResearchSection is active at a time.
+        """
+        if self.is_active:
+            ResearchSection.objects.exclude(pk=self.pk).update(is_active=False)
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title or "Research Section"
+
+
+class ResearchItem(models.Model):
+    """
+    Stores one research/publication card displayed in the Research section.
+
+    The public UI uses this data for:
+    - research card title
+    - type badge such as Conference Paper or Article
+    - publish date
+    - reads and citations
+    - authors list
+    - Read More link
+    - Share link
+    - featured image
+    """
+
+    section = models.ForeignKey(
+        ResearchSection,
+        on_delete=models.CASCADE,
+        related_name="items",
+        help_text="The Research section this item belongs to.",
+    )
+
+    title = models.CharField(
+        max_length=500,
+        help_text="Research paper/article title.",
+    )
+
+    slug = models.SlugField(
+        max_length=520,
+        unique=True,
+        blank=True,
+        help_text="Unique slug used internally.",
+    )
+
+    research_type = models.CharField(
+        max_length=120,
+        default="Article",
+        help_text="Type badge shown on the card, for example Article or Conference Paper.",
+    )
+
+    publish_date = models.CharField(
+        max_length=120,
+        blank=True,
+        default="",
+        help_text="Display date, for example November 2022.",
+    )
+
+    reads = models.CharField(
+        max_length=50,
+        blank=True,
+        default="0",
+        help_text="Display reads count, for example 404.",
+    )
+
+    citations = models.CharField(
+        max_length=50,
+        blank=True,
+        default="0",
+        help_text="Display citations count, for example 2.",
+    )
+
+    authors = models.JSONField(
+        blank=True,
+        default=list,
+        help_text="List of authors, for example ['Moaiad Khder', 'Samah Fujo'].",
+    )
+
+    primary_action = models.CharField(
+        max_length=80,
+        default="Read More",
+        blank=True,
+        help_text="Main action button text.",
+    )
+
+    primary_action_href = models.URLField(
+        max_length=1000,
+        blank=True,
+        default="",
+        help_text="Main action link, for example ResearchGate URL.",
+    )
+
+    share_href = models.URLField(
+        max_length=1000,
+        blank=True,
+        default="",
+        help_text="Share link. Usually same as the ResearchGate/publication URL.",
+    )
+
+    image = models.ImageField(
+        upload_to="research/images/",
+        blank=True,
+        null=True,
+        help_text="Optional uploaded image for the research card.",
+    )
+
+    external_image_url = models.URLField(
+        max_length=1000,
+        blank=True,
+        default="",
+        help_text="Optional external image URL, for example Unsplash image.",
+    )
+
+    alt_text = models.CharField(
+        max_length=300,
+        blank=True,
+        default="",
+        help_text="Image alt text for accessibility.",
+    )
+
+    sort_order = models.PositiveIntegerField(
+        default=0,
+        help_text="Controls display order. Lower numbers appear first.",
+    )
+
+    is_active = models.BooleanField(
+        default=True,
+        help_text="Only active research items are shown on the public website.",
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Research Item"
+        verbose_name_plural = "Research Items"
+        ordering = ["sort_order", "created_at"]
+
+    def save(self, *args, **kwargs):
+        """
+        Auto-generate slug and alt text when missing.
+        """
+        if not self.slug and self.title:
+            from django.utils.text import slugify
+
+            base_slug = slugify(self.title)[:480] or "research-item"
+            slug = base_slug
+            counter = 1
+
+            while ResearchItem.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                counter += 1
+                slug = f"{base_slug}-{counter}"
+
+            self.slug = slug
+
+        if not self.alt_text and self.title:
+            self.alt_text = f"{self.title} research image"
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title

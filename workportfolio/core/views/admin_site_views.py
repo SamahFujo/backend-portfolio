@@ -10,7 +10,10 @@ from core.serializers import (
     SkillItemAdminSerializer,
     ProjectSectionAdminSerializer,
     ProjectItemAdminSerializer,
-
+    CertificateSectionAdminSerializer,
+    CertificateItemAdminSerializer,
+    ResearchSectionAdminSerializer,
+    ResearchItemAdminSerializer,
 )
 
 from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
@@ -21,8 +24,12 @@ from core.models import (
     SkillSection,
     SkillItem,
     ProjectSection,
-    ProjectItem,)
-
+    ProjectItem,
+    CertificateSection,
+    CertificateItem,
+    ResearchSection,
+    ResearchItem,
+)
 
 
 class AdminHeroSectionAPIView(APIView):
@@ -589,5 +596,415 @@ class AdminProjectItemDetailAPIView(APIView):
 
         return Response(
             {"detail": "Project item deleted successfully."},
+            status=status.HTTP_200_OK,
+        )
+
+
+class AdminCertificateSectionAPIView(APIView):
+    """
+    Admin API for managing the Certificates section header.
+
+    GET:
+    - Returns the active Certificates section with its items.
+    - If no section exists, returns 200 with certificates = None.
+
+    PUT:
+    - Creates or updates the active Certificates section header.
+    """
+
+    permission_classes = [HasInternalAPIKey]
+    admin_api_key = settings.ADMIN_API_KEY
+    parser_classes = [JSONParser, MultiPartParser, FormParser]
+
+    def get(self, request, *args, **kwargs):
+        certificate_section = CertificateSection.objects.filter(
+            is_active=True
+        ).order_by("-updated_at").first()
+
+        if not certificate_section:
+            return Response(
+                {
+                    "detail": "No certificates section found yet.",
+                    "certificates": None,
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        serializer = CertificateSectionAdminSerializer(
+            certificate_section,
+            context={"request": request},
+        )
+
+        return Response(
+            {
+                "detail": "Certificates section loaded successfully.",
+                "certificates": serializer.data,
+            },
+            status=status.HTTP_200_OK,
+        )
+
+    def put(self, request, *args, **kwargs):
+        certificate_section = CertificateSection.objects.filter(
+            is_active=True
+        ).order_by("-updated_at").first()
+
+        if certificate_section:
+            serializer = CertificateSectionAdminSerializer(
+                certificate_section,
+                data=request.data,
+                partial=True,
+                context={"request": request},
+            )
+        else:
+            serializer = CertificateSectionAdminSerializer(
+                data=request.data,
+                context={"request": request},
+            )
+
+        if serializer.is_valid():
+            certificate_section_instance = serializer.save(is_active=True)
+
+            response_serializer = CertificateSectionAdminSerializer(
+                certificate_section_instance,
+                context={"request": request},
+            )
+
+            return Response(
+                {
+                    "detail": "Certificates section saved successfully.",
+                    "certificates": response_serializer.data,
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        return Response(
+            {
+                "detail": "Certificates section validation failed.",
+                "errors": serializer.errors,
+            },
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+
+class AdminCertificateItemCreateAPIView(APIView):
+    """
+    Admin API for creating a new certificate item.
+    """
+
+    permission_classes = [HasInternalAPIKey]
+    admin_api_key = settings.ADMIN_API_KEY
+    parser_classes = [JSONParser, MultiPartParser, FormParser]
+
+    def post(self, request, *args, **kwargs):
+        certificate_section = CertificateSection.objects.filter(
+            is_active=True
+        ).order_by("-updated_at").first()
+
+        if not certificate_section:
+            return Response(
+                {"detail": "Create the Certificates section before adding certificate items."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        data = request.data.copy()
+        data["section"] = certificate_section.id
+
+        serializer = CertificateItemAdminSerializer(
+            data=data,
+            context={"request": request},
+        )
+
+        if serializer.is_valid():
+            item = serializer.save()
+
+            response_serializer = CertificateItemAdminSerializer(
+                item,
+                context={"request": request},
+            )
+
+            return Response(
+                {
+                    "detail": "Certificate item created successfully.",
+                    "item": response_serializer.data,
+                },
+                status=status.HTTP_201_CREATED,
+            )
+
+        return Response(
+            {
+                "detail": "Certificate item validation failed.",
+                "errors": serializer.errors,
+            },
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+
+class AdminCertificateItemDetailAPIView(APIView):
+    """
+    Admin API for updating or deleting one certificate item.
+    """
+
+    permission_classes = [HasInternalAPIKey]
+    admin_api_key = settings.ADMIN_API_KEY
+    parser_classes = [JSONParser, MultiPartParser, FormParser]
+
+    def patch(self, request, item_id, *args, **kwargs):
+        item = CertificateItem.objects.filter(id=item_id).first()
+
+        if not item:
+            return Response(
+                {"detail": "Certificate item not found."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        serializer = CertificateItemAdminSerializer(
+            item,
+            data=request.data,
+            partial=True,
+            context={"request": request},
+        )
+
+        if serializer.is_valid():
+            updated_item = serializer.save()
+
+            response_serializer = CertificateItemAdminSerializer(
+                updated_item,
+                context={"request": request},
+            )
+
+            return Response(
+                {
+                    "detail": "Certificate item updated successfully.",
+                    "item": response_serializer.data,
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        return Response(
+            {
+                "detail": "Certificate item validation failed.",
+                "errors": serializer.errors,
+            },
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    def delete(self, request, item_id, *args, **kwargs):
+        item = CertificateItem.objects.filter(id=item_id).first()
+
+        if not item:
+            return Response(
+                {"detail": "Certificate item not found."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        item.delete()
+
+        return Response(
+            {"detail": "Certificate item deleted successfully."},
+            status=status.HTTP_200_OK,
+        )
+
+
+class AdminResearchSectionAPIView(APIView):
+    """
+    Admin API for managing the Research section header.
+
+    GET:
+    - Returns the active Research section with its items.
+    - If no section exists, returns 200 with research = None.
+
+    PUT:
+    - Creates or updates the active Research section header.
+    """
+
+    permission_classes = [HasInternalAPIKey]
+    admin_api_key = settings.ADMIN_API_KEY
+    parser_classes = [JSONParser, MultiPartParser, FormParser]
+
+    def get(self, request, *args, **kwargs):
+        research_section = ResearchSection.objects.filter(
+            is_active=True
+        ).order_by("-updated_at").first()
+
+        if not research_section:
+            return Response(
+                {
+                    "detail": "No research section found yet.",
+                    "research": None,
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        serializer = ResearchSectionAdminSerializer(
+            research_section,
+            context={"request": request},
+        )
+
+        return Response(
+            {
+                "detail": "Research section loaded successfully.",
+                "research": serializer.data,
+            },
+            status=status.HTTP_200_OK,
+        )
+
+    def put(self, request, *args, **kwargs):
+        research_section = ResearchSection.objects.filter(
+            is_active=True
+        ).order_by("-updated_at").first()
+
+        if research_section:
+            serializer = ResearchSectionAdminSerializer(
+                research_section,
+                data=request.data,
+                partial=True,
+                context={"request": request},
+            )
+        else:
+            serializer = ResearchSectionAdminSerializer(
+                data=request.data,
+                context={"request": request},
+            )
+
+        if serializer.is_valid():
+            research_section_instance = serializer.save(is_active=True)
+
+            response_serializer = ResearchSectionAdminSerializer(
+                research_section_instance,
+                context={"request": request},
+            )
+
+            return Response(
+                {
+                    "detail": "Research section saved successfully.",
+                    "research": response_serializer.data,
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        return Response(
+            {
+                "detail": "Research section validation failed.",
+                "errors": serializer.errors,
+            },
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+
+class AdminResearchItemCreateAPIView(APIView):
+    """
+    Admin API for creating a new research item.
+    """
+
+    permission_classes = [HasInternalAPIKey]
+    admin_api_key = settings.ADMIN_API_KEY
+    parser_classes = [JSONParser, MultiPartParser, FormParser]
+
+    def post(self, request, *args, **kwargs):
+        research_section = ResearchSection.objects.filter(
+            is_active=True
+        ).order_by("-updated_at").first()
+
+        if not research_section:
+            return Response(
+                {"detail": "Create the Research section before adding research items."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        data = request.data.copy()
+        data["section"] = research_section.id
+
+        serializer = ResearchItemAdminSerializer(
+            data=data,
+            context={"request": request},
+        )
+
+        if serializer.is_valid():
+            item = serializer.save()
+
+            response_serializer = ResearchItemAdminSerializer(
+                item,
+                context={"request": request},
+            )
+
+            return Response(
+                {
+                    "detail": "Research item created successfully.",
+                    "item": response_serializer.data,
+                },
+                status=status.HTTP_201_CREATED,
+            )
+
+        return Response(
+            {
+                "detail": "Research item validation failed.",
+                "errors": serializer.errors,
+            },
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+
+class AdminResearchItemDetailAPIView(APIView):
+    """
+    Admin API for updating or deleting one research item.
+    """
+
+    permission_classes = [HasInternalAPIKey]
+    admin_api_key = settings.ADMIN_API_KEY
+    parser_classes = [JSONParser, MultiPartParser, FormParser]
+
+    def patch(self, request, item_id, *args, **kwargs):
+        item = ResearchItem.objects.filter(id=item_id).first()
+
+        if not item:
+            return Response(
+                {"detail": "Research item not found."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        serializer = ResearchItemAdminSerializer(
+            item,
+            data=request.data,
+            partial=True,
+            context={"request": request},
+        )
+
+        if serializer.is_valid():
+            updated_item = serializer.save()
+
+            response_serializer = ResearchItemAdminSerializer(
+                updated_item,
+                context={"request": request},
+            )
+
+            return Response(
+                {
+                    "detail": "Research item updated successfully.",
+                    "item": response_serializer.data,
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        return Response(
+            {
+                "detail": "Research item validation failed.",
+                "errors": serializer.errors,
+            },
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    def delete(self, request, item_id, *args, **kwargs):
+        item = ResearchItem.objects.filter(id=item_id).first()
+
+        if not item:
+            return Response(
+                {"detail": "Research item not found."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        item.delete()
+
+        return Response(
+            {"detail": "Research item deleted successfully."},
             status=status.HTTP_200_OK,
         )

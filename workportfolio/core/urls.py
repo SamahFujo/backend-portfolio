@@ -24,6 +24,17 @@ from core.views import (
     AdminProjectSectionAPIView,
     AdminProjectItemCreateAPIView,
     AdminProjectItemDetailAPIView,
+
+    ActiveCertificateSectionAPIView,
+    AdminCertificateSectionAPIView,
+    AdminCertificateItemCreateAPIView,
+    AdminCertificateItemDetailAPIView,
+
+    ActiveResearchSectionAPIView,
+    AdminResearchSectionAPIView,
+    AdminResearchItemCreateAPIView,
+    AdminResearchItemDetailAPIView,
+
 )
 
 from core.views.admin_chat_views import (
@@ -85,6 +96,54 @@ urlpatterns = [
          name="admin-site-projects-item-create"),
     path("admin/site/projects/items/<int:item_id>/",
          AdminProjectItemDetailAPIView.as_view(), name="admin-site-projects-item-detail"),
+
+    # Public website Certificates API
+    path(
+        "site/certificates/",
+        ActiveCertificateSectionAPIView.as_view(),
+        name="site-certificates",
+    ),
+
+    # Admin Certificates APIs
+    path(
+        "admin/site/certificates/",
+        AdminCertificateSectionAPIView.as_view(),
+        name="admin-site-certificates",
+    ),
+    path(
+        "admin/site/certificates/items/",
+        AdminCertificateItemCreateAPIView.as_view(),
+        name="admin-site-certificates-item-create",
+    ),
+    path(
+        "admin/site/certificates/items/<int:item_id>/",
+        AdminCertificateItemDetailAPIView.as_view(),
+        name="admin-site-certificates-item-detail",
+    ),
+
+    # Public website Research API
+    path(
+        "site/research/",
+        ActiveResearchSectionAPIView.as_view(),
+        name="site-research",
+    ),
+
+    # Admin Research APIs
+    path(
+        "admin/site/research/",
+        AdminResearchSectionAPIView.as_view(),
+        name="admin-site-research",
+    ),
+    path(
+        "admin/site/research/items/",
+        AdminResearchItemCreateAPIView.as_view(),
+        name="admin-site-research-item-create",
+    ),
+    path(
+        "admin/site/research/items/<int:item_id>/",
+        AdminResearchItemDetailAPIView.as_view(),
+        name="admin-site-research-item-detail",
+    ),
 
     # Public contact APIs
     path("start-project/", StartProjectRequestView.as_view(), name="start-project"),

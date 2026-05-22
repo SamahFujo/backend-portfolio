@@ -6,6 +6,8 @@ from .models import (
     ChatMessage,
     ContactMessage,
     ProjectRequest,
+    ResearchSection,
+    ResearchItem,
 )
 from rest_framework import serializers
 from django.conf import settings
@@ -19,7 +21,10 @@ from .models import (
     SkillSection,
     SkillItem,
     ProjectSection,
-    ProjectItem)
+    ProjectItem,
+    CertificateSection,
+    CertificateItem,
+)
 
 
 class HeroSectionSerializer(serializers.ModelSerializer):
@@ -790,3 +795,321 @@ class RequestEmailVerificationSerializer(serializers.Serializer):
 class VerifyEmailCodeSerializer(serializers.Serializer):
     email = serializers.EmailField()
     code = serializers.CharField(min_length=6, max_length=6)
+
+
+class CertificateItemSerializer(serializers.ModelSerializer):
+    """
+    Public serializer for one certificate item.
+    Used by the public website Certificates section.
+    """
+
+    certificate_image_url = serializers.SerializerMethodField()
+    certificate_file_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = CertificateItem
+        fields = [
+            "id",
+            "slug",
+            "title",
+            "mobile_title",
+            "issuer",
+            "issue_date",
+            "certificate_image_url",
+            "certificate_file_url",
+            "alt_text",
+            "skills",
+            "sort_order",
+            "is_active",
+        ]
+
+    def get_certificate_image_url(self, obj):
+        request = self.context.get("request")
+
+        if obj.certificate_image:
+            url = obj.certificate_image.url
+            return request.build_absolute_uri(url) if request else url
+
+        return None
+
+    def get_certificate_file_url(self, obj):
+        request = self.context.get("request")
+
+        if obj.certificate_file:
+            url = obj.certificate_file.url
+            return request.build_absolute_uri(url) if request else url
+
+        return None
+
+
+class CertificateSectionSerializer(serializers.ModelSerializer):
+    """
+    Public serializer used by the website frontend to display
+    the active Certificates section with active certificate items.
+    """
+
+    items = serializers.SerializerMethodField()
+
+    class Meta:
+        model = CertificateSection
+        fields = [
+            "id",
+            "title",
+            "description",
+            "items",
+            "is_active",
+            "updated_at",
+        ]
+
+    def get_items(self, obj):
+        items = obj.items.filter(is_active=True).order_by(
+            "sort_order",
+            "created_at",
+        )
+
+        return CertificateItemSerializer(
+            items,
+            many=True,
+            context=self.context,
+        ).data
+
+
+class CertificateItemAdminSerializer(serializers.ModelSerializer):
+    """
+    Admin serializer for creating and updating certificate items.
+    Supports image and PDF uploads from the custom admin dashboard.
+    """
+
+    certificate_image_url = serializers.SerializerMethodField()
+    certificate_file_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = CertificateItem
+        fields = [
+            "id",
+            "section",
+            "slug",
+            "title",
+            "mobile_title",
+            "issuer",
+            "issue_date",
+            "certificate_image",
+            "certificate_file",
+            "certificate_image_url",
+            "certificate_file_url",
+            "alt_text",
+            "skills",
+            "sort_order",
+            "is_active",
+            "created_at",
+            "updated_at",
+        ]
+
+        read_only_fields = [
+            "id",
+            "created_at",
+            "updated_at",
+            "certificate_image_url",
+            "certificate_file_url",
+        ]
+
+    def get_certificate_image_url(self, obj):
+        request = self.context.get("request")
+
+        if obj.certificate_image:
+            url = obj.certificate_image.url
+            return request.build_absolute_uri(url) if request else url
+
+        return None
+
+    def get_certificate_file_url(self, obj):
+        request = self.context.get("request")
+
+        if obj.certificate_file:
+            url = obj.certificate_file.url
+            return request.build_absolute_uri(url) if request else url
+
+        return None
+
+
+class CertificateSectionAdminSerializer(serializers.ModelSerializer):
+    """
+    Admin serializer for managing the Certificates section header
+    and returning related certificate items.
+    """
+
+    items = CertificateItemAdminSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = CertificateSection
+        fields = [
+            "id",
+            "title",
+            "description",
+            "items",
+            "is_active",
+            "created_at",
+            "updated_at",
+        ]
+
+        read_only_fields = [
+            "id",
+            "items",
+            "created_at",
+            "updated_at",
+        ]
+
+
+class ResearchItemSerializer(serializers.ModelSerializer):
+    """
+    Public serializer for one research item.
+    Used by the public website Research section.
+    """
+
+    image_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ResearchItem
+        fields = [
+            "id",
+            "slug",
+            "title",
+            "research_type",
+            "publish_date",
+            "reads",
+            "citations",
+            "authors",
+            "primary_action",
+            "primary_action_href",
+            "share_href",
+            "image_url",
+            "external_image_url",
+            "alt_text",
+            "sort_order",
+            "is_active",
+        ]
+
+    def get_image_url(self, obj):
+        request = self.context.get("request")
+
+        if obj.image:
+            url = obj.image.url
+            return request.build_absolute_uri(url) if request else url
+
+        if obj.external_image_url:
+            return obj.external_image_url
+
+        return None
+
+
+class ResearchSectionSerializer(serializers.ModelSerializer):
+    """
+    Public serializer used by the website frontend to display
+    the active Research section with active research items.
+    """
+
+    items = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ResearchSection
+        fields = [
+            "id",
+            "title",
+            "description",
+            "items",
+            "is_active",
+            "updated_at",
+        ]
+
+    def get_items(self, obj):
+        items = obj.items.filter(is_active=True).order_by(
+            "sort_order",
+            "created_at",
+        )
+
+        return ResearchItemSerializer(
+            items,
+            many=True,
+            context=self.context,
+        ).data
+
+
+class ResearchItemAdminSerializer(serializers.ModelSerializer):
+    """
+    Admin serializer for creating and updating research cards.
+    Supports uploaded image and external image URL.
+    """
+
+    image_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ResearchItem
+        fields = [
+            "id",
+            "section",
+            "slug",
+            "title",
+            "research_type",
+            "publish_date",
+            "reads",
+            "citations",
+            "authors",
+            "primary_action",
+            "primary_action_href",
+            "share_href",
+            "image",
+            "image_url",
+            "external_image_url",
+            "alt_text",
+            "sort_order",
+            "is_active",
+            "created_at",
+            "updated_at",
+        ]
+
+        read_only_fields = [
+            "id",
+            "created_at",
+            "updated_at",
+            "image_url",
+        ]
+
+    def get_image_url(self, obj):
+        request = self.context.get("request")
+
+        if obj.image:
+            url = obj.image.url
+            return request.build_absolute_uri(url) if request else url
+
+        if obj.external_image_url:
+            return obj.external_image_url
+
+        return None
+
+
+class ResearchSectionAdminSerializer(serializers.ModelSerializer):
+    """
+    Admin serializer for managing the Research section header
+    and returning related research items.
+    """
+
+    items = ResearchItemAdminSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = ResearchSection
+        fields = [
+            "id",
+            "title",
+            "description",
+            "items",
+            "is_active",
+            "created_at",
+            "updated_at",
+        ]
+
+        read_only_fields = [
+            "id",
+            "items",
+            "created_at",
+            "updated_at",
+        ]

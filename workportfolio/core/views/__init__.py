@@ -27,6 +27,8 @@ from .public_site_views import (
     ActiveAboutSectionAPIView,
     ActiveSkillSectionAPIView,
     ActiveProjectSectionAPIView,
+    ActiveCertificateSectionAPIView,
+    ActiveResearchSectionAPIView,
 )
 
 from .admin_site_views import (
@@ -38,4 +40,10 @@ from .admin_site_views import (
     AdminProjectSectionAPIView,
     AdminProjectItemCreateAPIView,
     AdminProjectItemDetailAPIView,
+    AdminCertificateSectionAPIView,
+    AdminCertificateItemCreateAPIView,
+    AdminCertificateItemDetailAPIView,
+    AdminResearchSectionAPIView,
+    AdminResearchItemCreateAPIView,
+    AdminResearchItemDetailAPIView,
 )
