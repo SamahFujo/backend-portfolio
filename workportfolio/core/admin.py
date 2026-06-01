@@ -9,6 +9,10 @@ from .models import (
     CertificateItem,
     ResearchSection,
     ResearchItem,
+    ResearchStatsRefreshLog,
+    FooterSection,
+    FooterSocialLink,
+    FooterContactItem,
 )
 
 
@@ -803,3 +807,158 @@ class ResearchItemAdmin(admin.ModelAdmin):
             },
         ),
     )
+
+
+@admin.register(ResearchStatsRefreshLog)
+class ResearchStatsRefreshLogAdmin(admin.ModelAdmin):
+    """
+    Admin view for checking ResearchGate refresh attempts.
+    """
+
+    list_display = (
+        "research_item",
+        "status",
+        "old_reads",
+        "new_reads",
+        "old_citations",
+        "new_citations",
+        "reads_fetched",
+        "citations_fetched",
+        "created_at",
+    )
+
+    list_filter = (
+        "status",
+        "reads_fetched",
+        "citations_fetched",
+        "created_at",
+    )
+
+    search_fields = (
+        "research_item__title",
+        "message",
+        "source_url",
+    )
+
+    readonly_fields = (
+        "research_item",
+        "status",
+        "old_reads",
+        "new_reads",
+        "old_citations",
+        "new_citations",
+        "reads_fetched",
+        "citations_fetched",
+        "message",
+        "source_url",
+        "created_at",
+    )
+
+    ordering = ("-created_at",)
+
+
+class FooterSocialLinkInline(admin.TabularInline):
+    model = FooterSocialLink
+    extra = 0
+
+    fields = [
+        "sort_order",
+        "name",
+        "icon_key",
+        "url",
+        "is_active",
+    ]
+
+
+class FooterContactItemInline(admin.TabularInline):
+    model = FooterContactItem
+    extra = 0
+
+    fields = [
+        "sort_order",
+        "label",
+        "value",
+        "href",
+        "icon_key",
+        "is_active",
+    ]
+
+
+@admin.register(FooterSection)
+class FooterSectionAdmin(admin.ModelAdmin):
+    list_display = [
+        "follow_title",
+        "copyright_name",
+        "is_active",
+        "updated_at",
+    ]
+
+    list_filter = [
+        "is_active",
+        "updated_at",
+    ]
+
+    search_fields = [
+        "follow_title",
+        "copyright_name",
+    ]
+
+    inlines = [
+        FooterSocialLinkInline,
+        FooterContactItemInline,
+    ]
+
+
+@admin.register(FooterSocialLink)
+class FooterSocialLinkAdmin(admin.ModelAdmin):
+    list_display = [
+        "name",
+        "icon_key",
+        "url",
+        "sort_order",
+        "is_active",
+        "updated_at",
+    ]
+
+    list_filter = [
+        "icon_key",
+        "is_active",
+    ]
+
+    search_fields = [
+        "name",
+        "url",
+    ]
+
+    list_editable = [
+        "sort_order",
+        "is_active",
+    ]
+
+
+@admin.register(FooterContactItem)
+class FooterContactItemAdmin(admin.ModelAdmin):
+    list_display = [
+        "label",
+        "value",
+        "icon_key",
+        "sort_order",
+        "is_active",
+        "updated_at",
+    ]
+
+    list_filter = [
+        "icon_key",
+        "is_active",
+    ]
+
+    search_fields = [
+        "label",
+        "value",
+        "href",
+    ]
+
+    list_editable = [
+        "sort_order",
+        "is_active",
+    ]

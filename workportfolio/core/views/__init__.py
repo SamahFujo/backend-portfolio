@@ -29,6 +29,7 @@ from .public_site_views import (
     ActiveProjectSectionAPIView,
     ActiveCertificateSectionAPIView,
     ActiveResearchSectionAPIView,
+    ActiveFooterSectionAPIView,
 )
 
 from .admin_site_views import (
@@ -46,4 +47,9 @@ from .admin_site_views import (
     AdminResearchSectionAPIView,
     AdminResearchItemCreateAPIView,
     AdminResearchItemDetailAPIView,
+    AdminFooterSectionAPIView,
+    AdminFooterSocialLinkCreateAPIView,
+    AdminFooterSocialLinkDetailAPIView,
+    AdminFooterContactItemCreateAPIView,
+    AdminFooterContactItemDetailAPIView,
 )

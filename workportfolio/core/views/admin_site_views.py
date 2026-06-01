@@ -14,6 +14,9 @@ from core.serializers import (
     CertificateItemAdminSerializer,
     ResearchSectionAdminSerializer,
     ResearchItemAdminSerializer,
+    FooterSectionAdminSerializer,
+    FooterSocialLinkAdminSerializer,
+    FooterContactItemAdminSerializer,
 )
 
 from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
@@ -29,6 +32,10 @@ from core.models import (
     CertificateItem,
     ResearchSection,
     ResearchItem,
+    ResearchStatsRefreshLog,
+    FooterSection,
+    FooterSocialLink,
+    FooterContactItem
 )
 
 
@@ -962,6 +969,9 @@ class AdminResearchItemDetailAPIView(APIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
 
+        old_reads = item.reads or ""
+        old_citations = item.citations or ""
+
         serializer = ResearchItemAdminSerializer(
             item,
             data=request.data,
@@ -971,6 +981,30 @@ class AdminResearchItemDetailAPIView(APIView):
 
         if serializer.is_valid():
             updated_item = serializer.save()
+
+            new_reads = updated_item.reads or ""
+            new_citations = updated_item.citations or ""
+
+            stats_changed = (
+                old_reads != new_reads or old_citations != new_citations
+            )
+
+            if stats_changed:
+                ResearchStatsRefreshLog.objects.create(
+                    research_item=updated_item,
+                    status="manual",
+                    old_reads=old_reads,
+                    new_reads=new_reads,
+                    old_citations=old_citations,
+                    new_citations=new_citations,
+                    reads_fetched=False,
+                    citations_fetched=False,
+                    message=(
+                        "Reads/citations were updated manually from the admin panel. "
+                        "This value should match the latest ResearchGate page."
+                    ),
+                    source_url=updated_item.primary_action_href or "",
+                )
 
             response_serializer = ResearchItemAdminSerializer(
                 updated_item,
@@ -1006,5 +1040,328 @@ class AdminResearchItemDetailAPIView(APIView):
 
         return Response(
             {"detail": "Research item deleted successfully."},
+            status=status.HTTP_200_OK,
+        )
+
+
+class AdminFooterSectionAPIView(APIView):
+    """
+    Admin API endpoint for reading and updating the footer section.
+
+    Used by the custom admin panel.
+    """
+
+    permission_classes = [HasInternalAPIKey]
+    admin_api_key = settings.ADMIN_API_KEY
+    parser_classes = [JSONParser]
+
+    def get(self, request, *args, **kwargs):
+        footer = (
+            FooterSection.objects.filter(is_active=True)
+            .prefetch_related("social_links", "contact_items")
+            .first()
+        )
+
+        if not footer:
+            footer = FooterSection.objects.create(
+                follow_title="Follow me",
+                copyright_name="Samah Fujo",
+                is_active=True,
+            )
+
+        serializer = FooterSectionAdminSerializer(
+            footer,
+            context={"request": request},
+        )
+
+        return Response(
+            {
+                "footer": serializer.data,
+            },
+            status=status.HTTP_200_OK,
+        )
+
+    def put(self, request, *args, **kwargs):
+        footer = FooterSection.objects.filter(is_active=True).first()
+
+        if not footer:
+            footer = FooterSection.objects.create(is_active=True)
+
+        serializer = FooterSectionAdminSerializer(
+            footer,
+            data=request.data,
+            partial=True,
+            context={"request": request},
+        )
+
+        if serializer.is_valid():
+            updated_footer = serializer.save(is_active=True)
+
+            response_serializer = FooterSectionAdminSerializer(
+                updated_footer,
+                context={"request": request},
+            )
+
+            return Response(
+                {
+                    "detail": "Footer section updated successfully.",
+                    "footer": response_serializer.data,
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        return Response(
+            {
+                "detail": "Footer section validation failed.",
+                "errors": serializer.errors,
+            },
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+
+class AdminFooterSocialLinkCreateAPIView(APIView):
+    """
+    Admin API endpoint for creating footer social links.
+    """
+
+    permission_classes = [HasInternalAPIKey]
+    admin_api_key = settings.ADMIN_API_KEY
+    parser_classes = [JSONParser]
+
+    def post(self, request, *args, **kwargs):
+        footer = FooterSection.objects.filter(is_active=True).first()
+
+        if not footer:
+            footer = FooterSection.objects.create(
+                follow_title="Follow me",
+                copyright_name="Samah Fujo",
+                is_active=True,
+            )
+
+        data = request.data.copy()
+        data["section"] = footer.id
+
+        serializer = FooterSocialLinkAdminSerializer(
+            data=data,
+            context={"request": request},
+        )
+
+        if serializer.is_valid():
+            social_link = serializer.save(section=footer)
+
+            response_serializer = FooterSocialLinkAdminSerializer(
+                social_link,
+                context={"request": request},
+            )
+
+            return Response(
+                {
+                    "detail": "Footer social link created successfully.",
+                    "social_link": response_serializer.data,
+                },
+                status=status.HTTP_201_CREATED,
+            )
+
+        return Response(
+            {
+                "detail": "Footer social link validation failed.",
+                "errors": serializer.errors,
+            },
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+
+class AdminFooterSocialLinkDetailAPIView(APIView):
+    """
+    Admin API endpoint for updating and deleting footer social links.
+    """
+
+    permission_classes = [HasInternalAPIKey]
+    admin_api_key = settings.ADMIN_API_KEY
+    parser_classes = [JSONParser]
+
+    def patch(self, request, social_id, *args, **kwargs):
+        social_link = FooterSocialLink.objects.filter(id=social_id).first()
+
+        if not social_link:
+            return Response(
+                {
+                    "detail": "Footer social link not found.",
+                },
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        serializer = FooterSocialLinkAdminSerializer(
+            social_link,
+            data=request.data,
+            partial=True,
+            context={"request": request},
+        )
+
+        if serializer.is_valid():
+            updated_social_link = serializer.save()
+
+            response_serializer = FooterSocialLinkAdminSerializer(
+                updated_social_link,
+                context={"request": request},
+            )
+
+            return Response(
+                {
+                    "detail": "Footer social link updated successfully.",
+                    "social_link": response_serializer.data,
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        return Response(
+            {
+                "detail": "Footer social link validation failed.",
+                "errors": serializer.errors,
+            },
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    def delete(self, request, social_id, *args, **kwargs):
+        social_link = FooterSocialLink.objects.filter(id=social_id).first()
+
+        if not social_link:
+            return Response(
+                {
+                    "detail": "Footer social link not found.",
+                },
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        social_link.delete()
+
+        return Response(
+            {
+                "detail": "Footer social link deleted successfully.",
+            },
+            status=status.HTTP_200_OK,
+        )
+
+
+class AdminFooterContactItemCreateAPIView(APIView):
+    """
+    Admin API endpoint for creating footer contact items.
+    """
+
+    permission_classes = [HasInternalAPIKey]
+    admin_api_key = settings.ADMIN_API_KEY
+    parser_classes = [JSONParser]
+
+    def post(self, request, *args, **kwargs):
+        footer = FooterSection.objects.filter(is_active=True).first()
+
+        if not footer:
+            footer = FooterSection.objects.create(
+                follow_title="Follow me",
+                copyright_name="Samah Fujo",
+                is_active=True,
+            )
+
+        data = request.data.copy()
+        data["section"] = footer.id
+
+        serializer = FooterContactItemAdminSerializer(
+            data=data,
+            context={"request": request},
+        )
+
+        if serializer.is_valid():
+            contact_item = serializer.save(section=footer)
+
+            response_serializer = FooterContactItemAdminSerializer(
+                contact_item,
+                context={"request": request},
+            )
+
+            return Response(
+                {
+                    "detail": "Footer contact item created successfully.",
+                    "contact_item": response_serializer.data,
+                },
+                status=status.HTTP_201_CREATED,
+            )
+
+        return Response(
+            {
+                "detail": "Footer contact item validation failed.",
+                "errors": serializer.errors,
+            },
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+
+class AdminFooterContactItemDetailAPIView(APIView):
+    """
+    Admin API endpoint for updating and deleting footer contact items.
+    """
+
+    permission_classes = [HasInternalAPIKey]
+    admin_api_key = settings.ADMIN_API_KEY
+    parser_classes = [JSONParser]
+
+    def patch(self, request, contact_id, *args, **kwargs):
+        contact_item = FooterContactItem.objects.filter(id=contact_id).first()
+
+        if not contact_item:
+            return Response(
+                {
+                    "detail": "Footer contact item not found.",
+                },
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        serializer = FooterContactItemAdminSerializer(
+            contact_item,
+            data=request.data,
+            partial=True,
+            context={"request": request},
+        )
+
+        if serializer.is_valid():
+            updated_contact_item = serializer.save()
+
+            response_serializer = FooterContactItemAdminSerializer(
+                updated_contact_item,
+                context={"request": request},
+            )
+
+            return Response(
+                {
+                    "detail": "Footer contact item updated successfully.",
+                    "contact_item": response_serializer.data,
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        return Response(
+            {
+                "detail": "Footer contact item validation failed.",
+                "errors": serializer.errors,
+            },
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    def delete(self, request, contact_id, *args, **kwargs):
+        contact_item = FooterContactItem.objects.filter(id=contact_id).first()
+
+        if not contact_item:
+            return Response(
+                {
+                    "detail": "Footer contact item not found.",
+                },
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        contact_item.delete()
+
+        return Response(
+            {
+                "detail": "Footer contact item deleted successfully.",
+            },
             status=status.HTTP_200_OK,
         )

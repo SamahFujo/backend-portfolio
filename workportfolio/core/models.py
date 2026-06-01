@@ -1139,3 +1139,197 @@ class ResearchItem(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class ResearchStatsRefreshLog(models.Model):
+    """
+    Stores refresh attempts for ResearchGate stats.
+
+    This helps track whether reads/citations were fetched successfully,
+    failed, blocked, partially fetched, or unchanged.
+    """
+
+    STATUS_CHOICES = [
+        ("success", "Success"),
+        ("no_change", "No Change"),
+        ("partial", "Partial"),
+        ("failed", "Failed"),
+        ("skipped", "Skipped"),
+        ("manual", "Manual Update"),
+    ]
+
+    research_item = models.ForeignKey(
+        ResearchItem,
+        on_delete=models.CASCADE,
+        related_name="stats_refresh_logs",
+    )
+
+    status = models.CharField(
+        max_length=30,
+        choices=STATUS_CHOICES,
+        default="failed",
+    )
+
+    old_reads = models.CharField(max_length=50, blank=True, default="")
+    new_reads = models.CharField(max_length=50, blank=True, default="")
+
+    old_citations = models.CharField(max_length=50, blank=True, default="")
+    new_citations = models.CharField(max_length=50, blank=True, default="")
+
+    reads_fetched = models.BooleanField(default=False)
+    citations_fetched = models.BooleanField(default=False)
+
+    message = models.TextField(blank=True, default="")
+    source_url = models.URLField(max_length=1000, blank=True, default="")
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Research Stats Refresh Log"
+        verbose_name_plural = "Research Stats Refresh Logs"
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.research_item.title} - {self.status} - {self.created_at}"
+
+
+class FooterSection(models.Model):
+    """
+    Stores the main footer content.
+
+    This model controls:
+    - Follow title
+    - Copyright owner/name
+    - Active footer version
+    """
+
+    follow_title = models.CharField(
+        max_length=120,
+        default="Follow me",
+        blank=True,
+    )
+
+    copyright_name = models.CharField(
+        max_length=160,
+        default="Samah Fujo",
+        blank=True,
+    )
+
+    is_active = models.BooleanField(default=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Footer Section"
+        verbose_name_plural = "Footer Sections"
+        ordering = ["-updated_at"]
+
+    def save(self, *args, **kwargs):
+        """
+        Ensure only one footer section is active at a time.
+        """
+
+        if self.is_active:
+            FooterSection.objects.exclude(pk=self.pk).update(is_active=False)
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.follow_title or "Footer Section"
+
+
+class FooterSocialLink(models.Model):
+    """
+    Stores footer social media links.
+
+    icon_key should match frontend supported icons:
+    - linkedin
+    - instagram
+    - tiktok
+    """
+
+    ICON_CHOICES = [
+        ("linkedin", "LinkedIn"),
+        ("instagram", "Instagram"),
+        ("tiktok", "TikTok"),
+    ]
+
+    section = models.ForeignKey(
+        FooterSection,
+        on_delete=models.CASCADE,
+        related_name="social_links",
+    )
+
+    name = models.CharField(max_length=80)
+    icon_key = models.CharField(
+        max_length=40,
+        choices=ICON_CHOICES,
+        default="linkedin",
+    )
+    url = models.URLField(max_length=1000)
+
+    sort_order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Footer Social Link"
+        verbose_name_plural = "Footer Social Links"
+        ordering = ["sort_order", "created_at"]
+
+    def __str__(self):
+        return self.name
+
+
+class FooterContactItem(models.Model):
+    """
+    Stores footer contact information.
+
+    icon_key should match frontend supported icons:
+    - email
+    - phone
+    - location
+    """
+
+    ICON_CHOICES = [
+        ("email", "Email"),
+        ("phone", "Phone"),
+        ("location", "Location"),
+    ]
+
+    section = models.ForeignKey(
+        FooterSection,
+        on_delete=models.CASCADE,
+        related_name="contact_items",
+    )
+
+    label = models.CharField(max_length=80)
+    value = models.CharField(max_length=255)
+    href = models.CharField(
+        max_length=1000,
+        blank=True,
+        default="",
+        help_text="Example: mailto:s.fujo@hotmail.com or tel:+971527929218",
+    )
+    icon_key = models.CharField(
+        max_length=40,
+        choices=ICON_CHOICES,
+        default="email",
+    )
+
+    sort_order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Footer Contact Item"
+        verbose_name_plural = "Footer Contact Items"
+        ordering = ["sort_order", "created_at"]
+
+    def __str__(self):
+        return f"{self.label}: {self.value}"

@@ -4,8 +4,15 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from core.models import (HeroSection, AboutSection,
-                         SkillSection, ProjectSection,  CertificateSection, ResearchSection)
+from core.models import (
+    HeroSection,
+    AboutSection,
+    SkillSection,
+    ProjectSection,
+    CertificateSection,
+    ResearchSection,
+    FooterSection,
+)
 
 
 from core.serializers import (
@@ -15,6 +22,7 @@ from core.serializers import (
     ProjectSectionSerializer,
     CertificateSectionSerializer,
     ResearchSectionSerializer,
+    FooterSectionSerializer,
 )
 
 
@@ -176,3 +184,50 @@ class ActiveResearchSectionAPIView(APIView):
         )
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class ActiveFooterSectionAPIView(APIView):
+    """
+    Public API endpoint for the active footer section.
+
+    This endpoint is used by the website footer.
+    It returns:
+    - follow title
+    - copyright name
+    - active social links
+    - active contact items
+
+    No authentication is required because this is public website content.
+    """
+
+    authentication_classes = []
+    permission_classes = []
+    throttle_classes = []
+
+    def get(self, request, *args, **kwargs):
+        footer = (
+            FooterSection.objects.filter(is_active=True)
+            .prefetch_related("social_links", "contact_items")
+            .first()
+        )
+
+        if not footer:
+            return Response(
+                {
+                    "detail": "No active footer section found.",
+                    "footer": None,
+                },
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        serializer = FooterSectionSerializer(
+            footer,
+            context={"request": request},
+        )
+
+        return Response(
+            {
+                "footer": serializer.data,
+            },
+            status=status.HTTP_200_OK,
+        )

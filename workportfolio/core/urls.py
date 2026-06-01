@@ -35,6 +35,14 @@ from core.views import (
     AdminResearchItemCreateAPIView,
     AdminResearchItemDetailAPIView,
 
+
+    ActiveFooterSectionAPIView,
+    AdminFooterSectionAPIView,
+    AdminFooterSocialLinkCreateAPIView,
+    AdminFooterSocialLinkDetailAPIView,
+    AdminFooterContactItemCreateAPIView,
+    AdminFooterContactItemDetailAPIView,
+
 )
 
 from core.views.admin_chat_views import (
@@ -143,6 +151,47 @@ urlpatterns = [
         "admin/site/research/items/<int:item_id>/",
         AdminResearchItemDetailAPIView.as_view(),
         name="admin-site-research-item-detail",
+    ),
+
+
+    # Public footer API
+    path(
+        "/site/footer/",
+        ActiveFooterSectionAPIView.as_view(),
+        name="site-footer",
+    ),
+
+    # Admin footer section API
+    path(
+        "admin/site/footer/",
+        AdminFooterSectionAPIView.as_view(),
+        name="admin-site-footer",
+    ),
+
+    # Admin footer social links API
+    path(
+        "admin/site/footer/social-links/",
+        AdminFooterSocialLinkCreateAPIView.as_view(),
+        name="admin-site-footer-social-links-create",
+    ),
+
+    path(
+        "admin/site/footer/social-links/<int:social_id>/",
+        AdminFooterSocialLinkDetailAPIView.as_view(),
+        name="admin-site-footer-social-links-detail",
+    ),
+
+    # Admin footer contact items API
+    path(
+        "admin/site/footer/contact-items/",
+        AdminFooterContactItemCreateAPIView.as_view(),
+        name="admin-site-footer-contact-items-create",
+    ),
+
+    path(
+        "admin/site/footer/contact-items/<int:contact_id>/",
+        AdminFooterContactItemDetailAPIView.as_view(),
+        name="admin-site-footer-contact-items-detail",
     ),
 
     # Public contact APIs
