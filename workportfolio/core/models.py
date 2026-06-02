@@ -479,32 +479,188 @@ class TimeStampedModel(models.Model):
 
 class ProfileDocument(TimeStampedModel):
     """
-    Stores uploaded profile-related documents such as:
+    Stores uploaded chatbot knowledge documents such as:
     CVs, certificates, project summaries, recommendation letters, etc.
+
+    A document must pass extraction, validation, chunking, embedding,
+    and admin approval before it becomes available for chatbot retrieval.
     """
 
     STATUS_CHOICES = [
         ("uploaded", "Uploaded"),
-        ("processed", "Processed"),
+
+        ("extracting", "Extracting"),
+        ("extracted", "Extracted"),
+        ("extraction_failed", "Extraction Failed"),
+
+        ("validating", "Validating"),
+        ("validation_failed", "Validation Failed"),
+        ("validation_warning", "Validation Warning"),
+
+        ("chunking", "Chunking"),
+        ("chunked", "Chunked"),
+        ("chunking_failed", "Chunking Failed"),
+
+        ("embedding", "Generating Embeddings"),
+        ("embedded", "Embedded"),
+        ("embedding_failed", "Embedding Failed"),
+
+        ("ready_for_review", "Ready for Review"),
+
+        ("approved", "Approved"),
+        ("rejected", "Rejected"),
+        ("archived", "Archived"),
+    ]
+
+    QUALITY_STATUS_CHOICES = [
+        ("pending", "Pending"),
+        ("passed", "Passed"),
+        ("warning", "Warning"),
         ("failed", "Failed"),
     ]
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
     title = models.CharField(max_length=255)
+
     file = models.FileField(upload_to="profile_documents/")
-    document_type = models.CharField(max_length=100, blank=True, null=True)
-    raw_text = models.TextField(blank=True, null=True)
+
+    document_type = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True,
+        help_text="Example: CV, certificate, project summary, recommendation letter.",
+    )
+
+    raw_text = models.TextField(
+        blank=True,
+        null=True,
+        help_text="Full extracted text from the uploaded document.",
+    )
+
+    extracted_text_preview = models.TextField(
+        blank=True,
+        default="",
+        help_text="Short preview of extracted text for admin list/detail display.",
+    )
+
     status = models.CharField(
-        max_length=20, choices=STATUS_CHOICES, default="uploaded")
-    is_active = models.BooleanField(default=True)
-    priority = models.PositiveSmallIntegerField(default=5)  # 1 high priority
-    tags = models.JSONField(blank=True, null=True)          # list of strings
+        max_length=30,
+        choices=STATUS_CHOICES,
+        default="uploaded",
+        db_index=True,
+    )
+
+    quality_status = models.CharField(
+        max_length=20,
+        choices=QUALITY_STATUS_CHOICES,
+        default="pending",
+        db_index=True,
+    )
+
+    is_active = models.BooleanField(
+        default=False,
+        help_text="Only active and approved documents can be used by chatbot.",
+    )
+
+    is_approved = models.BooleanField(
+        default=False,
+        help_text="True only after admin approval.",
+    )
+
+    is_available_for_chatbot = models.BooleanField(
+        default=False,
+        help_text="Final safety flag used by chatbot retrieval.",
+    )
+
+    priority = models.PositiveSmallIntegerField(
+        default=5,
+        help_text="1 = highest priority, 10 = lowest priority.",
+    )
+
+    tags = models.JSONField(
+        blank=True,
+        null=True,
+        help_text="List of tags, for example ['cv', 'python', 'django'].",
+    )
+
     source_label = models.CharField(
         max_length=255,
         blank=True,
         null=True,
-        help_text="Optional label such as CV 2026, LinkedIn export, Project Summary, etc."
+        help_text="Optional label such as CV 2026, LinkedIn export, Project Summary, etc.",
     )
+
+    original_filename = models.CharField(
+        max_length=255,
+        blank=True,
+        default="",
+    )
+
+    file_size = models.PositiveIntegerField(
+        default=0,
+        help_text="Uploaded file size in bytes.",
+    )
+
+    file_hash = models.CharField(
+        max_length=128,
+        blank=True,
+        default="",
+        db_index=True,
+        help_text="Used to detect duplicate uploaded documents.",
+    )
+
+    mime_type = models.CharField(
+        max_length=120,
+        blank=True,
+        default="",
+    )
+
+    extraction_score = models.FloatField(default=0)
+    chunk_quality_score = models.FloatField(default=0)
+    embedding_quality_score = models.FloatField(default=0)
+    overall_quality_score = models.FloatField(default=0)
+
+    validation_summary = models.JSONField(
+        default=dict,
+        blank=True,
+        help_text="Stores document validation result summary.",
+    )
+
+    processing_metadata = models.JSONField(
+        default=dict,
+        blank=True,
+        help_text="Stores extraction/chunking/embedding metadata.",
+    )
+
+    admin_notes = models.TextField(
+        blank=True,
+        default="",
+        help_text="Internal admin notes about this document.",
+    )
+
+    rejection_reason = models.TextField(
+        blank=True,
+        default="",
+        help_text="Required when document is rejected.",
+    )
+
+    approved_at = models.DateTimeField(null=True, blank=True)
+    rejected_at = models.DateTimeField(null=True, blank=True)
+    processed_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Profile Document"
+        verbose_name_plural = "Profile Documents"
+        ordering = ["priority", "-updated_at"]
+        indexes = [
+            models.Index(fields=["status"]),
+            models.Index(fields=["quality_status"]),
+            models.Index(fields=["is_active", "is_approved",
+                         "is_available_for_chatbot"]),
+            models.Index(fields=["file_hash"]),
+            models.Index(fields=["document_type"]),
+        ]
 
     def __str__(self):
         return self.title
@@ -513,28 +669,281 @@ class ProfileDocument(TimeStampedModel):
 class DocumentChunk(TimeStampedModel):
     """
     Stores chunked pieces of a document for retrieval.
+
+    Chunks should only become active when the parent document is approved.
     """
+
+    QUALITY_STATUS_CHOICES = [
+        ("pending", "Pending"),
+        ("passed", "Passed"),
+        ("warning", "Warning"),
+        ("failed", "Failed"),
+    ]
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
     document = models.ForeignKey(
         ProfileDocument,
         on_delete=models.CASCADE,
-        related_name="chunks"
+        related_name="chunks",
     )
-    chunk_index = models.PositiveIntegerField()
-    content = models.TextField()
-    section_title = models.CharField(max_length=255, blank=True, null=True)
-    page_number = models.PositiveIntegerField(blank=True, null=True)
 
-    # 1536 is a good default if you plan to use OpenAI text embeddings.
-    # If you later choose a different embedding model, change this before migrating.
-    embedding = VectorField(dimensions=1024, blank=True, null=True)
+    chunk_index = models.PositiveIntegerField()
+
+    content = models.TextField()
+
+    section_title = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+    )
+
+    page_number = models.PositiveIntegerField(
+        blank=True,
+        null=True,
+    )
+
+    token_count = models.PositiveIntegerField(
+        default=0,
+        help_text="Approximate number of tokens or words in the chunk.",
+    )
+
+    character_count = models.PositiveIntegerField(
+        default=0,
+        help_text="Number of characters in the chunk.",
+    )
+
+    embedding = VectorField(
+        dimensions=1024,
+        blank=True,
+        null=True,
+    )
+
+    embedding_model = models.CharField(
+        max_length=120,
+        blank=True,
+        default="",
+        help_text="Name of the embedding model used.",
+    )
+
+    embedding_dimension = models.PositiveIntegerField(
+        default=1024,
+    )
+
+    has_embedding = models.BooleanField(
+        default=False,
+        db_index=True,
+    )
+
+    quality_status = models.CharField(
+        max_length=20,
+        choices=QUALITY_STATUS_CHOICES,
+        default="pending",
+        db_index=True,
+    )
+
+    quality_score = models.FloatField(
+        default=0,
+    )
+
+    quality_issues = models.JSONField(
+        default=list,
+        blank=True,
+        help_text="List of detected chunk issues.",
+    )
+
+    is_active = models.BooleanField(
+        default=False,
+        db_index=True,
+        help_text="Only active chunks are used by chatbot retrieval.",
+    )
 
     class Meta:
         ordering = ["document", "chunk_index"]
         unique_together = ("document", "chunk_index")
+        indexes = [
+            models.Index(fields=["document", "chunk_index"]),
+            models.Index(fields=["has_embedding"]),
+            models.Index(fields=["quality_status"]),
+            models.Index(fields=["is_active"]),
+        ]
 
     def __str__(self):
         return f"{self.document.title} - Chunk {self.chunk_index}"
+
+
+class DocumentQualityCheck(TimeStampedModel):
+    """
+    Stores quality-control checks for uploaded chatbot knowledge documents.
+
+    Each check represents one validation result, such as:
+    - extracted text exists
+    - document is not duplicated
+    - chunking completed
+    - embeddings generated
+    - OCR text quality is acceptable
+    """
+
+    CHECK_STATUS_CHOICES = [
+        ("passed", "Passed"),
+        ("warning", "Warning"),
+        ("failed", "Failed"),
+    ]
+
+    SEVERITY_CHOICES = [
+        ("info", "Info"),
+        ("warning", "Warning"),
+        ("error", "Error"),
+        ("critical", "Critical"),
+    ]
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+    document = models.ForeignKey(
+        ProfileDocument,
+        on_delete=models.CASCADE,
+        related_name="quality_checks",
+    )
+
+    check_name = models.CharField(max_length=120)
+
+    check_status = models.CharField(
+        max_length=20,
+        choices=CHECK_STATUS_CHOICES,
+        db_index=True,
+    )
+
+    severity = models.CharField(
+        max_length=20,
+        choices=SEVERITY_CHOICES,
+        default="info",
+        db_index=True,
+    )
+
+    message = models.TextField()
+
+    details = models.JSONField(
+        default=dict,
+        blank=True,
+        help_text="Optional structured details about the check result.",
+    )
+
+    class Meta:
+        verbose_name = "Document Quality Check"
+        verbose_name_plural = "Document Quality Checks"
+        ordering = ["-created_at"]
+        indexes = [
+            models.Index(fields=["document"]),
+            models.Index(fields=["check_status"]),
+            models.Index(fields=["severity"]),
+        ]
+
+    def __str__(self):
+        return f"{self.document.title} - {self.check_name} - {self.check_status}"
+
+
+class DocumentProcessingLog(TimeStampedModel):
+    """
+    Stores processing logs for each chatbot knowledge document.
+
+    This is useful for the admin panel timeline and debugging failed documents.
+    """
+
+    LEVEL_CHOICES = [
+        ("info", "Info"),
+        ("warning", "Warning"),
+        ("error", "Error"),
+        ("critical", "Critical"),
+    ]
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+    document = models.ForeignKey(
+        ProfileDocument,
+        on_delete=models.CASCADE,
+        related_name="processing_logs",
+    )
+
+    step = models.CharField(
+        max_length=120,
+        help_text="Example: upload_started, extraction_completed, embedding_failed.",
+    )
+
+    level = models.CharField(
+        max_length=20,
+        choices=LEVEL_CHOICES,
+        default="info",
+        db_index=True,
+    )
+
+    message = models.TextField()
+
+    metadata = models.JSONField(
+        default=dict,
+        blank=True,
+        help_text="Optional structured log metadata.",
+    )
+
+    class Meta:
+        verbose_name = "Document Processing Log"
+        verbose_name_plural = "Document Processing Logs"
+        ordering = ["-created_at"]
+        indexes = [
+            models.Index(fields=["document"]),
+            models.Index(fields=["level"]),
+            models.Index(fields=["step"]),
+        ]
+
+    def __str__(self):
+        return f"{self.document.title} - {self.step} - {self.level}"
+
+
+class ProfileDocumentVersion(TimeStampedModel):
+    """
+    Stores previous versions of a ProfileDocument when a file is replaced.
+
+    This allows safe rollback and prevents the chatbot from losing approved
+    knowledge while a new version is still under review.
+    """
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+    document = models.ForeignKey(
+        ProfileDocument,
+        on_delete=models.CASCADE,
+        related_name="versions",
+    )
+
+    version_number = models.PositiveIntegerField()
+
+    file = models.FileField(upload_to="profile_documents/versions/")
+
+    raw_text_snapshot = models.TextField(
+        blank=True,
+        default="",
+    )
+
+    status_snapshot = models.CharField(
+        max_length=30,
+        blank=True,
+        default="",
+    )
+
+    quality_score_snapshot = models.FloatField(default=0)
+
+    notes = models.TextField(
+        blank=True,
+        default="",
+    )
+
+    class Meta:
+        verbose_name = "Profile Document Version"
+        verbose_name_plural = "Profile Document Versions"
+        ordering = ["-version_number"]
+        unique_together = ["document", "version_number"]
+
+    def __str__(self):
+        return f"{self.document.title} - Version {self.version_number}"
 
 
 class ChatSession(TimeStampedModel):

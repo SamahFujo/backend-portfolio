@@ -3,18 +3,23 @@ Simple retrieval service.
 
 Keyword-based retrieval fallback.
 Useful for debugging or lightweight retrieval when vector search is unavailable.
+
+Important:
+This service must only retrieve approved chatbot chunks.
 """
 
 import re
 from typing import List
+
 from django.db.models import Q
 
 from core.models import DocumentChunk
+from core.services.retrieval.approved_chunks import get_chatbot_available_chunks
 
 
 class SearchService:
     """
-    Service responsible for retrieving relevant chunks from stored documents.
+    Service responsible for retrieving relevant chunks from approved documents.
     """
 
     STOP_WORDS = {
@@ -25,6 +30,10 @@ class SearchService:
 
     @classmethod
     def _extract_keywords(cls, query: str) -> List[str]:
+        """
+        Extract useful keywords from the user's query.
+        """
+
         words = re.findall(r"\b\w+\b", (query or "").lower())
         keywords = [w for w in words if len(w) > 2 and w not in cls.STOP_WORDS]
         return keywords[:8]
@@ -34,30 +43,29 @@ class SearchService:
         """
         Retrieve chunks using simple keyword matching.
 
-        Args:
-            query (str): User's question
-            limit (int): Maximum number of chunks to return
-
-        Returns:
-            List[DocumentChunk]: Matching chunks
+        This method only searches approved, active, chatbot-safe chunks.
         """
+
         query = (query or "").strip()
+
         if not query:
             return []
 
+        limit = max(1, int(limit or 5))
         keywords = cls._extract_keywords(query)
+
+        base_qs = get_chatbot_available_chunks()
 
         if not keywords:
             return list(
-                DocumentChunk.objects.filter(content__icontains=query)[:limit]
+                base_qs.filter(content__icontains=query)[:limit]
             )
 
         q_obj = Q()
-        for kw in keywords:
-            q_obj |= Q(content__icontains=kw)
+
+        for keyword in keywords:
+            q_obj |= Q(content__icontains=keyword)
 
         return list(
-            DocumentChunk.objects
-            .filter(q_obj)
-            .select_related("document")[:limit]
+            base_qs.filter(q_obj)[:limit]
         )

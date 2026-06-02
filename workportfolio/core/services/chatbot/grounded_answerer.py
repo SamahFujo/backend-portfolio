@@ -37,6 +37,51 @@ class GroundedAnswerer:
     HYBRID_NOT_ENOUGH_MESSAGE = (
         "I could understand the question from the conversation, but I couldn’t verify the factual answer from the available documents."
     )
+    
+    @staticmethod
+    def _filter_safe_evidence_chunks(
+        evidence_chunks: Optional[List[DocumentChunk]],
+    ) -> List[DocumentChunk]:
+        """
+        Final defensive safety filter.
+
+        GroundedAnswerer should normally receive already-approved chunks from
+        ProfileQAService and the retrieval layer. This method protects the system
+        if another service accidentally passes unapproved chunks directly.
+        """
+
+        safe_chunks = []
+
+        for chunk in evidence_chunks or []:
+            document = getattr(chunk, "document", None)
+
+            if document is None:
+                continue
+
+            if getattr(document, "status", None) != "approved":
+                continue
+
+            if not getattr(document, "is_active", False):
+                continue
+
+            if not getattr(document, "is_approved", False):
+                continue
+
+            if not getattr(document, "is_available_for_chatbot", False):
+                continue
+
+            if not getattr(chunk, "is_active", False):
+                continue
+
+            if not getattr(chunk, "has_embedding", False):
+                continue
+
+            if getattr(chunk, "quality_status", None) not in ["passed", "warning"]:
+                continue
+
+            safe_chunks.append(chunk)
+
+        return safe_chunks
 
     @staticmethod
     def _format_history_for_prompt(
@@ -1543,7 +1588,7 @@ Current message:
         answer_mode: str = "default",
     ) -> Dict[str, Any]:
 
-        evidence_chunks = evidence_chunks or []
+        evidence_chunks = cls._filter_safe_evidence_chunks(evidence_chunks)
         conversation_history = conversation_history or []
         resolved_question = (resolved_question or current_message or "").strip()
 

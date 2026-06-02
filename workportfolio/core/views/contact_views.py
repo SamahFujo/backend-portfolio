@@ -9,8 +9,8 @@ from rest_framework.authentication import SessionAuthentication
 from ..models import ContactMessage, ProjectRequest
 from ..serializers import GetInTouchSerializer, StartProjectRequestSerializer
 from ..throttles import ContactRateThrottle
-from ..services.resend_contact_email import send_get_in_touch_email
-from ..services.resend_email import send_start_project_email
+from ..services.emails.resend_contact_email import send_get_in_touch_email
+from ..services.emails.resend_email import send_start_project_email
 
 logger = logging.getLogger(__name__)
 

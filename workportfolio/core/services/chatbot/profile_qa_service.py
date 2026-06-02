@@ -5,7 +5,7 @@ from typing import Dict, Any, List, Optional
 from core.models import DocumentChunk
 from core.services.retrieval.scope_resolver import ScopeResolver
 from core.services.retrieval.reranked_vector_retrieval import RerankedVectorRetrievalService
-from core.services.llm.router import LLMRouter
+from core.services.retrieval.approved_chunks import get_chatbot_available_chunks
 from core.services.chatbot.extractors import (
 
     try_extract_contact,
@@ -21,7 +21,7 @@ from core.services.chatbot.extractors import (
 
 )
 from core.services.chatbot.grounded_answerer import GroundedAnswerer
-from django.conf import settings
+
 
 
 class ProfileQAService:
@@ -759,21 +759,23 @@ class ProfileQAService:
     @classmethod
     def _get_experience_duration_chunks(cls) -> List[DocumentChunk]:
         """
-        Fetch richer evidence for total-experience questions.
+        Fetch richer approved evidence for total-experience questions.
 
-        We do not want to rely only on semantic retrieval here because
-        summary chunks may omit the explicit date ranges needed for
-        deterministic experience calculation.
+        This must only use approved chatbot-safe chunks.
         """
+
         qs = (
-            DocumentChunk.objects
-            .select_related("document")
+            get_chatbot_available_chunks()
             .filter(
-                document__is_active=True,
                 document__document_type__in=["cv", "career_timeline"],
             )
-            .order_by("document__document_type", "document__title", "chunk_index")
+            .order_by(
+                "document__document_type",
+                "document__title",
+                "chunk_index",
+            )
         )
+
         return list(qs)
 
     @classmethod
@@ -781,19 +783,24 @@ class ProfileQAService:
         cls,
         filters: Optional[Dict[str, Any]],
     ) -> List[DocumentChunk]:
+        """
+        Fetch all approved chatbot-safe chunks matching filters.
+
+        This method must never return unapproved or inactive chunks.
+        """
+
         if not filters:
             return []
 
-        qs = DocumentChunk.objects.select_related("document").filter(
-            document__is_active=True
-        )
+        qs = get_chatbot_available_chunks()
 
         if filters.get("document_type"):
             qs = qs.filter(document__document_type=filters["document_type"])
 
         if filters.get("document_title_contains"):
             qs = qs.filter(
-                document__title__icontains=filters["document_title_contains"])
+                document__title__icontains=filters["document_title_contains"]
+            )
 
         return list(qs.order_by("document__title", "chunk_index"))
 

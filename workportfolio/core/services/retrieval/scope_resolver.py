@@ -169,7 +169,10 @@ class ScopeResolver:
         """
         msg = (message or "").strip()
         if not msg:
-            return {"only_active_docs": True}
+            {
+                "only_approved_docs": True,
+                "only_chatbot_available": True,
+            }
 
         # Direct contact/CV questions are safe to route to CV.
         if cls.CONTACT.search(msg) or cls.CV.search(msg):

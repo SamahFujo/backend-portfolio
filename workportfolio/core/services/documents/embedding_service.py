@@ -77,8 +77,16 @@ class EmbeddingService:
         Returns:
             List[List[float]]: List of embedding vectors
         """
-        cleaned_texts = [cls._clean_text(text)
-                         for text in texts if cls._clean_text(text)]
+        cleaned_texts = []
+
+        for text in texts:
+            cleaned = cls._clean_text(text)
+
+            if not cleaned:
+                raise ValueError("Cannot generate embeddings because one chunk is empty.")
+
+            cleaned_texts.append(cleaned)
+            
         if not cleaned_texts:
             return []
 

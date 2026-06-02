@@ -17,7 +17,7 @@ from rest_framework.permissions import AllowAny
 from core.models import ChatSession, ChatMessage
 from core.serializers import AskQuestionSerializer
 from core.throttles import ChatRateThrottle, ContactRateThrottle
-from core.services.resend_email import send_chat_history_email
+from core.services.emails.resend_email import send_chat_history_email
 from core.services.chatbot.hybrid_query_rewriter import GeminiQueryRewriter
 from core.services.chatbot.smart_chat_intents import SmartChatIntentService
 from core.services.chatbot.profile_qa_service import ProfileQAService
@@ -32,7 +32,7 @@ from core.serializers import (
     RequestEmailVerificationSerializer,
     VerifyEmailCodeSerializer,
 )
-from core.services.resend_verification_email import send_email_verification_code
+from core.services.emails.resend_verification_email import send_email_verification_code
 
 from core.models import HeroSection
 from core.serializers import HeroSectionSerializer
@@ -313,12 +313,13 @@ class AskAboutMeAPIView(APIView):
 
         request_meta = self._get_request_metadata(request)
 
+        session = None
+
         if session_id:
             session = ChatSession.objects.filter(
                 id=session_id,
-                is_active=True
+                is_active=True,
             ).first()
-
 
         if session is None:
             session = ChatSession.objects.create(
@@ -328,8 +329,7 @@ class AskAboutMeAPIView(APIView):
                 user_agent=request_meta["user_agent"],
                 referrer=request_meta["referrer"],
             )
-
-            # Update missing tracking fields only if they were not stored before.
+        else:
             update_fields = []
 
             if visitor_email and not session.visitor_email:
@@ -351,14 +351,7 @@ class AskAboutMeAPIView(APIView):
             if update_fields:
                 session.save(update_fields=update_fields)
 
-        else:
-            session = ChatSession.objects.create(
-                visitor_id=visitor_id,
-                visitor_email=visitor_email,
-                ip_address=request_meta["ip_address"],
-                user_agent=request_meta["user_agent"],
-                referrer=request_meta["referrer"],
-            )
+
 
         user_message = ChatMessage.objects.create(
             session=session,
