@@ -99,6 +99,7 @@ REST_FRAMEWORK = {
         "contact": os.getenv("CONTACT_THROTTLE_RATE", "5/min"),
         "chat": os.getenv("CHAT_THROTTLE_RATE", "20/min"),
         "upload": os.getenv("UPLOAD_THROTTLE_RATE", "10/hour"),
+        "admin_api": "1000/minute",
     },
 }
 
@@ -246,3 +247,12 @@ RERANK_TOP_N = int(os.getenv("RERANK_TOP_N", "8"))
 # ============================================================
 # ADMIN_API_KEY = os.getenv("ADMIN_API_KEY")
 ADMIN_API_KEY = config("ADMIN_API_KEY", default="")
+
+
+
+# **Credentials:DB Postgres**
+
+# * Host: `127.0.0.1`
+# * Port: `5432`
+# * User: `postgres`
+# * Password: `postgres`

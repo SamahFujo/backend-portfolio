@@ -844,7 +844,51 @@ class DocumentProcessingLogSerializer(serializers.ModelSerializer):
             "updated_at",
         ]
 
+class ProfileDocumentMarkReviewedSerializer(serializers.Serializer):
+    """
+    Serializer for marking a document as reviewed by an admin.
+    """
 
+    review_notes = serializers.CharField(
+        required=False,
+        allow_blank=True,
+        max_length=3000,
+    )
+
+    def validate(self, attrs):
+        document = self.context.get("document")
+
+        if not document:
+            raise serializers.ValidationError("Document context is required.")
+
+        if document.status not in ["ready_for_review", "approved"]:
+            raise serializers.ValidationError(
+                "Only ready-for-review or approved documents can be marked as reviewed."
+            )
+
+        if not document.raw_text or not document.raw_text.strip():
+            raise serializers.ValidationError(
+                "Cannot mark this document as reviewed because no extracted text exists."
+            )
+
+        if not document.chunks.exists():
+            raise serializers.ValidationError(
+                "Cannot mark this document as reviewed because no chunks were generated."
+            )
+
+        missing_embeddings_count = document.chunks.filter(
+            has_embedding=False
+        ).count()
+
+        if missing_embeddings_count > 0:
+            raise serializers.ValidationError(
+                f"Cannot mark this document as reviewed because {missing_embeddings_count} chunks are missing embeddings."
+            )
+
+        attrs["review_notes"] = (attrs.get("review_notes") or "").strip()
+
+        return attrs
+    
 class ProfileDocumentApproveSerializer(serializers.Serializer):
     """
     Serializer for approving a document before chatbot activation.
@@ -871,6 +915,11 @@ class ProfileDocumentApproveSerializer(serializers.Serializer):
         if document.status not in ["ready_for_review", "embedded", "validation_warning"]:
             raise serializers.ValidationError(
                 "Only documents that are ready for review can be approved."
+            )
+            
+        if not document.is_reviewed:
+            raise serializers.ValidationError(
+                "This document must be reviewed by an admin before approval."
             )
 
         if not document.raw_text or not document.raw_text.strip():

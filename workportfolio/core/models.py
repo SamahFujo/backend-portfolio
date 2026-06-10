@@ -644,6 +644,24 @@ class ProfileDocument(TimeStampedModel):
         default="",
         help_text="Required when document is rejected.",
     )
+    
+    is_reviewed = models.BooleanField(
+    default=False,
+    help_text="Whether an admin has reviewed the extracted text, chunks, embeddings, and quality checks.",
+    )
+
+    reviewed_at = models.DateTimeField(
+        blank=True,
+        null=True,
+        help_text="When the document was reviewed by an admin.",
+    )
+
+    review_notes = models.TextField(
+        blank=True,
+        default="",
+        help_text="Admin notes added during document review.",
+    )
+        
 
     approved_at = models.DateTimeField(null=True, blank=True)
     rejected_at = models.DateTimeField(null=True, blank=True)

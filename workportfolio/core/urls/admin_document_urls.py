@@ -3,7 +3,6 @@ Admin document quality-control URLs.
 """
 
 from django.urls import path
-
 from core.views.admin_document_views import (
     AdminDocumentListCreateAPIView,
     AdminDocumentDetailAPIView,
@@ -18,6 +17,9 @@ from core.views.admin_document_views import (
     AdminDocumentRejectAPIView,
     AdminDocumentArchiveAPIView,
     AdminDocumentReplaceAPIView,
+    AdminDocumentMarkReviewedAPIView,
+    AdminDocumentRestoreAPIView,
+    AdminDocumentPermanentDeleteAPIView,
 )
 
 
@@ -45,11 +47,30 @@ urlpatterns = [
          AdminDocumentApproveAPIView.as_view(), name="admin-documents-approve"),
     path("documents/<uuid:document_id>/reject/",
          AdminDocumentRejectAPIView.as_view(), name="admin-documents-reject"),
+    path(
+        "documents/<uuid:document_id>/mark-reviewed/",
+        AdminDocumentMarkReviewedAPIView.as_view(),
+        name="admin-documents-mark-reviewed",
+    ),
     path("documents/<uuid:document_id>/archive/",
          AdminDocumentArchiveAPIView.as_view(), name="admin-documents-archive"),
+
+    path(
+        "documents/<uuid:document_id>/restore/",
+        AdminDocumentRestoreAPIView.as_view(),
+        name="admin-documents-restore",
+    ),
+    path(
+        "documents/<uuid:document_id>/delete/",
+        AdminDocumentPermanentDeleteAPIView.as_view(),
+        name="admin-documents-delete",
+    ),
     path("documents/<uuid:document_id>/replace/",
          AdminDocumentReplaceAPIView.as_view(), name="admin-documents-replace"),
 
     path("document-chunks/<uuid:chunk_id>/",
          AdminDocumentChunkDetailAPIView.as_view(), name="admin-document-chunk-detail"),
+
+
+
 ]

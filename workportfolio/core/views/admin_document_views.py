@@ -15,7 +15,7 @@ from rest_framework import status
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
+from django.utils import timezone
 from core.models import (
     ProfileDocument,
     DocumentChunk,
@@ -33,6 +33,7 @@ from core.serializers import (
     ProfileDocumentApproveSerializer,
     ProfileDocumentRejectSerializer,
     ProfileDocumentReprocessSerializer,
+    ProfileDocumentMarkReviewedSerializer,
     DocumentChunkReviewSerializer,
     DocumentQualityCheckSerializer,
     DocumentProcessingLogSerializer,
@@ -41,6 +42,7 @@ from core.serializers import (
 from core.services.documents.ingestion_service import IngestionService
 from core.services.knowledge_quality import DocumentApprovalService
 from core.services.knowledge_quality.processing_log_service import log_info
+from core.throttles import AdminAPIRateThrottle
 
 
 class AdminDocumentListCreateAPIView(APIView):
@@ -55,6 +57,7 @@ class AdminDocumentListCreateAPIView(APIView):
 
     permission_classes = [HasInternalAPIKey]
     parser_classes = [MultiPartParser, FormParser, JSONParser]
+    throttle_classes = [AdminAPIRateThrottle]
 
     def get(self, request, *args, **kwargs):
         documents = ProfileDocument.objects.all().order_by(
@@ -120,6 +123,7 @@ class AdminDocumentDetailAPIView(APIView):
     """
 
     permission_classes = [HasInternalAPIKey]
+    throttle_classes = [AdminAPIRateThrottle]
 
     def get_object(self, document_id):
         return get_object_or_404(ProfileDocument, id=document_id)
@@ -169,6 +173,7 @@ class AdminDocumentProcessAPIView(APIView):
     """
 
     permission_classes = [HasInternalAPIKey]
+    throttle_classes = [AdminAPIRateThrottle]
 
     def post(self, request, document_id, *args, **kwargs):
         document = get_object_or_404(ProfileDocument, id=document_id)
@@ -197,6 +202,7 @@ class AdminDocumentReprocessAPIView(APIView):
     """
 
     permission_classes = [HasInternalAPIKey]
+    throttle_classes = [AdminAPIRateThrottle]
 
     def post(self, request, document_id, *args, **kwargs):
         document = get_object_or_404(ProfileDocument, id=document_id)
@@ -223,6 +229,7 @@ class AdminDocumentInspectionAPIView(APIView):
     """
 
     permission_classes = [HasInternalAPIKey]
+    throttle_classes = [AdminAPIRateThrottle]
 
     def get(self, request, document_id, *args, **kwargs):
         document = get_object_or_404(ProfileDocument, id=document_id)
@@ -241,6 +248,7 @@ class AdminDocumentChunksAPIView(APIView):
     """
 
     permission_classes = [HasInternalAPIKey]
+    throttle_classes = [AdminAPIRateThrottle]
 
     def get(self, request, document_id, *args, **kwargs):
         document = get_object_or_404(ProfileDocument, id=document_id)
@@ -272,6 +280,7 @@ class AdminDocumentChunkDetailAPIView(APIView):
     """
 
     permission_classes = [HasInternalAPIKey]
+    throttle_classes = [AdminAPIRateThrottle]
 
     def patch(self, request, chunk_id, *args, **kwargs):
         chunk = get_object_or_404(DocumentChunk, id=chunk_id)
@@ -303,6 +312,7 @@ class AdminDocumentQualityChecksAPIView(APIView):
     """
 
     permission_classes = [HasInternalAPIKey]
+    throttle_classes = [AdminAPIRateThrottle]
 
     def get(self, request, document_id, *args, **kwargs):
         document = get_object_or_404(ProfileDocument, id=document_id)
@@ -324,6 +334,7 @@ class AdminDocumentLogsAPIView(APIView):
     """
 
     permission_classes = [HasInternalAPIKey]
+    throttle_classes = [AdminAPIRateThrottle]
 
     def get(self, request, document_id, *args, **kwargs):
         document = get_object_or_404(ProfileDocument, id=document_id)
@@ -339,12 +350,68 @@ class AdminDocumentLogsAPIView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+class AdminDocumentMarkReviewedAPIView(APIView):
+    """
+    Mark a document as manually reviewed by an admin.
+
+    This confirms the admin inspected:
+    - extracted text
+    - chunks
+    - embeddings
+    - quality checks
+    - metadata
+    before approval.
+    """
+
+    permission_classes = [HasInternalAPIKey]
+    throttle_classes = [AdminAPIRateThrottle]
+
+    def post(self, request, document_id, *args, **kwargs):
+        document = get_object_or_404(ProfileDocument, id=document_id)
+
+        serializer = ProfileDocumentMarkReviewedSerializer(
+            data=request.data,
+            context={"document": document},
+        )
+        serializer.is_valid(raise_exception=True)
+
+        document.is_reviewed = True
+        document.reviewed_at = timezone.now()
+        document.review_notes = serializer.validated_data.get(
+            "review_notes", "")
+        document.save(
+            update_fields=[
+                "is_reviewed",
+                "reviewed_at",
+                "review_notes",
+                "updated_at",
+            ]
+        )
+
+        log_info(
+            document=document,
+            step="document_marked_reviewed",
+            message="Document was manually reviewed by admin.",
+            metadata={
+                "review_notes": document.review_notes,
+            },
+        )
+
+        response_serializer = ProfileDocumentDetailSerializer(
+            document,
+            context={"request": request},
+        )
+
+        return Response(response_serializer.data, status=status.HTTP_200_OK)
+
+
 class AdminDocumentApproveAPIView(APIView):
     """
     Approve document and activate it for chatbot retrieval.
     """
 
     permission_classes = [HasInternalAPIKey]
+    throttle_classes = [AdminAPIRateThrottle]
 
     def post(self, request, document_id, *args, **kwargs):
         document = get_object_or_404(ProfileDocument, id=document_id)
@@ -360,7 +427,8 @@ class AdminDocumentApproveAPIView(APIView):
         approved_document = service.approve(
             document=document,
             admin_notes=serializer.validated_data.get("admin_notes", ""),
-            force_approve=serializer.validated_data.get("force_approve", False),
+            force_approve=serializer.validated_data.get(
+                "force_approve", False),
         )
 
         response_serializer = ProfileDocumentDetailSerializer(
@@ -377,6 +445,7 @@ class AdminDocumentRejectAPIView(APIView):
     """
 
     permission_classes = [HasInternalAPIKey]
+    throttle_classes = [AdminAPIRateThrottle]
 
     def post(self, request, document_id, *args, **kwargs):
         document = get_object_or_404(ProfileDocument, id=document_id)
@@ -405,6 +474,7 @@ class AdminDocumentArchiveAPIView(APIView):
     """
 
     permission_classes = [HasInternalAPIKey]
+    throttle_classes = [AdminAPIRateThrottle]
 
     def post(self, request, document_id, *args, **kwargs):
         document = get_object_or_404(ProfileDocument, id=document_id)
@@ -420,6 +490,68 @@ class AdminDocumentArchiveAPIView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+class AdminDocumentRestoreAPIView(APIView):
+    """
+    Restore an archived document.
+
+    The document returns to ready_for_review and must be reviewed/approved again.
+    """
+
+    permission_classes = [HasInternalAPIKey]
+    throttle_classes = [AdminAPIRateThrottle]
+
+    def post(self, request, document_id, *args, **kwargs):
+        document = get_object_or_404(ProfileDocument, id=document_id)
+
+        service = DocumentApprovalService()
+        restored_document = service.restore(document)
+
+        serializer = ProfileDocumentDetailSerializer(
+            restored_document,
+            context={"request": request},
+        )
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
+class AdminDocumentPermanentDeleteAPIView(APIView):
+    """
+    Permanently delete a document.
+
+    This action is irreversible.
+
+    Allowed only for:
+    - archived documents
+    - rejected documents
+    - failed documents
+    - uploaded documents
+    - legacy processed documents that are not active/approved/chatbot-enabled
+
+    Approved active documents must be archived first.
+    """
+
+    permission_classes = [HasInternalAPIKey]
+    throttle_classes = [AdminAPIRateThrottle]
+
+    def delete(self, request, document_id, *args, **kwargs):
+        document = get_object_or_404(ProfileDocument, id=document_id)
+
+        confirm_text = str(request.data.get("confirm_text", "")).strip()
+
+        if confirm_text != "DELETE":
+            return Response(
+                {
+                    "detail": "Permanent delete requires confirm_text='DELETE'."
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        service = DocumentApprovalService()
+        result = service.delete_permanently(document)
+
+        return Response(result, status=status.HTTP_200_OK)
+
 class AdminDocumentReplaceAPIView(APIView):
     """
     Replace document file.
@@ -430,6 +562,7 @@ class AdminDocumentReplaceAPIView(APIView):
 
     permission_classes = [HasInternalAPIKey]
     parser_classes = [MultiPartParser, FormParser]
+    throttle_classes = [AdminAPIRateThrottle]
 
     def post(self, request, document_id, *args, **kwargs):
         document = get_object_or_404(ProfileDocument, id=document_id)
@@ -455,6 +588,9 @@ class AdminDocumentReplaceAPIView(APIView):
         document.is_active = False
         document.is_approved = False
         document.is_available_for_chatbot = False
+        document.is_reviewed = False
+        document.reviewed_at = None
+        document.review_notes = ""
         document.extraction_score = 0
         document.chunk_quality_score = 0
         document.embedding_quality_score = 0
@@ -462,10 +598,12 @@ class AdminDocumentReplaceAPIView(APIView):
         document.validation_summary = {}
         document.processing_metadata = {}
 
-        replacement_note = serializer.validated_data.get("replacement_note", "")
+        replacement_note = serializer.validated_data.get(
+            "replacement_note", "")
 
         if replacement_note:
-            document.admin_notes = f"{document.admin_notes}\n\nReplacement note: {replacement_note}".strip()
+            document.admin_notes = f"{document.admin_notes}\n\nReplacement note: {replacement_note}".strip(
+            )
 
         document.save()
 

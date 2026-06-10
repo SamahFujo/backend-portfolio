@@ -48,6 +48,10 @@ class IngestionService:
         """
         Parse, classify, chunk, embed, validate, and prepare document for admin review.
         """
+        
+        document.is_reviewed = False
+        document.reviewed_at = None
+        document.review_notes = ""
 
         try:
             log_info(

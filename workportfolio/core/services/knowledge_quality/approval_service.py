@@ -16,12 +16,10 @@ from core.services.knowledge_quality.processing_log_service import (
 )
 
 
-
 class DocumentApprovalService:
     """
     Handles approval, rejection, and archive actions for chatbot documents.
-    """
-
+    """ 
     MIN_APPROVAL_SCORE = 75
 
     def approve(
@@ -96,6 +94,8 @@ class DocumentApprovalService:
                     "overall_quality_score": document.overall_quality_score,
                 },
             )
+            
+            
 
         return document
 
@@ -174,7 +174,120 @@ class DocumentApprovalService:
             )
 
         return document
+    
+    def restore(self, document):
+        """
+        Restore an archived document back to ready_for_review.
 
+        Restored documents are not automatically approved.
+        Admin must review and approve again before chatbot retrieval.
+        """
+
+        if document.status != "archived":
+            raise ValidationError("Only archived documents can be restored.")
+
+        document.status = "ready_for_review"
+        document.is_active = False
+        document.is_approved = False
+        document.is_available_for_chatbot = False
+
+        if hasattr(document, "is_reviewed"):
+            document.is_reviewed = False
+
+        if hasattr(document, "reviewed_at"):
+            document.reviewed_at = None
+
+        if hasattr(document, "review_notes"):
+            document.review_notes = ""
+
+        document.save(
+            update_fields=[
+                "status",
+                "is_active",
+                "is_approved",
+                "is_available_for_chatbot",
+                "is_reviewed",
+                "reviewed_at",
+                "review_notes",
+                "updated_at",
+            ]
+        )
+
+        document.chunks.update(is_active=False)
+
+        log_info(
+            document=document,
+            step="document_restored",
+            message="Archived document was restored to ready_for_review.",
+            metadata={
+                "restored_at": timezone.now().isoformat(),
+            },
+        )
+
+        return document
+    
+    
+    def delete_permanently(self, document):
+        """
+        Permanently delete a document and all related knowledge data.
+
+        This removes:
+        - uploaded file from storage
+        - document database record
+        - chunks
+        - embeddings stored on chunks
+        - quality checks
+        - processing logs
+
+        Safety rule:
+        - Approved or chatbot-available documents cannot be deleted directly.
+        - They must be archived first.
+        - Legacy processed documents can be deleted if they are not approved
+        and not available for chatbot retrieval.
+        """
+
+        allowed_statuses = [
+            "archived",
+            "rejected",
+            "failed",
+            "uploaded",
+            "processed",  # legacy status from old workflow
+            "extraction_failed",
+            "validation_failed",
+            "chunking_failed",
+            "embedding_failed",
+        ]
+
+        if document.status not in allowed_statuses:
+            raise ValidationError(
+                "Only archived, rejected, failed, uploaded, or legacy processed documents can be permanently deleted."
+            )
+
+        if document.is_approved or document.is_available_for_chatbot:
+            raise ValidationError(
+                "Approved or chatbot-available documents cannot be permanently deleted directly. Archive them first."
+            )
+
+        document_title = document.title
+        document_id = str(document.id)
+
+        file_field = getattr(document, "file", None)
+
+        if file_field:
+            try:
+                file_field.delete(save=False)
+            except Exception:
+                # Do not block database cleanup if physical file deletion fails.
+                pass
+
+        document.delete()
+
+        return {
+            "deleted": True,
+            "document_id": document_id,
+            "title": document_title,
+            "message": "Document permanently deleted.",
+        }
     def validate_can_approve(
         self,
         document: ProfileDocument,
@@ -191,6 +304,11 @@ class DocumentApprovalService:
         ]:
             raise ValidationError(
                 "Only documents that are ready for review can be approved."
+            )
+
+        if not document.is_reviewed:
+            raise ValidationError(
+                "This document must be reviewed by an admin before approval."
             )
 
         if not document.raw_text or not document.raw_text.strip():

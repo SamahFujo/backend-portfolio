@@ -34,13 +34,6 @@ class HasInternalAPIKey(BasePermission):
             or ""
         ).strip()
 
-        # Temporary debug while testing. Remove after it works.
-        print("===== ADMIN API KEY DEBUG =====")
-        print("Provided key:", provided_key)
-        print("Expected key:", expected_key)
-        print("Keys match:", hmac.compare_digest(provided_key, expected_key))
-        print("===============================")
-
         if not expected_key:
             return False
 
