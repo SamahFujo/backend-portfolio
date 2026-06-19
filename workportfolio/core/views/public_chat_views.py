@@ -760,7 +760,7 @@ class AskAboutMeAPIView(APIView):
         retrieval_debug = qa_result.get("retrieval_debug") or []
 
         if bullets and not meta.get("safe_fallback"):
-            answer_text += "\n\nKey points:\n- " + "\n- ".join(bullets)
+            answer_text +=  "\n- ".join(bullets)
 
         citations = []
         for src in used_sources:
