@@ -3,7 +3,9 @@ import html
 
 import requests
 from django.conf import settings
+import logging
 
+logger = logging.getLogger(__name__)
 
 RESEND_API_URL = "https://api.resend.com/emails"
 
@@ -80,7 +82,14 @@ Client Email: {data.get('yourEmail', '')}
         },
         json=payload,
         timeout=20,
+    
     )
+    if not response.ok:
+      logger.error(
+          "Resend failed. status=%s body=%s",
+          response.status_code,
+          response.text,
+      )
     response.raise_for_status()
     return response.json()
 
@@ -186,6 +195,11 @@ def send_chat_history_email(*, recipient_email: str, history_text: str) -> dict:
         json=payload,
         timeout=20,
     )
-
+    if not response.ok:
+        logger.error(
+            "Resend failed. status=%s body=%s",
+            response.status_code,
+            response.text,
+        )
     response.raise_for_status()
     return response.json()
