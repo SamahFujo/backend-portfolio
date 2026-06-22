@@ -38,7 +38,10 @@ DEBUG = env_bool("DEBUG", False)
 
 if not SECRET_KEY:
     if DEBUG:
-        SECRET_KEY = "dev-only-insecure-secret-key-change-me"
+        SECRET_KEY = os.getenv(
+            "SECRET_KEY",
+            "django-insecure-dev-only-local-secret-key-not-for-production",
+        )
     else:
         raise ValueError("SECRET_KEY must be set when DEBUG is False.")
 

@@ -4,7 +4,7 @@ Public chatbot API views.
 
 import re
 import logging
-
+import secrets
 from django.conf import settings
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
@@ -62,7 +62,7 @@ class RequestEmailVerificationAPIView(APIView):
             is_used=False,
         ).update(is_used=True)
 
-        code = f"{random.randint(100000, 999999)}"
+        code = f"{secrets.randbelow(900000) + 100000}"
 
         verification = EmailVerificationCode.create_code(
             email=email,

@@ -8,7 +8,7 @@ from typing import Dict, Any, List, Optional
 from django.conf import settings
 import random
 from core.services.llm.router import LLMRouter
-
+import random
 
 @dataclass(frozen=True)
 class QuestionRouteResult:
@@ -1934,7 +1934,7 @@ class SmartChatIntentService:
         else:
             last_reply = cls._last_reply_by_intent.get(intent)
             candidates = [reply for reply in replies if reply != last_reply]
-            chosen = random.choice(candidates or replies)
+            chosen = random.SystemRandom().choice(candidates or replies)
 
         cls._last_reply_by_intent[intent] = chosen
         return chosen

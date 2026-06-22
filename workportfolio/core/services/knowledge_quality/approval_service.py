@@ -15,6 +15,10 @@ from core.services.knowledge_quality.processing_log_service import (
     log_warning,
 )
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 class DocumentApprovalService:
     """
@@ -277,8 +281,7 @@ class DocumentApprovalService:
             try:
                 file_field.delete(save=False)
             except Exception:
-                # Do not block database cleanup if physical file deletion fails.
-                pass
+                logger.exception("Failed to delete physical document file during cleanup.")
 
         document.delete()
 

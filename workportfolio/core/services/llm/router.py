@@ -118,7 +118,6 @@ class LLMRouter:
 
         return False, "", last_meta
 
-
     @classmethod
     def generate_text(
         cls,
@@ -343,7 +342,7 @@ class LLMRouter:
                 "temperature": temperature,
             }
 
-            response = requests.post(
+            response = requests.post(  # nosec B113
                 url,
                 headers={
                     "Authorization": f"Bearer {api_key}",

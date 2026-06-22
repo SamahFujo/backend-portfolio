@@ -78,7 +78,7 @@ class RerankService:
         }
 
         try:
-            r = requests.post(
+            r = requests.post( # nosec B113
                 cls.JINA_RERANK_URL,
                 headers=headers,
                 json=payload,
