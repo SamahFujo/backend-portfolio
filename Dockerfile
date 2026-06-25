@@ -19,7 +19,15 @@ COPY workportfolio /app/workportfolio
 
 WORKDIR /app/workportfolio
 
-RUN python manage.py collectstatic --noinput
+RUN SECRET_KEY=dummy-build-secret \
+    DEBUG=False \
+    DB_NAME=placeholder \
+    DB_USER=placeholder \
+    DB_PASSWORD=placeholder \
+    DB_HOST=localhost \
+    DB_PORT=5432 \
+    USE_S3_MEDIA=False \
+    python manage.py collectstatic --noinput
 
 EXPOSE 8000
 
