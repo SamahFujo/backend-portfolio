@@ -1,0 +1,18 @@
+venv/
+.git/
+.github/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.env
+.env.*
+*.sqlite3
+db.sqlite3
+workportfolio/db.sqlite3
+workportfolio/media/
+workportfolio/staticfiles/
+workportfolio/qa_runs/
+workportfolio/test results/
+.gitignore
