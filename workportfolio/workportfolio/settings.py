@@ -12,8 +12,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env()
@@ -35,6 +33,13 @@ def env_list(name: str, default: str = "") -> list[str]:
 ADMIN_API_KEY = config("ADMIN_API_KEY")
 SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = env_bool("DEBUG", False)
+
+ENVIRONMENT = (
+    os.getenv("DJANGO_ENV")
+    or os.getenv("ENVIRONMENT")
+    or os.getenv("APP_ENV")
+    or ("development" if DEBUG else "production")
+)
 
 if not SECRET_KEY:
     if DEBUG:
@@ -86,7 +91,7 @@ if USE_S3_MEDIA:
             f"https://{AWS_STORAGE_BUCKET_NAME}.s3."
             f"{AWS_S3_REGION_NAME}.amazonaws.com/"
         )
-        
+
 MAX_DOCUMENT_UPLOAD_SIZE = int(
     os.getenv("MAX_DOCUMENT_UPLOAD_SIZE", str(5 * 1024 * 1024)))
 ALLOWED_DOCUMENT_EXTENSIONS = {".pdf", ".docx", ".txt"}
@@ -292,9 +297,4 @@ RERANK_CANDIDATE_K = int(os.getenv("RERANK_CANDIDATE_K", "40"))
 RERANK_TOP_N = int(os.getenv("RERANK_TOP_N", "8"))
 
 
-# ============================================================
-# Admin dashboard settings
-# ============================================================
-# ADMIN_API_KEY = os.getenv("ADMIN_API_KEY")
-ADMIN_API_KEY = config("ADMIN_API_KEY", default="")
 
