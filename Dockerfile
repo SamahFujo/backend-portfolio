@@ -20,6 +20,7 @@ COPY workportfolio /app/workportfolio
 WORKDIR /app/workportfolio
 
 RUN SECRET_KEY=dummy-build-secret \
+    ADMIN_API_KEY=dummy-build-admin-key \
     DEBUG=False \
     DB_NAME=placeholder \
     DB_USER=placeholder \
