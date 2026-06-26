@@ -23,14 +23,20 @@ class StartProjectRequestSerializer(serializers.Serializer):
 
 class GetInTouchSerializer(serializers.Serializer):
     name = serializers.CharField(min_length=2, max_length=120)
-    message = serializers.CharField(min_length=10, max_length=5000)
+    email = serializers.EmailField()
     subject = serializers.CharField(
-        max_length=200, required=False, allow_blank=True)
-    message = serializers.CharField(max_length=5000)
+        max_length=200,
+        required=False,
+        allow_blank=True,
+    )
+    message = serializers.CharField(min_length=10, max_length=5000)
 
-    # Simple “honeypot” anti-bot field (frontend keeps it hidden)
+    # Simple honeypot anti-bot field
     website = serializers.CharField(
-        required=False, allow_blank=True, max_length=200)
+        required=False,
+        allow_blank=True,
+        max_length=200,
+    )
 
     def validate(self, attrs):
         # Honeypot: if filled, likely bot

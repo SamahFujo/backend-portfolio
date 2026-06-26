@@ -111,7 +111,7 @@ class StartProjectRequestView(APIView):
                     "success": False,
                     "message": "Your project request was saved, but the email notification could not be sent right now.",
                     "project_request_id": str(project_request.id),
-                    "email_sent": True,
+                    "email_sent": False,
                 },
                 status=status.HTTP_202_ACCEPTED,
             )
@@ -173,7 +173,7 @@ class GetInTouchView(APIView):
                     "success": False,
                     "message": "Your message was saved, but the email notification could not be sent right now.",
                     "contact_message_id": str(contact_message.id),
-                    "email_sent": True,
+                    "email_sent": False,
                 },
                 status=status.HTTP_202_ACCEPTED,
             )
