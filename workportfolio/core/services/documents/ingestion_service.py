@@ -15,7 +15,8 @@ Pipeline:
 import re
 
 from django.db import transaction
-
+import os
+import tempfile
 from core.models import ProfileDocument, DocumentChunk
 from core.services.documents.parser_service import ParserService
 from core.services.documents.chunk_service import ChunkService
@@ -42,6 +43,33 @@ class IngestionService:
     """
     Handles full document ingestion lifecycle.
     """
+    
+    @staticmethod
+    def _copy_django_file_to_temp_file(django_file, original_filename: str = "") -> str:
+        """
+        Copy a Django FileField file to a temporary local file.
+
+        This works with both:
+        - local development storage
+        - production S3/remote storage
+
+        ParserService needs a real local file path because PyMuPDF,
+        python-docx, and normal open() read from local paths.
+        """
+        suffix = os.path.splitext(original_filename or django_file.name or "")[1] or ".tmp"
+
+        temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=suffix)
+
+        try:
+            with django_file.open("rb") as source:
+                for chunk in source.chunks():
+                    temp_file.write(chunk)
+
+            temp_file.flush()
+            return temp_file.name
+
+        finally:
+            temp_file.close()
 
     @staticmethod
     def process_document(document: ProfileDocument) -> ProfileDocument:
@@ -63,7 +91,20 @@ class IngestionService:
             document.status = "extracting"
             document.save(update_fields=["status", "updated_at"])
 
-            raw_text = ParserService.extract_text(document.file.path)
+            temp_file_path = None
+
+            try:
+                temp_file_path = IngestionService._copy_django_file_to_temp_file(
+                    document.file,
+                    original_filename=document.original_filename or document.file.name,
+                )
+
+                raw_text = ParserService.extract_text(temp_file_path)
+
+            finally:
+                if temp_file_path and os.path.exists(temp_file_path):
+                    os.remove(temp_file_path)
+
             raw_text = (raw_text or "").strip()
 
             if not raw_text:
