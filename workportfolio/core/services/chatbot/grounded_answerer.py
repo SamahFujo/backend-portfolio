@@ -37,7 +37,7 @@ class GroundedAnswerer:
     HYBRID_NOT_ENOUGH_MESSAGE = (
         "I could understand the question from the conversation, but I couldn’t verify the factual answer from the available documents."
     )
-    
+
     @staticmethod
     def _filter_safe_evidence_chunks(
         evidence_chunks: Optional[List[DocumentChunk]],
@@ -828,6 +828,11 @@ Current message:
             "connection reset",
             "connection aborted",
             "try again later",
+            "invalid_json_after_cleaning",
+            "empty_json_after_cleaning",
+            "unacceptable_answer",
+            "json_parse",
+            "schema",
         ]
 
         return any(marker in error_text for marker in transient_markers)
@@ -913,6 +918,46 @@ Current message:
             return json.loads(cleaned)
         except Exception as exc:
             raise ValueError(f"invalid_json_after_cleaning:{exc}") from exc
+
+    @staticmethod
+    def _plain_text_recovery(text: str) -> str:
+        """
+        Recover a usable plain-text answer when the model answered naturally
+        instead of returning valid JSON.
+        """
+        cleaned = (text or "").strip()
+
+        if not cleaned:
+            return ""
+
+        if cleaned.startswith("```"):
+            cleaned = cleaned.strip("`").strip()
+
+            if cleaned.lower().startswith("json"):
+                cleaned = cleaned[4:].strip()
+
+        lower = cleaned.lower()
+
+        # If it still looks like broken JSON, do not expose it.
+        if '"verdict"' in lower and '"answer"' in lower:
+            return ""
+
+        # Remove common model prefaces.
+        prefixes = [
+            "here is the answer:",
+            "answer:",
+            "final answer:",
+        ]
+
+        for prefix in prefixes:
+            if lower.startswith(prefix):
+                cleaned = cleaned[len(prefix):].strip()
+                break
+
+        if len(cleaned) < 20:
+            return ""
+
+        return cleaned
 
     @classmethod
     def _prompt_mode(cls, question: str) -> str:
@@ -1405,18 +1450,81 @@ Current message:
         meta["instruction_mode"] = instruction_mode
         meta["answer_mode"] = answer_mode
 
+        def recover_plain_text_result(reason: str):
+            plain_answer = cls._plain_text_recovery(text or "")
+
+            if not cls._is_answer_acceptable(plain_answer):
+                return None
+
+            used = list(range(min(3, len(selected_chunks))))
+
+            initial_verdict = "not_enough_evidence" if is_yes_no else "supported"
+
+            verdict = cls._normalize_verdict_from_answer(
+                question=question_for_reasoning,
+                answer=plain_answer,
+                verdict=initial_verdict,
+                used_chunk_indices=used,
+            )
+
+            recovered_meta = {
+                **(meta or {}),
+                "provider_used": meta.get("provider_used", provider_name),
+                "answer_mode": answer_mode,
+                "instruction_mode": instruction_mode,
+                "fallback_used": False,
+                "generation_ok": True,
+                "safe_fallback": False,
+                "answer_source": "model_plain_text_recovery",
+                "recovered_from_unstructured_text": True,
+                "recovery_reason": reason,
+                "raw_text_preview": (text or "")[:500],
+            }
+
+            result = {
+                "verdict": verdict,
+                "answer": plain_answer,
+                "bullets": [],
+                "used_chunk_indices": used,
+                "used_sources": cls._build_used_sources(selected_chunks, used),
+                "meta": recovered_meta,
+            }
+
+            return result, recovered_meta
+
         if not ok:
+            recovered = recover_plain_text_result("generate_json_not_ok")
+
+            if recovered:
+                recovered_result, recovered_meta = recovered
+                return True, recovered_result, recovered_meta
+
+            meta = {
+                **(meta or {}),
+                "error": meta.get("error") or "generate_json_failed",
+                "raw_text_preview": (text or "")[:500],
+                "provider_used": meta.get("provider_used", provider_name),
+                "answer_mode": answer_mode,
+                "instruction_mode": instruction_mode,
+            }
             return False, {}, meta
 
         try:
             data = cls._parse_json_safely(text)
         except Exception as exc:
+            recovered = recover_plain_text_result(str(exc))
+
+            if recovered:
+                recovered_result, recovered_meta = recovered
+                return True, recovered_result, recovered_meta
+
             meta = {
                 **(meta or {}),
                 "error": str(exc),
                 "raw_text_preview": (text or "")[:500],
                 "provider_used": meta.get("provider_used", provider_name),
                 "answer_mode": answer_mode,
+                "instruction_mode": instruction_mode,
             }
             return False, {}, meta
 
@@ -1590,7 +1698,8 @@ Current message:
 
         evidence_chunks = cls._filter_safe_evidence_chunks(evidence_chunks)
         conversation_history = conversation_history or []
-        resolved_question = (resolved_question or current_message or "").strip()
+        resolved_question = (
+            resolved_question or current_message or "").strip()
 
         instruction_mode = answer_mode or "default"
 
