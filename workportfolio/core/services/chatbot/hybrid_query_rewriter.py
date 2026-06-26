@@ -84,7 +84,7 @@ class GeminiQueryRewriter:
         # common tech terms that might be misspelled but are important to preserve
         "roberta", "pytorch", "tensorflow", "scikit", "sklearn", "pandas", "numpy", "redis",
         "qdrant", "chroma", "pgvector", "jinja", "jinja2", "jupyter", "cuda", "vue", "node", "nodejs", "rest", "restful",
-    
+
         "chatbot", "chatbots",
         "deepseek",
         "samah.ai",
@@ -134,7 +134,7 @@ class GeminiQueryRewriter:
         "شكراً لرسالتك. حالياً يدعم الشات بوت اللغة الإنجليزية فقط. "
         "يرجى كتابة استفسارك باللغة الإنجليزية حتى أتمكن من مساعدتك."
     )
-    
+
     ALLOWED_DOCUMENT_TYPES = {
         "cv",
         "career_timeline",
@@ -147,6 +147,7 @@ class GeminiQueryRewriter:
         "preferences",
         "faq",
         "capabilities",
+        "security_deployment",
     }
 
     ALLOWED_ANSWER_TYPES = {
@@ -155,6 +156,7 @@ class GeminiQueryRewriter:
         "work_history",
         "experience_duration",
         "technical_skills",
+        "security_deployment",
         "skill_evaluation",
         "projects",
         "capabilities",
@@ -171,17 +173,19 @@ class GeminiQueryRewriter:
         "recommendation",
         "experience_letter",
         "general_profile",
+
     }
 
     ANSWER_TYPE_TO_PREFERRED_DOCS = {
-        "profile_overview": ["faq", "cv", "career_timeline"],
+        "security_deployment": ["security_deployment", "projects", "cv"],
+        "profile_overview": ["cv", "career_timeline", "faq"],
         "company_history": ["cv", "career_timeline", "experience_letter"],
         "work_history": ["cv", "career_timeline", "experience_letter"],
         "experience_duration": ["cv", "career_timeline", "experience_letter"],
-        "technical_skills": ["cv", "faq", "capabilities", "projects", "preferences"],
-        "skill_evaluation": ["cv", "faq", "capabilities", "projects", "preferences"],
-        "projects": ["projects", "faq", "capabilities"],
-        "capabilities": ["capabilities", "faq", "projects"],
+        "technical_skills": ["cv", "capabilities", "projects", "security_deployment", "faq"],
+        "skill_evaluation": ["cv", "capabilities", "projects", "security_deployment", "faq"],
+        "projects": ["projects", "capabilities", "faq"],
+        "capabilities": ["capabilities", "projects", "cv", "faq"],
         "achievements": ["achievements", "recommendation", "projects", "cv"],
         "leadership": ["cv", "career_timeline", "achievements", "recommendation"],
         "stakeholder_client_work": ["cv", "career_timeline", "achievements", "recommendation"],
@@ -194,7 +198,7 @@ class GeminiQueryRewriter:
         "preferences": ["preferences", "faq"],
         "recommendation": ["recommendation"],
         "experience_letter": ["experience_letter"],
-        "general_profile": ["cv", "faq", "projects", "capabilities"],
+        "general_profile": ["cv", "career_timeline", "projects", "capabilities", "faq"],
     }
 
     @staticmethod
@@ -288,7 +292,7 @@ class GeminiQueryRewriter:
             return False
 
         return True
-    
+
     @staticmethod
     def _normalize_token_for_protection(token: str) -> str:
         return re.sub(r"[^a-zA-Z0-9\.\+#]", "", (token or "").lower())
@@ -365,25 +369,155 @@ class GeminiQueryRewriter:
         rebuilt = re.sub(r"\s+", " ", rebuilt).strip()
 
         return rebuilt
-    
-    
+
     @classmethod
     def _default_query_plan(cls, query: str, notes: str = "default") -> Dict[str, Any]:
         """
-        Safe fallback query plan used for local rewrites or LLM failures.
-        Keeps backward compatibility and avoids breaking retrieval.
+        Safe fallback query plan used when LLM rewrite fails.
+        Uses deterministic local routing so FAQ does not dominate every broad query.
         """
         clean = (query or "").strip()
+        q = clean.lower()
 
-        return {
-            "rewritten_query": clean,
-            "retrieval_query": f"{clean} Samah profile CV projects experience skills capabilities",
-            "answer_type": "general_profile",
-            "preferred_document_types": cls.ANSWER_TYPE_TO_PREFERRED_DOCS["general_profile"],
-            "avoid_document_types": [],
-            "needs_document_retrieval": True,
-            "notes": notes,
-        }
+        def make_plan(
+            *,
+            answer_type: str,
+            preferred: list[str],
+            suffix: str,
+            avoid: list[str] | None = None,
+            plan_notes: str | None = None,
+        ) -> Dict[str, Any]:
+            return {
+                "rewritten_query": clean,
+                "retrieval_query": f"{clean} {suffix}".strip(),
+                "answer_type": answer_type,
+                "preferred_document_types": preferred,
+                "avoid_document_types": avoid or [],
+                "needs_document_retrieval": True,
+                "notes": plan_notes or notes,
+            }
+
+        if any(word in q for word in [
+            "project", "projects", "built", "dashboard", "chatbot",
+            "system", "application", "app", "portfolio website",
+        ]):
+            return make_plan(
+                answer_type="projects",
+                preferred=["projects", "capabilities"],
+                suffix="Samah projects built systems dashboards chatbots applications portfolio technical outcomes",
+                avoid=["compensation"],
+                plan_notes="local_rule_projects",
+            )
+
+        if any(word in q for word in [
+            "certificate", "certificates", "certification", "certifications",
+            "certified", "course", "training",
+        ]):
+            return make_plan(
+                answer_type="certificates",
+                preferred=["certificates", "cv"],
+                suffix="Samah certificates certifications professional training courses certificate names issuers",
+                avoid=["faq", "compensation"],
+                plan_notes="local_rule_certificates",
+            )
+
+        if any(word in q for word in [
+            "career timeline", "timeline", "career history", "work history",
+            "career path", "employment history", "roles", "previous role",
+        ]):
+            return make_plan(
+                answer_type="work_history",
+                preferred=["career_timeline", "cv", "experience_letter"],
+                suffix="Samah career timeline work history roles companies dates professional experience CV",
+                avoid=["faq", "compensation"],
+                plan_notes="local_rule_career_timeline",
+            )
+
+        if any(word in q for word in [
+            "achievement", "achievements", "impact", "strength", "strengths",
+            "strong points", "value", "accomplishment", "accomplishments",
+            "contribution", "contributions", "leadership", "stakeholder",
+        ]):
+            return make_plan(
+                answer_type="achievements",
+                preferred=["achievements", "recommendation",
+                           "experience_letter", "cv"],
+                suffix="Samah achievements impact strengths accomplishments leadership stakeholder contribution recommendation CV",
+                avoid=["faq", "compensation"],
+                plan_notes="local_rule_achievements",
+            )
+
+        if any(word in q for word in [
+            "work style", "working style", "preferences", "prefer",
+            "communication", "collaboration", "team style", "environment",
+        ]):
+            return make_plan(
+                answer_type="work_style",
+                preferred=["preferences", "recommendation"],
+                suffix="Samah work style preferences communication collaboration teamwork working environment",
+                avoid=["compensation"],
+                plan_notes="local_rule_work_style",
+            )
+
+        if any(word in q for word in [
+            "deployment", "deploy", "aws", "cloud", "ecs", "ecr", "rds",
+            "s3", "docker", "security", "production", "devops",
+            "ci/cd", "cicd", "github actions",
+        ]):
+            return make_plan(
+                answer_type="security_deployment",
+                preferred=["security_deployment", "projects", "cv"],
+                suffix="Samah deployment skills AWS Docker ECS ECR RDS S3 security production CI CD DevOps",
+                avoid=["faq", "compensation"],
+                plan_notes="local_rule_security_deployment",
+            )
+
+        if any(word in q for word in [
+            "salary", "compensation", "rate", "availability", "available",
+            "notice period", "join", "joining", "expected salary",
+            "freelance", "contract",
+        ]):
+            return make_plan(
+                answer_type="compensation",
+                preferred=["compensation"],
+                suffix="Samah compensation availability notice period salary joining freelance contract",
+                avoid=["faq"],
+                plan_notes="local_rule_compensation",
+            )
+
+        if any(word in q for word in [
+            "what can samah help", "can help", "services", "capabilities",
+            "what can she do", "what does she do",
+        ]):
+            return make_plan(
+                answer_type="capabilities",
+                preferred=["capabilities", "projects", "cv"],
+                suffix="Samah capabilities services AI backend automation full stack projects what I can help with",
+                avoid=["compensation"],
+                plan_notes="local_rule_capabilities",
+            )
+
+        if any(word in q for word in [
+            "cv", "resume", "experience", "background", "profile",
+            "skills", "technology", "technologies", "tech stack",
+        ]):
+            return make_plan(
+                answer_type="general_profile",
+                preferred=["cv", "career_timeline",
+                           "projects", "capabilities"],
+                suffix="Samah CV resume background experience skills technologies career projects capabilities",
+                avoid=["compensation"],
+                plan_notes="local_rule_profile",
+            )
+
+        return make_plan(
+            answer_type="general_profile",
+            preferred=["cv", "career_timeline",
+                       "projects", "capabilities", "faq"],
+            suffix="Samah professional profile CV career projects capabilities experience skills background",
+            avoid=["compensation"],
+            plan_notes=notes,
+        )
 
     @classmethod
     def _normalize_query_plan(cls, data: Dict[str, Any], fallback_query: str) -> Dict[str, Any]:
@@ -393,8 +527,10 @@ class GeminiQueryRewriter:
         """
         fallback = cls._default_query_plan(fallback_query)
 
-        rewritten_query = (data.get("rewritten_query") or fallback_query or "").strip()
-        retrieval_query = (data.get("retrieval_query") or rewritten_query or fallback["retrieval_query"]).strip()
+        rewritten_query = (data.get("rewritten_query")
+                           or fallback_query or "").strip()
+        retrieval_query = (data.get(
+            "retrieval_query") or rewritten_query or fallback["retrieval_query"]).strip()
 
         answer_type = (data.get("answer_type") or "general_profile").strip()
         if answer_type not in cls.ALLOWED_ANSWER_TYPES:
@@ -451,10 +587,11 @@ class GeminiQueryRewriter:
                     "error": None,
                 },
             }
-        
+
         low_q = q.lower()
         if any(pattern in low_q for pattern in cls.LOW_RISK_PRESERVE_PATTERNS):
-            plan = cls._default_query_plan(q, notes="preserved_capability_pattern")
+            plan = cls._default_query_plan(
+                q, notes="preserved_capability_pattern")
             plan["answer_type"] = "capabilities"
             plan["preferred_document_types"] = cls.ANSWER_TYPE_TO_PREFERRED_DOCS["capabilities"]
 
@@ -472,7 +609,8 @@ class GeminiQueryRewriter:
 
         rule_based = cls._rule_based_followup_rewrite(q, history)
         if rule_based:
-            plan = cls._default_query_plan(rule_based, notes="rule_based_followup")
+            plan = cls._default_query_plan(
+                rule_based, notes="rule_based_followup")
 
             return {
                 **plan,
@@ -504,6 +642,7 @@ class GeminiQueryRewriter:
             "You rewrite user queries and create a retrieval plan for Samah.ai's portfolio chatbot.\n"
             "The chatbot answers questions about Samah's professional profile using uploaded documents.\n\n"
             "Available document types:\n"
+            "- security_deployment: deployment, AWS, Docker, ECS, ECR, RDS, S3, CI/CD, security, production setup\n"
             "- cv: resume, contact, education, professional experience, company names, core skills\n"
             "- career_timeline: career progression, role development, leadership journey, work history\n"
             "- experience_letter: formal employment confirmation and employment dates\n"
@@ -615,8 +754,10 @@ class GeminiQueryRewriter:
                 fallback_query=local,
             )
 
-            plan["rewritten_query"] = cls._local_rewrite(plan["rewritten_query"])
-            plan["retrieval_query"] = cls._local_rewrite(plan["retrieval_query"])
+            plan["rewritten_query"] = cls._local_rewrite(
+                plan["rewritten_query"])
+            plan["retrieval_query"] = cls._local_rewrite(
+                plan["retrieval_query"])
 
             return {
                 **plan,
