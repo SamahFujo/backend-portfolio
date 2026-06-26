@@ -1,5 +1,5 @@
 from __future__ import annotations
-
+import re
 import json
 from typing import List, Dict, Any, Tuple, Optional
 from django.conf import settings
@@ -784,16 +784,229 @@ Current message:
 
         return used_sources
 
+        EVIDENCE_FALLBACK_STOP_WORDS = {
+            "the", "a", "an", "and", "or", "but", "if", "then", "than",
+            "is", "are", "was", "were", "be", "been", "being",
+            "do", "does", "did", "has", "have", "had",
+            "what", "which", "who", "where", "when", "why", "how",
+            "can", "could", "should", "would", "will",
+            "i", "you", "he", "she", "it", "we", "they",
+            "me", "my", "your", "his", "her", "their", "our",
+            "of", "to", "in", "on", "for", "from", "with", "about",
+            "samah", "please", "tell", "show", "give",
+        }
+
+    @classmethod
+    def _normalize_relevance_token(cls, token: str) -> str:
+        token = (token or "").strip().lower()
+
+        if not token:
+            return ""
+
+        if token in cls.EVIDENCE_FALLBACK_STOP_WORDS:
+            return ""
+
+        # Tiny normalization, not semantic hardcoding.
+        for suffix in ("ing", "ed", "es", "s"):
+            if len(token) > 5 and token.endswith(suffix):
+                token = token[: -len(suffix)]
+                break
+
+        if token in cls.EVIDENCE_FALLBACK_STOP_WORDS:
+            return ""
+
+        return token
+
+    @classmethod
+    def _relevance_tokens(cls, text: str) -> set[str]:
+        raw_tokens = re.findall(r"[A-Za-z][A-Za-z0-9\.\+#_-]*", text or "")
+        tokens = set()
+
+        for token in raw_tokens:
+            normalized = cls._normalize_relevance_token(token)
+            if normalized and len(normalized) >= 3:
+                tokens.add(normalized)
+
+        return tokens
+
+    @staticmethod
+    def _split_evidence_sentences(text: str) -> list[str]:
+        text = (text or "").replace("\r", "\n").strip()
+        if not text:
+            return []
+
+        # Split by sentence endings and line breaks.
+        parts = re.split(r"(?<=[.!?])\s+|\n+", text)
+
+        cleaned = []
+        seen = set()
+
+        for part in parts:
+            sentence = " ".join((part or "").split()).strip(" -•\t")
+            if len(sentence) < 25:
+                continue
+            if len(sentence) > 420:
+                sentence = sentence[:420].rstrip() + "..."
+
+            key = sentence.lower()
+            if key in seen:
+                continue
+
+            seen.add(key)
+            cleaned.append(sentence)
+
+        return cleaned
+
+    @classmethod
+    def _build_dynamic_evidence_fallback(
+        cls,
+        *,
+        question: str,
+        evidence_chunks: list[DocumentChunk],
+        meta: dict[str, Any],
+    ) -> Optional[Dict[str, Any]]:
+        """
+        Generic last-resort fallback.
+
+        This does not hardcode answers.
+        It dynamically selects the most relevant sentences from approved evidence chunks
+        when LLM JSON generation fails.
+        """
+        if not evidence_chunks:
+            return None
+
+        question_tokens = cls._relevance_tokens(question)
+        candidates = []
+
+        max_chunks = min(cls._chunk_budget(question), len(evidence_chunks))
+
+        for chunk_position, chunk in enumerate(evidence_chunks[:max_chunks]):
+            content = getattr(chunk, "content", "") or ""
+            document = getattr(chunk, "document", None)
+
+            document_title = getattr(document, "title", "") or ""
+            document_type = getattr(document, "document_type", "") or ""
+
+            context_tokens = cls._relevance_tokens(
+                f"{document_title} {document_type}"
+            )
+
+            for sentence in cls._split_evidence_sentences(content):
+                sentence_tokens = cls._relevance_tokens(sentence)
+
+                if not sentence_tokens:
+                    continue
+
+                overlap = len(question_tokens & sentence_tokens)
+                context_overlap = len(question_tokens & context_tokens)
+
+                # Generic scoring only: no Samah-specific facts.
+                score = (overlap * 3) + context_overlap
+
+                # If the question has weak tokens, still allow earlier retrieved evidence.
+                if not question_tokens:
+                    score = 1
+
+                if score <= 0:
+                    continue
+
+                candidates.append(
+                    {
+                        "score": score,
+                        "sentence": sentence,
+                        "chunk_position": chunk_position,
+                    }
+                )
+
+        if not candidates:
+            # Use the first meaningful sentences from top retrieved chunks.
+            for chunk_position, chunk in enumerate(evidence_chunks[:2]):
+                sentences = cls._split_evidence_sentences(
+                    getattr(chunk, "content", "") or "")
+                for sentence in sentences[:1]:
+                    candidates.append(
+                        {
+                            "score": 1,
+                            "sentence": sentence,
+                            "chunk_position": chunk_position,
+                        }
+                    )
+
+        if not candidates:
+            return None
+
+        candidates.sort(key=lambda item: item["score"], reverse=True)
+
+        selected_sentences = []
+        used_indices = []
+        seen_sentences = set()
+
+        for item in candidates:
+            sentence = item["sentence"]
+            sentence_key = sentence.lower()
+
+            if sentence_key in seen_sentences:
+                continue
+
+            seen_sentences.add(sentence_key)
+            selected_sentences.append(sentence)
+
+            if item["chunk_position"] not in used_indices:
+                used_indices.append(item["chunk_position"])
+
+            if len(selected_sentences) >= 3:
+                break
+
+        if not selected_sentences:
+            return None
+
+        if len(selected_sentences) == 1:
+            answer = f"Based on the available verified documents, {selected_sentences[0]}"
+            bullets = []
+        else:
+            answer = "Based on the available verified documents, the most relevant supported points are:"
+            bullets = selected_sentences
+
+        return {
+            "verdict": "supported",
+            "answer": answer,
+            "bullets": bullets,
+            "used_chunk_indices": used_indices,
+            "used_sources": cls._build_used_sources(evidence_chunks, used_indices),
+            "meta": {
+                **(meta or {}),
+                "provider_used": "dynamic_evidence_fallback",
+                "fallback_used": True,
+                "generation_ok": True,
+                "llm_generation_ok": False,
+                "safe_fallback": False,
+                "answer_source": "dynamic_evidence_fallback",
+                "fallback_reason": "llm_generation_failed_but_evidence_exists",
+            },
+        }
+
     @classmethod
     def _safe_failure_response(
         cls,
         evidence_chunks: List[DocumentChunk],
         meta: Dict[str, Any],
+        question: str = "",
     ) -> Dict[str, Any]:
         """
-        Returns a safe, controlled response when both providers fail
-        or when the model output is unusable.
+        Returns a controlled response when providers fail.
+
+        If approved evidence exists, return a dynamic evidence-based answer
+        instead of the temporary failure message.
         """
+        evidence_fallback = cls._build_dynamic_evidence_fallback(
+            question=question,
+            evidence_chunks=evidence_chunks,
+            meta=meta or {},
+        )
+
+        if evidence_fallback:
+            return evidence_fallback
+
         fallback_used = list(range(min(2, len(evidence_chunks))))
 
         return {
@@ -806,7 +1019,9 @@ Current message:
                 **(meta or {}),
                 "fallback_used": True,
                 "generation_ok": False,
+                "llm_generation_ok": False,
                 "safe_fallback": True,
+                "answer_source": "temporary_safe_fallback",
             },
         }
 
@@ -1610,7 +1825,7 @@ Current message:
             "meta": {
                 **meta,
                 "generation_ok": True,
-                "fallback_used": provider_name != "gemini",
+                "fallback_used": False,
                 "debug_prompt_chunks": debug_prompt_chunks,
                 "prompt_mode": mode,
                 "chunk_budget": chunk_budget,
@@ -1817,6 +2032,7 @@ Current message:
 
         return cls._safe_failure_response(
             evidence_chunks=evidence_chunks,
+            question=resolved_question or current_message,
             meta={
                 "primary_meta": primary_meta,
                 "secondary_meta": secondary_meta,

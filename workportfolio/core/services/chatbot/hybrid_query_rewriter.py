@@ -200,6 +200,48 @@ class GeminiQueryRewriter:
         "experience_letter": ["experience_letter"],
         "general_profile": ["cv", "career_timeline", "projects", "capabilities", "faq"],
     }
+    
+    
+    @staticmethod
+    def _extract_json_text(text: str) -> str:
+        text = (text or "").strip()
+
+        if not text:
+            return ""
+
+        if text.startswith("```"):
+            lines = text.splitlines()
+
+            if lines and lines[0].strip().startswith("```"):
+                lines = lines[1:]
+
+            if lines and lines[-1].strip() == "```":
+                lines = lines[:-1]
+
+            text = "\n".join(lines).strip()
+
+            if text.lower().startswith("json"):
+                text = text[4:].strip()
+
+        start = text.find("{")
+        end = text.rfind("}")
+
+        if start != -1 and end != -1 and end > start:
+            return text[start:end + 1].strip()
+
+        return text.strip()
+
+    @classmethod
+    def _parse_json_safely(cls, text: str) -> Dict[str, Any]:
+        cleaned = cls._extract_json_text(text)
+
+        if not cleaned:
+            raise ValueError("empty_json_after_cleaning")
+
+        try:
+            return json.loads(cleaned)
+        except Exception as exc:
+            raise ValueError(f"invalid_json_after_cleaning:{exc}") from exc
 
     @staticmethod
     def _arabic_char_count(text: str) -> int:
@@ -747,7 +789,7 @@ class GeminiQueryRewriter:
             }
 
         try:
-            data = json.loads(text)
+            data = cls._parse_json_safely(text)
 
             plan = cls._normalize_query_plan(
                 data=data,
