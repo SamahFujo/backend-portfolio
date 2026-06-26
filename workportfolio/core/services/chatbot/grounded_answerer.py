@@ -1197,7 +1197,7 @@ Current message:
     #         return "deepseek_first"
 
     #     return "gemini_first"
-    
+
     @classmethod
     def _provider_strategy(cls, resolved_question: str, answer_mode: str) -> str:
         """
@@ -1808,13 +1808,25 @@ Current message:
                 result["meta"]["retrieval_confidence"] = retrieval_confidence
                 return result
 
+        if strategy == "deepseek_first":
+            primary_meta = deepseek_meta
+            secondary_meta = gemini_meta
+        else:
+            primary_meta = gemini_meta
+            secondary_meta = deepseek_meta
+
         return cls._safe_failure_response(
             evidence_chunks=evidence_chunks,
             meta={
-                "primary_meta": gemini_meta,
-                "secondary_meta": deepseek_meta,
+                "primary_meta": primary_meta,
+                "secondary_meta": secondary_meta,
                 "provider_used": "safe_fallback",
                 "tried_models": [
+                    getattr(settings, "GROUNDED_SECONDARY_MODEL",
+                            "deepseek-chat"),
+                    getattr(settings, "GROUNDED_PRIMARY_MODEL",
+                            "gemini-2.5-flash-lite"),
+                ] if strategy == "deepseek_first" else [
                     getattr(settings, "GROUNDED_PRIMARY_MODEL",
                             "gemini-2.5-flash-lite"),
                     getattr(settings, "GROUNDED_SECONDARY_MODEL",
