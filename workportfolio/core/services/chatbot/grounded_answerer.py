@@ -1181,22 +1181,33 @@ Current message:
 
         return verdict
 
+    # @classmethod
+    # def _provider_strategy(cls, resolved_question: str, answer_mode: str) -> str:
+    #     """
+    #     Decide which provider to try first.
+    #     - hybrid mode usually needs richer reasoning -> gemini_first
+    #     - small/simple document questions can use deepseek_first
+    #     """
+    #     if answer_mode == "hybrid":
+    #         return "gemini_first"
+
+    #     mode = cls._prompt_mode(resolved_question)
+
+    #     if mode == "small":
+    #         return "deepseek_first"
+
+    #     return "gemini_first"
+    
     @classmethod
     def _provider_strategy(cls, resolved_question: str, answer_mode: str) -> str:
         """
         Decide which provider to try first.
-        - hybrid mode usually needs richer reasoning -> gemini_first
-        - small/simple document questions can use deepseek_first
+
+        Temporary production-safe strategy:
+        Gemini credits are currently depleted, so DeepSeek should be tried first
+        for all grounded answers.
         """
-        if answer_mode == "hybrid":
-            return "gemini_first"
-
-        mode = cls._prompt_mode(resolved_question)
-
-        if mode == "small":
-            return "deepseek_first"
-
-        return "gemini_first"
+        return "deepseek_first"
 
     @classmethod
     def _call_deepseek_first_then_gemini(
