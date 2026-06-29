@@ -7,6 +7,10 @@ from django.conf import settings
 from core.models import DocumentChunk
 from core.services.llm.router import LLMRouter
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 class GroundedAnswerer:
     """
@@ -231,6 +235,15 @@ Current message:
             ],
             json_schema=json_schema,
             task=LLMRouter.TASK_GROUNDED_ANSWER,
+        )
+
+        logger.warning(
+            "GROUNDED_PROVIDER_RESULT provider=%s ok=%s model_chain=%s meta=%s raw_text_preview=%s",
+            provider_name,
+            ok,
+            model_chain,
+            meta,
+            (text or "")[:500],
         )
 
         if not ok:
@@ -1738,6 +1751,12 @@ Current message:
         try:
             data = cls._parse_json_safely(text)
         except Exception as exc:
+            logger.exception(
+                "GROUNDED_JSON_PARSE_FAILED provider=%s error=%s raw_text_preview=%s",
+                provider_name,
+                exc,
+                (text or "")[:1000],
+            )
             recovered = recover_plain_text_result(str(exc))
 
             if recovered:
@@ -2029,6 +2048,15 @@ Current message:
         else:
             primary_meta = gemini_meta
             secondary_meta = deepseek_meta
+
+        logger.error(
+            "GROUNDED_ALL_PROVIDERS_FAILED strategy=%s primary_meta=%s secondary_meta=%s question=%s evidence_count=%s",
+            strategy,
+            primary_meta,
+            secondary_meta,
+            resolved_question or current_message,
+            len(evidence_chunks or []),
+        )
 
         return cls._safe_failure_response(
             evidence_chunks=evidence_chunks,
