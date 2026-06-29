@@ -117,6 +117,43 @@ class LLMRouter:
                 return True, text, meta
 
         return False, "", last_meta
+    
+    @staticmethod
+    def _extract_json_text(text: str) -> str:
+        """
+        Extract JSON from provider output.
+
+        Handles:
+        - raw JSON
+        - ```json fenced JSON
+        - extra text before/after JSON
+        """
+        text = (text or "").strip()
+
+        if not text:
+            return ""
+
+        if text.startswith("```"):
+            lines = text.splitlines()
+
+            if lines and lines[0].strip().startswith("```"):
+                lines = lines[1:]
+
+            if lines and lines[-1].strip() == "```":
+                lines = lines[:-1]
+
+            text = "\n".join(lines).strip()
+
+            if text.lower().startswith("json"):
+                text = text[4:].strip()
+
+        start = text.find("{")
+        end = text.rfind("}")
+
+        if start != -1 and end != -1 and end > start:
+            return text[start:end + 1].strip()
+
+        return text.strip()
 
     @classmethod
     def generate_text(
@@ -319,6 +356,28 @@ class LLMRouter:
                 "model_used": model_name,
                 "error": str(exc),
             }
+            
+    @staticmethod
+    def _get_deepseek_chat_completions_url() -> str:
+        """
+        Return the correct DeepSeek chat completions endpoint.
+
+        Supports both env styles:
+        - DEEPSEEK_BASE_URL=https://api.deepseek.com
+        - DEEPSEEK_BASE_URL=https://api.deepseek.com/chat/completions
+        """
+        base_url = getattr(
+            settings,
+            "DEEPSEEK_BASE_URL",
+            "https://api.deepseek.com",
+        )
+
+        base_url = (base_url or "https://api.deepseek.com").strip().rstrip("/")
+
+        if base_url.endswith("/chat/completions"):
+            return base_url
+
+        return f"{base_url}/chat/completions"
 
     @classmethod
     def _call_deepseek_text(
@@ -330,8 +389,7 @@ class LLMRouter:
         temperature: float,
     ) -> Tuple[bool, str, Dict[str, Any]]:
         try:
-            url = getattr(settings, "DEEPSEEK_BASE_URL",
-                          "https://api.deepseek.com/chat/completions")
+            url = cls._get_deepseek_chat_completions_url()
 
             payload = {
                 "model": model_name,
@@ -407,16 +465,19 @@ class LLMRouter:
         if not ok:
             return ok, text, meta
 
+        cleaned = cls._extract_json_text(text)
+
         try:
-            json.loads(text)
+            json.loads(cleaned)
         except Exception as exc:
-            return False, "", {
+            return False, cleaned or text, {
                 "provider": "deepseek",
                 "model_used": model_name,
                 "error": f"invalid_json_response:{exc}",
+                "raw_text_preview": (text or "")[:500],
             }
 
-        return True, text, meta
+        return True, cleaned, meta
 
     @classmethod
     def _get_gemini_api_key_for_task(cls, task: str) -> str:
