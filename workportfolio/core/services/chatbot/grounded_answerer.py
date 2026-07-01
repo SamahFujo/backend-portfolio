@@ -661,10 +661,10 @@ Current message:
         """
         Decide how many chunks to include based on question complexity.
 
-        Recommended:
-        - 4 chunks by default to reduce missed evidence.
-        - 5 chunks for broad/profile/status questions.
-        - 6 chunks maximum for complex overview/comparison questions.
+        Updated:
+        - 6 chunks by default for better coverage.
+        - 7 chunks for broad/profile/status/skills questions.
+        - 8 chunks maximum for complex overview/comparison questions.
         """
         q = (question or "").strip().lower()
 
@@ -691,7 +691,7 @@ Current message:
         ]
 
         if any(marker in q for marker in high_value_markers):
-            return 5
+            return 7
 
         if any(marker in q for marker in [
             "what certificates",
@@ -701,7 +701,7 @@ Current message:
             "certificates does she have",
             "certifications does she have",
         ]):
-            return 5
+            return 7
 
         if any(marker in q for marker in [
             "what tools",
@@ -715,7 +715,7 @@ Current message:
             "technology stack",
             "tech stack",
         ]):
-            return 5
+            return 7
 
         complex_markers = [
             "compare",
@@ -741,12 +741,12 @@ Current message:
         ]
 
         if any(marker in q for marker in complex_markers):
-            return 6
+            return 8
 
         if any(marker in q for marker in medium_markers):
-            return 5
+            return 7
 
-        return 4
+        return 6
 
     @staticmethod
     def _is_yes_no_question(question: str) -> bool:
