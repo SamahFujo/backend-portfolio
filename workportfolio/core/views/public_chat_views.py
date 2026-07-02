@@ -17,12 +17,14 @@ from rest_framework.permissions import AllowAny
 from core.models import ChatSession, ChatMessage
 from core.serializers import AskQuestionSerializer
 from core.throttles import ChatRateThrottle, ContactRateThrottle
-from core.services.emails.resend_email import send_chat_history_email
+from core.services.emails.resend_email import (
+    send_chat_history_email,
+    format_chat_time,
+)
 from core.services.chatbot.hybrid_query_rewriter import GeminiQueryRewriter
 from core.services.chatbot.smart_chat_intents import SmartChatIntentService
 from core.services.chatbot.profile_qa_service import ProfileQAService
 from core.services.chatbot.conversation_memory_service import ConversationMemoryService
-
 from .contact_views import CsrfExemptSessionAuthentication
 from django.utils import timezone
 
@@ -350,8 +352,6 @@ class AskAboutMeAPIView(APIView):
 
             if update_fields:
                 session.save(update_fields=update_fields)
-
-
 
         user_message = ChatMessage.objects.create(
             session=session,
@@ -760,7 +760,7 @@ class AskAboutMeAPIView(APIView):
         retrieval_debug = qa_result.get("retrieval_debug") or []
 
         if bullets and not meta.get("safe_fallback"):
-            answer_text +=  "\n- ".join(bullets)
+            answer_text += "\n- ".join(bullets)
 
         citations = []
         for src in used_sources:
@@ -895,7 +895,7 @@ class SendChatHistoryEmailAPIView(APIView):
 
             created_at = ""
             if getattr(msg, "created_at", None):
-                created_at = msg.created_at.strftime("%Y-%m-%d %H:%M")
+                created_at = format_chat_time(msg.created_at)
 
             content = (msg.content or "").strip()
             if not content:

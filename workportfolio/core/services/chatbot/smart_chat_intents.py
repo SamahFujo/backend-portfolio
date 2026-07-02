@@ -1226,6 +1226,27 @@ class SmartChatIntentService:
                 source="fallback",
                 raw_label="explicit_profile_overview_marker",
             )
+            
+        low_msg = msg.lower()
+
+        if any(marker in low_msg for marker in [
+            "career timeline",
+            "timeline",
+            "career history",
+            "work history",
+            "career path",
+            "career progression",
+            "employment history",
+            "role progression",
+            "previous role",
+            "previous roles",
+        ]):
+            return QuestionRouteResult(
+                route="profile_docs_question",
+                confidence=0.92,
+                source="fallback_career_timeline",
+                raw_label="career_timeline_marker",
+            )
 
         llm_result = cls._llm_classify_route(msg, history=history)
         if llm_result:

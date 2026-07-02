@@ -4,6 +4,10 @@ from typing import Dict, Any
 from django.conf import settings
 import requests
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 def send_get_in_touch_email(payload: Dict[str, Any]) -> Dict[str, Any]:
     """
@@ -50,5 +54,25 @@ def send_get_in_touch_email(payload: Dict[str, Any]) -> Dict[str, Any]:
         data["bcc"] = [settings.CONTACT_BCC_EMAIL]
 
     resp = requests.post(url, json=data, headers=headers, timeout=30)
+
+    if not resp.ok:
+        logger.error(
+            "Resend get-in-touch email failed. status=%s body=%s to=%s subject=%s sender=%s reply_to_domain=%s",
+            resp.status_code,
+            resp.text,
+            settings.CONTACT_TO_EMAIL,
+            subject,
+            settings.CONTACT_FROM_EMAIL,
+            email.split("@")[-1] if "@" in email else "",
+        )
+
     resp.raise_for_status()
+
+    logger.info(
+        "Resend get-in-touch email sent successfully. status=%s to=%s subject=%s",
+        resp.status_code,
+        settings.CONTACT_TO_EMAIL,
+        subject,
+    )
+
     return resp.json()

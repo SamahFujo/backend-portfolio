@@ -166,7 +166,17 @@ class GetInTouchView(APIView):
             )
 
         except Exception:
-            logger.exception("Failed to send get-in-touch email")
+            masked_email = contact_message.email
+            if "@" in masked_email:
+                name_part, domain_part = masked_email.split("@", 1)
+                masked_email = f"{name_part[:2]}***@{domain_part}"
+
+            logger.exception(
+                "Failed to send get-in-touch email. contact_message_id=%s visitor_email=%s subject=%s",
+                str(contact_message.id),
+                masked_email,
+                contact_message.subject,
+            )
 
             return Response(
                 {

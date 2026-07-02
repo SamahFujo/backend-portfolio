@@ -5,11 +5,32 @@ import requests
 from django.conf import settings
 import logging
 
+from django.utils import timezone
+from zoneinfo import ZoneInfo
+from datetime import timezone as datetime_timezone
+
 logger = logging.getLogger(__name__)
 
 RESEND_API_URL = "https://api.resend.com/emails"
 
+def format_chat_time(dt, tz_name: str = "Asia/Dubai") -> str:
+    """
+    Convert Django UTC-aware datetime to the target timezone
+    before showing it in the email.
+    """
+    if not dt:
+        return ""
 
+    target_tz = ZoneInfo(tz_name)
+
+    if timezone.is_naive(dt):
+        dt = timezone.make_aware(dt, timezone=datetime_timezone.utc)
+
+    local_dt = timezone.localtime(dt, target_tz)
+
+    return local_dt.strftime("%d %b %Y, %I:%M %p GST")
+  
+  
 def send_start_project_email(data: dict) -> dict:
     """
     Sends a project inquiry email to the site owner using Resend API.
