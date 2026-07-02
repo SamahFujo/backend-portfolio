@@ -176,6 +176,15 @@ class GeminiQueryRewriter:
 
     }
 
+    ALLOWED_QUESTION_SHAPES = {
+        "fact",
+        "list",
+        "timeline",
+        "summary",
+        "comparison",
+        "explanation",
+    }
+
     ANSWER_TYPE_TO_PREFERRED_DOCS = {
         "security_deployment": ["security_deployment", "projects", "cv"],
         "profile_overview": ["cv", "career_timeline", "faq"],
@@ -413,6 +422,40 @@ class GeminiQueryRewriter:
         return rebuilt
 
     @classmethod
+    def _infer_question_shape(cls, query: str, answer_type: str = "") -> str:
+        q = (query or "").strip().lower()
+        answer_type = (answer_type or "").strip().lower()
+
+        if any(marker in q for marker in [
+            "compare", "comparison", "difference", "versus", "vs ",
+        ]):
+            return "comparison"
+
+        if answer_type in {"company_history", "work_history"} or any(marker in q for marker in [
+            "timeline", "history", "career path", "career progression",
+            "employment history", "roles over time",
+        ]):
+            return "timeline"
+
+        if any(marker in q for marker in [
+            "which", "what are", "list", "all ", "companies", "projects",
+            "certificates", "certifications", "technologies",
+        ]):
+            return "list"
+
+        if any(marker in q for marker in [
+            "summarize", "summary", "overview", "background", "tell me about",
+        ]):
+            return "summary"
+
+        if any(marker in q for marker in [
+            "why", "how", "explain",
+        ]):
+            return "explanation"
+
+        return "fact"
+
+    @classmethod
     def _default_query_plan(cls, query: str, notes: str = "default") -> Dict[str, Any]:
         """
         Safe fallback query plan used when LLM rewrite fails.
@@ -433,6 +476,7 @@ class GeminiQueryRewriter:
                 "rewritten_query": clean,
                 "retrieval_query": f"{clean} {suffix}".strip(),
                 "answer_type": answer_type,
+                "question_shape": cls._infer_question_shape(clean, answer_type),
                 "preferred_document_types": preferred,
                 "avoid_document_types": avoid or [],
                 "needs_document_retrieval": True,
@@ -578,6 +622,13 @@ class GeminiQueryRewriter:
         if answer_type not in cls.ALLOWED_ANSWER_TYPES:
             answer_type = "general_profile"
 
+        question_shape = (data.get("question_shape") or "").strip().lower()
+        if question_shape not in cls.ALLOWED_QUESTION_SHAPES:
+            question_shape = cls._infer_question_shape(
+                data.get("rewritten_query") or fallback_query,
+                answer_type,
+            )
+
         preferred = data.get("preferred_document_types") or []
         if not isinstance(preferred, list):
             preferred = []
@@ -590,6 +641,17 @@ class GeminiQueryRewriter:
 
         if not preferred:
             preferred = cls.ANSWER_TYPE_TO_PREFERRED_DOCS.get(answer_type, [])
+
+        effective_query = (rewritten_query or retrieval_query or fallback_query or "").lower()
+        asks_for_projects = any(marker in effective_query for marker in [
+            "project", "projects", "built", "developed", "implemented",
+        ])
+
+        if asks_for_projects and "projects" not in preferred:
+            preferred = ["projects"] + preferred
+
+        if asks_for_projects and answer_type == "security_deployment":
+            answer_type = "projects"
 
         avoid = data.get("avoid_document_types") or []
         if not isinstance(avoid, list):
@@ -605,6 +667,7 @@ class GeminiQueryRewriter:
             "rewritten_query": rewritten_query,
             "retrieval_query": retrieval_query,
             "answer_type": answer_type,
+            "question_shape": question_shape,
             "preferred_document_types": preferred,
             "avoid_document_types": avoid,
             "needs_document_retrieval": bool(data.get("needs_document_retrieval", True)),
@@ -720,6 +783,7 @@ class GeminiQueryRewriter:
             "\"rewritten_query\":\"clean standalone user question\","
             "\"retrieval_query\":\"optimized semantic retrieval query\","
             "\"answer_type\":\"one allowed answer_type\","
+            "\"question_shape\":\"fact|list|timeline|summary|comparison|explanation\","
             "\"preferred_document_types\":[\"cv\"],"
             "\"avoid_document_types\":[\"compensation\"],"
             "\"needs_document_retrieval\":true,"
@@ -742,6 +806,7 @@ class GeminiQueryRewriter:
                 "rewritten_query": {"type": "string"},
                 "retrieval_query": {"type": "string"},
                 "answer_type": {"type": "string"},
+                "question_shape": {"type": "string"},
                 "preferred_document_types": {
                     "type": "array",
                     "items": {"type": "string"},
@@ -757,6 +822,7 @@ class GeminiQueryRewriter:
                 "rewritten_query",
                 "retrieval_query",
                 "answer_type",
+                "question_shape",
                 "preferred_document_types",
                 "avoid_document_types",
                 "needs_document_retrieval",

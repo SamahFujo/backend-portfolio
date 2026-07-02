@@ -287,9 +287,6 @@ GROUNDED_GEMINI_MAX_RETRIES = env.int(
     default=3,
 )
 
-
-
-
 ASSISTED_ANSWER_MODEL_CHAIN = ["gemini-2.5-flash-lite", "deepseek-chat"]
 # ============================================================
 # Reranker settings

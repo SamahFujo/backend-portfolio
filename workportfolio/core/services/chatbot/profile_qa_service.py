@@ -57,6 +57,8 @@ class ProfileQAService:
         "language_support": "English",
     }
 
+    AGGREGATION_SHAPES = {"list", "timeline", "summary", "comparison"}
+
     @staticmethod
     def _is_experience_duration_question(question: str) -> bool:
         q = (question or "").strip().lower()
@@ -306,14 +308,17 @@ class ProfileQAService:
         if not chunks or not retrieval_debug:
             return chunks, retrieval_debug
 
-        preferred = set(query_plan.get("preferred_document_types") or [])
+        preferred_list = list(query_plan.get("preferred_document_types") or [])
+        preferred = set(preferred_list)
         avoid = set(query_plan.get("avoid_document_types") or [])
+        question_shape = (query_plan.get("question_shape") or "fact").strip().lower()
 
         if not preferred and not avoid:
             return chunks, retrieval_debug
 
         chunk_by_id = {str(chunk.id): chunk for chunk in chunks}
         scored_items = []
+        preferred_rank = {doc_type: idx for idx, doc_type in enumerate(preferred_list)}
 
         for row in retrieval_debug:
             chunk_id = str(row.get("chunk_id"))
@@ -330,11 +335,16 @@ class ProfileQAService:
             penalty = 0.0
 
             if doc_type in preferred:
-                boost = 0.12
+                order_index = preferred_rank.get(doc_type, len(preferred_rank))
+                boost = max(0.10, 0.28 - (order_index * 0.06))
+
+                if question_shape in cls.AGGREGATION_SHAPES:
+                    boost += 0.05
+
                 final_score += boost
 
             if doc_type in avoid:
-                penalty = 0.25
+                penalty = 0.30
                 final_score -= penalty
 
             updated_row = dict(row)
@@ -357,8 +367,48 @@ class ProfileQAService:
         sorted_debug = [item[2] for item in scored_items]
 
         return sorted_chunks, sorted_debug
-    
 
+    @staticmethod
+    def _merge_chunk_results(
+        retrieval_sets: List[tuple[List[DocumentChunk], List[Dict[str, Any]]]],
+    ) -> tuple[List[DocumentChunk], List[Dict[str, Any]]]:
+        merged_chunks: List[DocumentChunk] = []
+        merged_debug: List[Dict[str, Any]] = []
+        seen_chunk_ids = set()
+
+        for chunks, debug_rows in retrieval_sets:
+            debug_by_chunk_id = {
+                str(row.get("chunk_id")): row for row in (debug_rows or [])
+            }
+
+            for chunk in chunks or []:
+                chunk_id = str(chunk.id)
+                if chunk_id in seen_chunk_ids:
+                    continue
+
+                seen_chunk_ids.add(chunk_id)
+                merged_chunks.append(chunk)
+
+                if chunk_id in debug_by_chunk_id:
+                    merged_debug.append(debug_by_chunk_id[chunk_id])
+
+        return merged_chunks, merged_debug
+
+    @classmethod
+    def _should_expand_preferred_retrieval(
+        cls,
+        question: str,
+        query_plan: Dict[str, Any],
+    ) -> bool:
+        shape = (query_plan.get("question_shape") or "").strip().lower()
+        if shape in cls.AGGREGATION_SHAPES:
+            return True
+
+        q = (question or "").strip().lower()
+        return any(marker in q for marker in [
+            "which", "what are", "list", "all ", "timeline",
+            "history", "companies", "projects", "roles",
+        ])
 
     @classmethod
     def _retrieve_chunks(
@@ -373,7 +423,7 @@ class ProfileQAService:
 
         Strategy:
         1. Use conservative ScopeResolver filters only for direct document-specific questions.
-        2. Retrieve once.
+        2. Retrieve globally, then expand across preferred document families for broad questions.
         3. Apply query-plan document-type boosting/penalty.
         """
         query_plan = query_plan or {}
@@ -381,10 +431,36 @@ class ProfileQAService:
         filters = ScopeResolver.resolve_filters(question, route=question_route)
         filters = cls._augment_filters_for_precision(question, filters)
 
-        chunks, retrieval_debug = RerankedVectorRetrievalService.retrieve_relevant_chunks(
+        retrieval_sets: List[tuple[List[DocumentChunk], List[dict]]] = []
+
+        base_chunks, base_debug = RerankedVectorRetrievalService.retrieve_relevant_chunks(
             query=retrieval_query,
             filters=filters,
         )
+        retrieval_sets.append((base_chunks, base_debug))
+
+        preferred_doc_types = list(query_plan.get("preferred_document_types") or [])
+        expand_preferred = cls._should_expand_preferred_retrieval(
+            question=question,
+            query_plan=query_plan,
+        )
+
+        if expand_preferred and preferred_doc_types:
+            for doc_type in preferred_doc_types[:3]:
+                scoped_filters = dict(filters or {})
+                scoped_filters["document_type"] = doc_type
+
+                scoped_chunks, scoped_debug = (
+                    RerankedVectorRetrievalService.retrieve_relevant_chunks(
+                        query=retrieval_query,
+                        filters=scoped_filters,
+                    )
+                )
+
+                if scoped_chunks:
+                    retrieval_sets.append((scoped_chunks, scoped_debug))
+
+        chunks, retrieval_debug = cls._merge_chunk_results(retrieval_sets)
 
         chunks, retrieval_debug = cls._boost_and_sort_chunks(
             chunks=chunks,
@@ -396,10 +472,12 @@ class ProfileQAService:
             **(filters or {"only_active_docs": True}),
             "query_plan": {
                 "answer_type": query_plan.get("answer_type"),
+                "question_shape": query_plan.get("question_shape"),
                 "preferred_document_types": query_plan.get("preferred_document_types") or [],
                 "avoid_document_types": query_plan.get("avoid_document_types") or [],
                 "needs_document_retrieval": query_plan.get("needs_document_retrieval", True),
                 "source": query_plan.get("source"),
+                "expanded_preferred_retrieval": expand_preferred,
             },
         }
 
