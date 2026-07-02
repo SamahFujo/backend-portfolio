@@ -287,37 +287,7 @@ GROUNDED_GEMINI_MAX_RETRIES = env.int(
     default=3,
 )
 
-INTENT_PRIMARY_MODEL = "gemini-2.5-flash-lite"
 
-QUICK_INTENT_MODEL_CHAIN = [
-    "gemini-2.5-flash-lite",
-    "deepseek-chat",
-]
-
-QUESTION_ROUTE_MODEL_CHAIN = [
-    "gemini-2.5-flash-lite",
-    "deepseek-chat",
-]
-
-UI_ACTION_INTENT_MODEL_CHAIN = [
-    "gemini-2.5-flash-lite",
-    "deepseek-chat",
-]
-
-CONVERSATIONAL_RESPONSE_MODEL_CHAIN = [
-    "gemini-2.5-flash-lite",
-    "deepseek-chat",
-]
-
-CONVERSATIONAL_REPLY_MODEL_CHAIN = [
-    "gemini-2.5-flash-lite",
-    "deepseek-chat",
-]
-
-SESSION_MEMORY_MODEL_CHAIN = [
-    "gemini-2.5-flash-lite",
-    "deepseek-chat",
-]
 
 
 ASSISTED_ANSWER_MODEL_CHAIN = ["gemini-2.5-flash-lite", "deepseek-chat"]
