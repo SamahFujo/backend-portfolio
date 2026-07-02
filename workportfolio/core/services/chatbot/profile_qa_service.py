@@ -293,8 +293,9 @@ class ProfileQAService:
         return None
     
     
-    @staticmethod
+    @classmethod
     def _boost_and_sort_chunks(
+        cls,
         chunks: List[DocumentChunk],
         retrieval_debug: List[Dict[str, Any]],
         query_plan: Dict[str, Any],

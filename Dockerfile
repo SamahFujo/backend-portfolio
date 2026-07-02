@@ -32,4 +32,4 @@ RUN SECRET_KEY=dummy-build-secret \
 
 EXPOSE 8000
 
-CMD ["gunicorn", "workportfolio.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "2", "--timeout", "120"]
+CMD ["gunicorn", "workportfolio.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "2", "--timeout", "120", "--access-logfile", "-", "--error-logfile", "-", "--capture-output"]
