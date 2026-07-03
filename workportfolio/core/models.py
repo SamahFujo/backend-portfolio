@@ -1207,6 +1207,10 @@ class WebsiteVisit(TimeStampedModel):
         ("page_view", "Page View"),
         ("cta_click", "CTA Click"),
         ("custom", "Custom"),
+        ("engagement", "Engagement"),
+        ("frontend_error", "Frontend Error"),
+        ("chatbot_error", "Chatbot Error"),
+        ("form_error", "Form Error"),
     ]
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -1246,6 +1250,77 @@ class WebsiteVisit(TimeStampedModel):
         default="page_view",
         db_index=True,
     )
+    
+    event_name = models.CharField(
+        max_length=100,
+        blank=True,
+        default="",
+        db_index=True,
+        help_text="Specific event name such as hero_start_project_click, chat_opened, or linkedin_click.",
+    )
+
+    utm_source = models.CharField(
+        max_length=150,
+        blank=True,
+        default="",
+        db_index=True,
+        help_text="Marketing source such as linkedin, instagram, github, or cv.",
+    )
+
+    utm_medium = models.CharField(
+        max_length=150,
+        blank=True,
+        default="",
+        db_index=True,
+        help_text="Marketing medium such as social, referral, qr, or email.",
+    )
+
+    utm_campaign = models.CharField(
+        max_length=150,
+        blank=True,
+        default="",
+        db_index=True,
+        help_text="Marketing campaign name.",
+    )
+
+    utm_term = models.CharField(
+        max_length=150,
+        blank=True,
+        default="",
+        help_text="Optional paid/search term.",
+    )
+
+    utm_content = models.CharField(
+        max_length=150,
+        blank=True,
+        default="",
+        help_text="Optional campaign content or variant.",
+    )
+
+    source_type = models.CharField(
+        max_length=50,
+        blank=True,
+        default="direct",
+        db_index=True,
+        help_text="Classified source type: direct, search, social, internal, or referral.",
+    )
+
+    device_type = models.CharField(
+        max_length=50,
+        blank=True,
+        default="unknown",
+        db_index=True,
+        help_text="Classified device type: desktop, mobile, tablet, or unknown.",
+    )
+
+    browser_name = models.CharField(
+        max_length=50,
+        blank=True,
+        default="other",
+        db_index=True,
+        help_text="Classified browser name such as chrome, safari, firefox, edge, opera, or other.",
+    )
+    
 
     referrer = models.TextField(
         blank=True,

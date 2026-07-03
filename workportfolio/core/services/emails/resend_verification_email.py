@@ -18,13 +18,14 @@ def send_email_verification_code(*, recipient_email: str, code: str) -> dict:
     payload = {
         "from": settings.CONTACT_FROM_EMAIL,
         "to": [recipient_email],
-        "subject": "Your Samah.ai verification code",
+        "subject": f"{code} is your Samah.ai verification code",
         "html": f"""
         <div style="font-family: Arial, sans-serif; background: #f8fafc; padding: 24px;">
             <div style="max-width: 520px; margin: auto; background: white; border-radius: 18px; padding: 28px; border: 1px solid #e2e8f0;">
                 <h2 style="margin: 0 0 12px; color: #0f172a;">Verify your email</h2>
-                <p style="color: #475569; font-size: 15px; line-height: 1.6;">
-                    Please use the verification code below to start chatting with Samah.ai.
+
+                <p style="color: #475569; font-size: 15px; line-height: 1.6; margin: 0 0 16px;">
+                    Use this verification code to continue to Samah.ai:
                 </p>
 
                 <div style="margin: 24px 0; text-align: center;">
@@ -33,13 +34,22 @@ def send_email_verification_code(*, recipient_email: str, code: str) -> dict:
                     </div>
                 </div>
 
-                <p style="color: #64748b; font-size: 13px;">
-                    This code will expire in 10 minutes. If you did not request this, you can ignore this email.
+                <p style="color: #0f172a; font-size: 16px; font-weight: 600; margin: 0 0 8px;">
+                    Verification code: {code}
+                </p>
+
+                <p style="color: #64748b; font-size: 13px; line-height: 1.6; margin: 0;">
+                    This code expires in 10 minutes.
+                    If you did not request it, you can ignore this email.
                 </p>
             </div>
         </div>
         """,
-        "text": f"Your Samah.ai verification code is: {code}. This code expires in 10 minutes.",
+        "text": (
+            f"Samah.ai verification code: {code}\n"
+            f"Verification code: {code}\n"
+            "This code expires in 10 minutes."
+        ),
     }
 
     response = requests.post(

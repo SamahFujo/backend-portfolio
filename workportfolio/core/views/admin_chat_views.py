@@ -232,7 +232,8 @@ class AdminWebAnalyticsAPIView(APIView):
         start_date = end_date - timedelta(days=range_days)
 
         visits_qs = WebsiteVisit.objects.filter(created_at__gte=start_date)
-        chat_sessions_qs = ChatSession.objects.filter(created_at__gte=start_date)
+        chat_sessions_qs = ChatSession.objects.filter(
+            created_at__gte=start_date)
         contact_qs = ContactMessage.objects.filter(created_at__gte=start_date)
         project_qs = ProjectRequest.objects.filter(created_at__gte=start_date)
 
@@ -279,8 +280,10 @@ class AdminWebAnalyticsAPIView(APIView):
             item["day"].isoformat(): item for item in visits_by_day
         }
         chat_map = {item["day"].isoformat(): item for item in chat_by_day}
-        contact_map = {item["day"].isoformat(): item for item in contact_by_day}
-        project_map = {item["day"].isoformat(): item for item in project_by_day}
+        contact_map = {item["day"].isoformat(
+        ): item for item in contact_by_day}
+        project_map = {item["day"].isoformat(
+        ): item for item in project_by_day}
 
         traffic_by_day = []
         for i in range(range_days + 1):
@@ -340,6 +343,39 @@ class AdminWebAnalyticsAPIView(APIView):
             "other": 0,
         }
 
+        event_name_breakdown = list(
+            visits_qs.exclude(event_name="")
+            .values("event_type", "event_name")
+            .annotate(events=Count("id"))
+            .order_by("-events", "event_name")[:20]
+        )
+
+        utm_source_breakdown = list(
+            visits_qs.exclude(utm_source="")
+            .values("utm_source")
+            .annotate(events=Count("id"), unique_visitors=Count("visitor_id", distinct=True))
+            .order_by("-events", "utm_source")[:20]
+        )
+
+        utm_campaign_breakdown = list(
+            visits_qs.exclude(utm_campaign="")
+            .values("utm_source", "utm_medium", "utm_campaign")
+            .annotate(events=Count("id"), unique_visitors=Count("visitor_id", distinct=True))
+            .order_by("-events", "utm_campaign")[:20]
+        )
+
+        error_events = visits_qs.filter(
+            event_type__in=["frontend_error", "chatbot_error", "form_error"]
+        )
+
+        error_breakdown = list(
+            error_events
+            .values("event_type", "event_name", "path")
+            .annotate(events=Count("id"))
+            .order_by("-events", "event_type")[:20]
+        )
+
+
         for visit in visits_qs.only("referrer", "user_agent"):
             source_counts[self._classify_source(visit.referrer)] += 1
             device_counts[self._classify_device(visit.user_agent)] += 1
@@ -359,6 +395,30 @@ class AdminWebAnalyticsAPIView(APIView):
             .distinct()
             .count()
         )
+        
+        contact_messages_count = contact_qs.count()
+        project_requests_count = project_qs.count()
+        
+        def percentage(part, whole):
+            if not whole:
+                return 0
+            return round((part / whole) * 100, 2)
+
+        conversion_base_visitors = max(
+            unique_visitors,
+            visitors_with_chat,
+            captured_leads,
+            contact_messages_count,
+            project_requests_count,
+        )
+
+        conversion_rates = {
+            "visitor_to_chat_rate": percentage(visitors_with_chat, conversion_base_visitors),
+            "visitor_to_lead_rate": percentage(captured_leads, conversion_base_visitors),
+            "visitor_to_contact_rate": percentage(contact_messages_count, conversion_base_visitors),
+            "visitor_to_project_rate": percentage(project_requests_count, conversion_base_visitors),
+            "chat_to_lead_rate": percentage(captured_leads, visitors_with_chat),
+        }
 
         return Response(
             {
@@ -381,11 +441,17 @@ class AdminWebAnalyticsAPIView(APIView):
                 "browser_breakdown": browser_counts,
                 "conversion": {
                     "site_visitors": unique_visitors,
+                    "conversion_base_visitors": conversion_base_visitors,
                     "chat_visitors": visitors_with_chat,
                     "captured_leads": captured_leads,
-                    "contact_messages": contact_qs.count(),
-                    "project_requests": project_qs.count(),
+                    "contact_messages": contact_messages_count,
+                    "project_requests": project_requests_count,
+                    "rates": conversion_rates,
                 },
+                "event_name_breakdown": event_name_breakdown,
+                "utm_source_breakdown": utm_source_breakdown,
+                "utm_campaign_breakdown": utm_campaign_breakdown,
+                "error_breakdown": error_breakdown,
             },
             status=status.HTTP_200_OK,
         )

@@ -1,3 +1,4 @@
+from urllib.parse import urlparse
 from core.serializers import AboutSectionSerializer
 
 from rest_framework import status
@@ -35,6 +36,96 @@ def _get_client_ip(request):
         return x_forwarded_for.split(",")[0].strip()
 
     return request.META.get("REMOTE_ADDR")
+
+
+def _classify_device(user_agent: str) -> str:
+    low = (user_agent or "").lower()
+
+    if any(token in low for token in ["mobile", "iphone", "android"]) and "ipad" not in low:
+        return "mobile"
+
+    if any(token in low for token in ["ipad", "tablet"]):
+        return "tablet"
+
+    if low:
+        return "desktop"
+
+    return "unknown"
+
+
+def _classify_browser(user_agent: str) -> str:
+    low = (user_agent or "").lower()
+
+    if "edg/" in low or "edge/" in low:
+        return "edge"
+
+    if "chrome/" in low and "edg/" not in low:
+        return "chrome"
+
+    if "safari/" in low and "chrome/" not in low:
+        return "safari"
+
+    if "firefox/" in low:
+        return "firefox"
+
+    if "opera" in low or "opr/" in low:
+        return "opera"
+
+    return "other"
+
+
+def _classify_source(referrer: str, utm_source: str = "") -> str:
+    utm_source = (utm_source or "").strip().lower()
+    referrer = (referrer or "").strip()
+
+    if utm_source:
+        if utm_source in ["linkedin", "instagram", "facebook", "x", "twitter", "tiktok"]:
+            return "social"
+        if utm_source in ["google", "bing", "yahoo", "duckduckgo"]:
+            return "search"
+        if utm_source in ["samah", "samah-ai", "portfolio"]:
+            return "internal"
+        return "referral"
+
+    if not referrer:
+        return "direct"
+
+    host = (urlparse(referrer).netloc or "").lower()
+
+    if not host:
+        return "direct"
+
+    if any(token in host for token in ["google.", "bing.", "yahoo.", "duckduckgo."]):
+        return "search"
+
+    if any(token in host for token in ["linkedin.", "facebook.", "instagram.", "x.com", "twitter.", "t.co", "tiktok."]):
+        return "social"
+
+    if "samah" in host:
+        return "internal"
+
+    return "referral"
+
+
+def _is_obvious_bot(user_agent: str) -> bool:
+    low = (user_agent or "").lower()
+
+    bot_markers = [
+        "bot",
+        "crawler",
+        "spider",
+        "slurp",
+        "bingpreview",
+        "facebookexternalhit",
+        "preview",
+        "ahrefs",
+        "semrush",
+        "python-requests",
+        "curl",
+        "wget",
+    ]
+
+    return any(marker in low for marker in bot_markers)
 
 
 class ActiveHeroSectionAPIView(APIView):
@@ -257,10 +348,27 @@ class WebsiteVisitTrackAPIView(APIView):
     throttle_classes = []
 
     def post(self, request, *args, **kwargs):
+        user_agent = request.META.get("HTTP_USER_AGENT", "")
+
+        # Do not store obvious crawler/bot noise.
+        if _is_obvious_bot(user_agent):
+            return Response(
+                {
+                    "success": True,
+                    "ignored": True,
+                    "reason": "bot_user_agent",
+                },
+                status=status.HTTP_200_OK,
+            )
+
         serializer = WebsiteVisitTrackSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         data = serializer.validated_data
+
+        referrer = data.get("referrer", "") or request.META.get(
+            "HTTP_REFERER", "")
+        utm_source = data.get("utm_source", "")
 
         visit = WebsiteVisit.objects.create(
             visitor_id=data.get("visitor_id", "") or None,
@@ -268,10 +376,19 @@ class WebsiteVisitTrackAPIView(APIView):
             path=data["path"],
             page_title=data.get("page_title", ""),
             event_type=data.get("event_type", "page_view"),
-            referrer=data.get("referrer", "") or request.META.get("HTTP_REFERER", ""),
+            event_name=data.get("event_name", ""),
+            referrer=referrer,
             ip_address=_get_client_ip(request),
-            user_agent=request.META.get("HTTP_USER_AGENT", ""),
+            user_agent=user_agent,
             source_label=data.get("source_label", ""),
+            utm_source=data.get("utm_source", ""),
+            utm_medium=data.get("utm_medium", ""),
+            utm_campaign=data.get("utm_campaign", ""),
+            utm_term=data.get("utm_term", ""),
+            utm_content=data.get("utm_content", ""),
+            source_type=_classify_source(referrer, utm_source=utm_source),
+            device_type=_classify_device(user_agent),
+            browser_name=_classify_browser(user_agent),
             metadata=data.get("metadata") or {},
         )
 
