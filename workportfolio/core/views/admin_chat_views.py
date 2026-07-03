@@ -12,7 +12,7 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from core.models import ChatSession, ChatMessage, ContactMessage, ProjectRequest
+from core.models import ChatSession, ChatMessage, ContactMessage, ProjectRequest, WebsiteVisit
 from core.permissions import HasInternalAPIKey
 from core.serializers import (
     AdminChatSessionListSerializer,
@@ -28,6 +28,7 @@ from django.db.models import Count, Q
 from django.db.models.functions import TruncDate
 
 from django.db.models import Count, Min, Max
+from urllib.parse import urlparse
 
 
 class AdminChatAnalyticsAPIView(APIView):
@@ -147,6 +148,244 @@ class AdminChatAnalyticsAPIView(APIView):
                 "range_days": range_days,
                 "messages_by_day": analytics_by_day,
                 "messages_by_role": role_counts,
+            },
+            status=status.HTTP_200_OK,
+        )
+
+
+class AdminWebAnalyticsAPIView(APIView):
+    """
+    Admin API endpoint for site-wide web analytics.
+
+    This is intended to power a dedicated admin analytics page covering:
+    - total page views
+    - unique visitors
+    - top pages
+    - top referrers
+    - source/device/browser breakdowns
+    - conversion into chat, contact, and project actions
+    """
+
+    authentication_classes = []
+    permission_classes = [HasInternalAPIKey]
+    throttle_classes = []
+
+    @staticmethod
+    def _classify_device(user_agent: str) -> str:
+        low = (user_agent or "").lower()
+        if any(token in low for token in ["mobile", "iphone", "android"]) and "ipad" not in low:
+            return "mobile"
+        if any(token in low for token in ["ipad", "tablet"]):
+            return "tablet"
+        if low:
+            return "desktop"
+        return "unknown"
+
+    @staticmethod
+    def _classify_browser(user_agent: str) -> str:
+        low = (user_agent or "").lower()
+        if "edg/" in low or "edge/" in low:
+            return "edge"
+        if "chrome/" in low and "edg/" not in low:
+            return "chrome"
+        if "safari/" in low and "chrome/" not in low:
+            return "safari"
+        if "firefox/" in low:
+            return "firefox"
+        if "opera" in low or "opr/" in low:
+            return "opera"
+        return "other"
+
+    @staticmethod
+    def _classify_source(referrer: str) -> str:
+        referrer = (referrer or "").strip()
+        if not referrer:
+            return "direct"
+
+        host = (urlparse(referrer).netloc or "").lower()
+        if not host:
+            return "direct"
+
+        if any(token in host for token in ["google.", "bing.", "yahoo.", "duckduckgo."]):
+            return "search"
+        if any(token in host for token in ["linkedin.", "facebook.", "instagram.", "x.com", "twitter.", "t.co"]):
+            return "social"
+        if "samah" in host:
+            return "internal"
+        return "referral"
+
+    def get(self, request, *args, **kwargs):
+        try:
+            range_days = int(request.query_params.get("days", 30))
+        except ValueError:
+            return Response(
+                {"detail": "Invalid 'days' value. It must be a number."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        if range_days < 1:
+            range_days = 30
+        if range_days > 365:
+            range_days = 365
+
+        end_date = timezone.now()
+        start_date = end_date - timedelta(days=range_days)
+
+        visits_qs = WebsiteVisit.objects.filter(created_at__gte=start_date)
+        chat_sessions_qs = ChatSession.objects.filter(created_at__gte=start_date)
+        contact_qs = ContactMessage.objects.filter(created_at__gte=start_date)
+        project_qs = ProjectRequest.objects.filter(created_at__gte=start_date)
+
+        total_page_views = visits_qs.filter(event_type="page_view").count()
+        total_events = visits_qs.count()
+        unique_visitors = (
+            visits_qs.exclude(visitor_id__isnull=True)
+            .exclude(visitor_id="")
+            .values("visitor_id")
+            .distinct()
+            .count()
+        )
+
+        visits_by_day = (
+            visits_qs.annotate(day=TruncDate("created_at"))
+            .values("day")
+            .annotate(
+                page_views=Count("id", filter=Q(event_type="page_view")),
+                total_events=Count("id"),
+                unique_visitors=Count("visitor_id", distinct=True),
+            )
+            .order_by("day")
+        )
+        chat_by_day = (
+            chat_sessions_qs.annotate(day=TruncDate("created_at"))
+            .values("day")
+            .annotate(chat_sessions=Count("id"))
+            .order_by("day")
+        )
+        contact_by_day = (
+            contact_qs.annotate(day=TruncDate("created_at"))
+            .values("day")
+            .annotate(contact_messages=Count("id"))
+            .order_by("day")
+        )
+        project_by_day = (
+            project_qs.annotate(day=TruncDate("created_at"))
+            .values("day")
+            .annotate(project_requests=Count("id"))
+            .order_by("day")
+        )
+
+        visits_map = {
+            item["day"].isoformat(): item for item in visits_by_day
+        }
+        chat_map = {item["day"].isoformat(): item for item in chat_by_day}
+        contact_map = {item["day"].isoformat(): item for item in contact_by_day}
+        project_map = {item["day"].isoformat(): item for item in project_by_day}
+
+        traffic_by_day = []
+        for i in range(range_days + 1):
+            current_day = (start_date + timedelta(days=i)).date().isoformat()
+            traffic_by_day.append({
+                "date": current_day,
+                "page_views": visits_map.get(current_day, {}).get("page_views", 0),
+                "total_events": visits_map.get(current_day, {}).get("total_events", 0),
+                "unique_visitors": visits_map.get(current_day, {}).get("unique_visitors", 0),
+                "chat_sessions": chat_map.get(current_day, {}).get("chat_sessions", 0),
+                "contact_messages": contact_map.get(current_day, {}).get("contact_messages", 0),
+                "project_requests": project_map.get(current_day, {}).get("project_requests", 0),
+            })
+
+        top_pages = list(
+            visits_qs.filter(event_type="page_view")
+            .values("path", "page_title")
+            .annotate(visits=Count("id"), unique_visitors=Count("visitor_id", distinct=True))
+            .order_by("-visits", "path")[:10]
+        )
+
+        top_referrers = []
+        referrer_rows = (
+            visits_qs.exclude(referrer__isnull=True)
+            .exclude(referrer="")
+            .values("referrer")
+            .annotate(visits=Count("id"))
+            .order_by("-visits")[:10]
+        )
+        for row in referrer_rows:
+            parsed = urlparse(row["referrer"])
+            top_referrers.append({
+                "referrer": row["referrer"],
+                "host": parsed.netloc or row["referrer"],
+                "visits": row["visits"],
+            })
+
+        source_counts = {
+            "direct": 0,
+            "search": 0,
+            "social": 0,
+            "referral": 0,
+            "internal": 0,
+        }
+        device_counts = {
+            "desktop": 0,
+            "mobile": 0,
+            "tablet": 0,
+            "unknown": 0,
+        }
+        browser_counts = {
+            "chrome": 0,
+            "safari": 0,
+            "firefox": 0,
+            "edge": 0,
+            "opera": 0,
+            "other": 0,
+        }
+
+        for visit in visits_qs.only("referrer", "user_agent"):
+            source_counts[self._classify_source(visit.referrer)] += 1
+            device_counts[self._classify_device(visit.user_agent)] += 1
+            browser_counts[self._classify_browser(visit.user_agent)] += 1
+
+        visitors_with_chat = (
+            chat_sessions_qs.exclude(visitor_id__isnull=True)
+            .exclude(visitor_id="")
+            .values("visitor_id")
+            .distinct()
+            .count()
+        )
+        captured_leads = (
+            chat_sessions_qs.exclude(visitor_email__isnull=True)
+            .exclude(visitor_email="")
+            .values("visitor_email")
+            .distinct()
+            .count()
+        )
+
+        return Response(
+            {
+                "range_days": range_days,
+                "overview": {
+                    "total_page_views": total_page_views,
+                    "total_events": total_events,
+                    "unique_visitors": unique_visitors,
+                    "chat_sessions": chat_sessions_qs.count(),
+                    "visitors_with_chat": visitors_with_chat,
+                    "contact_messages": contact_qs.count(),
+                    "project_requests": project_qs.count(),
+                    "captured_leads": captured_leads,
+                },
+                "traffic_by_day": traffic_by_day,
+                "top_pages": top_pages,
+                "top_referrers": top_referrers,
+                "source_breakdown": source_counts,
+                "device_breakdown": device_counts,
+                "browser_breakdown": browser_counts,
+                "conversion": {
+                    "site_visitors": unique_visitors,
+                    "chat_visitors": visitors_with_chat,
+                    "captured_leads": captured_leads,
+                    "contact_messages": contact_qs.count(),
+                    "project_requests": project_qs.count(),
+                },
             },
             status=status.HTTP_200_OK,
         )

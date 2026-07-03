@@ -3,6 +3,7 @@ from core.serializers import AboutSectionSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import AllowAny
 
 from core.models import (
     HeroSection,
@@ -12,6 +13,7 @@ from core.models import (
     CertificateSection,
     ResearchSection,
     FooterSection,
+    WebsiteVisit,
 )
 
 
@@ -23,7 +25,16 @@ from core.serializers import (
     CertificateSectionSerializer,
     ResearchSectionSerializer,
     FooterSectionSerializer,
+    WebsiteVisitTrackSerializer,
 )
+
+
+def _get_client_ip(request):
+    x_forwarded_for = request.META.get("HTTP_X_FORWARDED_FOR")
+    if x_forwarded_for:
+        return x_forwarded_for.split(",")[0].strip()
+
+    return request.META.get("REMOTE_ADDR")
 
 
 class ActiveHeroSectionAPIView(APIView):
@@ -230,4 +241,44 @@ class ActiveFooterSectionAPIView(APIView):
                 "footer": serializer.data,
             },
             status=status.HTTP_200_OK,
+        )
+
+
+class WebsiteVisitTrackAPIView(APIView):
+    """
+    Public analytics endpoint for lightweight visit tracking.
+
+    The frontend should call this on page load or important CTA interactions
+    so the admin dashboard can show site-wide visitor analytics.
+    """
+
+    authentication_classes = []
+    permission_classes = [AllowAny]
+    throttle_classes = []
+
+    def post(self, request, *args, **kwargs):
+        serializer = WebsiteVisitTrackSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        data = serializer.validated_data
+
+        visit = WebsiteVisit.objects.create(
+            visitor_id=data.get("visitor_id", "") or None,
+            session_key=data.get("session_key", "") or None,
+            path=data["path"],
+            page_title=data.get("page_title", ""),
+            event_type=data.get("event_type", "page_view"),
+            referrer=data.get("referrer", "") or request.META.get("HTTP_REFERER", ""),
+            ip_address=_get_client_ip(request),
+            user_agent=request.META.get("HTTP_USER_AGENT", ""),
+            source_label=data.get("source_label", ""),
+            metadata=data.get("metadata") or {},
+        )
+
+        return Response(
+            {
+                "success": True,
+                "visit_id": str(visit.id),
+            },
+            status=status.HTTP_201_CREATED,
         )

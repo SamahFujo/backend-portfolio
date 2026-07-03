@@ -6,6 +6,7 @@ from django.urls import path
 
 from core.views.admin_chat_views import (
     AdminChatAnalyticsAPIView,
+    AdminWebAnalyticsAPIView,
     AdminChatSessionListAPIView,
     AdminChatSessionDetailAPIView,
     AdminChatStatsAPIView,
@@ -38,6 +39,8 @@ urlpatterns = [
 
     path("chat/analytics/", AdminChatAnalyticsAPIView.as_view(),
          name="admin-chat-analytics"),
+    path("web-analytics/", AdminWebAnalyticsAPIView.as_view(),
+         name="admin-web-analytics"),
     path("chat/messages/", AdminChatMessagesAPIView.as_view(),
          name="admin-chat-messages"),
     path("chat/quality-issues/", AdminChatQualityIssuesAPIView.as_view(),

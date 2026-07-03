@@ -43,3 +43,44 @@ class GetInTouchSerializer(serializers.Serializer):
         if attrs.get("website"):
             raise serializers.ValidationError("Spam detected.")
         return attrs
+
+
+class WebsiteVisitTrackSerializer(serializers.Serializer):
+    visitor_id = serializers.CharField(
+        required=False,
+        allow_blank=True,
+        max_length=100,
+    )
+    session_key = serializers.CharField(
+        required=False,
+        allow_blank=True,
+        max_length=100,
+    )
+    path = serializers.CharField(max_length=255)
+    page_title = serializers.CharField(
+        required=False,
+        allow_blank=True,
+        max_length=255,
+    )
+    event_type = serializers.ChoiceField(
+        choices=["page_view", "cta_click", "custom"],
+        required=False,
+        default="page_view",
+    )
+    referrer = serializers.CharField(
+        required=False,
+        allow_blank=True,
+        max_length=2000,
+    )
+    source_label = serializers.CharField(
+        required=False,
+        allow_blank=True,
+        max_length=100,
+    )
+    metadata = serializers.JSONField(required=False)
+
+    def validate_path(self, value):
+        value = (value or "").strip()
+        if not value:
+            raise serializers.ValidationError("Path is required.")
+        return value[:255]

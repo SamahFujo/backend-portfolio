@@ -30,6 +30,7 @@ from .public_site_views import (
     ActiveCertificateSectionAPIView,
     ActiveResearchSectionAPIView,
     ActiveFooterSectionAPIView,
+    WebsiteVisitTrackAPIView,
 )
 
 from .admin_site_views import (

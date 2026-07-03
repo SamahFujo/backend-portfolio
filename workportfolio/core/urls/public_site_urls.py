@@ -14,6 +14,7 @@ from core.views import (
     ActiveCertificateSectionAPIView,
     ActiveResearchSectionAPIView,
     ActiveFooterSectionAPIView,
+    WebsiteVisitTrackAPIView,
 )
 
 
@@ -26,4 +27,6 @@ urlpatterns = [
          name="site-certificates"),
     path("research/", ActiveResearchSectionAPIView.as_view(), name="site-research"),
     path("footer/", ActiveFooterSectionAPIView.as_view(), name="site-footer"),
+    path("analytics/track-visit/", WebsiteVisitTrackAPIView.as_view(),
+         name="site-track-visit"),
 ]

@@ -1194,6 +1194,97 @@ class ProjectRequest(TimeStampedModel):
         return f"{self.project_name} - {self.your_email}"
 
 
+class WebsiteVisit(TimeStampedModel):
+    """
+    Stores lightweight website visit events for admin analytics.
+
+    The frontend can send one record on page load or on important visitor
+    interactions. This gives the admin dashboard site-wide metrics beyond
+    chatbot-only activity.
+    """
+
+    EVENT_TYPE_CHOICES = [
+        ("page_view", "Page View"),
+        ("cta_click", "CTA Click"),
+        ("custom", "Custom"),
+    ]
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+    visitor_id = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True,
+        db_index=True,
+        help_text="Anonymous visitor identifier shared by the frontend.",
+    )
+
+    session_key = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True,
+        db_index=True,
+        help_text="Frontend session key if available.",
+    )
+
+    path = models.CharField(
+        max_length=255,
+        db_index=True,
+        help_text="Visited path such as /, /projects, or /contact.",
+    )
+
+    page_title = models.CharField(
+        max_length=255,
+        blank=True,
+        default="",
+        help_text="Optional frontend page title for display in analytics.",
+    )
+
+    event_type = models.CharField(
+        max_length=20,
+        choices=EVENT_TYPE_CHOICES,
+        default="page_view",
+        db_index=True,
+    )
+
+    referrer = models.TextField(
+        blank=True,
+        null=True,
+        help_text="Referring page or source URL.",
+    )
+
+    ip_address = models.GenericIPAddressField(
+        blank=True,
+        null=True,
+        help_text="Visitor IP address for analytics/security tracking.",
+    )
+
+    user_agent = models.TextField(
+        blank=True,
+        null=True,
+        help_text="Browser/device information for analytics.",
+    )
+
+    source_label = models.CharField(
+        max_length=100,
+        blank=True,
+        default="",
+        help_text="Optional frontend-defined source label.",
+    )
+
+    metadata = models.JSONField(
+        default=dict,
+        blank=True,
+        help_text="Optional extra frontend analytics metadata.",
+    )
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.event_type} {self.path} ({self.visitor_id or 'anonymous'})"
+
+
 class CertificateSection(models.Model):
     """
     Stores dynamic header content for the Certificates section.
