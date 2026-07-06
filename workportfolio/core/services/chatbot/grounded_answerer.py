@@ -1835,6 +1835,8 @@ Current message:
                 **meta,
                 "generation_ok": True,
                 "fallback_used": False,
+                "safe_fallback": False,
+                "answer_source": "grounded_answer_llm",
                 "debug_prompt_chunks": debug_prompt_chunks,
                 "prompt_mode": mode,
                 "chunk_budget": chunk_budget,
