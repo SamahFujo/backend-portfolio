@@ -508,6 +508,18 @@ class GeminiQueryRewriter:
             )
 
         if any(word in q for word in [
+            "education", "degree", "degrees", "university", "college",
+            "gpa", "field of study", "major", "studied",
+        ]):
+            return make_plan(
+                answer_type="education",
+                preferred=["cv"],
+                suffix="Samah education degree university college GPA field of study major academic background CV",
+                avoid=["faq", "experience_letter", "compensation"],
+                plan_notes="local_rule_education",
+            )
+
+        if any(word in q for word in [
             "career timeline", "timeline", "career history", "work history",
             "career path", "employment history", "roles", "previous role",
         ]):

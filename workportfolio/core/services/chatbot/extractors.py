@@ -529,6 +529,95 @@ def try_extract_contact(question: str, chunks: List[DocumentChunk]) -> Tuple[boo
     return False, "", 0.0
 
 
+def try_extract_education(question: str, chunks: List[DocumentChunk]) -> Tuple[bool, str, float]:
+    """
+    Extract education facts conservatively from CV-style chunks.
+    """
+    q = (question or "").strip().lower()
+    education_markers = [
+        "education",
+        "degree",
+        "degrees",
+        "university",
+        "college",
+        "gpa",
+        "field of study",
+        "major",
+        "studied",
+    ]
+
+    if not any(marker in q for marker in education_markers):
+        return False, "", 0.0
+
+    relevant_lines: List[str] = []
+    gpa_lines: List[str] = []
+    field_lines: List[str] = []
+
+    for chunk in chunks:
+        document_type = getattr(chunk.document, "document_type", None)
+        content = (chunk.content or "").strip()
+        if not content:
+            continue
+
+        low_content = content.lower()
+        if document_type != "cv" and not any(marker in low_content for marker in education_markers):
+            continue
+
+        for raw_line in content.splitlines():
+            line = re.sub(r"\s+", " ", (raw_line or "").strip())
+            if not line:
+                continue
+
+            low_line = line.lower()
+            if any(marker in low_line for marker in ["gpa", "grade point average"]):
+                if line not in gpa_lines:
+                    gpa_lines.append(line)
+
+            if any(marker in low_line for marker in ["field of study", "major", "specialization"]):
+                if line not in field_lines:
+                    field_lines.append(line)
+
+            if any(marker in low_line for marker in [
+                "education",
+                "degree",
+                "bachelor",
+                "master",
+                "b.sc",
+                "bsc",
+                "university",
+                "college",
+            ]):
+                if line not in relevant_lines:
+                    relevant_lines.append(line)
+
+    asks_for_gpa = "gpa" in q or "grade point average" in q
+    asks_for_field = any(marker in q for marker in ["field of study", "major", "what did she study"])
+
+    if asks_for_gpa:
+        if gpa_lines:
+            return True, f"Based on the available CV, Samah’s GPA is mentioned as: {gpa_lines[0]}.", 0.22
+        return False, "", 0.0
+
+    if asks_for_field:
+        if field_lines:
+            return True, f"Based on the available CV, Samah’s field of study is described as: {field_lines[0]}.", 0.20
+        if relevant_lines:
+            return True, f"Based on the available CV, Samah’s education details include: {'; '.join(relevant_lines[:2])}.", 0.14
+        return False, "", 0.0
+
+    if relevant_lines:
+        summary_lines = []
+        for line in relevant_lines[:3]:
+            if line.lower() == "education":
+                continue
+            summary_lines.append(line)
+
+        if summary_lines:
+            return True, f"Based on the available CV, Samah’s education includes: {'; '.join(summary_lines[:2])}.", 0.24
+
+    return False, "", 0.0
+
+
 KNOWN_SKILLS = [
     "Python",
     "JavaScript",

@@ -9,6 +9,7 @@ from core.services.retrieval.approved_chunks import get_chatbot_available_chunks
 from core.services.chatbot.extractors import (
 
     try_extract_contact,
+    try_extract_education,
     try_extract_preferences,
     try_extract_experience_duration,
     try_extract_strengths,
@@ -21,6 +22,11 @@ from core.services.chatbot.extractors import (
 
 )
 from core.services.chatbot.grounded_answerer import GroundedAnswerer
+from core.services.chatbot.question_contracts import (
+    build_retry_query,
+    evaluate_evidence,
+    infer_question_contract,
+)
 
 
 
@@ -255,6 +261,7 @@ class ProfileQAService:
     ) -> Optional[Dict[str, Any]]:
         extractors = [
             try_extract_contact,
+            try_extract_education,
             try_extract_preferences,
             try_extract_experience_duration,
             try_extract_strengths,
@@ -412,6 +419,25 @@ class ProfileQAService:
         ])
 
     @classmethod
+    def _validate_retrieved_evidence(
+        cls,
+        question: str,
+        chunks: List[DocumentChunk],
+        query_plan: Dict[str, Any],
+        question_route: Optional[str],
+    ) -> Dict[str, Any]:
+        contract = infer_question_contract(
+            question=question,
+            query_plan=query_plan,
+            question_route=question_route,
+        )
+        return evaluate_evidence(
+            chunks=chunks,
+            contract=contract,
+            question=question,
+        )
+
+    @classmethod
     def _retrieve_chunks(
         cls,
         question: str,
@@ -469,6 +495,68 @@ class ProfileQAService:
             query_plan=query_plan,
         )
 
+        validation = cls._validate_retrieved_evidence(
+            question=question,
+            chunks=chunks,
+            query_plan=query_plan,
+            question_route=question_route,
+        )
+
+        retry_info = {
+            "attempted": False,
+            "used": False,
+            "reason": validation.get("reason"),
+        }
+
+        contract = infer_question_contract(
+            question=question,
+            query_plan=query_plan,
+            question_route=question_route,
+        )
+
+        if contract and (not chunks or not validation.get("is_sufficient")):
+            retry_info["attempted"] = True
+            retry_query = build_retry_query(retrieval_query, contract)
+            retry_sets: List[tuple[List[DocumentChunk], List[dict]]] = []
+
+            for doc_type in contract.strict_retry_document_types[:3]:
+                scoped_filters = dict(filters or {})
+                scoped_filters["document_type"] = doc_type
+
+                scoped_chunks, scoped_debug = (
+                    RerankedVectorRetrievalService.retrieve_relevant_chunks(
+                        query=retry_query,
+                        filters=scoped_filters,
+                    )
+                )
+
+                if scoped_chunks:
+                    retry_sets.append((scoped_chunks, scoped_debug))
+
+            if retry_sets:
+                retry_chunks, retry_debug = cls._merge_chunk_results(
+                    retrieval_sets + retry_sets
+                )
+                retry_chunks, retry_debug = cls._boost_and_sort_chunks(
+                    chunks=retry_chunks,
+                    retrieval_debug=retry_debug,
+                    query_plan=query_plan,
+                )
+                retry_validation = cls._validate_retrieved_evidence(
+                    question=question,
+                    chunks=retry_chunks,
+                    query_plan=query_plan,
+                    question_route=question_route,
+                )
+
+                if retry_validation.get("top_score", 0.0) >= validation.get("top_score", 0.0):
+                    chunks = retry_chunks
+                    retrieval_debug = retry_debug
+                    validation = retry_validation
+                    retry_info["used"] = True
+                    retry_info["reason"] = "targeted_contract_retry"
+                    retry_info["retry_query"] = retry_query
+
         applied_filters = {
             **(filters or {"only_active_docs": True}),
             "query_plan": {
@@ -480,6 +568,8 @@ class ProfileQAService:
                 "source": query_plan.get("source"),
                 "expanded_preferred_retrieval": expand_preferred,
             },
+            "evidence_validation": validation,
+            "retrieval_retry": retry_info,
         }
 
         return chunks, retrieval_debug, applied_filters

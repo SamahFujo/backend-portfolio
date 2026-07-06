@@ -27,6 +27,11 @@ class ScopeResolver:
         re.I,
     )
 
+    EDUCATION = re.compile(
+        r"\b(education|degree|degrees|university|college|gpa|field of study|major|studied)\b",
+        re.I,
+    )
+
     CONTACT = re.compile(
         r"\b(contact|email|phone|whatsapp|linkedin|get in touch|reach|connect|"
         r"communicate|talk to|speak with|contact details)\b",
@@ -175,7 +180,7 @@ class ScopeResolver:
             }
 
         # Direct contact/CV questions are safe to route to CV.
-        if cls.CONTACT.search(msg) or cls.CV.search(msg):
+        if cls.CONTACT.search(msg) or cls.CV.search(msg) or cls.EDUCATION.search(msg):
             return {
                 "document_type": "cv",
                 "only_active_docs": True,
