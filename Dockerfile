@@ -32,4 +32,5 @@ RUN SECRET_KEY=dummy-build-secret \
 
 EXPOSE 8000
 
-CMD ["gunicorn", "workportfolio.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "2", "--timeout", "120", "--access-logfile", "-", "--error-logfile", "-", "--capture-output"]
+# CMD ["gunicorn", "workportfolio.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "2", "--timeout", "120", "--access-logfile", "-", "--error-logfile", "-", "--capture-output"]
+CMD ["sh", "-c", "python manage.py migrate --noinput && gunicorn workportfolio.wsgi:application --bind 0.0.0.0:${PORT:-8000} --workers 1 --threads 4 --worker-class gthread --timeout 300 --access-logfile - --error-logfile - --capture-output"]
