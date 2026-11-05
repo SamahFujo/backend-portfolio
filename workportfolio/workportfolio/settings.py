@@ -60,7 +60,10 @@ if USE_S3_MEDIA:
     AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME", "")
     AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME", "eu-west-1")
     AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN", "").strip()
-
+    
+    AWS_S3_ENDPOINT_URL = os.getenv("AWS_S3_ENDPOINT_URL", "").strip() or None
+    AWS_S3_SIGNATURE_VERSION = "s3v4"
+    
     aws_access_key_id = os.getenv("AWS_ACCESS_KEY_ID", "").strip()
     aws_secret_access_key = os.getenv("AWS_SECRET_ACCESS_KEY", "").strip()
 
@@ -84,8 +87,11 @@ if USE_S3_MEDIA:
         },
     }
 
+        
     if AWS_S3_CUSTOM_DOMAIN:
         MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
+    elif AWS_S3_ENDPOINT_URL:
+        MEDIA_URL = f"{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/"
     else:
         MEDIA_URL = (
             f"https://{AWS_STORAGE_BUCKET_NAME}.s3."
